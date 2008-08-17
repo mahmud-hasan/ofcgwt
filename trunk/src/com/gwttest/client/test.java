@@ -44,8 +44,7 @@ public class test implements EntryPoint {
 	      }
 	    };
 
-	    // Schedule the timer to run once in 5 seconds.
-	    t.schedule(5000);
+	    t.schedule(1000);
 
 
 	}
@@ -112,16 +111,5 @@ public class test implements EntryPoint {
 		          .setSize(16)
 		          .setRotation(Rotation.HORIZONTAL)));
 
-//		chart.getXAxis()
-//		  .setStroke(1)
-//		  .setColour("#428C3E")
-//		  .setGridColour("#86BF83")
-//		  .setSteps(1);
-//		     
-//		chart.getXAxis().getLabels()
-//		  .setSteps(1)
-//		  .setRotation(Rotation.VERTICAL)
-//		  .setColour("#ff0000")
-//		  .setSize(16);
 	}
 }

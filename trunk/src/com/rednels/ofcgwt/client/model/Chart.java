@@ -1,3 +1,19 @@
+/*
+ *    Copyright 2008 Grant K Slender
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ *   
+ */
 package com.rednels.ofcgwt.client.model;
 
 import java.util.Arrays;
@@ -11,22 +27,21 @@ import com.rednels.ofcgwt.client.model.axis.XAxis;
 import com.rednels.ofcgwt.client.model.axis.YAxis;
 import com.rednels.ofcgwt.client.model.elements.Element;
 
-
-
 /**
- * This is the most important class in the Java OFC library.
+ * This is the most important class in the ofcfwt library.
  * Start here, configuring the title, axes, legends, labels,
- * and draw-able elements in your chart.  Coerce the
- * object to a String with the toString() method to get the
- * chart data back out.
+ * and draw-able elements in your chart.  
+ * 
+ * When finished, call toString() and the GWT JSON objects will
+ * convert the chart data into a OFC2 JSON data string.
  */
 public class Chart  implements JSONizable {
-    private JSONizable title;
+    private Text title;
     private XAxis x_axis;
     private YAxis y_axis;
     private YAxis y_axis_right;
-    private JSONizable y_legend;
-    private JSONizable x_legend;
+    private Text y_legend;
+    private Text x_legend;
     private String bg_colour;
     private Collection<Element> elements = new HashSet<Element>();
 
@@ -69,29 +84,29 @@ public class Chart  implements JSONizable {
         return y_axis_right;
     }
 
-    public JSONizable getTitle() {
+    public Text getTitle() {
         return title;
     }
 
-    public Chart setTitle(JSONizable title) {
+    public Chart setTitle(Text title) {
         this.title = title;
         return this;
     }
     
-    public JSONizable getXLegend() {
+    public Text getXLegend() {
         return x_legend;
     }
     
-    public Chart setXLegend(JSONizable x_legend) {
+    public Chart setXLegend(Text x_legend) {
         this.x_legend = x_legend;
         return this;
     }
     
-    public JSONizable getYLegend() {
+    public Text getYLegend() {
         return y_legend;
     }
 
-    public Chart setYLegend(JSONizable y_legend) {
+    public Chart setYLegend(Text y_legend) {
         this.y_legend = y_legend;
         return this;
     }
@@ -153,17 +168,6 @@ public class Chart  implements JSONizable {
     	if (index != 0) json.put("elements",ary);    	
     	return json;
     }
-        /*
-    {"title":{ "text":  "Many data lines","style": "{font-size: 20px; color:#0000ff; font-family: Verdana; text-align: center;}"},"y_legend":{"text": "Open Flash Chart",    "style": "{color: #736AFF; font-size: 12px;}"  },  "elements":[    {      "type":      "bar",      "alpha":     0.5,      "colour":    "#9933CC",      "text":      "Page views",      "font-size": 10,      "values" :   [9,6,7,9,5,7,6,9,7]    },    {      "type":      "bar",      "alpha":     0.5,      "colour":    "#CC9933",      "text":      "Page views 2",      "font-size": 10,      "values" :   [6,7,9,5,7,6,9,7,3]    }  ],  "x_axis":{    "stroke":1,    "tick_height":10,    "colour":"#d000d0",    "grid_colour":"#00ff00",    "labels": ["January","February","March","April","May","June","July","August","Spetember"]   },  "y_axis":{    "stroke":      4,    "tick_length": 3,    "colour":      "#d000d0",    "grid_colour": "#00ff00",    "offset":      0,    "max":         20  }}
-    private Text title;
-    private XAxis x_axis;
-    private YAxis y_axis;
-    private YAxis y_axis_right;
-    private Text y_legend;
-    private Text x_legend;
-    private String bg_colour;
-    private Collection<Element> elements = new HashSet<Element>();
-         */
     
     @Override
     public String toString() {
