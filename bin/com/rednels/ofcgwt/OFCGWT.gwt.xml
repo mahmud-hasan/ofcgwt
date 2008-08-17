@@ -1,7 +1,0 @@
-<module>
-    <inherits name='com.google.gwt.json.JSON'/>
-    <script src="com_rednels_ofcgwt_callback.js"></script>
-	<script src="swfobject.js"></script>
-	
-	
-</module>
