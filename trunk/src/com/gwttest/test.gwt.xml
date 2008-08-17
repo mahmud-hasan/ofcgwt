@@ -1,0 +1,12 @@
+<module>
+
+      <inherits name='com.google.gwt.user.User'/>
+      <inherits name='com.rednels.ofcgwt.OFCGWT' />
+<!-- 	  
+	  <inherits name='pl.rmalinowski.gwt2swf.GWT2SWF' /> 	
+ -->
+      <entry-point class='com.gwttest.client.test'/>
+
+      <stylesheet src='test.css' />
+	
+</module>
