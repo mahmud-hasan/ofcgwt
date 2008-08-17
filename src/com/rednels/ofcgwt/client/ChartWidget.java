@@ -16,7 +16,6 @@
  */
 package com.rednels.ofcgwt.client;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Widget;
@@ -127,7 +126,6 @@ public class ChartWidget extends Widget {
 	public void setHeight(String height) {
 		height = height.trim().toLowerCase();
 		super.setHeight(height); // Width validation
-		GWT.log(getHeight() + " =? " + height, null);
 		if (getHeight().equals(height)) {
 			if (isSWFInjected) {
 				Element elem = DOM.getFirstChild(getElement());
@@ -140,10 +138,7 @@ public class ChartWidget extends Widget {
 	public void setWidth(String width) {
 		width = width.trim().toLowerCase();
 		super.setWidth(width); // Width validation
-
 		if (getWidth().equals(width)) {
-			// throw new RuntimeException("CSS widths should not be negative");
-
 			if (isSWFInjected) {
 				Element elem = DOM.getFirstChild(getElement());
 				DOM.setElementAttribute(elem, "width", width);
@@ -164,11 +159,14 @@ public class ChartWidget extends Widget {
 	}
 
 	public String getMinPlayerVersion() {
-		//return "7.0.14";
 		return "9.0.0";
 	}
 
 	public String getInnerDivTextForFlashPlayerNotFound() {
 		return innerDivTextForFlashPlayerNotFound;
+	}
+
+	public void setInnerDivTextForFlashPlayerNotFound(String innerDivTextForFlashPlayerNotFound) {
+		this.innerDivTextForFlashPlayerNotFound = innerDivTextForFlashPlayerNotFound;
 	}
 }
