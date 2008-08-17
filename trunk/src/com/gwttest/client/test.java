@@ -8,7 +8,10 @@ import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -19,34 +22,51 @@ import com.rednels.ofcgwt.client.model.axis.Label.Rotation;
 import com.rednels.ofcgwt.client.model.elements.*;
 import com.rednels.ofcgwt.client.model.elements.LineChart.Style;
 
-/**
- * Entry point classes define <code>onModuleLoad()</code>.
- */
 public class test implements EntryPoint {
 	public void onModuleLoad() {
 		
-		final VerticalPanel vp = new VerticalPanel();
+		VerticalPanel vp = new VerticalPanel();
 		
-		final ChartWidget c1 = new ChartWidget();		
-		c1.setSize("400", "300");
-		vp.add(c1);
-//		final ChartWidget c2 = new ChartWidget();		
-//		vp.add(c2);
+		HorizontalPanel hp = new HorizontalPanel();		
+		hp.setSpacing(5);
+		hp.add(new com.google.gwt.user.client.ui.Label("Select a Chart : "));		
+		final ListBox dropBox = new ListBox(false);
+		dropBox.addItem("Pie");
+		dropBox.addItem("Area");
+		dropBox.addItem("Bar");
+	    hp.add(dropBox);
+	    
+	    vp.add(hp);
 		
+		final ChartWidget chart = new ChartWidget();
+		chart.setSize("400", "300");
+		vp.add(chart);
 		
 		RootPanel.get().add(vp);		
-		 // Create a new timer that calls Window.alert().
-	    Timer t = new Timer() {
-	      public void run() {
 
-				c1.loadJSON(getPieChart().toString());				
-//				c2.loadJSON(getAreaChart().toString());
+		Timer t = new Timer() {
+	      public void run() {
+				chart.loadJSON(getPieChart().toString());
 	      }
 	    };
-
-	    t.schedule(1000);
-
-
+	    t.schedule(500);
+	    
+	    dropBox.addChangeListener(new ChangeListener() {
+	        public void onChange(Widget sender) {
+	        	switch(dropBox.getSelectedIndex()) {
+	        	case 0: // pie
+					chart.loadJSON(getPieChart().toString());
+					break;
+	        	case 1: // area
+					chart.loadJSON(getAreaChart().toString());
+					break;
+	        	case 2: // bar
+					chart.loadJSON(getBarChart().toString());
+					break;
+	        		
+	        	}
+	        }
+	      });
 	}
 	
 	private Chart getPieChart() {
@@ -56,8 +76,8 @@ public class test implements EntryPoint {
 		    .setStartAngle(35)
 		    .setBorder(2)
 		    .addValues(2, 3, 4)
-		    .addSlice(6.5f, "label (6.5)")
-		    .setColours("#d01f3c", "#356aa0", "#C79810")
+		    .addSlice(6.5f, "A label (6.5)")
+		    .setColours("#d01f3c", "#345678","#356aa0", "#C79810")
 		    .setTooltip("#val# of #total#<br>#percent# of 100%")
 		    .setAlpha(0.6f));
 	}
@@ -86,7 +106,7 @@ public class test implements EntryPoint {
 	}
 	
 	private Chart getBarChart() {
-		return new Chart("X Axis Labels Complex Example")
+		Chart c = new Chart("X Axis Labels Complex Example")
 		  .addElements(new LineChart(Style.DOT)
 		    .addValues(9, 8, 7, 6, 5, 4, 3, 2, 1))
 		    .setXAxis(new XAxis()
@@ -111,5 +131,17 @@ public class test implements EntryPoint {
 		          .setSize(16)
 		          .setRotation(Rotation.HORIZONTAL)));
 
+		c.getXAxis()
+		  .setStroke(1)
+		  .setColour("#428C3E")
+		  .setGridColour("#86BF83")
+		  .setSteps(1);
+		     
+		c.getXAxis().getLabels()
+		  .setSteps(1)
+		  .setRotation(Rotation.VERTICAL)
+		  .setColour("#ff0000")
+		  .setSize(16);
+		return c;
 	}
 }
