@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<project default="build.jar" basedir=".">
+
+	<target name="build.jar" description="Package up the project as a jar">
+	    <delete file="ofcgwt.jar"/>
+		<jar destfile="ofcgwt.jar">
+			<fileset dir="src">
+				<include name="**/*.java" />
+			</fileset>
+			<fileset dir="bin">
+				<include name="**/*.*" />
+			</fileset>
+		</jar>
+	</target>
+</project>
