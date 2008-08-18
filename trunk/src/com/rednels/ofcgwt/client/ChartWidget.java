@@ -22,28 +22,28 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ChartWidget extends Widget {
-	private static int count = 0;
+public class ChartWidget extends Widget implements IChartData {
+	public static final String BLANK_CHART_JSON_DATA = "{\"title\":{\"text\":\"\"},\"elements\":[]}";
+	public static final String MIN_PLAYER_VERSION = "9.0.0";
+	public static final String ALTERNATE_SWF_SRC = "expressInstall.swf";
 	
+	private static int count = 0;
 	private boolean isSWFInjected = false;
 	private boolean ieCacheFixEnabled = true;
 	private final String swfId;
-	private String jsonData = "{\"title\":{\"text\":\"\"},\"elements\":[]}"; // THIS IS THE CURRENT MIN CHART YOU MUST HAVE !!
+	private String jsonData = BLANK_CHART_JSON_DATA;
 	private String width = "";
 	private String height = "";
 	private final String src;
-	private final String alternateSrc;
 	private final String swfDivId;
 	private String innerDivTextForFlashPlayerNotFound = "FlashPlayer ${flashPlayer.version} is required.";
 
+
 	public ChartWidget() {
 		initJSCallback(this);
-		alternateSrc = "expressInstall.swf";
 		swfId = "swfID_" + count;
 		swfDivId = "swfDivID_" + count;
-		String swfurl = "open-flash-chart.swf?id=";		
-		if (isIeCacheFixEnabled()) swfurl +=new Date().toString(); 
-		src = swfurl;
+		src = getSWFURL(isIeCacheFixEnabled());
 		++count;
 		Element element = DOM.createElement("div");
 		DOM.setElementProperty(element, "id", swfDivId);
@@ -53,29 +53,29 @@ public class ChartWidget extends Widget {
 
 	protected void onLoad() {
 		if (!isSWFInjected) {
-			initEmptyInnerDiv();
+			getElement().setInnerHTML("<div id=\"embed_" + swfId + "\">" + emptyInnerDiv() + "</div>");
 			onBeforeSWFInjection();
-			String swf = getSrc();
-			String id = getSwfId();
 			String w = getWidth();
 			String h = getHeight();
-			String v = getMinPlayerVersion().toString();
-			String a = getAlternate();
-			injectSWF(swf, id, w, h, v, a);
+			injectSWF(src, swfId, w, h, MIN_PLAYER_VERSION, ALTERNATE_SWF_SRC);
 			isSWFInjected = true;
 			onAfterSWFInjection();
 		}
 		super.onLoad();
 	}
 	
-	private void initEmptyInnerDiv() {
-		String notifyText = getInnerDivTextForFlashPlayerNotFound().replaceAll("\\$\\{flashPlayer.version\\}",getMinPlayerVersion().toString());
-		getElement().setInnerHTML("<div id=\"embed_" + swfId + "\">" + notifyText + "</div>");
+	private String emptyInnerDiv() {
+		return getInnerDivTextForFlashPlayerNotFound().replaceAll("\\$\\{flashPlayer.version\\}",MIN_PLAYER_VERSION);
 	}
 	
-	protected native void injectSWF(String swf, String id, String w, String h,String ver, String alt)
+	public static String getSWFURL(boolean iefix) {
+		String swfurl = "open-flash-chart.swf";		
+		if (iefix) swfurl += ("?id="+new Date()); 
+		return swfurl;
+	}
+	
+	public static native void injectSWF(String swf, String id, String w, String h,String ver, String alt)
 	/*-{ 	     
-//	    alert ('injectSWF() '+w+' '+h);
 		var flashvars = {id: id};
 		var params = {allowscriptaccess:'always',wmode: 'transparent'};
 	    var attributes = { id: id, name: id };
@@ -83,16 +83,15 @@ public class ChartWidget extends Widget {
 	        
 	}-*/;
 
-	private native void initJSCallback (ChartWidget chartclass) 
+	public static native void initJSCallback (IChartData chartclass) 
 	/*-{
 	   $wnd.dataFileJS = function () {
-	       return chartclass.@com.rednels.ofcgwt.client.ChartWidget::getJsonData()();
+	       return chartclass.@com.rednels.ofcgwt.client.IChartData::getJsonData()();
 	   };
 	}-*/;
 	
-	private native void loadJSON (String json) 
-	/*-{	
-		id = this.@com.rednels.ofcgwt.client.ChartWidget::getSwfId()();				
+	public static native void loadJSON (String id,String json) 
+	/*-{				
 		var swf = $doc.getElementById(id);
   		x = swf.load(json);
 	}-*/;
@@ -103,19 +102,13 @@ public class ChartWidget extends Widget {
 
 	public void setJsonData(String json) {
 		this.jsonData = json;
-		loadJSON(jsonData);
+		loadJSON(swfId,jsonData);
 	}
-
-	private String getAlternate() {
-		return alternateSrc;
-	}
-
 
 	/**
 	 * Override this method to catch information about injection.
 	 */
 	protected void onAfterSWFInjection() {
-
 	}
 
 	/**
@@ -132,10 +125,6 @@ public class ChartWidget extends Widget {
 
 	protected String getSwfDivId() {
 		return swfDivId;
-	}
-
-	public String getSwfId() {
-		return swfId;
 	}
 
 	public void setHeight(String height) {
@@ -163,20 +152,12 @@ public class ChartWidget extends Widget {
 		}
 	}
 
-	public String getSrc() {
-		return src;
-	}
-
 	public String getWidth() {
 		return width;
 	}	
 
 	public String getHeight() {
 		return height;
-	}
-
-	public String getMinPlayerVersion() {
-		return "9.0.0";
 	}
 
 	public String getInnerDivTextForFlashPlayerNotFound() {
