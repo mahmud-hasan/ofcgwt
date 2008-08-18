@@ -16,6 +16,8 @@
  */
 package com.rednels.ofcgwt.client;
 
+import java.util.Date;
+
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Widget;
@@ -24,9 +26,11 @@ public class ChartWidget extends Widget {
 	private static int count = 0;
 	
 	private boolean isSWFInjected = false;
+	private boolean ieCacheFixEnabled = true;
 	private final String swfId;
 	private String jsonData = "{\"title\":{\"text\":\"\"},\"elements\":[]}"; // THIS IS THE CURRENT MIN CHART YOU MUST HAVE !!
-//	private String jsonData = "";
+	private String width = "";
+	private String height = "";
 	private final String src;
 	private final String alternateSrc;
 	private final String swfDivId;
@@ -34,10 +38,12 @@ public class ChartWidget extends Widget {
 
 	public ChartWidget() {
 		initJSCallback(this);
-		src = "open-flash-chart.swf";
 		alternateSrc = "expressInstall.swf";
 		swfId = "swfID_" + count;
 		swfDivId = "swfDivID_" + count;
+		String swfurl = "open-flash-chart.swf?id=";		
+		if (isIeCacheFixEnabled()) swfurl +=new Date().toString(); 
+		src = swfurl;
 		++count;
 		Element element = DOM.createElement("div");
 		DOM.setElementProperty(element, "id", swfDivId);
@@ -49,8 +55,13 @@ public class ChartWidget extends Widget {
 		if (!isSWFInjected) {
 			initEmptyInnerDiv();
 			onBeforeSWFInjection();
-			injectSWF(getSrc(), getSwfId(), getWidth(), getHeight(),
-					getMinPlayerVersion().toString(), getAlternate());
+			String swf = getSrc();
+			String id = getSwfId();
+			String w = getWidth();
+			String h = getHeight();
+			String v = getMinPlayerVersion().toString();
+			String a = getAlternate();
+			injectSWF(swf, id, w, h, v, a);
 			isSWFInjected = true;
 			onAfterSWFInjection();
 		}
@@ -64,8 +75,9 @@ public class ChartWidget extends Widget {
 	
 	protected native void injectSWF(String swf, String id, String w, String h,String ver, String alt)
 	/*-{ 	     
-		var flashvars = {};
-		var params = {};
+//	    alert ('injectSWF() '+w+' '+h);
+		var flashvars = {id: id};
+		var params = {allowscriptaccess:'always',wmode: 'transparent'};
 	    var attributes = { id: id, name: id };
 		$wnd.swfobject.embedSWF(swf, "embed_"+id, w, h, ver, alt, flashvars, params, attributes);
 	        
@@ -78,17 +90,20 @@ public class ChartWidget extends Widget {
 	   };
 	}-*/;
 	
-	public native void loadJSON (String json) 
+	private native void loadJSON (String json) 
 	/*-{	
 		id = this.@com.rednels.ofcgwt.client.ChartWidget::getSwfId()();				
 		var swf = $doc.getElementById(id);
   		x = swf.load(json);
 	}-*/;
 
-
-	@SuppressWarnings("unused") // used by com_rednels_ofcgwt_callback.js
-	private String getJsonData() { 
+	public String getJsonData() { 
 		return jsonData;
+	}
+
+	public void setJsonData(String json) {
+		this.jsonData = json;
+		loadJSON(jsonData);
 	}
 
 	private String getAlternate() {
@@ -126,6 +141,7 @@ public class ChartWidget extends Widget {
 	public void setHeight(String height) {
 		height = height.trim().toLowerCase();
 		super.setHeight(height); // Width validation
+		this.height = height;
 		if (getHeight().equals(height)) {
 			if (isSWFInjected) {
 				Element elem = DOM.getFirstChild(getElement());
@@ -138,6 +154,7 @@ public class ChartWidget extends Widget {
 	public void setWidth(String width) {
 		width = width.trim().toLowerCase();
 		super.setWidth(width); // Width validation
+		this.width = width;
 		if (getWidth().equals(width)) {
 			if (isSWFInjected) {
 				Element elem = DOM.getFirstChild(getElement());
@@ -151,11 +168,11 @@ public class ChartWidget extends Widget {
 	}
 
 	public String getWidth() {
-		return DOM.getStyleAttribute(getElement(), "width");
-	}
+		return width;
+	}	
 
 	public String getHeight() {
-		return DOM.getStyleAttribute(getElement(), "height");
+		return height;
 	}
 
 	public String getMinPlayerVersion() {
@@ -168,5 +185,14 @@ public class ChartWidget extends Widget {
 
 	public void setInnerDivTextForFlashPlayerNotFound(String innerDivTextForFlashPlayerNotFound) {
 		this.innerDivTextForFlashPlayerNotFound = innerDivTextForFlashPlayerNotFound;
+	}
+	
+	// mulitple swf fix : need to add a unique element to the SWF url or it will be cache and crash?
+	public void setIeCacheFixEnabled(boolean ieCacheFixEnabled) {
+		this.ieCacheFixEnabled = ieCacheFixEnabled;
+	}
+
+	public boolean isIeCacheFixEnabled() {
+		return ieCacheFixEnabled;
 	}
 }

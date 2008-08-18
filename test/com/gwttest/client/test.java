@@ -24,7 +24,6 @@ import com.rednels.ofcgwt.client.model.elements.LineChart.Style;
 
 public class test implements EntryPoint {
 	public void onModuleLoad() {
-		
 		VerticalPanel vp = new VerticalPanel();
 		
 		HorizontalPanel hp = new HorizontalPanel();		
@@ -38,36 +37,48 @@ public class test implements EntryPoint {
 	    hp.add(dropBox);
 	    
 	    vp.add(hp);
-		
+
+		HorizontalPanel hp2 = new HorizontalPanel();		
+		hp2.setSpacing(5);
 		final ChartWidget chart = new ChartWidget();
-		chart.setSize("400", "300");
-		vp.add(chart);
+		chart.setSize("300", "300");
+		hp2.add(chart);
+
+		final ChartWidget chart2 = new ChartWidget();
+		chart2.setSize("300", "300");
+		hp2.add(chart2);
+		
+		vp.add(hp2);
 		
 		RootPanel.get().add(vp);		
 
 		Timer t = new Timer() {
-	      public void run() {
-				chart.loadJSON(getPieChart().toString());
+	      public void run() {	    	    
+				chart.setJsonData(getPieChart().toString());
 	      }
 	    };
 	    t.schedule(500);
 	    
 	    dropBox.addChangeListener(new ChangeListener() {
 	        public void onChange(Widget sender) {
+	        	String json = chart.getJsonData();
+	        	System.out.println(json);
+	        	chart2.setJsonData(json);
 	        	switch(dropBox.getSelectedIndex()) {
 	        	case 0: // pie
-					chart.loadJSON(getPieChart().toString());
+	        		json = getPieChart().toString();
 					break;
 	        	case 1: // area
-					chart.loadJSON(getAreaChart().toString());
+	        		json = getAreaChart().toString();
 					break;
 	        	case 2: // bar
-					chart.loadJSON(getBarChart().toString());
+	        		json = getBarChart().toString();
 					break;
 	        	case 3: // glass bar
-					chart.loadJSON(getGlassBarChart().toString());
+	        		json = getGlassBarChart().toString();
 					break;
 	        	}
+	        	chart.setJsonData(json);
 	        }
 	      });
 	}

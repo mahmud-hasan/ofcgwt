@@ -1,16 +1,44 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<project default="build.jar" basedir=".">
+<project default="jar" basedir=".">
 
-	<target name="build.jar" description="Package up the project as a jar">
-	    <delete file="ofcgwt.jar"/>
-		<jar destfile="ofcgwt.jar">
-			<fileset dir="src">
-				<include name="**/*.java" />
-			</fileset>
-			<fileset dir="bin">
-				<include name="**/*.*" />
-			</fileset>
+	  <property environment="env" />
+	<property name="ofcgwt.src" value="src" />
+	<property name="ofcgwt.target" location="build" />
+	<property name="javac.out" location="${ofcgwt.target}/bin" />
+
+	<fail unless="env.GWT_HOME_1_5">GWT_HOME_1_5 environment variable is not defined</fail>
+	
+	<path id="gwt.class.path">
+	    <pathelement path="${env.GWT_HOME_1_5}/gwt-user.jar" />
+	    <pathelement path="${env.GWT_HOME_1_5}/gwt-dev-${gwt.platform}.jar" />
+	</path>
+	
+	<path id="project.class.path">
+	    <pathelement path="${java.class.path}/" />
+	    <path refid="gwt.class.path" />
+	</path>
+	
+	<target name="compile">
+	    <mkdir dir="${javac.out}" />
+	    <javac target="1.5" srcdir="" destdir="${javac.out}" includes="**">
+	      <src path="${ofcgwt.src}" />
+	      <classpath refid="project.class.path" />
+	    </javac>
+	  </target>
+
+	  <target name="source">
+	    <copy todir="${ofcgwt.target}/src">
+	      <fileset dir="src">
+	      </fileset>
+	    </copy>
+	  </target>
+	
+	<target name="jar" depends="compile,source" description="Package up the project as a jar">
+	    <delete file="${ofcgwt.target}/ofcgwt.jar"/>
+		<jar jarfile="${ofcgwt.target}/ofcgwt.jar">
+			<fileset dir="build/bin"/>
+			<fileset dir="build/src"/>
 		</jar>
 	</target>
 </project>

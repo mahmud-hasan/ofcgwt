@@ -16,11 +16,23 @@
  */
 function open_flash_chart_data()
 {
+    //alert('open_flash_chart_data');
 	// this function is for callback support for com.rednels.ofcgwt !! DO NOT REMOVE !!
 	var r = window.dataFileJS();
 	return r;
 }
-
+function open_flash_chart_dataswfID_0()
+{
+    alert('swfID_0');
+	// this function is for callback support for com.rednels.ofcgwt !! DO NOT REMOVE !!
+	var r = window.dataFileJS();
+	return r;
+}
+function open_flash_chart_dataswfID_1()
+{
+    alert('swfID_1');
+	return '{\"title\":{\"text\":\"\"},\"elements\":[]}';
+}
 function ofc_ready()
 {
 	//window.onChartReady(); //TODO add gwt callback, but need chart id to tell them apart !!
