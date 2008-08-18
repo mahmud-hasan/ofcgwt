@@ -46,6 +46,7 @@ public class Chart  implements JSONizable {
     private Collection<Element> elements = new HashSet<Element>();
 
     public XAxis getXAxis() {
+    	if (x_axis == null) x_axis = new XAxis(); 
         return x_axis;
     }
     
@@ -67,6 +68,7 @@ public class Chart  implements JSONizable {
     }
 
     public YAxis getYAxis() {
+    	if (y_axis == null) y_axis = new YAxis();
         return y_axis;
     }
 

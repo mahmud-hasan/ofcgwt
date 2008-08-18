@@ -168,84 +168,9 @@ public class test implements EntryPoint {
 		    .addBars(new BarChart.Bar(7,"#FF0000").setTooltip("RED<br>Mooo<br>#val#"))
 		    .addValues(6,9,7)
 		    .setTooltip("Tip for purple bars<br>val=#val#, top=#top#")
-		  	.setAlpha(0.5f))		
-		  	
-		  	;
+		  	.setAlpha(0.5f));
 		
-//		    .setXAxis(new XAxis()
-//		      .setTickHeight(5)
-//		      .addLabels("one", "two", "three", "four", "five")
-//		      .addLabels(
-//		        new Label("six")
-//		          .setColour("#0000FF")
-//		          .setSize(30)
-//		          .setRotation(Rotation.VERTICAL),
-//		        new Label("seven")
-//		          .setColour("#0000FF")
-//		          .setSize(30)
-//		          .setRotation(Rotation.VERTICAL),
-//		        new Label("eight")
-//		          .setColour("#8C773E")
-//		          .setSize(16)
-//		          .setRotation(Rotation.DIAGONAL)
-//		          .setVisible(true),
-//		        new Label("nine")
-//		          .setColour("#2683CF")
-//		          .setSize(16)
-//		          .setRotation(Rotation.HORIZONTAL)));
-//
-//		c.getXAxis()
-//		  .setStroke(1)
-//		  .setColour("#428C3E")
-//		  .setGridColour("#86BF83")
-//		  .setSteps(1);
-//		     
-//		c.getXAxis().getLabels()
-//		  .setSteps(1)
-//		  .setRotation(Rotation.VERTICAL)
-//		  .setColour("#ff0000")
-//		  .setSize(16);
 		return c;
 	}
-	/*
 	
-
-      "text--":      "Page views",
-      "font-size--": 10,
-
-    {
-      "type":      "bar_glass",
-      "alpha":     0.5,
-      "colour":    "#44FF44",
-      "tip":       "Tip for green bars<br>val=#val#, top=#top#",
-      "text--":      "Page views",
-      "font-size--": 10,
-      "values" :   [6,7,9,5,9,{"top":7,"colour":"#FF0000", "tip": "RED<br>W000t<br>#val#"},6,5,2]
-    }
-  ],
-
-  "x_axis":{
-    "stroke":       1,
-    "tick_height":  10,
-    "colour":      "#d000d0",
-    "grid_colour": "#00ff00",
-    "labels": {
-      "labels": ["January","February","March","April","May","June","July","August","Spetember"]
-    }
-   },
-
-  "y_axis":{
-    "stroke":      4,
-    "tick_length": 3,
-    "colour":      "#d000d0",
-    "grid_colour": "#00ff00",
-    "offset":      0,
-    "max":         20
-  },
-
-  "tooltip":{
-    "text": "Global Tooltip<br>val=#val#, top=#top#"
-  }
- 
-	  */
 }

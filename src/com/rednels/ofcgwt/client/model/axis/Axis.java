@@ -104,7 +104,7 @@ public abstract class Axis implements JSONizable {
     	JSONObject json = new JSONObject();
     	if (stroke != null) json.put("stroke", new JSONNumber(stroke));
     	if (colour != null) json.put("colour", new JSONString(colour));
-    	if (grid_colour != null) json.put("grid_colour", new JSONString(grid_colour));
+    	if (grid_colour != null) json.put("grid-colour", new JSONString(grid_colour));
     	if (steps != null) json.put("steps", new JSONNumber(steps));
     	if (offset != null) json.put("offset", new JSONNumber(offset));
     	if (threed != null) json.put("3d", new JSONNumber(threed));
