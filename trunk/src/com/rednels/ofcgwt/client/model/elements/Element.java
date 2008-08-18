@@ -17,6 +17,7 @@
 package com.rednels.ofcgwt.client.model.elements;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.google.gwt.json.client.JSONArray;
@@ -70,6 +71,12 @@ public abstract class Element implements JSONizable {
     
     public List<Object> getValues() {
         return values;
+    }
+    
+    public Element setValues(Collection values) {
+        this.values.clear();
+        this.values.addAll(values);
+        return this;
     }
     
     public Element setTooltip(String tooltip) {
