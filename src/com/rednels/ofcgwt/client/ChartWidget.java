@@ -21,7 +21,12 @@ import java.util.Date;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Widget;
-
+/**
+ * A gwt chart widget based on Open Flash Chart.</br></br>
+ * 
+ * Create the ChartWidget and add anywhere a widget can be used.
+ * 
+ */
 public class ChartWidget extends Widget implements IChartData {
 	public static final String BLANK_CHART_JSON_DATA = "{\"title\":{\"text\":\"\"},\"elements\":[]}";
 	public static final String MIN_PLAYER_VERSION = "9.0.0";
@@ -32,13 +37,17 @@ public class ChartWidget extends Widget implements IChartData {
 	private boolean ieCacheFixEnabled = true;
 	private final String swfId;
 	private String jsonData = BLANK_CHART_JSON_DATA;
-	private String width = "";
-	private String height = "";
+	private String width = "100%";
+	private String height = "100%";
 	private final String src;
 	private final String swfDivId;
 	private String innerDivTextForFlashPlayerNotFound = "FlashPlayer ${flashPlayer.version} is required.";
 
 
+	/**
+	 * Creates a new ChartWidget.
+	 * 
+	 */
 	public ChartWidget() {
 		initJSCallback(this);
 		swfId = "swfID_" + count;
@@ -48,18 +57,16 @@ public class ChartWidget extends Widget implements IChartData {
 		Element element = DOM.createElement("div");
 		DOM.setElementProperty(element, "id", swfDivId);
 		setElement(element);
-		setSize("300", "300");
+		setSize(width, height);
 	}
 
 	protected void onLoad() {
 		if (!isSWFInjected) {
 			getElement().setInnerHTML("<div id=\"embed_" + swfId + "\">" + emptyInnerDiv() + "</div>");
-			onBeforeSWFInjection();
 			String w = getWidth();
 			String h = getHeight();
 			injectSWF(src, swfId, w, h, MIN_PLAYER_VERSION, ALTERNATE_SWF_SRC);
 			isSWFInjected = true;
-			onAfterSWFInjection();
 		}
 		super.onLoad();
 	}
@@ -67,54 +74,78 @@ public class ChartWidget extends Widget implements IChartData {
 	private String emptyInnerDiv() {
 		return getInnerDivTextForFlashPlayerNotFound().replaceAll("\\$\\{flashPlayer.version\\}",MIN_PLAYER_VERSION);
 	}
-	
+
+	/**
+	 * Returns the open flash chart swf url
+	 * 
+	 * @return the swf url string
+	 */
 	public static String getSWFURL(boolean iefix) {
 		String swfurl = "open-flash-chart.swf";		
-		if (iefix) swfurl += ("?id="+new Date()); 
+		if (iefix) swfurl += ("?id="+(new Date().getTime())); 
 		return swfurl;
 	}
-	
+
+	/**
+	 * Injects the swf into the dom.<br>Internal widget use only - made public for integration. 
+	 * 
+	 * @param swf url
+	 * @param id the dom id
+	 * @param w width
+	 * @param h height
+	 * @param ver version string (9.0.0)
+	 * @param alt alternate swf to load if wrong version
+	 */
 	public static native void injectSWF(String swf, String id, String w, String h,String ver, String alt)
 	/*-{ 	     
-		var flashvars = {id: id};
-		var params = {allowscriptaccess:'always',wmode: 'transparent'};
+		var flashvars = {id: id,allowResize: true};
+		var params = {scale: 'noscale', allowscriptaccess:'always',wmode: 'transparent'};
 	    var attributes = { id: id, name: id };
 		$wnd.swfobject.embedSWF(swf, "embed_"+id, w, h, ver, alt, flashvars, params, attributes);
 	        
 	}-*/;
 
+	/**
+	 * Inits the call back functions.<br>Internal widget use only - made public for integration.
+	 * 
+	 * @param chartclass an instance of IChartData
+	 */
 	public static native void initJSCallback (IChartData chartclass) 
 	/*-{
 	   $wnd.dataFileJS = function () {
 	       return chartclass.@com.rednels.ofcgwt.client.IChartData::getJsonData()();
 	   };
 	}-*/;
-	
+
+	/**
+	 * Calls the load method on the OFC swf.<br>Internal widget use only - made public for integration.
+	 * 
+	 * @param id the dom id 
+	 * @param json a JSON string 
+	 */
 	public static native void loadJSON (String id,String json) 
 	/*-{				
 		var swf = $doc.getElementById(id);
   		x = swf.load(json);
 	}-*/;
 
+	/**
+	 * Gets the current JSON data for this chart.
+	 * 
+	 * @return a JSON string
+	 */
 	public String getJsonData() { 
 		return jsonData;
 	}
 
+	/**
+	 * Sets the JSON data for this chart & updates the chart if ready.
+	 * 
+	 * @param json a JSON string 
+	 */
 	public void setJsonData(String json) {
 		this.jsonData = json;
 		loadJSON(swfId,jsonData);
-	}
-
-	/**
-	 * Override this method to catch information about injection.
-	 */
-	protected void onAfterSWFInjection() {
-	}
-
-	/**
-	 * Override this method to catch information about injection.
-	 */
-	protected void onBeforeSWFInjection() {
 	}
 
 	protected void onUnload() {
@@ -152,27 +183,58 @@ public class ChartWidget extends Widget implements IChartData {
 		}
 	}
 
+	/**
+	 * Gets the objects width.
+	 * 
+	 * @return width
+	 */
 	public String getWidth() {
 		return width;
 	}	
 
+	/**
+	 * Gets the objects height.
+	 * 
+	 * @return height
+	 */
 	public String getHeight() {
 		return height;
 	}
 
+
+	/**
+	 * Gets the InnerDiv Text for when flash player is not found or can't be injected.
+	 * 
+	 * @return string
+	 */
 	public String getInnerDivTextForFlashPlayerNotFound() {
 		return innerDivTextForFlashPlayerNotFound;
 	}
 
-	public void setInnerDivTextForFlashPlayerNotFound(String innerDivTextForFlashPlayerNotFound) {
-		this.innerDivTextForFlashPlayerNotFound = innerDivTextForFlashPlayerNotFound;
-	}
-	
-	// mulitple swf fix : need to add a unique element to the SWF url or it will be cache and crash?
-	public void setIeCacheFixEnabled(boolean ieCacheFixEnabled) {
-		this.ieCacheFixEnabled = ieCacheFixEnabled;
+	/**
+	 * Sets the InnerDiv Text for when flash player is not found or can't be injected.
+	 * <br>Defaults to "FlashPlayer ${flashPlayer.version} is required."
+	 * 
+	 * @param divtext a string 
+	 */
+	public void setInnerDivTextForFlashPlayerNotFound(String divtext) {
+		this.innerDivTextForFlashPlayerNotFound = divtext;
 	}
 
+	/**
+	 * Enables an IE fix/workaround that stops caching of the swf. Stopping IE caching allows more than one chart to be rendered at once.
+	 * <p>Defaults to true. Means the SWF is never cached !!
+	 * 
+	 * @param enable - true to enable, false to disable
+	 */
+	// mulitple swf fix : need to add a unique element to the SWF url or it will be cache and crash?
+	public void setIeCacheFixEnabled(boolean enable) {
+		this.ieCacheFixEnabled = enable;
+	}
+
+	/**
+	 * @return true if IE cache fix is enabled, false if not
+	 */	
 	public boolean isIeCacheFixEnabled() {
 		return ieCacheFixEnabled;
 	}
