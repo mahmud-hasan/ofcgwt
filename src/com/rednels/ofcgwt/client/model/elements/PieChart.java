@@ -32,6 +32,7 @@ public class PieChart extends Element implements JSONizable{
     private Integer startAngle; 
     private Collection<String> colours;
     private Boolean animate;
+    private Boolean gradientFill;
     private Integer border;
     
     public PieChart() {
@@ -42,10 +43,19 @@ public class PieChart extends Element implements JSONizable{
         this.animate = animate;
         return this;
     }
-    
-    public Boolean getAnimate() {
+
+	public Boolean getAnimate() {
         return animate;
     }
+    
+    public PieChart setGradientFill(boolean gradientFill) {
+		this.gradientFill = gradientFill;
+        return this;
+	}
+
+	public Boolean getGradientFill() {
+		return gradientFill;
+	}
 
     public Integer getStartAngle() {
         return startAngle;
@@ -123,31 +133,52 @@ public class PieChart extends Element implements JSONizable{
         }
     	if (index != 0) json.put("colours",ary);	
     	if (animate != null) json.put("animate", JSONBoolean.getInstance(animate));   
+    	if (gradientFill != null) json.put("gradient-fill", JSONBoolean.getInstance(gradientFill));   
     	if (border != null) json.put("border", new JSONNumber(border.doubleValue()));
     	return json;
 	}
 	
     public static class Slice implements JSONizable{
-        private final String text;
+        private final String label;        
         private final Number value;
+        private String labelColour;
+        private String fontSize;
         
         public Slice(Number value, String text) {
-            this.text = text;
+            this.label = text;
             this.value = value;
         }
         
-        public Number getValue() {
+        public void setLabelColour(String labelColour) {
+			this.labelColour = labelColour;
+		}
+
+		public String getLabelColour() {
+			return labelColour;
+		}
+
+		public void setFontSize(String fontSize) {
+			this.fontSize = fontSize;
+		}
+
+		public String getFontSize() {
+			return fontSize;
+		}
+
+		public Number getValue() {
             return value;
         }
         
         public String getText() {
-            return text;
+            return label;
         }
 
     	public JSONObject buildJSONObject() {
         	JSONObject json = new JSONObject();
         	if (value != null) json.put("value", new JSONNumber(value.doubleValue())); 	
-        	if (text != null) json.put("text", new JSONString(text));
+        	if (label != null) json.put("label", new JSONString(label));
+        	if (labelColour != null) json.put("label-colour", new JSONString(labelColour));
+        	if (fontSize != null) json.put("font-size", new JSONString(fontSize));
         	return json;
     	}
     }

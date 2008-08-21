@@ -16,6 +16,7 @@
  */
 package com.rednels.ofcgwt.client;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import com.google.gwt.user.client.DOM;
@@ -42,7 +43,7 @@ public class ChartWidget extends Widget implements IChartData {
 	private final String src;
 	private final String swfDivId;
 	private String innerDivTextForFlashPlayerNotFound = "FlashPlayer ${flashPlayer.version} is required.";
-
+	private static ArrayList<IChartData> charts = new ArrayList<IChartData>();
 
 	/**
 	 * Creates a new ChartWidget.
@@ -110,12 +111,45 @@ public class ChartWidget extends Widget implements IChartData {
 	 * 
 	 * @param chartclass an instance of IChartData
 	 */
-	public static native void initJSCallback (IChartData chartclass) 
+	public static void initJSCallback (IChartData chartclass) {
+		charts.add(chartclass);
+		initCallback();
+	}
+		
+	private static native void initCallback () 
 	/*-{
-	   $wnd.dataFileJS = function () {
-	       return chartclass.@com.rednels.ofcgwt.client.IChartData::getJsonData()();
+	   $wnd.ofcgwtGetJsonData = function (id) {
+	       return @com.rednels.ofcgwt.client.ChartWidget::jsonData(Ljava/lang/String;)(id);
 	   };
+	   
+	   $wnd.ofcgwtNotifyReady = function (id) {
+	       @com.rednels.ofcgwt.client.ChartWidget::notify(Ljava/lang/String;)(id);
+	   };
+	   
 	}-*/;
+	
+	@SuppressWarnings("unused")
+	private static void notify(String id) {
+		for (IChartData chart: charts) {
+			if (chart.getSwfId().equals(id)) chart.notifyReady();
+		}	
+	}
+	
+	@SuppressWarnings("unused")
+	private static String jsonData(String id) {
+		for (IChartData chart: charts) {
+			if (chart.getSwfId().equals(id)) return chart.getJsonData();
+		}	
+		return BLANK_CHART_JSON_DATA;
+	}
+
+	/**
+	 * Gets the current JSON data for this chart.
+	 * 
+	 * @return a JSON string
+	 */
+	public void notifyReady() {		
+	}
 
 	/**
 	 * Calls the load method on the OFC swf.<br>Internal widget use only - made public for integration.
@@ -237,5 +271,9 @@ public class ChartWidget extends Widget implements IChartData {
 	 */	
 	public boolean isIeCacheFixEnabled() {
 		return ieCacheFixEnabled;
+	}
+
+	public String getSwfId() {
+		return swfId;
 	}
 }
