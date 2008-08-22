@@ -9,9 +9,9 @@ import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.rednels.ofcgwt.client.ChartWidget;
+import com.rednels.ofcgwt.client.IChartListener;
 
 
 /**
@@ -24,11 +24,7 @@ public class Test implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 		
-		VerticalPanel vp = new VerticalPanel();
-		vp.setBorderWidth(1);
-
 		HorizontalPanel hp = new HorizontalPanel();
-//		hp.setHeight("200");
 		hp.setSpacing(5);
 		hp.add(new com.google.gwt.user.client.ui.Label("Select a Chart : "));
 		final ListBox chartDropBox = new ListBox(false);
@@ -45,26 +41,22 @@ public class Test implements EntryPoint {
 		speedDropBox.addItem("Fast");
 		speedDropBox.addItem("Normal");
 		speedDropBox.addItem("Slow");
-		speedDropBox.setSelectedIndex(1);
+		speedDropBox.setSelectedIndex(2);
 		hp.add(speedDropBox);
 
-		vp.add(hp);
-		vp.setCellHeight(hp, "50");
-//		vp.setCellWidth(hp, "100%");
-
-		final ChartWidget chart = new ChartWidget();
-//		chart.setSize("300", "300");
-		vp.setCellHeight(chart, "100%");
-		vp.setCellWidth(chart, "100%");
-
-		vp.setWidth("100%");
-		vp.setHeight("100%");
-		vp.add(chart);
-
-
-		RootPanel.get().add(vp);
-		
 		final List<ITestCharts> list = getCharts();
+		final ChartWidget chart = new ChartWidget();
+		chart.setSize("70%", "70%");
+		chart.addChartListeners(new IChartListener(){
+			public void handleChartReadyEvent() {
+				// chart is ready, so lets load it up !!
+				String j = list.get(chartDropBox.getSelectedIndex()).getJSON();
+				chart.setJsonData(j);				
+			}});
+
+		RootPanel.get().add(hp);
+		RootPanel.get().add(chart);
+		
 		
 		final Timer t = new Timer() {
 			public void run() {

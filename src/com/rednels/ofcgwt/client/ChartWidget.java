@@ -32,18 +32,20 @@ public class ChartWidget extends Widget implements IChartData {
 	public static final String BLANK_CHART_JSON_DATA = "{\"title\":{\"text\":\"\"},\"elements\":[]}";
 	public static final String MIN_PLAYER_VERSION = "9.0.0";
 	public static final String ALTERNATE_SWF_SRC = "expressInstall.swf";
-	
+	private static ArrayList<IChartData> charts = new ArrayList<IChartData>();
+
+	private ArrayList<IChartListener> listeners = new ArrayList<IChartListener>();
 	private static int count = 0;
 	private boolean isSWFInjected = false;
 	private boolean ieCacheFixEnabled = true;
 	private final String swfId;
+	private final String src;
+	private final String swfDivId;
 	private String jsonData = BLANK_CHART_JSON_DATA;
 	private String width = "100%";
 	private String height = "100%";
-	private final String src;
-	private final String swfDivId;
 	private String innerDivTextForFlashPlayerNotFound = "FlashPlayer ${flashPlayer.version} is required.";
-	private static ArrayList<IChartData> charts = new ArrayList<IChartData>();
+	private boolean hasFlashPlayer = false;
 
 	/**
 	 * Creates a new ChartWidget.
@@ -59,6 +61,7 @@ public class ChartWidget extends Widget implements IChartData {
 		DOM.setElementProperty(element, "id", swfDivId);
 		setElement(element);
 		setSize(width, height);
+		hasFlashPlayer = hasFlashPlayerVersion(MIN_PLAYER_VERSION);
 	}
 
 	protected void onLoad() {
@@ -102,9 +105,15 @@ public class ChartWidget extends Widget implements IChartData {
 		var flashvars = {id: id,allowResize: true};
 		var params = {scale: 'noscale', allowscriptaccess:'always',wmode: 'transparent'};
 	    var attributes = { id: id, name: id };
-		$wnd.swfobject.embedSWF(swf, "embed_"+id, w, h, ver, alt, flashvars, params, attributes);
-	        
+		$wnd.swfobject.embedSWF(swf, "embed_"+id, w, h, ver, alt, flashvars, params, attributes);	        
 	}-*/;
+	
+
+	private static native boolean hasFlashPlayerVersion(String v)
+	/*-{	    
+	  	return $wnd.swfobject.hasFlashPlayerVersion(v);	        
+	}-*/;
+	
 
 	/**
 	 * Inits the call back functions.<br>Internal widget use only - made public for integration.
@@ -149,6 +158,9 @@ public class ChartWidget extends Widget implements IChartData {
 	 * @return a JSON string
 	 */
 	public void notifyReady() {		
+		for (IChartListener chart : listeners) {
+			chart.handleChartReadyEvent();
+		}
 	}
 
 	/**
@@ -174,22 +186,21 @@ public class ChartWidget extends Widget implements IChartData {
 
 	/**
 	 * Sets the JSON data for this chart & updates the chart if ready.
+	 * Does nothing if the required flash player is not loaded.
 	 * 
 	 * @param json a JSON string 
 	 */
 	public void setJsonData(String json) {
-		this.jsonData = json;
-		loadJSON(swfId,jsonData);
+		if (hasFlashPlayer) {
+			this.jsonData = json;
+			loadJSON(swfId,jsonData);
+		}
 	}
 
 	protected void onUnload() {
 		getElement().removeChild(DOM.getFirstChild(getElement()));
 		isSWFInjected = false;
 		super.onUnload();
-	}
-
-	protected String getSwfDivId() {
-		return swfDivId;
 	}
 
 	public void setHeight(String height) {
@@ -235,7 +246,6 @@ public class ChartWidget extends Widget implements IChartData {
 		return height;
 	}
 
-
 	/**
 	 * Gets the InnerDiv Text for when flash player is not found or can't be injected.
 	 * 
@@ -273,7 +283,28 @@ public class ChartWidget extends Widget implements IChartData {
 		return ieCacheFixEnabled;
 	}
 
+	/**
+	 * @return the swfId
+	 */	
 	public String getSwfId() {
 		return swfId;
+	}
+
+	/**
+	 * Removes an IChartListener 
+	 * 
+	 * @param chart an IChartListener 
+	 */
+	public void removeChartListeners(IChartListener chart) {
+		listeners.remove(chart);
+	}
+
+	/**
+	 * Adds an IChartListener that implements the handleChartReadyEvent method
+	 * 
+	 * @param chart an IChartListener 
+	 */
+	public void addChartListeners(IChartListener chart) {
+		listeners.add(chart);
 	}
 }

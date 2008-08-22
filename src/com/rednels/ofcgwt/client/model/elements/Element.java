@@ -73,7 +73,8 @@ public abstract class Element implements JSONizable {
         return values;
     }
     
-    public Element setValues(Collection values) {
+    @SuppressWarnings("unchecked")
+	public Element setValues(Collection values) {
         this.values.clear();
         this.values.addAll(values);
         return this;
