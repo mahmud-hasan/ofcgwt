@@ -2,7 +2,6 @@ package com.gwttest.client;
 
 import com.google.gwt.user.client.Random;
 import com.rednels.ofcgwt.client.model.Chart;
-import com.rednels.ofcgwt.client.model.axis.Label;
 import com.rednels.ofcgwt.client.model.elements.PieChart;
 
 public class TestPieChart implements ITestCharts {

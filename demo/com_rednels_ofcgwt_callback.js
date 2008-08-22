@@ -14,15 +14,15 @@
  *   limitations under the License.
  *   
  */
-function open_flash_chart_data()
+function open_flash_chart_data(id)
 {
 	// this function is for callback support for com.rednels.ofcgwt !! DO NOT REMOVE !!
-	var r = window.dataFileJS();
+	var r = window.ofcgwtGetJsonData(id);
 	return r;
 }
 
-function ofc_ready()
+function ofc_ready(id)
 {
-	//window.onChartReady(); //TODO add gwt callback, but need chart id to tell them apart !!
-    //alert('ofc_ready');
+	// this function is for callback support for com.rednels.ofcgwt !! DO NOT REMOVE !!
+	window.ofcgwtNotifyReady(id);
 }
