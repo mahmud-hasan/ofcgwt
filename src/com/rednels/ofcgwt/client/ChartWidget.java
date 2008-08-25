@@ -191,8 +191,8 @@ public class ChartWidget extends Widget implements IChartData {
 	 * @param json a JSON string 
 	 */
 	public void setJsonData(String json) {
-		if (hasFlashPlayer) {
-			this.jsonData = json;
+		this.jsonData = json;
+		if (hasFlashPlayer && isSWFInjected) {
 			loadJSON(swfId,jsonData);
 		}
 	}

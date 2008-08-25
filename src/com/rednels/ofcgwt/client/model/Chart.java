@@ -35,7 +35,7 @@ import com.rednels.ofcgwt.client.model.elements.Element;
  * When finished, call toString() and the GWT JSON objects will
  * convert the chart data into a OFC2 JSON data string.
  */
-public class Chart  implements JSONizable {
+public class Chart implements JSONizable {
     private Text title;
     private XAxis x_axis;
     private YAxis y_axis;
