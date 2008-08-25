@@ -126,15 +126,16 @@ public class PieChart extends Element implements JSONizable{
 	public JSONObject buildJSONObject() {
     	JSONObject json = super.buildJSONObject();
     	if (startAngle != null) json.put("start-angle", new JSONNumber(startAngle.doubleValue()));
-    	JSONArray ary = new JSONArray();
-    	int index = 0;
-    	for (String s : getColours()) {
-    		ary.set(index++, new JSONString(s));
-        }
-    	if (index != 0) json.put("colours",ary);	
     	if (animate != null) json.put("animate", JSONBoolean.getInstance(animate));   
     	if (gradientFill != null) json.put("gradient-fill", JSONBoolean.getInstance(gradientFill));   
     	if (border != null) json.put("border", new JSONNumber(border.doubleValue()));
+    	if (colours == null) return json;
+    	JSONArray ary = new JSONArray();
+    	int index = 0;
+    	for (String s : colours) {
+    		ary.set(index++, new JSONString(s));
+        }
+    	if (index != 0) json.put("colours",ary);	
     	return json;
 	}
 	
