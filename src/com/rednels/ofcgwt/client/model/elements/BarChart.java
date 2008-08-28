@@ -28,10 +28,10 @@ public class BarChart extends Element implements JSONizable {
     private String colour;
     
     public BarChart() {
-        this(Style.NORMAL);
+        this(BarStyle.NORMAL);
     }
     
-    public BarChart(Style style) {
+    public BarChart(BarStyle style) {
         super(style.getStyle());
     }
     
@@ -74,14 +74,14 @@ public class BarChart extends Element implements JSONizable {
     	return json;
 	}
     
-    public static enum Style {
+    public static enum BarStyle {
         NORMAL("bar"),
         THREED("bar_3d"),
         GLASS("bar_glass");
         
         private String style;
         
-        Style(String style) {
+        BarStyle(String style) {
             this.style = style;
         }
         

@@ -26,52 +26,43 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
-public class YAxis extends Axis implements JSONizable {
-    private Integer tick_length;
+public class YAxis extends AbstractAxis implements JSONizable {
+    private Integer tickLength;
     private List<String> labels;
     
-    public YAxis setTickLength(Integer tick_length) {
-        this.tick_length = tick_length;
-        return this;
+    public void setTickLength(Integer tick_length) {
+        this.tickLength = tick_length;
     }
     
     public Integer getTickLength() {
-        return tick_length;
+        return tickLength;
     }
     
-    public YAxis setLabels(String... labels) {
-        checkLabels();
-        this.labels.clear();
-        return addLabels(labels);
-    }
-    
-    public YAxis addLabels(String... labels) {
-        checkLabels();
+    public void addLabels(String... labels) {
+        checkLabelsNotNull();
         this.labels.addAll(Arrays.asList(labels));
-        return this;
     }
     
-    public YAxis addLabels(List<String> labels) {
-        checkLabels();
+    public void addLabels(List<String> labels) {
+        checkLabelsNotNull();
         this.labels.addAll(labels);
-        return this;
     }
     
     public List<String> getLabels() {
         return labels;
     }
     
-    private synchronized void checkLabels() {
+    private synchronized void checkLabelsNotNull() {
         if (labels == null) labels = new ArrayList<String>();
     }    
 
 	public JSONObject buildJSONObject() {		
     	JSONObject json = super.buildJSONObject();
-    	if (tick_length != null) json.put("tick-length", new JSONNumber(tick_length));
+    	if (tickLength != null) json.put("tick-length", new JSONNumber(tickLength));
     	if (labels == null) return json;
     	JSONArray ary = new JSONArray();
     	int index = 0;
-    	for (String o : getLabels()) {
+    	for (String o : labels) {
     		ary.set(index++, new JSONString(o));
         }
     	if (index != 0) json.put("labels",ary);

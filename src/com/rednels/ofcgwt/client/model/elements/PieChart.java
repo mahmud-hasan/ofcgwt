@@ -33,6 +33,7 @@ public class PieChart extends Element implements JSONizable{
     private Collection<String> colours;
     private Boolean animate;
     private Boolean gradientFill;
+    private Boolean nolabels;
     private Integer border;
     
     public PieChart() {
@@ -55,6 +56,14 @@ public class PieChart extends Element implements JSONizable{
 
 	public Boolean getGradientFill() {
 		return gradientFill;
+	}
+    
+    public void setNoLabels(boolean nolabels) {
+		this.nolabels = nolabels;
+	}
+
+	public Boolean getNoLabels() {
+		return nolabels;
 	}
 
     public Integer getStartAngle() {
@@ -127,7 +136,8 @@ public class PieChart extends Element implements JSONizable{
     	JSONObject json = super.buildJSONObject();
     	if (startAngle != null) json.put("start-angle", new JSONNumber(startAngle.doubleValue()));
     	if (animate != null) json.put("animate", JSONBoolean.getInstance(animate));   
-    	if (gradientFill != null) json.put("gradient-fill", JSONBoolean.getInstance(gradientFill));   
+    	if (gradientFill != null) json.put("gradient-fill", JSONBoolean.getInstance(gradientFill)); 
+    	if (nolabels != null) json.put("nolabels", JSONBoolean.getInstance(nolabels));    
     	if (border != null) json.put("border", new JSONNumber(border.doubleValue()));
     	if (colours == null) return json;
     	JSONArray ary = new JSONArray();

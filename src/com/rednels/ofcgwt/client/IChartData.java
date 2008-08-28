@@ -18,8 +18,19 @@ package com.rednels.ofcgwt.client;
 
 public interface IChartData {
 
+	/**
+	 * Get the currently set JSON data
+	 * @return json String
+	 */
 	public String getJsonData();
+	/**
+	 * Notify that the chart widget is ready to go
+	 */
 	public void notifyReady();
+	/**
+	 * Get the currently set swf ID of this chart widget
+	 * @return swf id String
+	 */
 	public String getSwfId();		
 
 }

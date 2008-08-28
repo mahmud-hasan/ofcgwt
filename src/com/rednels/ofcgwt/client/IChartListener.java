@@ -17,5 +17,8 @@
 package com.rednels.ofcgwt.client;
 
 public interface IChartListener {
+	/**
+	 * Sent when a Chart Ready event that the listener has registered for occurs.
+	 */
 	public void handleChartReadyEvent();
 }

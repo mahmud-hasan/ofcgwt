@@ -20,6 +20,11 @@ import com.google.gwt.json.client.JSONObject;
 
 public interface JSONizable {
 
+	/**
+	 * Build (and return) a JSONObject that contains all the items of this object. If required, 
+	 * will call buildJSONObject on any JSONizable objects items. 
+	 * @return the JSONObject
+	 */
 	public JSONObject buildJSONObject();
 
 }

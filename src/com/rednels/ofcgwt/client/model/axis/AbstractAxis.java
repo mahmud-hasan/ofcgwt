@@ -21,93 +21,84 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
-public abstract class Axis implements JSONizable {
+public abstract class AbstractAxis implements JSONizable {
     private Integer stroke;
     private String colour;
-    private String grid_colour;
+    private String gridColour;
     private Integer steps;
     private Integer offset;
-    private Integer threed; 
+    private Integer zdepth3d; 
     private Integer min;
     private Integer max;
     
     public Integer getStroke() {
         return stroke;
     }
-    public Axis setStroke(Integer stroke) {
+    public void setStroke(Integer stroke) {
         this.stroke = stroke;
-        return this;
     }
     public String getColour() {
         return colour;
     }
-    public Axis setColour(String colour) {
+    public void setColour(String colour) {
         this.colour = colour;
-        return this;
     }
     public String getGridColour() {
-        return grid_colour;
+        return gridColour;
     }
-    public Axis setGridColour(String grid_colour) {
-        this.grid_colour = grid_colour;
-        return this;
+    public void setGridColour(String grid_colour) {
+        this.gridColour = grid_colour;
     }
     public Integer getSteps() {
         return steps;
     }
-    public Axis setSteps(Integer steps) {
+    public void setSteps(Integer steps) {
         this.steps = steps;
-        return this;
     }
     public Integer getOffset() {
         return offset;
     }
-    public Axis setOffset(Boolean offset) {
+    public void setOffset(Boolean offset) {
         if (offset == null) this.offset = null;
         this.offset = offset ? 1 : 0;
-        return this;
     }
-    public Integer get3D() {
-        return threed;
+    public Integer getZDepth3D() {
+        return zdepth3d;
     }
-    public Axis set3D(Integer threed) {
-        this.threed = threed;
-        return this;
+    public void setZDepth3D(Integer threed) {
+        this.zdepth3d = threed;
     }
     public Integer getMin() {
         return min;
     }
-    public Axis setMin(Integer min) {
+    public void setMin(Integer min) {
         this.min = min;
-        return this;
     }
     public Integer getMax() {
         return max;
     }
-    public Axis setMax(Integer max) {
+    public void setMax(Integer max) {
         this.max = max;
-        return this;
     }
     
-    public Axis setRange(Integer min, Integer max, Integer step) {
+    public void setRange(Integer min, Integer max, Integer step) {
+    	setRange(min,max);
+        setSteps(step);
+    }
+    
+    public void setRange(Integer min, Integer max) {
         setMin(min);
         setMax(max);
-        setSteps(step);
-        return this;
-    }
-    
-    public Axis setRange(Integer min, Integer max) {
-        return setRange(min, max, getSteps());
     }
 
 	public JSONObject buildJSONObject() {
     	JSONObject json = new JSONObject();
     	if (stroke != null) json.put("stroke", new JSONNumber(stroke));
     	if (colour != null) json.put("colour", new JSONString(colour));
-    	if (grid_colour != null) json.put("grid-colour", new JSONString(grid_colour));
+    	if (gridColour != null) json.put("grid-colour", new JSONString(gridColour));
     	if (steps != null) json.put("steps", new JSONNumber(steps));
     	if (offset != null) json.put("offset", new JSONNumber(offset));
-    	if (threed != null) json.put("3d", new JSONNumber(threed));
+    	if (zdepth3d != null) json.put("3d", new JSONNumber(zdepth3d));
     	if (min != null) json.put("min", new JSONNumber(min));
     	if (max != null) json.put("max", new JSONNumber(max));    	
     	return json;

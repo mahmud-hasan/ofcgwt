@@ -23,34 +23,63 @@ public class Text implements JSONizable {
     private String text;
     private String style;
     
+    /**
+     * Create a new Text instance
+     */
     public Text() {
         this(null, null);
     }
     
+    /**
+     * Create a new Text instance with the given text
+     * @param text String
+     */
     public Text(String text) {
         this(text, null);
     }
     
+    /**
+     * Create a new Text instance with the given text and style. Style is a CSS string for formatting text.  
+     * @param text String
+     * @param style String
+     */
     public Text(String text, String style) {
         setText(text);
         setStyle(style);
     }
     
+    /**
+     * Get the text
+     * @return String text 
+     */
     public String getText() {
         return text;
     }
-    public JSONizable setText(String text) {
+    /**
+     * Sets the text string. 
+     * @param text String
+     */
+    public void setText(String text) {
         this.text = text;
-        return this;
     }
+    /**
+     * Get the style
+     * @return String style 
+     */
     public String getStyle() {
         return style;
     }
-    public JSONizable setStyle(String style) {
+    /**
+     * Sets the text string. 
+     * @param style String
+     */
+    public void setStyle(String style) {
         this.style = style;
-        return this;
     }
 
+	/* (non-Javadoc)
+	 * @see com.rednels.ofcgwt.client.model.JSONizable#buildJSONObject()
+	 */
 	public JSONObject buildJSONObject() {
     	JSONObject json = new JSONObject();
     	if (text != null) json.put("text", new JSONString(text));
