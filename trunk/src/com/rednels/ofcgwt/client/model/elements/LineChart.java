@@ -33,10 +33,10 @@ public class LineChart extends Element implements JSONizable {
     private String colour;
     
     public LineChart() {
-        this(Style.NORMAL);
+        this(LineStyle.NORMAL);
     }
     
-    public LineChart(Style style) {
+    public LineChart(LineStyle style) {
         this(style.getStyle());
     }
     
@@ -168,14 +168,14 @@ public class LineChart extends Element implements JSONizable {
     	}
     }
     
-    public static enum Style {
+    public static enum LineStyle {
         NORMAL("line"),
         DOT("line_dot"),
         HOLLOW("line_hollow");
         
         private String style;
         
-        Style(String style) {
+        LineStyle(String style) {
             this.style = style;
         }
         

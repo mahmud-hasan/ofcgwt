@@ -25,7 +25,7 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * A gwt chart widget based on Open Flash Chart.</br></br>
  * 
- * Create the ChartWidget and add anywhere a widget can be used.
+ * Create the ChartWidget and add anywhere a GWT widget can be used.
  * 
  */
 public class ChartWidget extends Widget implements IChartData {
@@ -37,7 +37,7 @@ public class ChartWidget extends Widget implements IChartData {
 	private ArrayList<IChartListener> listeners = new ArrayList<IChartListener>();
 	private static int count = 0;
 	private boolean isSWFInjected = false;
-	private boolean ieCacheFixEnabled = true;
+	private boolean cacheFixEnabled = true;
 	private final String swfId;
 	private final String src;
 	private final String swfDivId;
@@ -48,14 +48,13 @@ public class ChartWidget extends Widget implements IChartData {
 	private boolean hasFlashPlayer = false;
 
 	/**
-	 * Creates a new ChartWidget.
-	 * 
+	 * Creates a new ChartWidget.	 * 
 	 */
 	public ChartWidget() {
 		initJSCallback(this);
 		swfId = "swfID_" + count;
 		swfDivId = "swfDivID_" + count;
-		src = getSWFURL(isIeCacheFixEnabled());
+		src = getSWFURL(isCacheFixEnabled());
 		++count;
 		Element element = DOM.createElement("div");
 		DOM.setElementProperty(element, "id", swfDivId);
@@ -266,21 +265,21 @@ public class ChartWidget extends Widget implements IChartData {
 	}
 
 	/**
-	 * Enables an IE fix/workaround that stops caching of the swf. Stopping IE caching allows more than one chart to be rendered at once.
-	 * <p>Defaults to true. Means the SWF is never cached !!
+	 * Enables an fix/workaround that stops caching of the swf which on IE may solve some bugs.
+	 * <br>Defaults to true. Enable this if you find problems in IE with multiple charts.
 	 * 
 	 * @param enable - true to enable, false to disable
 	 */
-	// mulitple swf fix : need to add a unique element to the SWF url or it will be cache and crash?
-	public void setIeCacheFixEnabled(boolean enable) {
-		this.ieCacheFixEnabled = enable;
+	public void setCacheFixEnabled(boolean enable) {
+		this.cacheFixEnabled = enable;
 	}
 
 	/**
-	 * @return true if IE cache fix is enabled, false if not
+	 * Is the CacheFix Enabled?
+	 * @return true if cache fix is enabled, false if not
 	 */	
-	public boolean isIeCacheFixEnabled() {
-		return ieCacheFixEnabled;
+	public boolean isCacheFixEnabled() {
+		return cacheFixEnabled;
 	}
 
 	/**

@@ -16,63 +16,126 @@
  */
 package com.rednels.ofcgwt.client.model.axis;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONString;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
-public class XAxis extends Axis implements JSONizable {
-    private Integer tick_height; 
-    private XAxisLabels labels = new XAxisLabels();
+public class XAxis extends AbstractAxis implements JSONizable {
+    private Integer tickHeight; 
+    private Labels labels;
     
-    public XAxis setTickHeight(Integer tick_height) {
-        this.tick_height = tick_height;
-        return this;
+    public void setTickHeight(Integer tick_height) {
+        this.tickHeight = tick_height;
     }
     
     public Integer getTickHeight() {
-        return tick_height;
+        return tickHeight;
     }
     
-    public XAxisLabels getLabels() {
+    public Labels getLabels() {
         return labels;
     }
     
-    public XAxis setXAxisLabels(XAxisLabels labels) {
+    public void setXAxisLabels(Labels labels) {
         this.labels = labels;
-        return this;
     }
     
-    public XAxis setLabels(String... labels) {
-        this.labels = new XAxisLabels(labels);
-        return this;
+    public void setLabels(String... labels) {
+        this.labels = new Labels(labels);
     }
 
-    public XAxis setLabels(List<String> labels) {
-        this.labels = new XAxisLabels(labels);
-        return this;
+    public void setLabels(List<String> labels) {
+        this.labels = new Labels(labels);
     }
     
-    public XAxis addLabels(String... labels) {
+    public void addLabels(String... labels) {
+        checkLabelsNotNull();
         this.labels.addLabels(labels);
-        return this;
     }
     
-    public XAxis addLabels(Label... labels) {
+    public void addLabels(Label... labels) {
+        checkLabelsNotNull();
         this.labels.addLabels(labels);
-        return this;
     }
     
-    public XAxis addLabels(List<Label> labels) {
+    public void addLabels(List<Label> labels) {
+        checkLabelsNotNull();
         this.labels.addLabels(labels);
-        return this;
     }
+    
+    private synchronized void checkLabelsNotNull() {
+        if (labels == null) labels = new Labels();
+    }    
 
 	public JSONObject buildJSONObject() {		
     	JSONObject json = super.buildJSONObject();
-    	if (tick_height != null) json.put("tick-height", new JSONNumber(tick_height));    	
+    	if (tickHeight != null) json.put("tick-height", new JSONNumber(tickHeight));    	
     	if (labels != null) json.put("labels", labels.buildJSONObject());
     	return json;
+	}
+	
+	public class Labels extends Label implements JSONizable {
+	    private Integer steps;
+	    private List<Object> labels;
+	    	    
+	    public Labels(String... labels) {
+	        addLabels(labels);
+	    }
+	    
+	    public Labels(List<String> labels) {
+	    	 checkLabelsNotNull();
+	         this.labels.addAll(labels);
+	    }    
+	    
+	    public List<Object> getLabels() {
+	        return labels;
+	    }
+	    
+	    public void addLabels(String... labels) {
+	        checkLabelsNotNull();
+	        this.labels.addAll(Arrays.asList(labels));
+	    }
+	    
+	    public void addLabels(Label... labels) {
+	        checkLabelsNotNull();
+	        this.labels.addAll(Arrays.asList(labels));
+	    }
+	    
+	    public void addLabels(List<Label> labels) {
+	        checkLabelsNotNull();
+	        this.labels.addAll(labels);
+	    }
+	    
+	    public void setSteps(Integer steps) {
+	        this.steps = steps;
+	    }
+	    
+	    public Integer getSteps() {
+	        return steps;
+	    }
+	    
+	    private synchronized void checkLabelsNotNull() {
+	        if (labels == null) labels = new ArrayList<Object>();
+	    }
+
+		public JSONObject buildJSONObject() {		
+	    	JSONObject json = super.buildJSONObject();
+	    	if (steps != null) json.put("steps", new JSONNumber(steps));
+	    	if (labels == null) return json;
+	    	JSONArray ary = new JSONArray();
+	    	int index = 0;
+	    	for (Object o : getLabels()) {
+	    		if (o instanceof String) ary.set(index++, new JSONString((String)o));
+	    		if (o instanceof Label) ary.set(index++, ((Label)o).buildJSONObject());
+	        }
+	    	if (index != 0) json.put("labels",ary);
+	    	return json;
+		}
 	}
 }

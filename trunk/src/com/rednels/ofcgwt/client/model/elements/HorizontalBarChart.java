@@ -35,36 +35,32 @@ public class HorizontalBarChart extends Element implements JSONizable {
         return colour;
     }
     
-    public HorizontalBarChart setColour(String colour) {
+    public void setColour(String colour) {
         this.colour = colour;
-        return this;
     }
     
-    public HorizontalBarChart addBars(Bar... values) {
+    public void addBars(Bar... values) {
         getValues().addAll(Arrays.asList(values));
-        return this;
     }
     
-    public HorizontalBarChart addBars(List<Bar> values) {
+    public void addBars(List<Bar> values) {
         getValues().addAll(values);
-        return this;
     }
         
-    public HorizontalBarChart addValues(Number... rightValues) {
+    public void addValues(Number... rightValues) {
         Bar[] values = new Bar[rightValues.length];
         for (int i = 0; i < rightValues.length; ++i) {
             values[i] = new Bar(rightValues[i]);
         }
-        return addBars(values);
+        addBars(values);
     }
     
-    public HorizontalBarChart addValues(List<Number> rightValues) {
+    public void addValues(List<Number> rightValues) {
         getValues().addAll(rightValues);
-        return this;
     }
     
-    public HorizontalBarChart addBar(Number left, Number right) {
-        return addBars(new Bar(left, right));
+    public void addBar(Number left, Number right) {
+        addBars(new Bar(left, right));
     }
 
 	public JSONObject buildJSONObject() {
@@ -73,38 +69,63 @@ public class HorizontalBarChart extends Element implements JSONizable {
     	return json;
 	}
     
+
     public static class Bar implements JSONizable {
-        private final Number right;
-        private Number left;
-        
-        public Bar(Number right) {
-            this(null, right);
-        }
-        
-        public Bar(Number left, Number right) {
-            if (right == null) throw new NullPointerException("Field is mandatory.");
-            this.right = right;
-            setLeft(left);
-        }
-        
-        public Number getRight() {
-            return right;
-        }
-        
-        public Number getLeft() {
-            return left;
-        }
-        
-        public Bar setLeft(Number left) {
-            this.left = left;
-            return this;
-        }
+    	private Number left;
+    	private Number right;
+    	private String colour;
+    	private String tooltip;
+    	
+    	public Bar(Number top, Number bottom, String colour) {
+    	    setTop(top);
+    	    setBottom(bottom);
+    	    setColour(colour);
+    	}
+    	
+    	public Bar(Number top, Number bottom) {
+    		this(top, bottom, null);
+    	}
+    	
+    	public Bar(Number top, String colour) {
+    	    this(top, null, colour);
+    	}
+    	
+    	public Bar(Number top) {
+    	    this(top, null, null);
+    	}
+    	
+		public Number getTop() {
+			return left;
+		}
+		public void setTop(Number top) {
+			this.left = top;
+		}
+		public Number getBottom() {
+			return right;
+		}
+		public void setBottom(Number bottom) {
+			this.right = bottom;
+		}
+		public String getColour() {
+			return colour;
+		}
+		public void setColour(String colour) {
+			this.colour = colour;
+		}
+		public String getTooltip() {
+			return tooltip;
+		}
+		public void setTooltip(String tooltip) {
+			this.tooltip = tooltip;
+		}
 
     	public JSONObject buildJSONObject() {
         	JSONObject json = new JSONObject();
-        	if (right != null) json.put("right", new JSONNumber(right.doubleValue()));
-        	if (left != null) json.put("left", new JSONNumber(left.doubleValue())); 	
+        	if (left != null) json.put("left", new JSONNumber(left.doubleValue()));
+        	if (right != null) json.put("right", new JSONNumber(right.doubleValue())); 	
+        	if (colour != null) json.put("colour", new JSONString(colour));
+        	if (tooltip != null) json.put("tip", new JSONString(tooltip));
         	return json;
-    	}
+    	}	
     }
 }

@@ -29,7 +29,7 @@ public class ScatterChart extends Element implements JSONizable {
     private String colour;
     private Integer dotSize; 
     
-    protected ScatterChart(String type) {
+    public ScatterChart() {
         super("scatter");
     }
     

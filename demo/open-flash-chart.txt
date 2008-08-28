@@ -1,3 +1,5 @@
+<< This is a SVN build of OFC that has been tested to work with OFCGWT >>
+
 Open Flash Chart, displays data as a chart in flash.
 Copyright (C) 2007 John Glazebrook
 

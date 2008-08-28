@@ -107,6 +107,7 @@ public class StackedBarChart extends Element implements JSONizable {
 
     	public JSONObject buildJSONObject() {
         	JSONObject json = new JSONObject();
+        	if (values == null) return json;    	
         	JSONArray ary = new JSONArray();
         	int index = 0;
         	for (Object o : values) {
