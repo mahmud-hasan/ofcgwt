@@ -107,7 +107,7 @@ public class ChartData implements JSONizable {
 		for (final Element e : this.elements) {
 			ary.set(index++, e.buildJSONObject());
 		}
-		if (index != 0) json.put("elements", ary);
+		json.put("elements", ary);
 		return json;
 	}
 
