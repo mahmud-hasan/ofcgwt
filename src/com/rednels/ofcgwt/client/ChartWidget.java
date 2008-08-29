@@ -39,7 +39,6 @@ public class ChartWidget extends Widget implements IChartData {
 	private boolean isSWFInjected = false;
 	private boolean cacheFixEnabled = true;
 	private final String swfId;
-	private final String src;
 	private final String swfDivId;
 	private String jsonData = BLANK_CHART_JSON_DATA;
 	private String width = "100%";
@@ -54,7 +53,6 @@ public class ChartWidget extends Widget implements IChartData {
 		initJSCallback(this);
 		swfId = "swfID_" + count;
 		swfDivId = "swfDivID_" + count;
-		src = getSWFURL(isCacheFixEnabled());
 		++count;
 		Element element = DOM.createElement("div");
 		DOM.setElementProperty(element, "id", swfDivId);
@@ -68,7 +66,7 @@ public class ChartWidget extends Widget implements IChartData {
 			getElement().setInnerHTML("<div id=\"embed_" + swfId + "\">" + emptyInnerDiv() + "</div>");
 			String w = getWidth();
 			String h = getHeight();
-			injectSWF(src, swfId, w, h, MIN_PLAYER_VERSION, ALTERNATE_SWF_SRC);
+			injectSWF(getSWFURL(isCacheFixEnabled()), swfId, w, h, MIN_PLAYER_VERSION, ALTERNATE_SWF_SRC);
 			isSWFInjected = true;
 		}
 		super.onLoad();
@@ -108,7 +106,7 @@ public class ChartWidget extends Widget implements IChartData {
 	}-*/;
 	
 
-	private static native boolean hasFlashPlayerVersion(String v)
+	public static native boolean hasFlashPlayerVersion(String v)
 	/*-{	    
 	  	return $wnd.swfobject.hasFlashPlayerVersion(v);	        
 	}-*/;
