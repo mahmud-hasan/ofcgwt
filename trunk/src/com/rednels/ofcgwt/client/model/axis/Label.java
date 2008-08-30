@@ -22,83 +22,170 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.rednels.ofcgwt.client.model.JSONizable;
-
+/**
+ * Base class for an OFC label  
+ */
 public class Label implements JSONizable {
+    
+    /** The text. */
     private String text;
+    
+    /** The colour. */
     private String colour;
+    
+    /** The size. */
     private Integer size;
+    
+    /** The rotate. */
     private Rotation rotate;
+    
+    /** The visible. */
     private Boolean visible;
     
+    /**
+     * The Enum Rotation.
+     */
     public static enum Rotation {
+        
+        /** The VERTICAL. */
         VERTICAL("vertical"),
+        
+        /** The DIAGONAL. */
         DIAGONAL("diagonal"),
+        
+        /** The HORIZONTAL. */
         HORIZONTAL("horizontal");
         
+        /** The text. */
         private final String text;
+        
+        /**
+         * Creates a new rotation.
+         * 
+         * @param text the text
+         */
         Rotation(String text) {
             this.text = text;
         }
         
+        /* (non-Javadoc)
+         * @see java.lang.Enum#toString()
+         */
         @Override
         public String toString() {
             return text;
         }
     }
     
+    /**
+     * Creates a new label.
+     */
     public Label() {
         this(null);
     }
     
+    /**
+     * Creates a new label.
+     * 
+     * @param text the text
+     */
     public Label(String text) {
         setText(text);
     }
 
+    /**
+     * Gets the text.
+     * 
+     * @return the text
+     */
     public String getText() {
         return text;
     }
 
-    public Label setText(String text) {
+    /**
+     * Sets the text.
+     * 
+     * @param text the text
+     */
+    public void setText(String text) {
         this.text = text;
-        return this;
     }
 
+    /**
+     * Gets the colour.
+     * 
+     * @return the colour
+     */
     public String getColour() {
         return colour;
     }
 
-    public Label setColour(String colour) {
+    /**
+     * Sets the colour in HTML hex format (#ffffff) 
+     * 
+     * @param colour the colour
+     */
+    public void setColour(String colour) {
         this.colour = colour;
-        return this;
     }
 
+    /**
+     * Gets the size.
+     * 
+     * @return the size
+     */
     public Integer getSize() {
         return size;
     }
 
-    public Label setSize(Integer size) {
+    /**
+     * Sets the size.
+     * 
+     * @param size the size
+     */
+    public void setSize(Integer size) {
         this.size = size;
-        return this;
     }
 
+    /**
+     * Gets the rotation.
+     * 
+     * @return the rotation
+     */
     public Rotation getRotation() {
         return rotate;
     }
 
-    public Label setRotation(Rotation rotate) {
+    /**
+     * Sets the rotation.
+     * 
+     * @param rotate the rotate
+     */
+    public void setRotation(Rotation rotate) {
         this.rotate = rotate;
-        return this;
     }
 
+    /**
+     * Gets the visible.
+     * 
+     * @return the visible
+     */
     public Boolean getVisible() {
         return visible;
     }
 
-    public Label setVisible(Boolean visible) {
+    /**
+     * Sets the visible.
+     * 
+     * @param visible the visible
+     */
+    public void setVisible(Boolean visible) {
         this.visible = visible;
-        return this;
     }
     
+	/* (non-Javadoc)
+	 * @see com.rednels.ofcgwt.client.model.JSONizable#buildJSONObject()
+	 */
 	public JSONObject buildJSONObject() {
     	JSONObject json = new JSONObject();
     	if (text != null) json.put("text", new JSONString(text));

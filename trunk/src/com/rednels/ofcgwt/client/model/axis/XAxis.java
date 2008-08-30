@@ -26,54 +26,112 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.rednels.ofcgwt.client.model.JSONizable;
-
+/**
+ * Class for an OFC x-axis that extends AbstractAxis   
+ * @see com.rednels.ofcgwt.client.model.axis.AbstractAxis
+ */
 public class XAxis extends AbstractAxis implements JSONizable {
+    
+    /** The tick height. */
     private Integer tickHeight; 
+    
+    /** The labels. */
     private Labels labels;
     
+    /**
+     * Sets the tick height.
+     * 
+     * @param tick_height the new tick height
+     */
     public void setTickHeight(Integer tick_height) {
         this.tickHeight = tick_height;
     }
     
+    /**
+     * Gets the tick height.
+     * 
+     * @return the tick height
+     */
     public Integer getTickHeight() {
         return tickHeight;
     }
     
+    /**
+     * Gets the labels.
+     * 
+     * @return the labels
+     */
     public Labels getLabels() {
         return labels;
     }
     
+    /**
+     * Sets the x axis labels.
+     * 
+     * @param labels the new x axis labels
+     */
     public void setXAxisLabels(Labels labels) {
         this.labels = labels;
     }
     
+    /**
+     * Sets the labels.
+     * 
+     * @param labels the new labels
+     */
     public void setLabels(String... labels) {
         this.labels = new Labels(labels);
     }
 
+    /**
+     * Sets the labels.
+     * 
+     * @param labels the new labels
+     */
     public void setLabels(List<String> labels) {
         this.labels = new Labels(labels);
     }
     
+    /**
+     * Adds the labels.
+     * 
+     * @param labels the labels
+     */
     public void addLabels(String... labels) {
         checkLabelsNotNull();
         this.labels.addLabels(labels);
     }
     
+    /**
+     * Adds the labels.
+     * 
+     * @param labels the labels
+     */
     public void addLabels(Label... labels) {
         checkLabelsNotNull();
         this.labels.addLabels(labels);
     }
     
+    /**
+     * Adds the labels.
+     * 
+     * @param labels the labels
+     */
     public void addLabels(List<Label> labels) {
         checkLabelsNotNull();
         this.labels.addLabels(labels);
     }
     
+    /**
+     * Check labels not null.
+     */
     private synchronized void checkLabelsNotNull() {
         if (labels == null) labels = new Labels();
     }    
 
+	/* (non-Javadoc)
+	 * @see com.rednels.ofcgwt.client.model.axis.AbstractAxis#buildJSONObject()
+	 */
 	public JSONObject buildJSONObject() {		
     	JSONObject json = super.buildJSONObject();
     	if (tickHeight != null) json.put("tick-height", new JSONNumber(tickHeight));    	
@@ -81,50 +139,104 @@ public class XAxis extends AbstractAxis implements JSONizable {
     	return json;
 	}
 	
+	/**
+	 * Class for an OFC x-axis label that extends Label
+	 * @see com.rednels.ofcgwt.client.model.axis.Label
+	 */
 	public class Labels extends Label implements JSONizable {
-	    private Integer steps;
-	    private List<Object> labels;
+	    
+    	/** The steps. */
+    	private Integer steps;
+	    
+    	/** The labels. */
+    	private List<Object> labels;
 	    	    
-	    public Labels(String... labels) {
+	    /**
+    	 * Creates a new labels.
+    	 * 
+    	 * @param labels the labels
+    	 */
+    	public Labels(String... labels) {
 	        addLabels(labels);
 	    }
 	    
-	    public Labels(List<String> labels) {
+	    /**
+    	 * Creates a new labels.
+    	 * 
+    	 * @param labels the labels
+    	 */
+    	public Labels(List<String> labels) {
 	    	 checkLabelsNotNull();
 	         this.labels.addAll(labels);
 	    }    
 	    
-	    public List<Object> getLabels() {
+	    /**
+    	 * Gets the labels.
+    	 * 
+    	 * @return the labels
+    	 */
+    	public List<Object> getLabels() {
 	        return labels;
 	    }
 	    
-	    public void addLabels(String... labels) {
+	    /**
+    	 * Adds the labels.
+    	 * 
+    	 * @param labels the labels
+    	 */
+    	public void addLabels(String... labels) {
 	        checkLabelsNotNull();
 	        this.labels.addAll(Arrays.asList(labels));
 	    }
 	    
-	    public void addLabels(Label... labels) {
+	    /**
+    	 * Adds the labels.
+    	 * 
+    	 * @param labels the labels
+    	 */
+    	public void addLabels(Label... labels) {
 	        checkLabelsNotNull();
 	        this.labels.addAll(Arrays.asList(labels));
 	    }
 	    
-	    public void addLabels(List<Label> labels) {
+	    /**
+    	 * Adds the labels.
+    	 * 
+    	 * @param labels the labels
+    	 */
+    	public void addLabels(List<Label> labels) {
 	        checkLabelsNotNull();
 	        this.labels.addAll(labels);
 	    }
 	    
-	    public void setSteps(Integer steps) {
+	    /**
+    	 * Sets the steps.
+    	 * 
+    	 * @param steps the new steps
+    	 */
+    	public void setSteps(Integer steps) {
 	        this.steps = steps;
 	    }
 	    
-	    public Integer getSteps() {
+	    /**
+    	 * Gets the steps.
+    	 * 
+    	 * @return the steps
+    	 */
+    	public Integer getSteps() {
 	        return steps;
 	    }
 	    
-	    private synchronized void checkLabelsNotNull() {
+	    /**
+    	 * Check labels not null.
+    	 */
+    	private synchronized void checkLabelsNotNull() {
 	        if (labels == null) labels = new ArrayList<Object>();
 	    }
 
+		/* (non-Javadoc)
+		 * @see com.rednels.ofcgwt.client.model.axis.Label#buildJSONObject()
+		 */
 		public JSONObject buildJSONObject() {		
 	    	JSONObject json = super.buildJSONObject();
 	    	if (steps != null) json.put("steps", new JSONNumber(steps));

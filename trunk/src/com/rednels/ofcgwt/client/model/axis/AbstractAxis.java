@@ -22,6 +22,9 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
+/**
+ * Base abstract class for an OFC axis    
+ */
 public abstract class AbstractAxis implements JSONizable {
     private Integer stroke;
     private String colour;
@@ -32,66 +35,177 @@ public abstract class AbstractAxis implements JSONizable {
     private Integer min;
     private Integer max;
     
+    /**
+     * Gets the stroke.
+     * 
+     * @return the stroke
+     */
     public Integer getStroke() {
         return stroke;
     }
+    
+    /**
+     * Sets the stroke.
+     * 
+     * @param stroke the new stroke
+     */
     public void setStroke(Integer stroke) {
         this.stroke = stroke;
     }
+    
+    /**
+     * Gets the colour.
+     * 
+     * @return the colour
+     */
     public String getColour() {
         return colour;
     }
+    
+    /**
+     * Sets the colour in HTML hex format (#ffffff) 
+     * 
+     * @param colour the new colour
+     */
     public void setColour(String colour) {
         this.colour = colour;
     }
+    
+    /**
+     * Gets the grid colour.
+     * 
+     * @return the grid colour
+     */
     public String getGridColour() {
         return gridColour;
     }
+    
+    /**
+     * Sets the grid colour in HTML hex format (#ffffff) 
+     * 
+     * @param grid_colour the new grid colour
+     */
     public void setGridColour(String grid_colour) {
         this.gridColour = grid_colour;
     }
+    
+    /**
+     * Gets the steps.
+     * 
+     * @return the steps
+     */
     public Integer getSteps() {
         return steps;
     }
+    
+    /**
+     * Sets the steps.
+     * 
+     * @param steps the new steps
+     */
     public void setSteps(Integer steps) {
         this.steps = steps;
     }
+    
+    /**
+     * Gets the offset.
+     * 
+     * @return the offset
+     */
     public Integer getOffset() {
         return offset;
     }
+    
+    /**
+     * Sets the offset.
+     * 
+     * @param offset the new offset
+     */
     public void setOffset(Boolean offset) {
         if (offset == null) this.offset = null;
         this.offset = offset ? 1 : 0;
     }
+    
+    /**
+     * Gets the z-depth (3D).
+     * 
+     * @return the zdepth3d
+     */
     public Integer getZDepth3D() {
         return zdepth3d;
     }
-    public void setZDepth3D(Integer threed) {
-        this.zdepth3d = threed;
+    
+    /**
+     * Sets the z-depth (3D).
+     * 
+     * @param zdepth3d the new zdepth3d
+     */
+    public void setZDepth3D(Integer zdepth3d) {
+        this.zdepth3d = zdepth3d;
     }
+    
+    /**
+     * Gets the min.
+     * 
+     * @return the min
+     */
     public Integer getMin() {
         return min;
     }
+    
+    /**
+     * Sets the min.
+     * 
+     * @param min the new min
+     */
     public void setMin(Integer min) {
         this.min = min;
     }
+    
+    /**
+     * Gets the max.
+     * 
+     * @return the max
+     */
     public Integer getMax() {
         return max;
     }
+    
+    /**
+     * Sets the max.
+     * 
+     * @param max the new max
+     */
     public void setMax(Integer max) {
         this.max = max;
     }
     
+    /**
+     * Sets the range.
+     * 
+     * @param min the min
+     * @param max the max
+     * @param step the step
+     */
     public void setRange(Integer min, Integer max, Integer step) {
     	setRange(min,max);
         setSteps(step);
     }
     
+    /**
+     * Sets the range.
+     * 
+     * @param min the min
+     * @param max the max
+     */
     public void setRange(Integer min, Integer max) {
         setMin(min);
         setMax(max);
     }
 
+	/* (non-Javadoc)
+	 * @see com.rednels.ofcgwt.client.model.JSONizable#buildJSONObject()
+	 */
 	public JSONObject buildJSONObject() {
     	JSONObject json = new JSONObject();
     	if (stroke != null) json.put("stroke", new JSONNumber(stroke));

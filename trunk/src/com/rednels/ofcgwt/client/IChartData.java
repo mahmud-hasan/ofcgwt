@@ -16,7 +16,9 @@ GNU General Public License for more details.
 See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
 */
 package com.rednels.ofcgwt.client;
-
+/**
+ * An interface that ChartWidgets should implement   
+ */
 public interface IChartData {
 
 	/**
