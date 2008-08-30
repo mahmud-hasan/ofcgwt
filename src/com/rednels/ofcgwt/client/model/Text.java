@@ -20,6 +20,9 @@ package com.rednels.ofcgwt.client.model;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 
+/**
+ * Base class for an OFC text element   
+ */
 public class Text implements JSONizable {
     private String text;
     private String style;

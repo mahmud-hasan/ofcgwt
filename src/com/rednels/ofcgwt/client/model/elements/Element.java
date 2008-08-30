@@ -26,70 +26,142 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.rednels.ofcgwt.client.model.JSONizable;
-
+/**
+ * Base abstract class for OFC elements 
+ */
 public abstract class Element implements JSONizable {
+    
+    /** The type. */
     private final String type;
+    
+    /** The alpha. */
     private Float alpha;
+    
+    /** The text. */
     private String text;
+    
+    /** The font size. */
     private Integer fontSize; 
+    
+    /** The tooltip. */
     private String tooltip; 
+    
+    /** The values. */
     private List<Object> values = new ArrayList<Object>();
     
+    /**
+     * Creates a new element.
+     * 
+     * @param type the type
+     */
     protected Element(String type) {
         this.type = type;
     }
     
+    /**
+     * Gets the type.
+     * 
+     * @return the type
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * Gets the alpha.
+     * 
+     * @return the alpha
+     */
     public Float getAlpha() {
         return alpha;
     }
 
-    public Element setAlpha(Float alpha) {
+    /**
+     * Sets the alpha.
+     * 
+     * @param alpha the alpha
+     */
+    public void setAlpha(Float alpha) {
         this.alpha = alpha;
-        return this;
     }
 
+    /**
+     * Gets the text.
+     * 
+     * @return the text
+     */
     public String getText() {
         return text;
     }
 
-    public Element setText(String text) {
+    /**
+     * Sets the text.
+     * 
+     * @param text the text
+     */
+    public void setText(String text) {
         this.text = text;
-        return this;
     }
 
+    /**
+     * Gets the font size.
+     * 
+     * @return the font size
+     */
     public Integer getFontSize() {
         return fontSize;
     }
 
-    public Element setFontSize(Integer fontSize) {
+    /**
+     * Sets the font size.
+     * 
+     * @param fontSize the font size
+     */
+    public void setFontSize(Integer fontSize) {
         this.fontSize = fontSize;
-        return this;
     }
     
+    /**
+     * Gets the values.
+     * 
+     * @return the values
+     */
     public List<Object> getValues() {
         return values;
     }
     
+    /**
+     * Sets the values.
+     * 
+     * @param values the values
+     */
     @SuppressWarnings("unchecked")
-	public Element setValues(Collection values) {
+	public void setValues(Collection values) {
         this.values.clear();
         this.values.addAll(values);
-        return this;
     }
     
-    public Element setTooltip(String tooltip) {
+    /**
+     * Sets the tooltip text (#val# is the default)
+     * 
+     * @param tooltip the tooltip
+     */
+    public void setTooltip(String tooltip) {
         this.tooltip = tooltip;
-        return this;
     }
     
+    /**
+     * Gets the tooltip.
+     * 
+     * @return the tooltip
+     */
     public String getTooltip() {
         return tooltip;
     }
 
+	/* (non-Javadoc)
+	 * @see com.rednels.ofcgwt.client.model.JSONizable#buildJSONObject()
+	 */
 	public JSONObject buildJSONObject() {
     	JSONObject json = new JSONObject();
     	if (type != null) json.put("type", new JSONString(type));

@@ -107,6 +107,12 @@ public class ChartWidget extends Widget implements IChartData {
 	}-*/;
 	
 
+	/**
+	 * Returns true if the flash player equals or is higher than the version string provided
+	 * 
+	 * @param v String version
+	 * @return true if flash version equals or is higher
+	 */
 	public static native boolean hasFlashPlayerVersion(String v)
 	/*-{	    
 	  	return $wnd.swfobject.hasFlashPlayerVersion(v);	        
@@ -151,9 +157,7 @@ public class ChartWidget extends Widget implements IChartData {
 	}
 
 	/**
-	 * Gets the current JSON data for this chart.
-	 * 
-	 * @return a JSON string
+	 * Notifies registered chart listeners that the chart is ready
 	 */
 	public void notifyReady() {		
 		for (IChartListener chart : listeners) {

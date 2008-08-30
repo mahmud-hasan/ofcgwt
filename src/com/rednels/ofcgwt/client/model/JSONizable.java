@@ -19,11 +19,14 @@ package com.rednels.ofcgwt.client.model;
 
 import com.google.gwt.json.client.JSONObject;
 
+/**
+ * An interface that objects that build JSON strings should implement   
+ */
 public interface JSONizable {
 
 	/**
 	 * Build (and return) a JSONObject that contains all the items of this object. If required, 
-	 * will call buildJSONObject on any JSONizable objects items. 
+	 * will call buildJSONObject() on any contained JSONizable objects, thus producing an entire JSON tree. 
 	 * @return the JSONObject
 	 */
 	public JSONObject buildJSONObject();

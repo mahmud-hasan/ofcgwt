@@ -26,37 +26,75 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.rednels.ofcgwt.client.model.JSONizable;
-
+/**
+ * Class for an OFC y-axis that extends AbstractAxis   
+ * @see com.rednels.ofcgwt.client.model.axis.AbstractAxis
+ */
 public class YAxis extends AbstractAxis implements JSONizable {
+    
+    /** The tick length. */
     private Integer tickLength;
+    
+    /** The labels. */
     private List<String> labels;
     
+    /**
+     * Sets the tick length.
+     * 
+     * @param tick_length the new tick length
+     */
     public void setTickLength(Integer tick_length) {
         this.tickLength = tick_length;
     }
     
+    /**
+     * Gets the tick length.
+     * 
+     * @return the tick length
+     */
     public Integer getTickLength() {
         return tickLength;
     }
     
+    /**
+     * Adds the labels.
+     * 
+     * @param labels the labels
+     */
     public void addLabels(String... labels) {
         checkLabelsNotNull();
         this.labels.addAll(Arrays.asList(labels));
     }
     
+    /**
+     * Adds the labels.
+     * 
+     * @param labels the labels
+     */
     public void addLabels(List<String> labels) {
         checkLabelsNotNull();
         this.labels.addAll(labels);
     }
     
+    /**
+     * Gets the labels.
+     * 
+     * @return the labels
+     */
     public List<String> getLabels() {
         return labels;
     }
     
+    /**
+     * Check labels not null.
+     */
     private synchronized void checkLabelsNotNull() {
         if (labels == null) labels = new ArrayList<String>();
     }    
 
+	/* (non-Javadoc)
+	 * @see com.rednels.ofcgwt.client.model.axis.AbstractAxis#buildJSONObject()
+	 */
 	public JSONObject buildJSONObject() {		
     	JSONObject json = super.buildJSONObject();
     	if (tickLength != null) json.put("tick-length", new JSONNumber(tickLength));

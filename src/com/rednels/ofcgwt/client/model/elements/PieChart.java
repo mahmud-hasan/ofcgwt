@@ -28,117 +28,230 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.rednels.ofcgwt.client.model.JSONizable;
-
+/** 
+ * Class for an OFC pie chart that extends Element   
+ * @see com.rednels.ofcgwt.client.model.elements.Element
+ */
 public class PieChart extends Element implements JSONizable{
+    
+    /** The start angle. */
     private Integer startAngle; 
+    
+    /** The colours. */
     private Collection<String> colours;
+    
+    /** The animate. */
     private Boolean animate;
+    
+    /** The gradient fill. */
     private Boolean gradientFill;
+    
+    /** The nolabels. */
     private Boolean nolabels;
+    
+    /** The border. */
     private Integer border;
     
+    /**
+     * Creates a new pie chart.
+     */
     public PieChart() {
         super("pie");
     }
     
-    public PieChart setAnimate(boolean animate) {
+    /**
+     * Sets animation
+     * 
+     * @param animate true or false
+     */
+    public void setAnimate(boolean animate) {
         this.animate = animate;
-        return this;
     }
 
+	/**
+	 * Gets the animation value
+	 * 
+	 * @return true if animate is enabled
+	 */
 	public Boolean getAnimate() {
         return animate;
     }
     
-    public PieChart setGradientFill(boolean gradientFill) {
+    /**
+     * Sets the gradient fill.
+     * 
+     * @param gradientFill true or false
+     */
+    public void setGradientFill(boolean gradientFill) {
 		this.gradientFill = gradientFill;
-        return this;
 	}
 
+	/**
+	 * Gets the gradient fill.
+	 * 
+	 * @return true if gradient fill is enabled
+	 */
 	public Boolean getGradientFill() {
 		return gradientFill;
 	}
     
+    /**
+     * Sets the no labels.
+     * 
+     * @param nolabels true or false
+     */
     public void setNoLabels(boolean nolabels) {
 		this.nolabels = nolabels;
 	}
 
+	/**
+	 * Gets the no labels value
+	 * 
+	 * @return true if no labels is enabled
+	 */
 	public Boolean getNoLabels() {
 		return nolabels;
 	}
 
+    /**
+     * Gets the start angle.
+     * 
+     * @return the start angle
+     */
     public Integer getStartAngle() {
         return startAngle;
     }
 
-    public PieChart setStartAngle(Integer startAngle) {
+    /**
+     * Sets the start angle.
+     * 
+     * @param startAngle the new start angle
+     */
+    public void setStartAngle(Integer startAngle) {
         this.startAngle = startAngle;
-        return this;
     }
 
+    /**
+     * Gets the colours.
+     * 
+     * @return the colours
+     */
     public Collection<String> getColours() {
         return colours;
     }
 
-    public PieChart setColours(Collection<String> colours) {
+    /**
+     * Sets colours in HTML hex format (#ffffff) 
+     * 
+     * @param colours the new colours
+     */
+    public void setColours(Collection<String> colours) {
         checkColours();
         this.colours = colours;
-        return this;
     }
     
-    public PieChart setColours(String... colours) {
+    /**
+     * Sets colours in HTML hex format (#ffffff) 
+     * 
+     * @param colours the new colours
+     */
+    public void setColours(String... colours) {
         checkColours();
         this.colours.clear();
         this.colours.addAll(Arrays.asList(colours));
-        return this;
     }
     
-    public PieChart setColours(List<String> colours) {
+    /**
+     * Sets the colours.
+     * 
+     * @param colours the new colours
+     */
+    public void setColours(List<String> colours) {
         checkColours();
         this.colours.clear();
         this.colours.addAll(colours);
-        return this;
     }
     
+    /**
+     * Gets the border.
+     * 
+     * @return the border
+     */
     public Integer getBorder() {
         return border;
     }
     
-    public PieChart setBorder(Integer border) {
+    /**
+     * Sets the border.
+     * 
+     * @param border the new border
+     */
+    public void setBorder(Integer border) {
         this.border = border;
-        return this;
     }
 
-    public PieChart addValues(Number... values) {
+    /**
+     * Adds values.
+     * 
+     * @param values the values
+     */
+    public void addValues(Number... values) {
         getValues().addAll(Arrays.asList(values));
-        return this;
     }
     
-    public PieChart addValues(List<Number> values) {
+    /**
+     * Adds the values.
+     * 
+     * @param values the values
+     */
+    public void addValues(List<Number> values) {
         getValues().addAll(values);
-        return this;
     }
     
-    public PieChart addSlice(Number value, String text) {
-        return addSlices(new Slice(value, text));
+    /**
+     * Adds a slice.
+     * 
+     * @param value the value
+     * @param text the text
+     */
+    public void addSlice(Number value, String text) {
+        addSlices(new Slice(value, text));
     }
     
-    public PieChart addSlices(Slice... s) {
-        getValues().addAll(Arrays.asList(s));
-        return this;
+    /**
+     * Adds slices.
+     * 
+     * @param slice the slice
+     */
+    public void addSlices(Slice... slice) {
+        getValues().addAll(Arrays.asList(slice));
     }
     
-    public PieChart addSlices(List<Slice> values) {
-        getValues().addAll(values);
-        return this;
+    /**
+     * Adds slices.
+     * 
+     * @param slices the slices
+     */
+    public void addSlices(List<Slice> slices) {
+        getValues().addAll(slices);
+    }
+    
+    /**
+     * Check colours.
+     */
+    private synchronized void checkColours() {
+        if (colours == null) colours = new ArrayList<String>();
     }
 
+	/* (non-Javadoc)
+	 * @see com.rednels.ofcgwt.client.model.elements.Element#buildJSONObject()
+	 */
 	public JSONObject buildJSONObject() {
     	JSONObject json = super.buildJSONObject();
     	if (startAngle != null) json.put("start-angle", new JSONNumber(startAngle.doubleValue()));
     	if (animate != null) json.put("animate", JSONBoolean.getInstance(animate));   
     	if (gradientFill != null) json.put("gradient-fill", JSONBoolean.getInstance(gradientFill)); 
-    	if (nolabels != null) json.put("nolabels", JSONBoolean.getInstance(nolabels));    
+    	if (nolabels != null) json.put("no-labels", JSONBoolean.getInstance(nolabels));    
     	if (border != null) json.put("border", new JSONNumber(border.doubleValue()));
     	if (colours == null) return json;
     	JSONArray ary = new JSONArray();
@@ -150,42 +263,92 @@ public class PieChart extends Element implements JSONizable{
     	return json;
 	}
 	
+    /**
+     * The Class Slice.
+     */
     public static class Slice implements JSONizable{
+        
+        /** The label. */
         private final String label;        
+        
+        /** The value. */
         private final Number value;
+        
+        /** The label colour. */
         private String labelColour;
+        
+        /** The font size. */
         private String fontSize;
         
+        /**
+         * Creates a new slice.
+         * 
+         * @param value the value
+         * @param text the text
+         */
         public Slice(Number value, String text) {
             this.label = text;
             this.value = value;
         }
         
+        /**
+         * Sets the label colour.
+         * 
+         * @param labelColour the new label colour
+         */
         public void setLabelColour(String labelColour) {
 			this.labelColour = labelColour;
 		}
 
+		/**
+		 * Gets the label colour.
+		 * 
+		 * @return the label colour
+		 */
 		public String getLabelColour() {
 			return labelColour;
 		}
 
+		/**
+		 * Sets the font size.
+		 * 
+		 * @param fontSize the new font size
+		 */
 		public void setFontSize(String fontSize) {
 			this.fontSize = fontSize;
 		}
 
+		/**
+		 * Gets the font size.
+		 * 
+		 * @return the font size
+		 */
 		public String getFontSize() {
 			return fontSize;
 		}
 
+		/**
+		 * Gets the value.
+		 * 
+		 * @return the value
+		 */
 		public Number getValue() {
             return value;
         }
         
+        /**
+         * Gets the text.
+         * 
+         * @return the text
+         */
         public String getText() {
             return label;
         }
 
-    	public JSONObject buildJSONObject() {
+    	/* (non-Javadoc)
+	     * @see com.rednels.ofcgwt.client.model.JSONizable#buildJSONObject()
+	     */
+	    public JSONObject buildJSONObject() {
         	JSONObject json = new JSONObject();
         	if (value != null) json.put("value", new JSONNumber(value.doubleValue())); 	
         	if (label != null) json.put("label", new JSONString(label));
@@ -193,9 +356,5 @@ public class PieChart extends Element implements JSONizable{
         	if (fontSize != null) json.put("font-size", new JSONString(fontSize));
         	return json;
     	}
-    }
-    
-    private synchronized void checkColours() {
-        if (colours == null) colours = new ArrayList<String>();
     }
 }
