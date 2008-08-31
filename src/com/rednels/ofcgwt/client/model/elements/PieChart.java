@@ -40,6 +40,9 @@ public class PieChart extends Element implements JSONizable{
     /** The colours. */
     private Collection<String> colours;
     
+    /** The alpha. */
+    private Float alpha;
+    
     /** The animate. */
     private Boolean animate;
     
@@ -129,6 +132,24 @@ public class PieChart extends Element implements JSONizable{
      */
     public void setStartAngle(Integer startAngle) {
         this.startAngle = startAngle;
+    }
+
+    /**
+     * Gets the alpha.
+     * 
+     * @return the alpha
+     */
+    public Float getAlpha() {
+        return alpha;
+    }
+
+    /**
+     * Sets the alpha.
+     * 
+     * @param alpha the alpha
+     */
+    public void setAlpha(Float alpha) {
+        this.alpha = alpha;
     }
 
     /**
@@ -251,6 +272,7 @@ public class PieChart extends Element implements JSONizable{
     	if (startAngle != null) json.put("start-angle", new JSONNumber(startAngle.doubleValue()));
     	if (animate != null) json.put("animate", JSONBoolean.getInstance(animate));   
     	if (gradientFill != null) json.put("gradient-fill", JSONBoolean.getInstance(gradientFill)); 
+    	if (alpha != null) json.put("alpha", new JSONNumber(alpha)); 
     	if (nolabels != null) json.put("no-labels", JSONBoolean.getInstance(nolabels));    
     	if (border != null) json.put("border", new JSONNumber(border.doubleValue()));
     	if (colours == null) return json;
@@ -264,7 +286,7 @@ public class PieChart extends Element implements JSONizable{
 	}
 	
     /**
-     * The Class Slice.
+     * Base class for OFC pie slices 
      */
     public static class Slice implements JSONizable{
         

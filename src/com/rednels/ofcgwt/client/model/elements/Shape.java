@@ -25,24 +25,24 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.rednels.ofcgwt.client.model.JSONizable;
 /**
- * Class for an OFC scatter chart that extends Element   
+ * Class for an OFC shape that extends Element (polygon drawn under a chart)   
  * @see com.rednels.ofcgwt.client.model.elements.Element
  */
-public class ScatterChart extends Element implements JSONizable {
+public class Shape extends Element implements JSONizable {
 
     /** The Constant TYPE. */
-    private static final transient String TYPE = "scatter";
+    private static final transient String TYPE = "shape";
+    
+    /** The alpha. */
+    private Float alpha;
     
     /** The colour. */
     private String colour;
-    
-    /** The dot size. */
-    private Integer dotSize; 
-    
+        
     /**
-     * Creates a new scatter chart.
+     * Creates a new shape.
      */
-    public ScatterChart() {
+    public Shape() {
         super(TYPE);
     }
     
@@ -75,6 +75,24 @@ public class ScatterChart extends Element implements JSONizable {
     }
 
     /**
+     * Gets the alpha.
+     * 
+     * @return the alpha
+     */
+    public Float getAlpha() {
+        return alpha;
+    }
+
+    /**
+     * Sets the alpha.
+     * 
+     * @param alpha the alpha
+     */
+    public void setAlpha(Float alpha) {
+        this.alpha = alpha;
+    }
+
+    /**
      * Gets the colour.
      * 
      * @return the colour
@@ -92,36 +110,18 @@ public class ScatterChart extends Element implements JSONizable {
         this.colour = colour;
     }
 
-    /**
-     * Gets the dot size.
-     * 
-     * @return the dot size
-     */
-    public Integer getDotSize() {
-        return dotSize;
-    }
-
-    /**
-     * Sets the dot size.
-     * 
-     * @param dotSize the new dot size
-     */
-    public void setDotSize(Integer dotSize) {
-        this.dotSize = dotSize;
-    }
-
 	/* (non-Javadoc)
 	 * @see com.rednels.ofcgwt.client.model.elements.Element#buildJSONObject()
 	 */
 	public JSONObject buildJSONObject() {
     	JSONObject json = super.buildJSONObject();
-    	if (dotSize != null) json.put("dot-size", new JSONNumber(dotSize.doubleValue()));
+    	if (alpha != null) json.put("alpha", new JSONNumber(alpha)); 
     	if (colour != null) json.put("colour", new JSONString(colour));    	
     	return json;
 	}
 
     /**
-     * Base class for OFC scatter points 
+     * Base class for OFC shape points
      */
     public static class Point implements JSONizable {
         

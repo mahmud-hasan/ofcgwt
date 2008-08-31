@@ -24,127 +24,274 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.rednels.ofcgwt.client.model.JSONizable;
-
+/**
+ * Class for an OFC bar chart that extends Element   
+ * @see com.rednels.ofcgwt.client.model.elements.Element
+ */
 public class BarChart extends Element implements JSONizable {   
+    
+    /** The colour. */
     private String colour;
     
+    /**
+     * Creates a new bar chart with normal style.
+     */
     public BarChart() {
         this(BarStyle.NORMAL);
     }
     
+    /**
+     * Creates a new bar chart.
+     * 
+     * @param style the style
+     */
     public BarChart(BarStyle style) {
         super(style.getStyle());
     }
     
+    /**
+     * Creates a new bar chart.
+     * 
+     * @param style the style
+     */
     protected BarChart(String style) {
         super(style);
     }
     
-    public BarChart addValues(Number... values) {
+    /**
+     * Adds the values.
+     * 
+     * @param values the values
+     */
+    public void addValues(Number... values) {
         getValues().addAll(Arrays.asList(values));
-        return this;
     }
     
-    public BarChart addValues(List<Number> values) {
+    /**
+     * Adds the values.
+     * 
+     * @param values the values
+     */
+    public void addValues(List<Number> values) {
         getValues().addAll(values);
-        return this;
     }
     
-    public BarChart addBars(Bar... bars) {
+    /**
+     * Adds the bars.
+     * 
+     * @param bars the bars
+     */
+    public void addBars(Bar... bars) {
         getValues().addAll(Arrays.asList(bars));
-        return this;
     }
     
-    public BarChart addBars(List<Bar> bars) {
+    /**
+     * Adds the bars.
+     * 
+     * @param bars the bars
+     */
+    public void addBars(List<Bar> bars) {
         getValues().addAll(bars);
-        return this;
     }
     
+    /**
+     * Gets the colour.
+     * 
+     * @return the colour
+     */
     public String getColour() {
         return colour;
     }
 
-    public BarChart setColour(String colour) {
+    /**
+     * Sets the colour in HTML hex format (#ffffff) 
+     * 
+     * @param colour the new colour
+     */
+    public void setColour(String colour) {
         this.colour = colour;
-        return this;
     }
 
+	/* (non-Javadoc)
+	 * @see com.rednels.ofcgwt.client.model.elements.Element#buildJSONObject()
+	 */
 	public JSONObject buildJSONObject() {
     	JSONObject json = super.buildJSONObject();
     	if (colour != null) json.put("colour", new JSONString(colour)); 	
     	return json;
 	}
     
+    /**
+     * Enumeration BarStyle - used with BarChart.
+     */
     public static enum BarStyle {
+        
+        /** NORMAL */
         NORMAL("bar"),
+        
+        /** 3D */
         THREED("bar_3d"),
+        
+        /** GLASS */
         GLASS("bar_glass");
         
+        /** The style. */
         private String style;
         
+        /**
+         * Creates a new bar style.
+         * 
+         * @param style the style
+         */
         BarStyle(String style) {
             this.style = style;
         }
         
+        /**
+         * Gets the style.
+         * 
+         * @return the style
+         */
         public String getStyle() {
             return style;
         }
     }
     
+    /**
+     * Base class for OFC bar chart bars 
+     */
     public static class Bar implements JSONizable {
-    	private Number top;
-    	private Number bottom;
-    	private String colour;
-    	private String tooltip;
     	
-    	public Bar(Number top, Number bottom, String colour) {
+	    /** The top. */
+	    private Number top;
+    	
+	    /** The bottom. */
+	    private Number bottom;
+    	
+	    /** The colour. */
+	    private String colour;
+    	
+	    /** The tooltip. */
+	    private String tooltip;
+    	
+    	/**
+	     * Creates a new bar.
+	     * 
+	     * @param top the top
+	     * @param bottom the bottom
+	     * @param colour the colour
+	     */
+	    public Bar(Number top, Number bottom, String colour) {
     	    setTop(top);
     	    setBottom(bottom);
     	    setColour(colour);
     	}
     	
-    	public Bar(Number top, Number bottom) {
+    	/**
+	     * Creates a new bar.
+	     * 
+	     * @param top the top
+	     * @param bottom the bottom
+	     */
+	    public Bar(Number top, Number bottom) {
     		this(top, bottom, null);
     	}
     	
-    	public Bar(Number top, String colour) {
+    	/**
+	     * Creates a new bar.
+	     * 
+	     * @param top the top
+	     * @param colour the colour
+	     */
+	    public Bar(Number top, String colour) {
     	    this(top, null, colour);
     	}
     	
-    	public Bar(Number top) {
+    	/**
+	     * Creates a new bar.
+	     * 
+	     * @param top the top
+	     */
+	    public Bar(Number top) {
     	    this(top, null, null);
     	}
     	
+		/**
+		 * Gets the top.
+		 * 
+		 * @return the top
+		 */
 		public Number getTop() {
 			return top;
 		}
-		public Bar setTop(Number top) {
+		
+		/**
+		 * Sets the top.
+		 * 
+		 * @param top the new top
+		 */
+		public void setTop(Number top) {
 			this.top = top;
-			return this;
 		}
+		
+		/**
+		 * Gets the bottom.
+		 * 
+		 * @return the bottom
+		 */
 		public Number getBottom() {
 			return bottom;
 		}
-		public Bar setBottom(Number bottom) {
+		
+		/**
+		 * Sets the bottom.
+		 * 
+		 * @param bottom the new bottom
+		 */
+		public void setBottom(Number bottom) {
 			this.bottom = bottom;
-			return this;
 		}
+		
+		/**
+		 * Gets the colour.
+		 * 
+		 * @return the colour
+		 */
 		public String getColour() {
 			return colour;
 		}
-		public Bar setColour(String colour) {
+		
+		/**
+		 * Sets the colour in HTML hex format (#ffffff) 
+		 * 
+		 * @param colour the new colour
+		 */
+		public void setColour(String colour) {
 			this.colour = colour;
-			return this;
 		}
+		
+		/**
+		 * Gets the tooltip.
+		 * 
+		 * @return the tooltip
+		 */
 		public String getTooltip() {
 			return tooltip;
 		}
-		public Bar setTooltip(String tooltip) {
+		
+		/**
+		 * Sets the tooltip.
+		 * 
+		 * @param tooltip the new tooltip
+		 */
+		public void setTooltip(String tooltip) {
 			this.tooltip = tooltip;
-			return this;
 		}
 
-    	public JSONObject buildJSONObject() {
+    	/* (non-Javadoc)
+	     * @see com.rednels.ofcgwt.client.model.JSONizable#buildJSONObject()
+	     */
+	    public JSONObject buildJSONObject() {
         	JSONObject json = new JSONObject();
         	if (top != null) json.put("top", new JSONNumber(top.doubleValue()));
         	if (bottom != null) json.put("bottom", new JSONNumber(bottom.doubleValue())); 	

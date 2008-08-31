@@ -279,7 +279,6 @@ public class Test implements EntryPoint {
 		ya.setOffset(true);
 		cd1.setYAxis(ya);
 		HorizontalBarChart bchart1 = new HorizontalBarChart();
-		bchart1.setAlpha(0.3f);
 		bchart1.setTooltip("#val# mph");
 		bchart1.addBars(new HorizontalBarChart.Bar(133,"#ff0000"));
 		bchart1.addBars(new HorizontalBarChart.Bar(123,"#00ff00"));
@@ -296,6 +295,7 @@ public class Test implements EntryPoint {
 		ChartData cd = new ChartData("Volume Consumed","font-size: 14px; font-family: Verdana; text-align: center;");
 		cd.setBackgroundColour("#ffffff");
 		AreaHollowChart area = new AreaHollowChart();
+		area.setFillAlpha(0.3f);
 		area.setDotSize(3);
 		XAxis xa = new XAxis();
 		int ln=0;

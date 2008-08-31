@@ -19,30 +19,46 @@ package com.rednels.ofcgwt.client.model.elements;
 
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
-
-
+/**
+ * Class for an OFC area-hollow chart that extends LineChart   
+ * @see com.rednels.ofcgwt.client.model.elements.LineChart
+ */
 public class AreaHollowChart extends LineChart {
-    private static transient final Float DEFAULT_ALPHA = 0.35f;
-    
+        
+    /** The fill alpha. */
     private Float fillAlpha; 
     
+    /**
+     * Creates a new area hollow chart
+     */
     public AreaHollowChart() {
         super("area_hollow"); 
-        setFillAlpha(DEFAULT_ALPHA);
     }
 
+    /**
+     * Gets the fill alpha.
+     * 
+     * @return the fill alpha
+     */
     public Float getFillAlpha() {
         return fillAlpha;
     }
 
-    public AreaHollowChart setFillAlpha(Float fillAlpha) {
+    /**
+     * Sets the fill alpha.
+     * 
+     * @param fillAlpha the new fill alpha
+     */
+    public void setFillAlpha(Float fillAlpha) {
         this.fillAlpha = fillAlpha;
-        return this;
     }
 
+	/* (non-Javadoc)
+	 * @see com.rednels.ofcgwt.client.model.elements.LineChart#buildJSONObject()
+	 */
 	public JSONObject buildJSONObject() {
     	JSONObject json = super.buildJSONObject();
-    	if (fillAlpha != null) json.put("fillAlpha", new JSONNumber(fillAlpha));//    	
+    	if (fillAlpha != null) json.put("fill-alpha", new JSONNumber(fillAlpha));//    	
     	return json;
 	}
 }

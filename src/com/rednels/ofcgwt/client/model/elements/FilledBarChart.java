@@ -20,68 +20,137 @@ package com.rednels.ofcgwt.client.model.elements;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.rednels.ofcgwt.client.model.JSONizable;
-
-
+/**
+ * Class for an OFC filled bar chart (outlined) that extends BarChart   
+ * @see com.rednels.ofcgwt.client.model.elements.BarChart
+ */
 public class FilledBarChart extends BarChart implements JSONizable {
+    
+    /** The Constant TYPE. */
     private static final transient String TYPE = "bar_filled";
+    
+    /** The outline colour. */
     private String outlineColour; 
     
+    /**
+     * Creates a new filled bar chart.
+     */
     public FilledBarChart() {
         super(TYPE);
     }
     
+    /**
+     * Creates a new filled bar chart.
+     * 
+     * @param colour the colour
+     * @param outlineColour the outline colour
+     */
     public FilledBarChart(String colour, String outlineColour) {
         super(TYPE);
         setColour(colour);
         setOutlineColour(outlineColour);
     }
     
+    /**
+     * Creates a new filled bar chart.
+     * 
+     * @param style the style
+     */
     protected FilledBarChart(String style) {
         super(style);
     }
     
+    /**
+     * Gets the outline colour.
+     * 
+     * @return the outline colour
+     */
     public String getOutlineColour() {
         return outlineColour;
     }
     
-    public BarChart setOutlineColour(String outlineColour) {
+    /**
+     * Sets the outline colour in HTML hex format (#ffffff) 
+     * 
+     * @param outlineColour the new outline colour
+     */
+    public void setOutlineColour(String outlineColour) {
         this.outlineColour = outlineColour;
-        return this;
     }
 
+	/* (non-Javadoc)
+	 * @see com.rednels.ofcgwt.client.model.elements.BarChart#buildJSONObject()
+	 */
 	public JSONObject buildJSONObject() {
     	JSONObject json = super.buildJSONObject();
     	if (outlineColour != null) json.put("outline-colour", new JSONString(outlineColour)); 	
     	return json;
 	}
     
+    /**
+     * Class for OFC filled bar chart bars, extends BarChart.Bar
+     * @see com.rednels.ofcgwt.client.model.elements.BarChart.Bar  
+     */
     public static class Bar extends BarChart.Bar implements JSONizable  {
+        
+        /** The outline colour. */
         private String outlineColour; 
         
+        /**
+         * Creates a new bar.
+         * 
+         * @param top the top
+         * @param bottom the bottom
+         */
         public Bar(Number top, Number bottom) {
             super(top, bottom);
         }
         
+        /**
+         * Creates a new bar.
+         * 
+         * @param top the top
+         * @param bottom the bottom
+         * @param colour the colour
+         * @param outlineColour the outline colour
+         */
         public Bar(Number top, Number bottom, String colour, String outlineColour) {
             super(top, bottom);
             setColour(colour);
             setOutlineColour(outlineColour);
         }
         
+        /**
+         * Creates a new bar.
+         * 
+         * @param top the top
+         */
         public Bar(Number top) {
             super(top);
         }
         
-        public Bar setOutlineColour(String outlineColour) {
+        /**
+         * Sets the outline colour in HTML hex format (#ffffff) 
+         * 
+         * @param outlineColour the new outline colour
+         */
+        public void setOutlineColour(String outlineColour) {
             this.outlineColour = outlineColour;
-            return this;
         }
         
+        /**
+         * Gets the outline colour.
+         * 
+         * @return the outline colour
+         */
         public String getOutlineColour() {
             return outlineColour;
         }
 
-    	public JSONObject buildJSONObject() {
+    	/* (non-Javadoc)
+	     * @see com.rednels.ofcgwt.client.model.elements.BarChart.Bar#buildJSONObject()
+	     */
+	    public JSONObject buildJSONObject() {
         	JSONObject json = super.buildJSONObject();
         	if (outlineColour != null) json.put("outline-colour", new JSONString(outlineColour)); 	
         	return json;
