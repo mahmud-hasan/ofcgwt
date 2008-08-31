@@ -50,7 +50,7 @@
 	</target>
 
 	  <target name="docs">
-	    <javadoc access="public" classpathref="project.class.path" destdir="${ofcgwt.target}/docs/api" windowtitle="OFCGXT API" useexternalfile="true">
+	    <javadoc access="public" classpathref="project.class.path" destdir="${ofcgwt.target}/docs/api" windowtitle="OFCGWT API" useexternalfile="true">
 	      <fileset dir="${ofcgwt.target}/src">
 	        <include name="**/*.java" />
 	      </fileset>
