@@ -13,16 +13,12 @@ To begin you will need...
  * OFCGWT beta6
  * Eclipse 3.4 
 
-= The Steps =
- # Create an Eclipse GWT project
-
- # Copy Test.java from OFCGWT beta6.zip download
-
- # Add the ofcgwt.jar file
-
- # Configure Eclipse
-
- # Launch 
+= The 5 Major Steps =
+== Create an Eclipse GWT Project ==
+== Copy Test.java from OFCGWT Download ==
+== Add the OFCGWT Jar ==
+== Configure Eclipse ==
+== Launch  ==
 
 
  
