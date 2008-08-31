@@ -3,7 +3,7 @@
 OFCGWT has only been tested with GWT 1.5.2 and whilst it should technically work with earlier versions, it has not been tested. If you encounter problems, please let us know.
 
 === Can you add a new feature to the charts? ===
-OFCGWT is a wrapper library around [http://teethgrinder.co.uk/open-flash-chart-2/ OpenFlashChart2] and does not actually provide the charting capabilities. In saying that, OFC is an open source project and you are welcome to query the author for new features. Also, if you are aware of an OFC feature we have not made available, please let us know.
+OFCGWT is a wrapper library around [http://teethgrinder.co.uk/open-flash-chart-2/ Open Flash Chart v2] (OFC) and does not actually provide the charting capabilities. In saying that, OFC is an open source project and you are welcome to query the author for new features. Also, if you are aware of an OFC feature we have not made available, please let us know.
 
 === I have a question not answered here - who can I ask? ===
 Please log an issue or join the OFCGWT group and post your question - I will respond as quickly as I can.
