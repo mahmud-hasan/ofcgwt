@@ -84,7 +84,7 @@ public class SketchBarChart extends FilledBarChart implements JSONizable {
      * Class for OFC sketch bar chart bars, extends FilledBarChart.Bar
      * @see com.rednels.ofcgwt.client.model.elements.FilledBarChart.Bar  
      */
-    public static class Bar extends FilledBarChart.Bar implements JSONizable {
+    public static class SketchBar extends FilledBarChart.Bar implements JSONizable {
         
         /** The offset. */
         private Integer offset; 
@@ -94,7 +94,7 @@ public class SketchBarChart extends FilledBarChart implements JSONizable {
          * 
          * @param top the top
          */
-        public Bar(Number top) {
+        public SketchBar(Number top) {
             super(top);
         }
         
@@ -104,7 +104,7 @@ public class SketchBarChart extends FilledBarChart implements JSONizable {
          * @param top the top
          * @param offset the offset
          */
-        public Bar(Number top, Integer offset) {
+        public SketchBar(Number top, Integer offset) {
             super(top);
             setOffset(offset);
         }
@@ -116,7 +116,7 @@ public class SketchBarChart extends FilledBarChart implements JSONizable {
          * @param bottom the bottom
          * @param offset the offset
          */
-        public Bar(Number top, Number bottom, Integer offset) {
+        public SketchBar(Number top, Number bottom, Integer offset) {
             super(top, bottom);
             setOffset(offset);
         }
@@ -131,11 +131,11 @@ public class SketchBarChart extends FilledBarChart implements JSONizable {
         }
         
         /**
-         * Gets the fun factor.
+         * Gets the offset.
          * 
-         * @return the fun factor
+         * @return the offset
          */
-        public Integer getFunFactor() {
+        public Integer getOffset() {
             return offset;
         }
 
