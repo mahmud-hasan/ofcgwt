@@ -141,79 +141,79 @@ public class HorizontalBarChart extends Element implements JSONizable {
     	/**
 	     * Creates a new bar.
 	     * 
-	     * @param top the top
-	     * @param bottom the bottom
+	     * @param left the left
+	     * @param right the right
 	     * @param colour the colour
 	     */
-	    public Bar(Number top, Number bottom, String colour) {
-    	    setTop(top);
-    	    setBottom(bottom);
+	    public Bar(Number left, Number right, String colour) {
+    	    setLeft(left);
+    	    setRight(right);
     	    setColour(colour);
     	}
     	
     	/**
 	     * Creates a new bar.
 	     * 
-	     * @param top the top
-	     * @param bottom the bottom
+	     * @param left the left
+	     * @param right the right
 	     */
-	    public Bar(Number top, Number bottom) {
-    		this(top, bottom, null);
+	    public Bar(Number left, Number right) {
+    		this(left, right, null);
     	}
     	
     	/**
 	     * Creates a new bar.
 	     * 
-	     * @param top the top
+	     * @param right the right
 	     * @param colour the colour
 	     */
-	    public Bar(Number top, String colour) {
-    	    this(top, null, colour);
+	    public Bar(Number right, String colour) {
+    	    this(null, right, colour);
     	}
     	
     	/**
 	     * Creates a new bar.
 	     * 
-	     * @param top the top
+	     * @param right the right
 	     */
-	    public Bar(Number top) {
-    	    this(top, null, null);
+	    public Bar(Number right) {
+    	    this(null, right, null);
     	}
     	
 		/**
-		 * Gets the top.
+		 * Gets the left.
 		 * 
-		 * @return the top
+		 * @return the left
 		 */
-		public Number getTop() {
+		public Number getLeft() {
 			return left;
 		}
 		
 		/**
-		 * Sets the top.
+		 * Sets the left.
 		 * 
-		 * @param top the new top
+		 * @param left the new left
 		 */
-		public void setTop(Number top) {
-			this.left = top;
+		public void setLeft(Number left) {
+			this.left = left;
 		}
 		
 		/**
-		 * Gets the bottom.
+		 * Gets the right.
 		 * 
-		 * @return the bottom
+		 * @return the right
 		 */
-		public Number getBottom() {
+		public Number getRight() {
 			return right;
 		}
 		
 		/**
-		 * Sets the bottom.
+		 * Sets the right.
 		 * 
-		 * @param bottom the new bottom
+		 * @param right the new right
 		 */
-		public void setBottom(Number bottom) {
-			this.right = bottom;
+		public void setRight(Number right) {
+			this.right = right;
 		}
 		
 		/**

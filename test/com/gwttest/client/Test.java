@@ -30,6 +30,8 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.rednels.ofcgwt.client.ChartWidget;
 import com.rednels.ofcgwt.client.model.ChartData;
+import com.rednels.ofcgwt.client.model.ToolTip;
+import com.rednels.ofcgwt.client.model.ToolTip.MouseStyle;
 import com.rednels.ofcgwt.client.model.axis.XAxis;
 import com.rednels.ofcgwt.client.model.axis.YAxis;
 import com.rednels.ofcgwt.client.model.elements.AreaChart;
@@ -224,17 +226,20 @@ public class Test implements EntryPoint {
 		cd.setBackgroundColour("#ffffff");
 		
 		LineChart lc1 = new LineChart(LineStyle.NORMAL);
+		lc1.setText("PoorEnterprises Pty");
 		lc1.setColour("#ff0000");
 		for (int t=0;t<30;t++) {
 			lc1.addValues(Random.nextDouble()*.5 - .5);
 		}
 		LineChart lc2 = new LineChart(LineStyle.HOLLOW);
 		lc2.setColour("#00ff00");
+		lc2.setText("Ave-Ridge Co LLC");
 		for (int t=0;t<30;t++) {
 			lc2.addValues(Random.nextDouble()*.8);
 		}
 		LineChart lc3 = new LineChart(LineStyle.DOT);
 		lc3.setColour("#0000ff");
+		lc3.setText("Suu Perb Enterprises");
 		for (int t=0;t<30;t++) {
 			lc3.addValues(Random.nextDouble()*1.1 + .5);
 		}
@@ -276,7 +281,7 @@ public class Test implements EntryPoint {
 
 	private Widget addHorizBarChart() {
 		ChartWidget chart1 = new ChartWidget();		
-		ChartData cd1 = new ChartData("Car Top Speed","font-size: 14px; font-family: Verdana; text-align: center;");
+		ChartData cd1 = new ChartData("Top Car Speed","font-size: 14px; font-family: Verdana; text-align: center;");
 		cd1.setBackgroundColour("#ffffff");
 		XAxis xa = new XAxis();
 		xa.setRange(0, 200, 20);
@@ -287,12 +292,13 @@ public class Test implements EntryPoint {
 		cd1.setYAxis(ya);
 		HorizontalBarChart bchart1 = new HorizontalBarChart();
 		bchart1.setTooltip("#val# mph");
-		bchart1.addBars(new HorizontalBarChart.Bar(133,"#ff0000"));
-		bchart1.addBars(new HorizontalBarChart.Bar(123,"#00ff00"));
-		bchart1.addBars(new HorizontalBarChart.Bar(144,"#0000ff"));
 		bchart1.addBars(new HorizontalBarChart.Bar(187,"#ffff00"));
+		bchart1.addBars(new HorizontalBarChart.Bar(144,"#0000ff"));
+		bchart1.addBars(new HorizontalBarChart.Bar(123,"#00ff00"));
+		bchart1.addBars(new HorizontalBarChart.Bar(133,"#ff0000"));
 		cd1.addElements(bchart1);
-		chart1.setSize("350", "250");
+		cd1.setTooltip(new ToolTip(MouseStyle.FOLLOW));
+		chart1.setSize("400", "250");
 		chart1.setJsonData(cd1.toString());
 		return chart1;
 	}
