@@ -14,11 +14,11 @@ To begin you will need...
  * Eclipse 3.4 
 
 = The 5 Major Steps =
-== Create an Eclipse GWT Project ==
-== Copy Test.java from OFCGWT Download ==
-== Add the OFCGWT Jar ==
-== Configure Eclipse ==
-== Launch  ==
+== 1. Create an Eclipse GWT Project ==
+== 2. Copy Test.java from OFCGWT Download ==
+== 3. Add the OFCGWT Jar ==
+== 4. Configure Eclipse ==
+== 5. Launch  ==
 
 
  
