@@ -1,4 +1,5 @@
 #summary Frequently Asked Questions
+#labels Featured
 === Does this work with GWT X.Y.Z ? ===
 OFCGWT has only been tested with GWT 1.5.2 and whilst it should technically work with earlier versions, it has not been tested. If you encounter problems, please let us know.
 
