@@ -28,6 +28,7 @@ import com.rednels.ofcgwt.client.model.axis.XAxis;
 import com.rednels.ofcgwt.client.model.axis.YAxis;
 import com.rednels.ofcgwt.client.model.elements.Element;
 
+// TODO: Auto-generated Javadoc
 /**
  * This is the most important class in the ofcgwt library. Start here,
  * configuring the title, axes, legends, labels, and draw-able elements in your
@@ -42,6 +43,7 @@ import com.rednels.ofcgwt.client.model.elements.Element;
  */
 public class ChartData implements JSONizable {
 	private Text title;
+	private ToolTip tooltip;
 	private XAxis x_axis;
 	private YAxis y_axis;
 	private YAxis y_axis_right;
@@ -96,6 +98,7 @@ public class ChartData implements JSONizable {
 	public JSONObject buildJSONObject() {
 		final JSONObject json = new JSONObject();
 		if (this.title != null) json.put("title", this.title.buildJSONObject());
+		if (this.tooltip != null) json.put("tooltip", this.tooltip.buildJSONObject());
 		if (this.x_axis != null) json.put("x_axis", this.x_axis.buildJSONObject());
 		if (this.y_axis != null) json.put("y_axis", this.y_axis.buildJSONObject());
 		if (this.y_axis_right != null) json.put("y_axis_right", this.y_axis_right.buildJSONObject());
@@ -250,6 +253,24 @@ public class ChartData implements JSONizable {
 	 */
 	public void setYLegend(Text y_legend) {
 		this.y_legend = y_legend;
+	}
+
+	/**
+	 * Sets the tooltip.
+	 * 
+	 * @param tooltip the new tooltip
+	 */
+	public void setTooltip(ToolTip tooltip) {
+		this.tooltip = tooltip;
+	}
+
+	/**
+	 * Gets the tooltip.
+	 * 
+	 * @return the tooltip
+	 */
+	public ToolTip getTooltip() {
+		return tooltip;
 	}
 
 	/**
