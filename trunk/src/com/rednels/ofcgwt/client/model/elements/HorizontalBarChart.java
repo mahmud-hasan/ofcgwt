@@ -24,46 +24,96 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.rednels.ofcgwt.client.model.JSONizable;
-
+/**
+ * Class for an OFC horizontal bar chart that extends Element   
+ * @see com.rednels.ofcgwt.client.model.elements.Element
+ */
 public class HorizontalBarChart extends Element implements JSONizable {
+
+    /** The Constant TYPE. */
+    private static final transient String TYPE = "hbar";
+    
+    /** The colour. */
     private String colour;
     
+    /**
+     * Creates a new horizontal bar chart.
+     */
     public HorizontalBarChart() {
-        super("hbar");
+        super(TYPE);
     }
     
+    /**
+     * Gets the colour.
+     * 
+     * @return the colour
+     */
     public String getColour() {
         return colour;
     }
     
+    /**
+     * Sets the colour in HTML hex format (#ffffff) 
+     * 
+     * @param colour the new colour
+     */
     public void setColour(String colour) {
         this.colour = colour;
     }
     
+    /**
+     * Adds the bars.
+     * 
+     * @param values the values
+     */
     public void addBars(Bar... values) {
         getValues().addAll(Arrays.asList(values));
     }
     
+    /**
+     * Adds the bars.
+     * 
+     * @param values the values
+     */
     public void addBars(List<Bar> values) {
         getValues().addAll(values);
     }
         
-    public void addValues(Number... rightValues) {
-        Bar[] values = new Bar[rightValues.length];
-        for (int i = 0; i < rightValues.length; ++i) {
-            values[i] = new Bar(rightValues[i]);
+    /**
+     * Adds bars with right side values.
+     * 
+     * @param values the right side values
+     */
+    public void addValues(Number... values) {
+        Bar[] v = new Bar[values.length];
+        for (int i = 0; i < values.length; ++i) {
+            v[i] = new Bar(values[i]);
         }
-        addBars(values);
+        addBars(v);
     }
     
-    public void addValues(List<Number> rightValues) {
-        getValues().addAll(rightValues);
+    /**
+     * Adds bars with right side values.
+     * 
+     * @param values the right side values
+     */
+    public void addValues(List<Number> values) {
+        getValues().addAll(values);
     }
     
+    /**
+     * Adds the bar.
+     * 
+     * @param left the left
+     * @param right the right
+     */
     public void addBar(Number left, Number right) {
         addBars(new Bar(left, right));
     }
 
+	/* (non-Javadoc)
+	 * @see com.rednels.ofcgwt.client.model.elements.Element#buildJSONObject()
+	 */
 	public JSONObject buildJSONObject() {
     	JSONObject json = super.buildJSONObject();
     	if (colour != null) json.put("colour", new JSONString(colour)); 	
@@ -71,56 +121,141 @@ public class HorizontalBarChart extends Element implements JSONizable {
 	}
     
 
+    /**
+     * Base class for OFC horizontal bar chart bars 
+     */
     public static class Bar implements JSONizable {
-    	private Number left;
-    	private Number right;
-    	private String colour;
-    	private String tooltip;
     	
-    	public Bar(Number top, Number bottom, String colour) {
+	    /** The left. */
+	    private Number left;
+    	
+	    /** The right. */
+	    private Number right;
+    	
+	    /** The colour. */
+	    private String colour;
+    	
+	    /** The tooltip. */
+	    private String tooltip;
+    	
+    	/**
+	     * Creates a new bar.
+	     * 
+	     * @param top the top
+	     * @param bottom the bottom
+	     * @param colour the colour
+	     */
+	    public Bar(Number top, Number bottom, String colour) {
     	    setTop(top);
     	    setBottom(bottom);
     	    setColour(colour);
     	}
     	
-    	public Bar(Number top, Number bottom) {
+    	/**
+	     * Creates a new bar.
+	     * 
+	     * @param top the top
+	     * @param bottom the bottom
+	     */
+	    public Bar(Number top, Number bottom) {
     		this(top, bottom, null);
     	}
     	
-    	public Bar(Number top, String colour) {
+    	/**
+	     * Creates a new bar.
+	     * 
+	     * @param top the top
+	     * @param colour the colour
+	     */
+	    public Bar(Number top, String colour) {
     	    this(top, null, colour);
     	}
     	
-    	public Bar(Number top) {
+    	/**
+	     * Creates a new bar.
+	     * 
+	     * @param top the top
+	     */
+	    public Bar(Number top) {
     	    this(top, null, null);
     	}
     	
+		/**
+		 * Gets the top.
+		 * 
+		 * @return the top
+		 */
 		public Number getTop() {
 			return left;
 		}
+		
+		/**
+		 * Sets the top.
+		 * 
+		 * @param top the new top
+		 */
 		public void setTop(Number top) {
 			this.left = top;
 		}
+		
+		/**
+		 * Gets the bottom.
+		 * 
+		 * @return the bottom
+		 */
 		public Number getBottom() {
 			return right;
 		}
+		
+		/**
+		 * Sets the bottom.
+		 * 
+		 * @param bottom the new bottom
+		 */
 		public void setBottom(Number bottom) {
 			this.right = bottom;
 		}
+		
+		/**
+		 * Gets the colour.
+		 * 
+		 * @return the colour
+		 */
 		public String getColour() {
 			return colour;
 		}
+		
+		/**
+		 * Sets the colour in HTML hex format (#ffffff) 
+		 * 
+		 * @param colour the new colour
+		 */
 		public void setColour(String colour) {
 			this.colour = colour;
 		}
+		
+		/**
+		 * Gets the tooltip.
+		 * 
+		 * @return the tooltip
+		 */
 		public String getTooltip() {
 			return tooltip;
 		}
+		
+		/**
+		 * Sets the tooltip.
+		 * 
+		 * @param tooltip the new tooltip
+		 */
 		public void setTooltip(String tooltip) {
 			this.tooltip = tooltip;
 		}
 
-    	public JSONObject buildJSONObject() {
+    	/* (non-Javadoc)
+	     * @see com.rednels.ofcgwt.client.model.JSONizable#buildJSONObject()
+	     */
+	    public JSONObject buildJSONObject() {
         	JSONObject json = new JSONObject();
         	if (left != null) json.put("left", new JSONNumber(left.doubleValue()));
         	if (right != null) json.put("right", new JSONNumber(right.doubleValue())); 	

@@ -32,10 +32,7 @@ import com.rednels.ofcgwt.client.model.JSONizable;
 public abstract class Element implements JSONizable {
     
     /** The type. */
-    private final String type;
-    
-    /** The alpha. */
-    private Float alpha;
+    private final String type;    
     
     /** The text. */
     private String text;
@@ -47,7 +44,7 @@ public abstract class Element implements JSONizable {
     private String tooltip; 
     
     /** The values. */
-    private List<Object> values = new ArrayList<Object>();
+    protected List<Object> values = new ArrayList<Object>();
     
     /**
      * Creates a new element.
@@ -65,24 +62,6 @@ public abstract class Element implements JSONizable {
      */
     public String getType() {
         return type;
-    }
-
-    /**
-     * Gets the alpha.
-     * 
-     * @return the alpha
-     */
-    public Float getAlpha() {
-        return alpha;
-    }
-
-    /**
-     * Sets the alpha.
-     * 
-     * @param alpha the alpha
-     */
-    public void setAlpha(Float alpha) {
-        this.alpha = alpha;
     }
 
     /**
@@ -165,7 +144,6 @@ public abstract class Element implements JSONizable {
 	public JSONObject buildJSONObject() {
     	JSONObject json = new JSONObject();
     	if (type != null) json.put("type", new JSONString(type));
-    	if (alpha != null) json.put("alpha", new JSONNumber(alpha)); //NumberFormat.getFormat("#.##").format(alpha)
     	if (text != null) json.put("text", new JSONString(text));
     	if (fontSize != null) json.put("font-size", new JSONNumber(fontSize));
     	if (tooltip != null) json.put("tip", new JSONString(tooltip));

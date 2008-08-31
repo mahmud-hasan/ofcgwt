@@ -20,15 +20,32 @@ package com.rednels.ofcgwt.client.model.elements;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.rednels.ofcgwt.client.model.JSONizable;
-
+/**
+ * Class for an OFC sketch bar chart (drawn) that extends FilledBarChart   
+ * @see com.rednels.ofcgwt.client.model.elements.FilledBarChart
+ */
 public class SketchBarChart extends FilledBarChart implements JSONizable {
+    
+    /** The Constant TYPE. */
     private static final transient String TYPE = "bar_sketch";
+    
+    /** The offset. */
     private Integer offset; 
     
+    /**
+     * Creates a new sketch bar chart.
+     */
     public SketchBarChart() {
         super(TYPE);
     }
     
+    /**
+     * Creates a new sketch bar chart.
+     * 
+     * @param colour the colour
+     * @param outlineColour the outline colour
+     * @param offset the offset
+     */
     public SketchBarChart(String colour, String outlineColour, Integer offset) {
         super(TYPE);
         setColour(colour);
@@ -36,48 +53,96 @@ public class SketchBarChart extends FilledBarChart implements JSONizable {
         setOffset(offset);
     }
     
+    /**
+     * Gets the offset.
+     * 
+     * @return the offset
+     */
     public Integer getOffset() {
         return offset;
     }
     
-    public BarChart setOffset(Integer offset) {
+    /**
+     * Sets the offset (the fun factor).
+     * 
+     * @param offset the new offset
+     */
+    public void setOffset(Integer offset) {
         this.offset = offset;
-        return this;
     }
 
+	/* (non-Javadoc)
+	 * @see com.rednels.ofcgwt.client.model.elements.FilledBarChart#buildJSONObject()
+	 */
 	public JSONObject buildJSONObject() {
     	JSONObject json = super.buildJSONObject();
     	if (offset != null) json.put("offset", new JSONNumber(offset.doubleValue()));
     	return json;
 	}
     
+    /**
+     * Class for OFC sketch bar chart bars, extends FilledBarChart.Bar
+     * @see com.rednels.ofcgwt.client.model.elements.FilledBarChart.Bar  
+     */
     public static class Bar extends FilledBarChart.Bar implements JSONizable {
+        
+        /** The offset. */
         private Integer offset; 
         
+        /**
+         * Creates a new bar.
+         * 
+         * @param top the top
+         */
         public Bar(Number top) {
             super(top);
         }
         
+        /**
+         * Creates a new bar.
+         * 
+         * @param top the top
+         * @param offset the offset
+         */
         public Bar(Number top, Integer offset) {
             super(top);
             setOffset(offset);
         }
         
+        /**
+         * Creates a new bar.
+         * 
+         * @param top the top
+         * @param bottom the bottom
+         * @param offset the offset
+         */
         public Bar(Number top, Number bottom, Integer offset) {
             super(top, bottom);
             setOffset(offset);
         }
         
-        public Bar setOffset(Integer offset) {
+        /**
+         * Sets the offset (the fun factor).
+         * 
+         * @param offset the new offset
+         */
+        public void setOffset(Integer offset) {
             this.offset = offset;
-            return this;
         }
         
+        /**
+         * Gets the fun factor.
+         * 
+         * @return the fun factor
+         */
         public Integer getFunFactor() {
             return offset;
         }
 
-    	public JSONObject buildJSONObject() {
+    	/* (non-Javadoc)
+	     * @see com.rednels.ofcgwt.client.model.elements.FilledBarChart.Bar#buildJSONObject()
+	     */
+	    public JSONObject buildJSONObject() {
         	JSONObject json = super.buildJSONObject();
         	if (offset != null) json.put("offset", new JSONNumber(offset.doubleValue()));
         	return json;

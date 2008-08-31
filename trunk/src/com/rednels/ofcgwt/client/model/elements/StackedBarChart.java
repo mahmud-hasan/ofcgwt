@@ -26,87 +26,106 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.rednels.ofcgwt.client.model.JSONizable;
-
+/**
+ * Class for an OFC stacked bar chart that extends Element   
+ * @see com.rednels.ofcgwt.client.model.elements.Element
+ */
 public class StackedBarChart extends Element implements JSONizable {
-    public StackedBarChart() {
-        super("bar_stack");
-    }
-    
-    public StackedBarChart addStack(Stack... stacks) {
-        return copy(Arrays.asList(stacks));
-    }
-    
-    public StackedBarChart addStack(List<Stack> stacks) {
-        return copy(stacks);
-    }
-    
-    public Stack newStack() {
-        Stack s = new Stack();
-        copy(Arrays.asList(s));
-        return s;
-    }
-    
-    public Stack lastStack() {
-        if (getValues().isEmpty()) {
-            return newStack();
-        } else {
-            return stack(getStackCount() - 1);
-        }
-    }
-    
-    @SuppressWarnings("unchecked")
-	public Stack stack(int index) {
-        return new Stack((List<Object>) getValues().get(index));
-    }
-    
-    public int getStackCount() {
-        return getValues().size();
-    }
-    
-    private StackedBarChart copy(List<Stack> stacks) {
-        for (Stack s : stacks) {
-            getValues().add(s.getBackingList());
-        }
-        return this;
-    }
 
+    /** The Constant TYPE. */
+    private static final transient String TYPE = "bar_stack";
+    
+    /**
+     * Creates a new stacked bar chart.
+     */
+    public StackedBarChart() {
+        super(TYPE);
+    }
+    
+    /**
+     * Adds the stack.
+     * 
+     * @param stacks the stacks
+     */
+    public void addStack(Stack... stacks) {
+    	addStack(Arrays.asList(stacks));
+    }
+    
+    /**
+     * Adds the stack.
+     * 
+     * @param stacks the stacks
+     */
+    public void addStack(List<Stack> stacks) {    	
+    	for (Stack s : stacks) {
+    		values.addAll(s.values);
+    	}
+    }    
+
+    /**
+     * Base class for OFC stack bar chart stacks 
+     */
     public static class Stack implements JSONizable {
-        private transient List<Object> values;
         
+        /** The values. */
+        private transient ArrayList<Object> values;
+        
+        /**
+         * Creates a new stack.
+         */
         public Stack() {
             values = new ArrayList<Object>();
         }
         
-        Stack(List<Object> values) {
-            this.values = values;
+        /**
+         * Adds the stack values.
+         * 
+         * @param values the values
+         */
+        public void addStackValues(StackValue... values) {
+        	this.values.addAll(Arrays.asList(values));
         }
         
-        public Stack addStackValues(StackValue... values) {
-            return doAdd(Arrays.asList(values));
+        /**
+         * Adds the stack values.
+         * 
+         * @param values the values
+         */
+        public void addStackValues(List<StackValue> values) {
+        	this.values.addAll(values);
         }
         
-        public Stack addStackValues(List<StackValue> values) {
-            return doAdd(values);
+        /**
+         * Adds the values.
+         * 
+         * @param numbers the numbers
+         */
+        public void addValues(Number... numbers) {
+        	this.values.addAll(Arrays.asList(numbers));
         }
         
-        public Stack addValues(Number... numbers) {
-            return doAdd(Arrays.asList(numbers));
+        /**
+         * Adds the values.
+         * 
+         * @param numbers the numbers
+         */
+        public void addValues(List<Number> numbers) {
+        	this.values.addAll(numbers);
         }
         
-        public Stack addValues(List<Number> numbers) {
-            return doAdd(numbers);
-        }
-        
-        private Stack doAdd(List<? extends Object> values) {
-            this.values.addAll(values);
-            return this;
-        }
-        
-        List<Object> getBackingList() {
+        /**
+         * Gets the values.
+         * 
+         * @return the values
+         */
+        public List<Object> getValues() {
             return this.values;
         }
 
-    	public JSONObject buildJSONObject() {
+    	/* (non-Javadoc)
+	     * @see com.rednels.ofcgwt.client.model.JSONizable#buildJSONObject()
+	     */
+	    public JSONObject buildJSONObject() {
         	JSONObject json = new JSONObject();
         	if (values == null) return json;    	
         	JSONArray ary = new JSONArray();
@@ -120,38 +139,77 @@ public class StackedBarChart extends Element implements JSONizable {
     	}
     }
     
+    /**
+     * Base class for OFC stack bar chart values 
+     */
     public static class StackValue implements JSONizable {
+        
+        /** The val. */
         private Number val;
+        
+        /** The colour. */
         private String colour;
         
+        /**
+         * Creates a new stack value.
+         * 
+         * @param value the value
+         */
         public StackValue(Number value) {
             this(value, null);
         }
         
+        /**
+         * Creates a new stack value.
+         * 
+         * @param value the value
+         * @param colour the colour
+         */
         public StackValue(Number value, String colour) {
             setValue(value);
             setColour(colour);
         }
         
+        /**
+         * Gets the value.
+         * 
+         * @return the value
+         */
         public Number getValue() {
             return val;
         }
         
-        public StackValue setValue(Number val) {
+        /**
+         * Sets the value.
+         * 
+         * @param val the new value
+         */
+        public void setValue(Number val) {
             this.val = val;
-            return this;
         }
         
+        /**
+         * Gets the colour.
+         * 
+         * @return the colour
+         */
         public String getColour() {
             return colour;
         }
         
-        public StackValue setColour(String colour) {
+        /**
+         * Sets the colour in HTML hex format (#ffffff) 
+         * 
+         * @param colour the new colour
+         */
+        public void setColour(String colour) {
             this.colour = colour;
-            return this;
         }
 
-    	public JSONObject buildJSONObject() {
+    	/* (non-Javadoc)
+	     * @see com.rednels.ofcgwt.client.model.JSONizable#buildJSONObject()
+	     */
+	    public JSONObject buildJSONObject() {
         	JSONObject json = new JSONObject();
         	if (val != null) json.put("val", new JSONNumber(val.doubleValue())); 	
         	if (colour != null) json.put("colour", new JSONString(colour));
