@@ -27,8 +27,6 @@ import com.google.gwt.json.client.JSONString;
 import com.rednels.ofcgwt.client.model.axis.XAxis;
 import com.rednels.ofcgwt.client.model.axis.YAxis;
 import com.rednels.ofcgwt.client.model.elements.Element;
-
-// TODO: Auto-generated Javadoc
 /**
  * This is the most important class in the ofcgwt library. Start here,
  * configuring the title, axes, legends, labels, and draw-able elements in your
