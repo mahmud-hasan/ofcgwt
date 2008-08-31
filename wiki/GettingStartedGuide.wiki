@@ -2,13 +2,27 @@
 #labels Featured
 
 = Introduction =
+This guide will outline required steps needed to get a GWT application working with OFCGWT. Basic Java and GWT programming skills will be assumed, and that you are familiar with using Eclipse as your development environment.
 
-More to come soon
+== Requirements ==
+The following items are what is required to be successful with OFCGWT (_though earlier version might work, they have not been tested_).
+
+To begin you will need...
+ * GWT 1.5.2 
+ * Java 1.6 
+ * OFCGWT beta6
+ * Eclipse 3.4 
+
+= The Steps =
+ # Create an Eclipse GWT project
+
+ # Copy Test.java from OFCGWT beta6.zip download
+
+ # Add the ofcgwt.jar file
+
+ # Configure Eclipse
+
+ # Launch 
 
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+ 
