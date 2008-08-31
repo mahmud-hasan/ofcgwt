@@ -16,7 +16,13 @@ To begin you will need...
 
 = The 5 Major Steps =
 == 1. Create an Eclipse GWT Project ==
+_Unless you know what you are doing, copy the project names etc exactly as provided._
+ a) Using GWT tools at the command line, create a new GWT project 'ProjectCreator -eclipse ofcgwttest -out ofcgwttest'
+ b) Still with GWT tools command line, create a new GWT application 'ApplicationCreator -eclipse ofcgwttest -out ofcgwttest com.gwttest.client.Test'
+These two steps will have created a new Eclipse project setup for GWT.
 == 2. Copy Test.java from OFCGWT Download ==
+To speed things up, we are going to copy in a java source file provided with the beta6 download of OFCGWT.
+ a) Copy the 'Test.java' file included in the beta6.zip file into the 'ofcgwttest\src\com\gwttest\client' directory overwriting the existing file.
 == 3. Add the OFCGWT Jar ==
 == 4. Configure Eclipse ==
 == 5. Launch  ==
