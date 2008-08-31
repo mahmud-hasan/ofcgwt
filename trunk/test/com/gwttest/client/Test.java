@@ -32,12 +32,14 @@ import com.rednels.ofcgwt.client.ChartWidget;
 import com.rednels.ofcgwt.client.model.ChartData;
 import com.rednels.ofcgwt.client.model.axis.XAxis;
 import com.rednels.ofcgwt.client.model.axis.YAxis;
-import com.rednels.ofcgwt.client.model.elements.AreaHollowChart;
+import com.rednels.ofcgwt.client.model.elements.AreaChart;
 import com.rednels.ofcgwt.client.model.elements.BarChart;
 import com.rednels.ofcgwt.client.model.elements.HorizontalBarChart;
 import com.rednels.ofcgwt.client.model.elements.LineChart;
 import com.rednels.ofcgwt.client.model.elements.PieChart;
 import com.rednels.ofcgwt.client.model.elements.ScatterChart;
+import com.rednels.ofcgwt.client.model.elements.SketchBarChart;
+import com.rednels.ofcgwt.client.model.elements.AreaChart.AreaStyle;
 import com.rednels.ofcgwt.client.model.elements.BarChart.BarStyle;
 import com.rednels.ofcgwt.client.model.elements.LineChart.LineStyle;
 
@@ -47,7 +49,7 @@ import com.rednels.ofcgwt.client.model.elements.LineChart.LineStyle;
  */
 public class Test implements EntryPoint {
 
-	String[] panels = {"Home","Pie","Bar","Line","Scatter","Horizontal Bar","Area"};
+	String[] panels = {"Home","Pie","Bar","Line","Scatter","Horizontal Bar","Area","Sketch"};
 
 	public void onModuleLoad() {
 		SimplePanel main = new SimplePanel();
@@ -92,7 +94,12 @@ public class Test implements EntryPoint {
 		//add area chart
 		SimplePanel areaSp = new SimplePanel();
 		areaSp.add(addAreaChart());
-		tabPanel.add(areaSp, panels[6]);		
+		tabPanel.add(areaSp, panels[6]);	
+
+		//add sketch chart
+		SimplePanel sketchSp = new SimplePanel();
+		sketchSp.add(addSketchChart());
+		tabPanel.add(sketchSp, panels[7]);			
 		
 	    tabPanel.selectTab(0);
 		RootPanel.get().add(tabPanel);
@@ -219,7 +226,7 @@ public class Test implements EntryPoint {
 		LineChart lc1 = new LineChart(LineStyle.NORMAL);
 		lc1.setColour("#ff0000");
 		for (int t=0;t<30;t++) {
-			lc1.addValues(Random.nextDouble()*.5);
+			lc1.addValues(Random.nextDouble()*.5 - .5);
 		}
 		LineChart lc2 = new LineChart(LineStyle.HOLLOW);
 		lc2.setColour("#00ff00");
@@ -229,7 +236,7 @@ public class Test implements EntryPoint {
 		LineChart lc3 = new LineChart(LineStyle.DOT);
 		lc3.setColour("#0000ff");
 		for (int t=0;t<30;t++) {
-			lc3.addValues(Random.nextDouble()*1.1);
+			lc3.addValues(Random.nextDouble()*1.1 + .5);
 		}
 		YAxis ya = new YAxis();
 		ya.setMax(2);
@@ -291,25 +298,90 @@ public class Test implements EntryPoint {
 	}
 
 	private Widget addAreaChart() {
-		ChartWidget chart = new ChartWidget();		
-		ChartData cd = new ChartData("Volume Consumed","font-size: 14px; font-family: Verdana; text-align: center;");
-		cd.setBackgroundColour("#ffffff");
-		AreaHollowChart area = new AreaHollowChart();
-		area.setFillAlpha(0.3f);
-		area.setDotSize(3);
+
+		HorizontalPanel hp = new HorizontalPanel();
+		hp.setBorderWidth(1);
+				
+		FlowPanel fp1 = new FlowPanel();
+		ChartWidget chart1 = new ChartWidget();		
+		ChartData cd1 = new ChartData("Volume Consumed","font-size: 14px; font-family: Verdana; text-align: center;");
+		cd1.setBackgroundColour("#ffffff");
+		AreaChart area1 = new AreaChart(AreaStyle.HOLLOW);
+		area1.setFillAlpha(0.7f);
+		area1.setDotSize(3);
 		XAxis xa = new XAxis();
 		int ln=0;
 		for( float i=0; i<6.2; i+=0.2 )
 		{
 			xa.addLabels(""+ln++);
-			area.addValues(Math.sin(i)* 1.9 + 4);
+			area1.addValues(Math.sin(i)* 1.9 + 4);
 		}		
 		
 		xa.getLabels().setSteps(3);
-		cd.setXAxis(xa);
-		cd.addElements(area);
-		chart.setSize("400", "300");
-		chart.setJsonData(cd.toString());
-		return chart;
+		cd1.setXAxis(xa);
+		cd1.addElements(area1);
+		chart1.setSize("400", "300");
+		chart1.setJsonData(cd1.toString());	
+		HTML label1 = new HTML("<u>Hollow Area Chart</u>");
+		label1.setWidth("100%");
+		label1.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		fp1.add(label1);
+		fp1.add(chart1);
+		hp.add(fp1);
+		
+		FlowPanel fp2 = new FlowPanel();
+		ChartWidget chart2 = new ChartWidget();		
+		ChartData cd2 = new ChartData("Growth per Region","font-size: 14px; font-family: Verdana; text-align: center;");
+		cd2.setBackgroundColour("#ffffff");
+		xa = new XAxis();
+		xa.setLabels("J","F","M","A","M","J","J","A","S","O","N","D");
+		xa.setMax(12);
+		cd2.setXAxis(xa);
+		AreaChart area2 = new AreaChart(AreaStyle.LINE);
+		area2.setFillAlpha(0.3f);
+		area2.setColour("#ff0000");
+		area2.setFillColour("#ff0000");
+		for (int n=0;n<12;n++)
+			area2.addValues(n*.8);		
+		cd2.addElements(area2);
+		AreaChart area3 = new AreaChart(AreaStyle.LINE);
+		area3.setFillAlpha(0.3f);
+		area3.setColour("#00aa00");
+		area3.setFillColour("#00aa00");
+		for (int n=0;n<12;n++)
+			area3.addValues(n*.3+2);		
+		cd2.addElements(area3);
+		chart2.setSize("400", "300");
+		chart2.setJsonData(cd2.toString());		
+		HTML label2 = new HTML("<u>Line Area Chart</u>");
+		label2.setWidth("100%");
+		label2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		fp2.add(label2);
+		fp2.add(chart2);		
+		hp.add(fp2);	
+		
+		return hp;		
+	}
+
+	private Widget addSketchChart() {
+		ChartWidget chart2 = new ChartWidget();		
+		ChartData cd2 = new ChartData("How many pies were eaten?","font-size: 14px; font-family: Verdana; text-align: center;");
+		cd2.setBackgroundColour("#ffffff");
+		XAxis xa = new XAxis();
+		xa.setLabels("John","Frank","Mary","Andy","Mike","James");
+		xa.setMax(6);
+		cd2.setXAxis(xa);
+		SketchBarChart sketch = new SketchBarChart("#00aa00","#009900",6);
+		sketch.setTooltip("#val# pies");
+		sketch.addValues(6,4,3);
+		SketchBarChart.SketchBar skb = new SketchBarChart.SketchBar(8);
+		skb.setColour("#6666ff");
+		skb.setTooltip("Winner!<br>#val# pies");
+		sketch.addBars(skb);
+		sketch.addValues(4,2);		
+		cd2.addElements(sketch);
+		chart2.setSize("350", "350");
+		chart2.setJsonData(cd2.toString());		
+		return chart2;
 	}
 }
