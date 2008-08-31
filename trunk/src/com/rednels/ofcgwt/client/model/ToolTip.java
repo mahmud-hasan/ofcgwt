@@ -21,7 +21,7 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 /**
- * Base class for an OFC text element   
+ * Base class for an OFC tooltip element   
  */
 public class ToolTip implements JSONizable {
    	private String titlestyle;
