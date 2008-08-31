@@ -20,8 +20,6 @@ package com.rednels.ofcgwt.client.model;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
-
-// TODO: Auto-generated Javadoc
 /**
  * Base class for an OFC text element   
  */
@@ -40,8 +38,9 @@ public class ToolTip implements JSONizable {
     }
     
     /**
-     * Create a new Text instance with the given mouse style
-     * @param text String
+     * Create a new ToolTip instance with the given mouse style
+     * 
+     * @param mouse MouseStyle
      */
     public ToolTip(MouseStyle mouse) {
     	setMouse(mouse);

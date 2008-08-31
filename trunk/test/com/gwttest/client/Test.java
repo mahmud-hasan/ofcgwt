@@ -47,7 +47,7 @@ import com.rednels.ofcgwt.client.model.elements.LineChart.LineStyle;
 
 
 /**
- * Entry point classes define <code>onModuleLoad()</code>.
+ * Example Test using OFCGWT
  */
 public class Test implements EntryPoint {
 
