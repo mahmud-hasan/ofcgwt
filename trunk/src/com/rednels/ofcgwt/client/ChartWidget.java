@@ -23,6 +23,7 @@ import java.util.Date;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 /**
  * A gwt chart widget based on Open Flash Chart.</br></br>
@@ -104,7 +105,7 @@ public class ChartWidget extends Widget implements IChartData {
 	public static native void injectSWF(String swf, String id, String w, String h,String ver, String alt)
 	/*-{ 	     
 		var flashvars = {id: id,allowResize: true};
-		var params = {scale: 'noscale', allowscriptaccess:'always',wmode: 'transparent'};
+		var params = {scale: 'noscale', allowscriptaccess:'always',wmode: 'opaque'};
 	    var attributes = { id: id, name: id };
 		$wnd.swfobject.embedSWF(swf, "embed_"+id, w, h, ver, alt, flashvars, params, attributes);	        
 	}-*/;
