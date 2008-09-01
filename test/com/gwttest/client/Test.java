@@ -18,8 +18,14 @@ See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
 package com.gwttest.client;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Random;
+import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.DecoratedTabPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -51,7 +57,7 @@ import com.rednels.ofcgwt.client.model.elements.LineChart.LineStyle;
  */
 public class Test implements EntryPoint {
 
-	String[] panels = {"Home","Pie","Bar","Line","Scatter","Horizontal Bar","Area","Sketch"};
+	String[] panels = {"Home","Pie","Bar","Line","Scatter","Horizontal Bar","Area","Sketch","Updatable"};
 
 	public void onModuleLoad() {
 		SimplePanel main = new SimplePanel();
@@ -102,6 +108,11 @@ public class Test implements EntryPoint {
 		SimplePanel sketchSp = new SimplePanel();
 		sketchSp.add(addSketchChart());
 		tabPanel.add(sketchSp, panels[7]);			
+
+		//add updatable chart
+		SimplePanel updateSp = new SimplePanel();
+		updateSp.add(addUpdateChart());
+		tabPanel.add(updateSp, panels[8]);			
 		
 	    tabPanel.selectTab(0);
 		RootPanel.get().add(tabPanel);
@@ -389,5 +400,69 @@ public class Test implements EntryPoint {
 		chart2.setSize("350", "350");
 		chart2.setJsonData(cd2.toString());		
 		return chart2;
+	}
+
+
+	private Widget addUpdateChart() {
+
+		FlowPanel fp1 = new FlowPanel();
+		final ChartWidget chart1 = new ChartWidget();		
+		final ChartData cd1 = new ChartData("Sales by Month 2006","font-size: 14px; font-family: Verdana; text-align: center;");
+		cd1.setBackgroundColour("#ffffff");
+		XAxis xa = new XAxis();
+		xa.setLabels("J","F","M","A","M","J","J","A","S","O","N","D");
+		xa.setMax(12);
+		cd1.setXAxis(xa);
+		YAxis ya = new YAxis();
+		ya.setSteps(16);
+		ya.setMax(160);
+		cd1.setYAxis(ya);
+		BarChart bchart1 = new BarChart(BarStyle.NORMAL);
+		bchart1.setColour("#dd3333");
+		bchart1.setTooltip("$#val#");
+		bchart1.addValues(133,123,144,122,155,123,135,153,123,122,111,100);		
+		cd1.addElements(bchart1);
+		final BarChart bchart2 = new BarChart(BarStyle.NORMAL);
+		bchart2.setColour("#3333dd");		
+		bchart2.setTooltip("$#val#");
+		bchart2.addValues(calcValues(50));		
+		cd1.addElements(bchart2);
+		chart1.setSize("550", "250");
+		chart1.setJsonData(cd1.toString());		
+		HTML label1 = new HTML("<u>Charts are all dynamically updatable on the client-side...</u>");
+		label1.setWidth("100%");
+		label1.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		fp1.add(label1);
+		fp1.add(chart1);
+		
+		
+		final SliderBar slider = new SliderBar(0.0, 100.0);
+		slider.setStepSize(5.0);
+		slider.setCurrentValue(50.0);
+		slider.setNumTicks(10);
+		slider.setNumLabels(5);
+		slider.setWidth("500px");
+
+		final Timer updater = new Timer() {
+			public void run() {
+				bchart2.setValues(calcValues(slider.getCurrentValue()));		
+				chart1.setJsonData(cd1.toString());	
+			}};		
+		slider.addChangeListener(new ChangeListener(){
+			public void onChange(Widget sender) {
+				updater.schedule(300);
+			}});
+		fp1.add(slider);
+		
+		return fp1;
+	}
+	
+	private List<Number> calcValues(double v) {
+		Number[] vals = new Number[]{133,123,144,122,155,123,135,153,123,122,111,100};
+		for (int n = 0; n<vals.length;n++) {
+			vals[n] = vals[n].doubleValue()*(v/100);
+		}
+		ArrayList<Number> nl = new ArrayList<Number>(Arrays.asList(vals));
+		return nl;
 	}
 }
