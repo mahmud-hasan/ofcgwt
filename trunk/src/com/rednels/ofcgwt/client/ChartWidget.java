@@ -20,6 +20,7 @@ package com.rednels.ofcgwt.client;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Widget;
@@ -38,7 +39,7 @@ public class ChartWidget extends Widget implements IChartData {
 	private ArrayList<IChartListener> listeners = new ArrayList<IChartListener>();
 	private static int count = 0;
 	private boolean isSWFInjected = false;
-	private boolean cacheFixEnabled = true;
+	private boolean cacheFixEnabled = false;
 	private final String swfId;
 	private final String swfDivId;
 	private String jsonData = BLANK_CHART_JSON_DATA;
@@ -46,6 +47,7 @@ public class ChartWidget extends Widget implements IChartData {
 	private String height = "100%";
 	private String innerDivTextForFlashPlayerNotFound = "FlashPlayer ${flashPlayer.version} is required.";
 	private boolean hasFlashPlayer = false;
+	private static final CacheFixImpl cacheFixImpl = GWT.create(CacheFixImpl.class);
 
 	/**
 	 * Creates a new ChartWidget.	 * 
@@ -60,6 +62,7 @@ public class ChartWidget extends Widget implements IChartData {
 		setElement(element);
 		setSize(width, height);
 		hasFlashPlayer = hasFlashPlayerVersion(MIN_PLAYER_VERSION);
+		cacheFixEnabled = cacheFixImpl.isCacheFixNeeded();
 	}
 
 	protected void onLoad() {
@@ -67,7 +70,7 @@ public class ChartWidget extends Widget implements IChartData {
 			getElement().setInnerHTML("<div id=\"embed_" + swfId + "\">" + emptyInnerDiv() + "</div>");
 			String w = getWidth();
 			String h = getHeight();
-			injectSWF(getSWFURL(isCacheFixEnabled()), swfId, w, h, MIN_PLAYER_VERSION, ALTERNATE_SWF_SRC);
+			injectSWF(getSWFURL(isCacheFixEnabled(),swfId), swfId, w, h, MIN_PLAYER_VERSION, ALTERNATE_SWF_SRC);
 			isSWFInjected = true;
 		}
 		super.onLoad();
@@ -82,9 +85,9 @@ public class ChartWidget extends Widget implements IChartData {
 	 * 
 	 * @return the swf url string
 	 */
-	public static String getSWFURL(boolean iefix) {
+	public static String getSWFURL(boolean iefix, String id) {
 		String swfurl = "open-flash-chart.swf";		
-		if (iefix) swfurl += ("?id="+(new Date().getTime())); 
+		if (iefix) swfurl += ("?id="+id+(new Date().getTime())); 
 		return swfurl;
 	}
 
@@ -269,7 +272,9 @@ public class ChartWidget extends Widget implements IChartData {
 
 	/**
 	 * Enables an fix/workaround that stops caching of the swf which on IE may solve some bugs.
-	 * <br>Defaults to true. Enable this if you find problems in IE with multiple charts.
+	 * The workaround adds a unique parameter url to each SWF making each chart widget non-cachable.
+	 * On IE this feature is enabled by default, other agents it is disabled. 
+	 * </br></br>Enable this if you find problems in with multiple charts.
 	 * 
 	 * @param enable - true to enable, false to disable
 	 */

@@ -1,8 +1,8 @@
 <module>
-
       <inherits name='com.google.gwt.user.User'/>
       <inherits name='com.google.gwt.user.theme.standard.Standard'/>
       <inherits name='com.rednels.ofcgwt.OFCGWT' />
       <entry-point class='com.gwttest.client.Test'/>
+      <stylesheet src='test.css' />
 
 </module>
