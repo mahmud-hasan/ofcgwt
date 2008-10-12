@@ -105,7 +105,7 @@ public class ChartWidget extends Widget implements IChartData {
 	public static native void injectSWF(String swf, String id, String w, String h,String ver, String alt)
 	/*-{ 	     
 		var flashvars = {id: id,allowResize: true};
-		var params = {scale: 'noscale', allowscriptaccess:'always',wmode: 'window'};
+		var params = {scale: 'noscale', allowscriptaccess:'always',wmode: 'transparent'};
 	    var attributes = { id: id, name: id };
 		$wnd.swfobject.embedSWF(swf, "embed_"+id, w, h, ver, alt, flashvars, params, attributes);	        
 	}-*/;
