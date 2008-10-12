@@ -24,4 +24,8 @@ public interface IChartListener {
 	 * Sent when a Chart Ready event that the listener has registered for occurs.
 	 */
 	public void handleChartReadyEvent();
+	/**
+	 * Sent when a Image Saved  event that the listener has registered for occurs.
+	 */
+	public void imageSavedEvent();
 }

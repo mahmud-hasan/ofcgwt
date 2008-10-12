@@ -57,7 +57,7 @@ import com.rednels.ofcgwt.client.model.elements.LineChart.LineStyle;
  */
 public class Demo implements EntryPoint {
 
-	String[] panels = {"Home","Pie","Bar","Line","Scatter","Horizontal Bar","Area","Sketch","Updatable"};
+	String[] panels = {"Home","Pie","Bar","Line","Scatter","Horizontal Bar","Area","Sketch","Updatable","SaveImage"};
 
 	public void onModuleLoad() {
 		SimplePanel main = new SimplePanel();
@@ -113,6 +113,11 @@ public class Demo implements EntryPoint {
 		SimplePanel updateSp = new SimplePanel();
 		updateSp.add(addUpdateChart());
 		tabPanel.add(updateSp, panels[8]);			
+
+		//add saveimage chart
+//		SimplePanel imageSp = new SimplePanel();
+//		imageSp.add(addImageChart());
+//		tabPanel.add(imageSp, panels[9]);		
 		
 	    tabPanel.selectTab(0);
 		RootPanel.get().add(tabPanel);
@@ -402,9 +407,7 @@ public class Demo implements EntryPoint {
 		return chart2;
 	}
 
-
 	private Widget addUpdateChart() {
-
 		FlowPanel fp1 = new FlowPanel();
 		final ChartWidget chart1 = new ChartWidget();		
 		final ChartData cd1 = new ChartData("Sales by Month 2006","font-size: 14px; font-family: Verdana; text-align: center;");
@@ -465,4 +468,42 @@ public class Demo implements EntryPoint {
 		ArrayList<Number> nl = new ArrayList<Number>(Arrays.asList(vals));
 		return nl;
 	}
+
+	/*   // this doesn't work without server side code 
+	private Widget addImageChart() {
+		FlowPanel fp1 = new FlowPanel();
+		final ChartWidget chart = new ChartWidget();		
+		ChartData cd = new ChartData("Sales ","font-size: 12px; font-family: Verdana; text-align: center;");
+		cd.setBackgroundColour("#f0f0f0");
+		PieChart pie = new PieChart();
+		pie.setTooltip("#label# $#val#<br>#percent#");
+		pie.setAnimate(false);
+		pie.setGradientFill(false);
+		pie.setColours("#ff0000","#00ff00","#0000ff");
+		pie.addSlices(new PieChart.Slice(71000,"AU"));
+		pie.addSlices(new PieChart.Slice(88000,"USA"));
+		pie.addSlices(new PieChart.Slice(62000,"UK"));
+		cd.addElements(pie);
+		chart.setSize("350", "350");
+		chart.setJsonData(cd.toString());
+		fp1.add(chart);
+		chart.addChartListeners(new IChartListener(){
+			public void handleChartReadyEvent() {
+			}
+			
+			public void imageSavedEvent() {
+				System.out.println("imageSavedEvent");
+			}});
+	
+		
+		final Button b = new Button("Send Saved Image");
+		b.addClickListener(new ClickListener(){
+			public void onClick(Widget sender) {
+				chart.saveJpgImagetoURL("http://localhost:8888/test.jpg", false);
+			}});
+		fp1.add(b);
+		
+		return fp1;
+	}	
+	*/
 }

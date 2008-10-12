@@ -23,7 +23,7 @@ import java.util.Date;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Widget;
 /**
  * A gwt chart widget based on Open Flash Chart.</br></br>
@@ -105,7 +105,7 @@ public class ChartWidget extends Widget implements IChartData {
 	public static native void injectSWF(String swf, String id, String w, String h,String ver, String alt)
 	/*-{ 	     
 		var flashvars = {id: id,allowResize: true};
-		var params = {scale: 'noscale', allowscriptaccess:'always',wmode: 'opaque'};
+		var params = {scale: 'noscale', allowscriptaccess:'always',wmode: 'window'};
 	    var attributes = { id: id, name: id };
 		$wnd.swfobject.embedSWF(swf, "embed_"+id, w, h, ver, alt, flashvars, params, attributes);	        
 	}-*/;
@@ -170,6 +170,15 @@ public class ChartWidget extends Widget implements IChartData {
 	}
 
 	/**
+	 * Notifies registered chart listeners that the image was saved
+	 */
+	public void notifyImageSaved() {		
+		for (IChartListener chart : listeners) {
+			chart.imageSavedEvent();
+		}
+	}
+
+	/**
 	 * Calls the load method on the OFC swf.<br>Internal widget use only - made public for integration.
 	 * 
 	 * @param id the dom id 
@@ -179,6 +188,18 @@ public class ChartWidget extends Widget implements IChartData {
 	/*-{				
 		var swf = $doc.getElementById(id);
   		x = swf.load(json);
+	}-*/;
+
+	/**
+	 * Calls the save_image method on the OFC swf.<br>Internal widget use only - made public for integration.
+	 * 
+	 * @param id the dom id 
+	 * @param json a JSON string 
+	 */
+	public static native void saveImage (String id,String url,boolean debug) 
+	/*-{				
+		var swf = $doc.getElementById(id);
+  		x = swf.save_image( url, 'this.@com.rednels.ofcgwt.client.ChartWidget::notifyImageSaved()()', debug );
 	}-*/;
 
 	/**
@@ -200,6 +221,18 @@ public class ChartWidget extends Widget implements IChartData {
 		this.jsonData = json;
 		if (hasFlashPlayer && isSWFInjected) {
 			loadJSON(swfId,jsonData);
+		}
+	}
+
+	/**
+	 * Saves a JPG image of this chart and send the JPG to the url provided.
+	 * Calls Does nothing if the required flash player is not loaded.
+	 * 
+	 * @param json a JSON string 
+	 */
+	public void saveJpgImagetoURL(String url,boolean debug) {
+		if (hasFlashPlayer && isSWFInjected) {
+			saveImage(swfId,url,debug);
 		}
 	}
 
