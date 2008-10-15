@@ -29,9 +29,6 @@ import com.rednels.ofcgwt.client.model.JSONizable;
  * @see com.rednels.ofcgwt.client.model.elements.Element
  */
 public class ScatterChart extends Element implements JSONizable {
-
-    /** The Constant TYPE. */
-    private static final transient String TYPE = "scatter";
     
     /** The colour. */
     private String colour;
@@ -40,10 +37,17 @@ public class ScatterChart extends Element implements JSONizable {
     private Integer dotSize; 
     
     /**
-     * Creates a new scatter chart.
+     * Creates a new scatter chart with ScatterStyle.POINT style
      */
     public ScatterChart() {
-        super(TYPE);
+        this(ScatterStyle.POINT);
+    }
+    
+    /**
+     * Creates a new scatter chart with provided style.
+     */
+    public ScatterChart(ScatterStyle style) {
+        super(style.getStyle());
     }
     
     /**
@@ -119,6 +123,39 @@ public class ScatterChart extends Element implements JSONizable {
     	if (colour != null) json.put("colour", new JSONString(colour));    	
     	return json;
 	}
+	
+    /**
+     * Enumeration ScatterStyle - used with ScatterChart.
+     */
+    public static enum ScatterStyle {
+        
+        /** NORMAL */
+        LINE("scatter_line"),
+        
+        /** HOLLOW */
+        POINT("scatter");
+        
+        /** The style. */
+        private String style;
+        
+        /**
+         * Creates a new scatter style.
+         * 
+         * @param style the style
+         */
+        ScatterStyle(String style) {
+            this.style = style;
+        }
+        
+        /**
+         * Gets the style.
+         * 
+         * @return the style
+         */
+        public String getStyle() {
+            return style;
+        }
+    }
 
     /**
      * Base class for OFC scatter points 
