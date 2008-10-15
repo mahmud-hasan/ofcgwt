@@ -17,6 +17,7 @@ See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
 */
 package com.rednels.ofcgwt.client.model.elements;
 
+import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
@@ -32,15 +33,18 @@ public class AreaChart extends LineChart {
     /** The fill colour. */
     private String fillColour; 
     
+    /** The animate. */
+    private Boolean loop;
+    
     /**
-     * Creates a new area chart with line style
+     * Creates a new area chart with AreaStyle.LINE style
      */
     public AreaChart() {
         this(AreaStyle.LINE); 
     }
 
     /**
-     * Creates a new area chart with line style
+     * Creates a new area chart with provided style
      */
     public AreaChart(AreaStyle style) {
         super(style.getStyle()); 
@@ -62,6 +66,24 @@ public class AreaChart extends LineChart {
      */
     public void setFillAlpha(Float fillAlpha) {
         this.fillAlpha = fillAlpha;
+    }
+    
+    /**
+     * Sets loop
+     * 
+     * @param loop true or false
+     */
+    public void setLoop(boolean loop) {
+        this.loop = loop;
+    }
+
+	/**
+	 * Gets the loop value
+	 * 
+	 * @return true if loop is enabled
+	 */
+	public Boolean getLoop() {
+        return loop;
     }
     
     /**
@@ -89,8 +111,10 @@ public class AreaChart extends LineChart {
     	JSONObject json = super.buildJSONObject();
     	if (fillAlpha != null) json.put("fill-alpha", new JSONNumber(fillAlpha));
     	if (fillColour != null) json.put("fill", new JSONString(fillColour)); 
+    	if (loop != null) json.put("loop", JSONBoolean.getInstance(loop));   
     	return json;
 	}    
+	
     /**
      * Enumeration AreaStyle - used with AreaChart.
      */

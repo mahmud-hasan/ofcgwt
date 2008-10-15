@@ -25,7 +25,7 @@ import com.google.gwt.core.client.EntryPoint;
 public class Test implements EntryPoint {
 
 	public void onModuleLoad() {
-		new Demo().onModuleLoad();
-//		new MemoryLeakTest().onModuleLoad();
+//		new Demo().onModuleLoad();
+		new MemoryLeakTest().onModuleLoad();
 	}
 }

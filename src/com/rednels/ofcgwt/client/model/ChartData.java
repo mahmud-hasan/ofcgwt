@@ -24,6 +24,7 @@ import java.util.HashSet;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
+import com.rednels.ofcgwt.client.model.axis.RadarAxis;
 import com.rednels.ofcgwt.client.model.axis.XAxis;
 import com.rednels.ofcgwt.client.model.axis.YAxis;
 import com.rednels.ofcgwt.client.model.elements.Element;
@@ -44,6 +45,7 @@ public class ChartData implements JSONizable {
 	private ToolTip tooltip;
 	private XAxis x_axis;
 	private YAxis y_axis;
+	private RadarAxis radar_axis;
 	private YAxis y_axis_right;
 	private Text y_legend;
 	private Text x_legend;
@@ -100,6 +102,7 @@ public class ChartData implements JSONizable {
 		if (this.x_axis != null) json.put("x_axis", this.x_axis.buildJSONObject());
 		if (this.y_axis != null) json.put("y_axis", this.y_axis.buildJSONObject());
 		if (this.y_axis_right != null) json.put("y_axis_right", this.y_axis_right.buildJSONObject());
+		if (this.radar_axis != null) json.put("radar_axis", this.radar_axis.buildJSONObject());
 		if (this.y_legend != null) json.put("y_legend", this.y_legend.buildJSONObject());
 		if (this.x_legend != null) json.put("x_legend", this.x_legend.buildJSONObject());
 		if (this.bg_colour != null) json.put("bg_colour", new JSONString(this.bg_colour));
