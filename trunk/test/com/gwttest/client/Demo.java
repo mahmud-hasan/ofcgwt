@@ -23,16 +23,21 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.ChangeListener;
+import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DecoratedTabPanel;
+import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.rednels.ofcgwt.client.ChartWidget;
 import com.rednels.ofcgwt.client.model.ChartData;
@@ -57,81 +62,116 @@ import com.rednels.ofcgwt.client.model.elements.LineChart.LineStyle;
  */
 public class Demo implements EntryPoint {
 
-	String[] panels = {"Home","Pie","Bar","Line","Scatter","Horizontal Bar","Area","Sketch","Updatable","SaveImage"};
+	private String lineChartData = null;
 
 	public void onModuleLoad() {
 		SimplePanel main = new SimplePanel();
 		main.setHeight("100%");
 		main.setWidth("100%");
 		
-		DecoratedTabPanel tabPanel = new DecoratedTabPanel();
-	    tabPanel.setAnimationEnabled(true);
-	    
+		HorizontalPanel hp = new HorizontalPanel();
+		hp.setSpacing(10);
+							    
 	    //add home page
 	    HTML homeText = new HTML("<h2>Welcome to OFCGWT</h2>"
 	         + "<i>....the OpenFlashChart GWT Library</i></br></br>"
-	         + "This demonstration site will showcase the many different types of</br>charts that can be inserted into a GWT application."
+	         + "This demonstration site will showcase the many different types of charts that can be inserted into a GWT application."
 	         );
-	    tabPanel.add(homeText, panels[0]);
+	    hp.add(homeText);
+	    hp.setCellWidth(homeText, "300");
+	    DecoratorPanel dp = new DecoratorPanel();
+	    
 
 		//add pie chart
 		SimplePanel pieSp = new SimplePanel();
-		pieSp.add(addPieChart());
-		tabPanel.add(pieSp, panels[1]);
-
-		//add bar charts
-		SimplePanel barSp = new SimplePanel();
-		barSp.add(addBarCharts());
-		tabPanel.add(barSp, panels[2]);
-
-		//add line chart
-		SimplePanel lineSp = new SimplePanel();
-		lineSp.add(addLineChart());
-		tabPanel.add(lineSp, panels[3]);
-
-		//add scatter chart
-		SimplePanel scatterSp = new SimplePanel();
-		scatterSp.add(addScatterChart());
-		tabPanel.add(scatterSp, panels[4]);
-
-		//add horiz bar chart
-		SimplePanel horizSp = new SimplePanel();
-		horizSp.add(addHorizBarChart());
-		tabPanel.add(horizSp, panels[5]);		
-
-		//add area chart
-		SimplePanel areaSp = new SimplePanel();
-		areaSp.add(addAreaChart());
-		tabPanel.add(areaSp, panels[6]);	
-
-		//add sketch chart
-		SimplePanel sketchSp = new SimplePanel();
-		sketchSp.add(addSketchChart());
-		tabPanel.add(sketchSp, panels[7]);			
-
-		//add updatable chart
-		SimplePanel updateSp = new SimplePanel();
-		updateSp.add(addUpdateChart());
-		tabPanel.add(updateSp, panels[8]);			
-
-		//add saveimage chart
-//		SimplePanel imageSp = new SimplePanel();
-//		imageSp.add(addImageChart());
-//		tabPanel.add(imageSp, panels[9]);		
+		final ChartWidget chart = new ChartWidget();	
+		chart.setSize("400", "300");
+		chart.setJsonData(getPieChartData().toString());
+		pieSp.add(chart);
+		dp.add(pieSp);
+		hp.add(dp);
 		
-	    tabPanel.selectTab(0);
-		RootPanel.get().add(tabPanel);
+		VerticalPanel chartlist = new VerticalPanel();
+		chartlist.setSpacing(5);
+		RadioButton rb = createRadioButton("PieChart",new Command(){
+			public void execute() {
+				chart.setJsonData(getPieChartData().toString());					
+			}
+		});
+		rb.setChecked(true);
+		chartlist.add(rb);
+		
+		chartlist.add(createRadioButton("BarChart - Normal",new Command(){
+			public void execute() {
+				chart.setJsonData(getBarChartNormalData().toString());					
+			}
+		}));
+		
+		chartlist.add(createRadioButton("BarChart - Glass",new Command(){
+			public void execute() {
+				chart.setJsonData(getBarChartGlassData().toString());					
+			}
+		}));
+		
+		chartlist.add(createRadioButton("BarChart - 3D",new Command(){
+			public void execute() {
+				chart.setJsonData(getBarChart3DData().toString());					
+			}
+		}));
+
+		chartlist.add(createRadioButton("LineChart",new Command(){
+			public void execute() {
+				chart.setJsonData(getLineChartData().toString());
+			}
+		}));
+
+		chartlist.add(createRadioButton("ScatterChart",new Command(){
+			public void execute() {
+				chart.setJsonData(getScatterChartData().toString());
+			}
+		}));
+
+		chartlist.add(createRadioButton("Horizontal-BarChart",new Command(){
+			public void execute() {
+				chart.setJsonData(getHorizBarChartData().toString());
+			}
+		}));
+
+		chartlist.add(createRadioButton("AreaChart",new Command(){
+			public void execute() {
+				chart.setJsonData(getAreaChartData().toString());
+			}
+		}));
+
+		chartlist.add(createRadioButton("SketchChart",new Command(){
+			public void execute() {
+				chart.setJsonData(getSketchChartData().toString());
+			}
+		}));
+					
+		hp.add(chartlist);
+	    hp.setCellWidth(chartlist, "300");
+		
+		RootPanel.get().add(hp);
 	}
 
-	private ChartWidget addPieChart() {
-		ChartWidget chart = new ChartWidget();		
+	private RadioButton createRadioButton(String string, final Command command) {
+		RadioButton rb = new RadioButton("chartlist", string);
+		rb.addClickListener(new ClickListener(){
+			public void onClick(Widget sender) {
+				command.execute();				
+			}});		
+		return rb;
+	}
+
+	private ChartData getPieChartData() {	
 		ChartData cd = new ChartData("Sales by Region","font-size: 14px; font-family: Verdana; text-align: center;");
 		cd.setBackgroundColour("#ffffff");
 		PieChart pie = new PieChart();
 		pie.setAlpha(0.3f);
 		pie.setNoLabels(true);
 		pie.setTooltip("#label# $#val#<br>#percent#");
-		pie.setAnimate(true);
+		pie.setAnimate(false);
 		pie.setGradientFill(true);
 		pie.setColours("#ff0000","#00ff00","#0000ff","#ff9900","#ff00ff");
 		pie.addSlices(new PieChart.Slice(11000,"AU"));
@@ -140,17 +180,10 @@ public class Demo implements EntryPoint {
 		pie.addSlices(new PieChart.Slice(14000,"JP"));
 		pie.addSlices(new PieChart.Slice(43000,"EU"));
 		cd.addElements(pie);
-		chart.setSize("300", "300");
-		chart.setJsonData(cd.toString());
-		return chart;
+		return cd;
 	}	
 
-	private Widget addBarCharts() {
-		HorizontalPanel hp = new HorizontalPanel();
-		hp.setBorderWidth(1);
-				
-		FlowPanel fp1 = new FlowPanel();
-		ChartWidget chart1 = new ChartWidget();		
+	private ChartData getBarChartNormalData() {
 		ChartData cd1 = new ChartData("Sales by Month 2006","font-size: 14px; font-family: Verdana; text-align: center;");
 		cd1.setBackgroundColour("#ffffff");
 		XAxis xa = new XAxis();
@@ -165,25 +198,17 @@ public class Demo implements EntryPoint {
 		bchart1.setTooltip("$#val#");
 		bchart1.addValues(133,123,144,122,155,123,135,153,123,122,111,100);		
 		cd1.addElements(bchart1);
-		chart1.setSize("350", "250");
-		chart1.setJsonData(cd1.toString());		
-		HTML label1 = new HTML("<u>Normal Bar Chart</u>");
-		label1.setWidth("100%");
-		label1.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		fp1.add(label1);
-		fp1.add(chart1);
-
-		hp.add(fp1);
-		
-		FlowPanel fp2 = new FlowPanel();
-		ChartWidget chart2 = new ChartWidget();		
+		return cd1;
+	}
+	
+	private ChartData getBarChartGlassData() {
 		ChartData cd2 = new ChartData("Sales by Month 2007","font-size: 14px; font-family: Verdana; text-align: center;");
 		cd2.setBackgroundColour("#ffffff");
-		xa = new XAxis();
+		XAxis xa = new XAxis();
 		xa.setLabels("J","F","M","A","M","J","J","A","S","O","N","D");
 		xa.setMax(12);
 		cd2.setXAxis(xa);
-		ya = new YAxis();
+		YAxis ya = new YAxis();
 		ya.setSteps(16);
 		ya.setMax(160);
 		cd2.setYAxis(ya);
@@ -192,21 +217,13 @@ public class Demo implements EntryPoint {
 		bchart2.setTooltip("$#val#");
 		bchart2.addValues(123,133,134,112,135,143,151,133,103,102,131,120);		
 		cd2.addElements(bchart2);
-		chart2.setSize("350", "250");
-		chart2.setJsonData(cd2.toString());		
-		HTML label2 = new HTML("<u>Glass Bar Chart</u>");
-		label2.setWidth("100%");
-		label2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		fp2.add(label2);
-		fp2.add(chart2);		
-		
-		hp.add(fp2);
-		
-		FlowPanel fp3 = new FlowPanel();
-		ChartWidget chart3 = new ChartWidget();		
+		return cd2;
+	}
+
+	private ChartData getBarChart3DData() {
 		ChartData cd3 = new ChartData("Sales by Month 2008","font-size: 14px; font-family: Verdana; text-align: center;");
 		cd3.setBackgroundColour("#ffffff");
-		xa = new XAxis();
+		XAxis xa = new XAxis();
 		xa.setLabels("J","F","M","A","M","J","J","A","S","O","N","D");
 		xa.setZDepth3D(5);
 		xa.setMax(12);
@@ -214,7 +231,7 @@ public class Demo implements EntryPoint {
 		xa.setOffset(true);
 		xa.setColour("#909090");
 		cd3.setXAxis(xa);
-		ya = new YAxis();
+		YAxis ya = new YAxis();
 		ya.setSteps(16);
 		ya.setMax(160);
 		cd3.setYAxis(ya);
@@ -222,22 +239,11 @@ public class Demo implements EntryPoint {
 		bchart3.setColour("#ff8800");
 		bchart3.setTooltip("$#val#");
 		bchart3.addValues(103,123,133,138,126,117,121,143,140,152,121,105);		
-		cd3.addElements(bchart3);
-		chart3.setSize("350", "250");
-		chart3.setJsonData(cd3.toString());		
-		HTML label3 = new HTML("<u>3D Bar Chart</u>");
-		label3.setWidth("100%");
-		label3.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		fp3.add(label3);
-		fp3.add(chart3);		
-		
-		hp.add(fp3);
-		
-		return hp;
+		cd3.addElements(bchart3);		
+		return cd3;
 	}
 
-	private Widget addLineChart() {
-		ChartWidget chart = new ChartWidget();		
+	private ChartData getLineChartData() {
 		ChartData cd = new ChartData("Relative Performance","font-size: 14px; font-family: Verdana; text-align: center;");
 		cd.setBackgroundColour("#ffffff");
 		
@@ -267,13 +273,10 @@ public class Demo implements EntryPoint {
 		cd.addElements(lc1);
 		cd.addElements(lc2);
 		cd.addElements(lc3);
-		chart.setSize("600", "300");
-		chart.setJsonData(cd.toString());
-		return chart;
+		return cd;
 	}	
 
-	private Widget addScatterChart() {
-		ChartWidget chart = new ChartWidget();		
+	private ChartData getScatterChartData() {
 		ChartData cd = new ChartData("X Y Distribution","font-size: 14px; font-family: Verdana; text-align: center;");
 		cd.setBackgroundColour("#ffffff");
 		ScatterChart scat = new ScatterChart();
@@ -290,13 +293,10 @@ public class Demo implements EntryPoint {
 		ya.setRange(-25, 25, 5);
 		cd.setYAxis(ya);
 		cd.addElements(scat);
-		chart.setSize("600", "600");
-		chart.setJsonData(cd.toString());
-		return chart;
+		return cd;
 	}
 
-	private Widget addHorizBarChart() {
-		ChartWidget chart1 = new ChartWidget();		
+	private ChartData getHorizBarChartData() {
 		ChartData cd1 = new ChartData("Top Car Speed","font-size: 14px; font-family: Verdana; text-align: center;");
 		cd1.setBackgroundColour("#ffffff");
 		XAxis xa = new XAxis();
@@ -314,18 +314,10 @@ public class Demo implements EntryPoint {
 		bchart1.addBars(new HorizontalBarChart.Bar(133,"#ff0000"));
 		cd1.addElements(bchart1);
 		cd1.setTooltip(new ToolTip(MouseStyle.FOLLOW));
-		chart1.setSize("400", "250");
-		chart1.setJsonData(cd1.toString());
-		return chart1;
+		return cd1;
 	}
 
-	private Widget addAreaChart() {
-
-		HorizontalPanel hp = new HorizontalPanel();
-		hp.setBorderWidth(1);
-				
-		FlowPanel fp1 = new FlowPanel();
-		ChartWidget chart1 = new ChartWidget();		
+	private ChartData getAreaChartData() {
 		ChartData cd1 = new ChartData("Volume Consumed","font-size: 14px; font-family: Verdana; text-align: center;");
 		cd1.setBackgroundColour("#ffffff");
 		AreaChart area1 = new AreaChart(AreaStyle.HOLLOW);
@@ -342,51 +334,11 @@ public class Demo implements EntryPoint {
 		xa.getLabels().setSteps(3);
 		cd1.setXAxis(xa);
 		cd1.addElements(area1);
-		chart1.setSize("400", "300");
-		chart1.setJsonData(cd1.toString());	
-		HTML label1 = new HTML("<u>Hollow Area Chart</u>");
-		label1.setWidth("100%");
-		label1.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		fp1.add(label1);
-		fp1.add(chart1);
-		hp.add(fp1);
 		
-		FlowPanel fp2 = new FlowPanel();
-		ChartWidget chart2 = new ChartWidget();		
-		ChartData cd2 = new ChartData("Growth per Region","font-size: 14px; font-family: Verdana; text-align: center;");
-		cd2.setBackgroundColour("#ffffff");
-		xa = new XAxis();
-		xa.setLabels("J","F","M","A","M","J","J","A","S","O","N","D");
-		xa.setMax(12);
-		cd2.setXAxis(xa);
-		AreaChart area2 = new AreaChart(AreaStyle.LINE);
-		area2.setFillAlpha(0.3f);
-		area2.setColour("#ff0000");
-		area2.setFillColour("#ff0000");
-		for (int n=0;n<12;n++)
-			area2.addValues(n*.8);		
-		cd2.addElements(area2);
-		AreaChart area3 = new AreaChart(AreaStyle.LINE);
-		area3.setFillAlpha(0.3f);
-		area3.setColour("#00aa00");
-		area3.setFillColour("#00aa00");
-		for (int n=0;n<12;n++)
-			area3.addValues(n*.3+2);		
-		cd2.addElements(area3);
-		chart2.setSize("400", "300");
-		chart2.setJsonData(cd2.toString());		
-		HTML label2 = new HTML("<u>Line Area Chart</u>");
-		label2.setWidth("100%");
-		label2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		fp2.add(label2);
-		fp2.add(chart2);		
-		hp.add(fp2);	
-		
-		return hp;		
+		return cd1;		
 	}
 
-	private Widget addSketchChart() {
-		ChartWidget chart2 = new ChartWidget();		
+	private ChartData getSketchChartData() {	
 		ChartData cd2 = new ChartData("How many pies were eaten?","font-size: 14px; font-family: Verdana; text-align: center;");
 		cd2.setBackgroundColour("#ffffff");
 		XAxis xa = new XAxis();
@@ -402,108 +354,6 @@ public class Demo implements EntryPoint {
 		sketch.addBars(skb);
 		sketch.addValues(4,2);		
 		cd2.addElements(sketch);
-		chart2.setSize("350", "350");
-		chart2.setJsonData(cd2.toString());		
-		return chart2;
+		return cd2;
 	}
-
-	private Widget addUpdateChart() {
-		FlowPanel fp1 = new FlowPanel();
-		final ChartWidget chart1 = new ChartWidget();		
-		final ChartData cd1 = new ChartData("Sales by Month 2006","font-size: 14px; font-family: Verdana; text-align: center;");
-		cd1.setBackgroundColour("#ffffff");
-		XAxis xa = new XAxis();
-		xa.setLabels("J","F","M","A","M","J","J","A","S","O","N","D");
-		xa.setMax(12);
-		cd1.setXAxis(xa);
-		YAxis ya = new YAxis();
-		ya.setSteps(16);
-		ya.setMax(160);
-		cd1.setYAxis(ya);
-		BarChart bchart1 = new BarChart(BarStyle.NORMAL);
-		bchart1.setColour("#dd3333");
-		bchart1.setTooltip("$#val#");
-		bchart1.addValues(133,123,144,122,155,123,135,153,123,122,111,100);		
-		cd1.addElements(bchart1);
-		final BarChart bchart2 = new BarChart(BarStyle.NORMAL);
-		bchart2.setColour("#3333dd");		
-		bchart2.setTooltip("$#val#");
-		bchart2.addValues(calcValues(50));		
-		cd1.addElements(bchart2);
-		chart1.setSize("550", "250");
-		chart1.setJsonData(cd1.toString());		
-		HTML label1 = new HTML("<u>Charts are all dynamically updatable on the client-side...</u>");
-		label1.setWidth("100%");
-		label1.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		fp1.add(label1);
-		fp1.add(chart1);
-		
-		
-		final SliderBar slider = new SliderBar(0.0, 100.0);
-		slider.setStepSize(5.0);
-		slider.setCurrentValue(50.0);
-		slider.setNumTicks(10);
-		slider.setNumLabels(5);
-		slider.setWidth("500px");
-
-		final Timer updater = new Timer() {
-			public void run() {
-				bchart2.setValues(calcValues(slider.getCurrentValue()));		
-				chart1.setJsonData(cd1.toString());	
-			}};		
-		slider.addChangeListener(new ChangeListener(){
-			public void onChange(Widget sender) {
-				updater.schedule(300);
-			}});
-		fp1.add(slider);
-		
-		return fp1;
-	}
-	
-	private List<Number> calcValues(double v) {
-		Number[] vals = new Number[]{133,123,144,122,155,123,135,153,123,122,111,100};
-		for (int n = 0; n<vals.length;n++) {
-			vals[n] = vals[n].doubleValue()*(v/100);
-		}
-		ArrayList<Number> nl = new ArrayList<Number>(Arrays.asList(vals));
-		return nl;
-	}
-
-	/*   // this doesn't work without server side code 
-	private Widget addImageChart() {
-		FlowPanel fp1 = new FlowPanel();
-		final ChartWidget chart = new ChartWidget();		
-		ChartData cd = new ChartData("Sales ","font-size: 12px; font-family: Verdana; text-align: center;");
-		cd.setBackgroundColour("#f0f0f0");
-		PieChart pie = new PieChart();
-		pie.setTooltip("#label# $#val#<br>#percent#");
-		pie.setAnimate(false);
-		pie.setGradientFill(false);
-		pie.setColours("#ff0000","#00ff00","#0000ff");
-		pie.addSlices(new PieChart.Slice(71000,"AU"));
-		pie.addSlices(new PieChart.Slice(88000,"USA"));
-		pie.addSlices(new PieChart.Slice(62000,"UK"));
-		cd.addElements(pie);
-		chart.setSize("350", "350");
-		chart.setJsonData(cd.toString());
-		fp1.add(chart);
-		chart.addChartListeners(new IChartListener(){
-			public void handleChartReadyEvent() {
-			}
-			
-			public void imageSavedEvent() {
-				System.out.println("imageSavedEvent");
-			}});
-	
-		
-		final Button b = new Button("Send Saved Image");
-		b.addClickListener(new ClickListener(){
-			public void onClick(Widget sender) {
-				chart.saveJpgImagetoURL("http://localhost:8888/test.jpg", false);
-			}});
-		fp1.add(b);
-		
-		return fp1;
-	}	
-	*/
 }
