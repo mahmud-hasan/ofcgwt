@@ -137,9 +137,15 @@ public class Demo implements EntryPoint {
 			}
 		}));
 
-		chartlist.add(createRadioButton("AreaChart",new Command(){
+		chartlist.add(createRadioButton("AreaChart - Hollow",new Command(){
 			public void execute() {
-				chart.setJsonData(getAreaChartData().toString());
+				chart.setJsonData(getAreaHollowChartData().toString());
+			}
+		}));
+
+		chartlist.add(createRadioButton("AreaChart - Line",new Command(){
+			public void execute() {
+				chart.setJsonData(getAreaLineChartData().toString());
 			}
 		}));
 
@@ -317,7 +323,7 @@ public class Demo implements EntryPoint {
 		return cd1;
 	}
 
-	private ChartData getAreaChartData() {
+	private ChartData getAreaHollowChartData() {
 		ChartData cd1 = new ChartData("Volume Consumed","font-size: 14px; font-family: Verdana; text-align: center;");
 		cd1.setBackgroundColour("#ffffff");
 		AreaChart area1 = new AreaChart(AreaStyle.HOLLOW);
@@ -334,8 +340,34 @@ public class Demo implements EntryPoint {
 		xa.getLabels().setSteps(3);
 		cd1.setXAxis(xa);
 		cd1.addElements(area1);
+		System.out.println(cd1.toString());
 		
 		return cd1;		
+	}
+	
+	private ChartData getAreaLineChartData() {
+		ChartData cd2 = new ChartData("Growth per Region","font-size: 14px; font-family: Verdana; text-align: center;");
+		cd2.setBackgroundColour("#ffffff");
+		XAxis xa = new XAxis();
+		xa.setLabels("J","F","M","A","M","J","J","A","S","O","N","D");
+		xa.setMax(12);
+		cd2.setXAxis(xa);
+		AreaChart area2 = new AreaChart(AreaStyle.LINE);
+		area2.setFillAlpha(0.3f);
+		area2.setColour("#ff0000");
+		area2.setFillColour("#ff0000");
+		for (int n=0;n<12;n++)
+			area2.addValues(n*.8);		
+		cd2.addElements(area2);
+		AreaChart area3 = new AreaChart(AreaStyle.LINE);
+		area3.setFillAlpha(0.3f);
+		area3.setColour("#00aa00");
+		area3.setFillColour("#00aa00");
+		for (int n=0;n<12;n++)
+			area3.addValues(n*.3+2);		
+		cd2.addElements(area3);
+		System.out.println(cd2.toString());
+		return cd2;
 	}
 
 	private ChartData getSketchChartData() {	
