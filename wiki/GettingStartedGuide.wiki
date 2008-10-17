@@ -11,7 +11,7 @@ The following items are what is required to be successful with OFCGWT (_though e
 To begin you will need...
  * GWT 1.5.2 
  * Java 1.6 
- * OFCGWT beta6
+ * OFCGWT 1.0.1
  * Eclipse 3.4 
 
 = The 5 Major Steps =
@@ -24,7 +24,7 @@ _Unless you know what you are doing, copy the project names etc exactly as provi
  c) Remove/delete the two `.cmd` files created by GWT in the project root directory - we won't be using these and they will only confuse things going forward.
 These two steps will have created a new Eclipse project setup for GWT.
 == 2. Copy Files from OFCGWT Download ==
-To speed things up, we are going to copy in a java source file provided with the beta6 download of OFCGWT.
+To speed things up, we are going to copy in a java source file provided with the 1.0.1 download of OFCGWT.
  a) Copy the `Test.java` file included in the beta6.zip file into the `ofcgwttest\src\com\gwttest\client` directory overwriting the existing file.
 
  b) Now copy in the ofcgwt.jar file into the root of the project directory `ofcgwttest\`
