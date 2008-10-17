@@ -150,6 +150,15 @@ public class ChartData implements JSONizable {
 	}
 
 	/**
+	 * Get the current RadarAxis object
+	 * @return RadarAxis object
+	 */
+	public RadarAxis getRadarAxis() {
+		if (this.radar_axis == null) this.radar_axis = new RadarAxis();
+		return this.radar_axis;
+	}
+
+	/**
 	 * Get the current x legend Text
 	 * @return Text x legend  
 	 */
@@ -222,6 +231,14 @@ public class ChartData implements JSONizable {
 	 */
 	public void setXAxis(XAxis x_axis) {
 		this.x_axis = x_axis;
+	}
+
+	/**
+	 * Sets the RadarAxis to this RadarAxis object
+	 * @param radar_axis RadarAxis object
+	 */
+	public void setRadarAxis(RadarAxis radar_axis) {
+		this.radar_axis = radar_axis;
 	}
 
 	/**
