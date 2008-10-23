@@ -24,6 +24,7 @@ import java.util.List;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
 /**
  * Class for an OFC radar axis that extends AbstractAxis   
@@ -145,12 +146,12 @@ public class RadarAxis extends AbstractAxis implements JSONizable {
     }    
 
 	/* (non-Javadoc)
-	 * @see com.rednels.ofcgwt.client.model.axis.AbstractAxis#buildJSONObject()
+	 * @see com.rednels.ofcgwt.client.model.axis.AbstractAxis.buildJSON()
 	 */
-	public JSONObject buildJSONObject() {		
-    	JSONObject json = super.buildJSONObject();     	
-    	if (labels != null) json.put("labels", labels.buildJSONObject());
-    	if (spokelabels != null) json.put("spoke-labels", spokelabels.buildJSONObject());
+	public JSONValue buildJSON() {		
+    	JSONObject json = (JSONObject)super.buildJSON();     	
+    	if (labels != null) json.put("labels", labels.buildJSON());
+    	if (spokelabels != null) json.put("spoke-labels", spokelabels.buildJSON());
     	return json;
 	}
 
@@ -249,9 +250,9 @@ public class RadarAxis extends AbstractAxis implements JSONizable {
         }
         
     	/* (non-Javadoc)
-    	 * @see com.rednels.ofcgwt.client.model.JSONizable#buildJSONObject()
+    	 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
     	 */
-		public JSONObject buildJSONObject() {		
+		public JSONValue buildJSON() {		
 	    	JSONObject json = new JSONObject();
 	    	if (colour != null) json.put("colour", new JSONString(colour));
 	    	if (labels == null) return json;
@@ -259,7 +260,7 @@ public class RadarAxis extends AbstractAxis implements JSONizable {
 	    	int index = 0;
 	    	for (Object o : getLabels()) {
 	    		if (o instanceof String) ary.set(index++, new JSONString((String)o));
-	    		if (o instanceof Label) ary.set(index++, ((Label)o).buildJSONObject());
+	    		if (o instanceof Label) ary.set(index++, ((Label)o).buildJSON());
 	        }
 	    	if (index != 0) json.put("labels",ary);
 	    	return json;

@@ -19,6 +19,7 @@ package com.rednels.ofcgwt.client.model.elements;
 
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
 /**
  * Class for an OFC sketch bar chart (drawn) that extends FilledBarChart   
@@ -72,10 +73,10 @@ public class SketchBarChart extends FilledBarChart implements JSONizable {
     }
 
 	/* (non-Javadoc)
-	 * @see com.rednels.ofcgwt.client.model.elements.FilledBarChart#buildJSONObject()
+	 * @see com.rednels.ofcgwt.client.model.elements.FilledBarChart.buildJSON()
 	 */
-	public JSONObject buildJSONObject() {
-    	JSONObject json = super.buildJSONObject();
+	public JSONValue buildJSON() {
+    	JSONObject json = (JSONObject)super.buildJSON();
     	if (offset != null) json.put("offset", new JSONNumber(offset.doubleValue()));
     	return json;
 	}
@@ -140,10 +141,10 @@ public class SketchBarChart extends FilledBarChart implements JSONizable {
         }
 
     	/* (non-Javadoc)
-	     * @see com.rednels.ofcgwt.client.model.elements.FilledBarChart.Bar#buildJSONObject()
+	     * @see com.rednels.ofcgwt.client.model.elements.FilledBarChart.Bar.buildJSON()
 	     */
-	    public JSONObject buildJSONObject() {
-        	JSONObject json = super.buildJSONObject();
+	    public JSONValue buildJSON() {
+        	JSONObject json = (JSONObject)super.buildJSON();
         	if (offset != null) json.put("offset", new JSONNumber(offset.doubleValue()));
         	return json;
     	}

@@ -27,6 +27,7 @@ import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
 /** 
  * Class for an OFC pie chart that extends Element   
@@ -265,10 +266,10 @@ public class PieChart extends Element implements JSONizable{
     }
 
 	/* (non-Javadoc)
-	 * @see com.rednels.ofcgwt.client.model.elements.Element#buildJSONObject()
+	 * @see com.rednels.ofcgwt.client.model.elements.Element.buildJSON()
 	 */
-	public JSONObject buildJSONObject() {
-    	JSONObject json = super.buildJSONObject();
+	public JSONValue buildJSON() {
+    	JSONObject json = (JSONObject)super.buildJSON();
     	if (startAngle != null) json.put("start-angle", new JSONNumber(startAngle.doubleValue()));
     	if (animate != null) json.put("animate", JSONBoolean.getInstance(animate));   
     	if (gradientFill != null) json.put("gradient-fill", JSONBoolean.getInstance(gradientFill)); 
@@ -368,9 +369,9 @@ public class PieChart extends Element implements JSONizable{
         }
 
     	/* (non-Javadoc)
-	     * @see com.rednels.ofcgwt.client.model.JSONizable#buildJSONObject()
+	     * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
 	     */
-	    public JSONObject buildJSONObject() {
+	    public JSONValue buildJSON() {
         	JSONObject json = new JSONObject();
         	if (value != null) json.put("value", new JSONNumber(value.doubleValue())); 	
         	if (label != null) json.put("label", new JSONString(label));

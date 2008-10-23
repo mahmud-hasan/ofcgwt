@@ -24,6 +24,7 @@ import java.util.HashSet;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.axis.RadarAxis;
 import com.rednels.ofcgwt.client.model.axis.XAxis;
 import com.rednels.ofcgwt.client.model.axis.YAxis;
@@ -93,24 +94,24 @@ public class ChartData implements JSONizable {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.rednels.ofcgwt.client.model.JSONizable#buildJSONObject()
+	 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
 	 */
-	public JSONObject buildJSONObject() {
+	public JSONValue buildJSON() {
 		final JSONObject json = new JSONObject();
-		if (this.title != null) json.put("title", this.title.buildJSONObject());
-		if (this.tooltip != null) json.put("tooltip", this.tooltip.buildJSONObject());
-		if (this.x_axis != null) json.put("x_axis", this.x_axis.buildJSONObject());
-		if (this.y_axis != null) json.put("y_axis", this.y_axis.buildJSONObject());
-		if (this.y_axis_right != null) json.put("y_axis_right", this.y_axis_right.buildJSONObject());
-		if (this.radar_axis != null) json.put("radar_axis", this.radar_axis.buildJSONObject());
-		if (this.y_legend != null) json.put("y_legend", this.y_legend.buildJSONObject());
-		if (this.x_legend != null) json.put("x_legend", this.x_legend.buildJSONObject());
+		if (this.title != null) json.put("title", this.title.buildJSON());
+		if (this.tooltip != null) json.put("tooltip", this.tooltip.buildJSON());
+		if (this.x_axis != null) json.put("x_axis", this.x_axis.buildJSON());
+		if (this.y_axis != null) json.put("y_axis", this.y_axis.buildJSON());
+		if (this.y_axis_right != null) json.put("y_axis_right", this.y_axis_right.buildJSON());
+		if (this.radar_axis != null) json.put("radar_axis", this.radar_axis.buildJSON());
+		if (this.y_legend != null) json.put("y_legend", this.y_legend.buildJSON());
+		if (this.x_legend != null) json.put("x_legend", this.x_legend.buildJSON());
 		if (this.bg_colour != null) json.put("bg_colour", new JSONString(this.bg_colour));
 		if (this.elements == null) return json;
 		final JSONArray ary = new JSONArray();
 		int index = 0;
 		for (final Element e : this.elements) {
-			ary.set(index++, e.buildJSONObject());
+			ary.set(index++, e.buildJSON());
 		}
 		json.put("elements", ary);
 		return json;
@@ -292,10 +293,10 @@ public class ChartData implements JSONizable {
 	}
 
 	/**
-	 * Returns the json formatted string of this chart data object. Calls buildJSONObject()
+	 * Returns the json formatted string of this chart data object. Calls.buildJSON()
 	 * @return json string
 	 */
 	public String toString() {
-		return buildJSONObject().toString();
+		return buildJSON().toString();
 	}
 }

@@ -21,6 +21,7 @@ import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONValue;
 /**
  * Class for an OFC area chart that extends LineChart   
  * @see com.rednels.ofcgwt.client.model.elements.LineChart
@@ -105,10 +106,10 @@ public class AreaChart extends LineChart {
     }
 
 	/* (non-Javadoc)
-	 * @see com.rednels.ofcgwt.client.model.elements.LineChart#buildJSONObject()
+	 * @see com.rednels.ofcgwt.client.model.elements.LineChart.buildJSON()
 	 */
-	public JSONObject buildJSONObject() {
-    	JSONObject json = super.buildJSONObject();
+	public JSONValue buildJSON() {
+    	JSONObject json = (JSONObject)super.buildJSON();
     	if (fillAlpha != null) json.put("fill-alpha", new JSONNumber(fillAlpha));
     	if (fillColour != null) json.put("fill", new JSONString(fillColour)); 
     	if (loop != null) json.put("loop", JSONBoolean.getInstance(loop));   

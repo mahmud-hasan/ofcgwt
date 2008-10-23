@@ -23,6 +23,7 @@ import java.util.List;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
 /**
  * Class for an OFC line chart that extends Element   
@@ -176,10 +177,10 @@ public class LineChart extends Element implements JSONizable {
     }
 
 	/* (non-Javadoc)
-	 * @see com.rednels.ofcgwt.client.model.elements.Element#buildJSONObject()
+	 * @see com.rednels.ofcgwt.client.model.elements.Element.buildJSON()
 	 */
-	public JSONObject buildJSONObject() {
-    	JSONObject json = super.buildJSONObject();
+	public JSONValue buildJSON() {
+    	JSONObject json = (JSONObject)super.buildJSON();
     	if (width != null) json.put("width", new JSONNumber(width));
     	if (dotSize != null) json.put("dot-size", new JSONNumber(dotSize));
     	if (haloSize != null) json.put("halo-size", new JSONNumber(haloSize));
@@ -350,9 +351,9 @@ public class LineChart extends Element implements JSONizable {
         }
 
     	/* (non-Javadoc)
-	     * @see com.rednels.ofcgwt.client.model.JSONizable#buildJSONObject()
+	     * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
 	     */
-	    public JSONObject buildJSONObject() {
+	    public JSONValue buildJSON() {
         	JSONObject json = new JSONObject();
         	if (haloSize != null) json.put("halo-size", new JSONNumber(haloSize.doubleValue()));
         	if (dotSize != null) json.put("dot-size", new JSONNumber(dotSize.doubleValue())); 

@@ -25,6 +25,7 @@ import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
 /**
  * Class for an OFC stacked bar chart that extends Element   
@@ -56,10 +57,8 @@ public class StackedBarChart extends Element implements JSONizable {
      * 
      * @param stacks the stacks
      */
-    public void addStack(List<Stack> stacks) {    	
-    	for (Stack s : stacks) {
-    		values.addAll(s.values);
-    	}
+    public void addStack(List<Stack> stacks) {
+    	values.addAll(stacks);
     }    
 
     /**
@@ -75,6 +74,22 @@ public class StackedBarChart extends Element implements JSONizable {
          */
         public Stack() {
             values = new ArrayList<Object>();
+        }
+        
+        /**
+         * Creates a new stack with numbers.
+         */
+        public Stack(Number... numbers) {
+            values = new ArrayList<Object>();
+        	this.addValues(numbers);
+        }
+        
+        /**
+         * Creates a new stack with values.
+         */
+        public Stack(StackValue... values) {
+            this.values = new ArrayList<Object>();
+        	this.addStackValues(values);
         }
         
         /**
@@ -123,19 +138,27 @@ public class StackedBarChart extends Element implements JSONizable {
         }
 
     	/* (non-Javadoc)
-	     * @see com.rednels.ofcgwt.client.model.JSONizable#buildJSONObject()
+	     * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
 	     */
-	    public JSONObject buildJSONObject() {
-        	JSONObject json = new JSONObject();
-        	if (values == null) return json;    	
+	    public JSONValue buildJSON() {
+//        	JSONObject json = new JSONObject();
+//        	if (values == null) return json;    	
+//        	JSONArray ary = new JSONArray();
+//        	int index = 0;
+//        	for (Object o : values) {
+//        		if (o instanceof Number) ary.set(index++, new JSONNumber(((Number)o).doubleValue()));
+//        		if (o instanceof StackValue) ary.set(index++, ((StackValue)o).buildJSON());
+//            }
+//        	if (index != 0) json.put("labels",ary);
+//        	return json;    	
         	JSONArray ary = new JSONArray();
+        	if (values == null) return ary;
         	int index = 0;
         	for (Object o : values) {
         		if (o instanceof Number) ary.set(index++, new JSONNumber(((Number)o).doubleValue()));
-        		if (o instanceof StackValue) ary.set(index++, ((StackValue)o).buildJSONObject());
+        		if (o instanceof StackValue) ary.set(index++, ((StackValue)o).buildJSON());
             }
-        	if (index != 0) json.put("labels",ary);
-        	return json;
+        	return ary;
     	}
     }
     
@@ -207,9 +230,9 @@ public class StackedBarChart extends Element implements JSONizable {
         }
 
     	/* (non-Javadoc)
-	     * @see com.rednels.ofcgwt.client.model.JSONizable#buildJSONObject()
+	     * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
 	     */
-	    public JSONObject buildJSONObject() {
+	    public JSONValue buildJSON() {
         	JSONObject json = new JSONObject();
         	if (val != null) json.put("val", new JSONNumber(val.doubleValue())); 	
         	if (colour != null) json.put("colour", new JSONString(colour));

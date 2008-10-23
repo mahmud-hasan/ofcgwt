@@ -25,6 +25,7 @@ import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
 /**
  * Class for an OFC x-axis that extends AbstractAxis   
@@ -130,12 +131,12 @@ public class XAxis extends AbstractAxis implements JSONizable {
     }    
 
 	/* (non-Javadoc)
-	 * @see com.rednels.ofcgwt.client.model.axis.AbstractAxis#buildJSONObject()
+	 * @see com.rednels.ofcgwt.client.model.axis.AbstractAxis.buildJSON()
 	 */
-	public JSONObject buildJSONObject() {		
-    	JSONObject json = super.buildJSONObject();
+	public JSONValue buildJSON() {		
+    	JSONObject json = (JSONObject)super.buildJSON();
     	if (tickHeight != null) json.put("tick-height", new JSONNumber(tickHeight));    	
-    	if (labels != null) json.put("labels", labels.buildJSONObject());
+    	if (labels != null) json.put("labels", labels.buildJSON());
     	return json;
 	}
 	
@@ -235,17 +236,17 @@ public class XAxis extends AbstractAxis implements JSONizable {
 	    }
 
 		/* (non-Javadoc)
-		 * @see com.rednels.ofcgwt.client.model.axis.Label#buildJSONObject()
+		 * @see com.rednels.ofcgwt.client.model.axis.Label.buildJSON()
 		 */
-		public JSONObject buildJSONObject() {		
-	    	JSONObject json = super.buildJSONObject();
+		public JSONValue buildJSON() {		
+	    	JSONObject json = (JSONObject)super.buildJSON();
 	    	if (steps != null) json.put("steps", new JSONNumber(steps));
 	    	if (labels == null) return json;
 	    	JSONArray ary = new JSONArray();
 	    	int index = 0;
 	    	for (Object o : getLabels()) {
 	    		if (o instanceof String) ary.set(index++, new JSONString((String)o));
-	    		if (o instanceof Label) ary.set(index++, ((Label)o).buildJSONObject());
+	    		if (o instanceof Label) ary.set(index++, ((Label)o).buildJSON());
 	        }
 	    	if (index != 0) json.put("labels",ary);
 	    	return json;

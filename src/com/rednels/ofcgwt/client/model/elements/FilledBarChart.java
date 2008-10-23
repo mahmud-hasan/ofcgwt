@@ -19,6 +19,7 @@ package com.rednels.ofcgwt.client.model.elements;
 
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
 /**
  * Class for an OFC filled bar chart (outlined) that extends BarChart   
@@ -79,10 +80,10 @@ public class FilledBarChart extends BarChart implements JSONizable {
     }
 
 	/* (non-Javadoc)
-	 * @see com.rednels.ofcgwt.client.model.elements.BarChart#buildJSONObject()
+	 * @see com.rednels.ofcgwt.client.model.elements.BarChart.buildJSON()
 	 */
-	public JSONObject buildJSONObject() {
-    	JSONObject json = super.buildJSONObject();
+	public JSONValue buildJSON() {
+    	JSONObject json = (JSONObject)super.buildJSON();
     	if (outlineColour != null) json.put("outline-colour", new JSONString(outlineColour)); 	
     	return json;
 	}
@@ -148,10 +149,10 @@ public class FilledBarChart extends BarChart implements JSONizable {
         }
 
     	/* (non-Javadoc)
-	     * @see com.rednels.ofcgwt.client.model.elements.BarChart.Bar#buildJSONObject()
+	     * @see com.rednels.ofcgwt.client.model.elements.BarChart.Bar.buildJSON()
 	     */
-	    public JSONObject buildJSONObject() {
-        	JSONObject json = super.buildJSONObject();
+	    public JSONValue buildJSON() {
+        	JSONObject json = (JSONObject)super.buildJSON();
         	if (outlineColour != null) json.put("outline-colour", new JSONString(outlineColour)); 	
         	return json;
     	}
