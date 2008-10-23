@@ -51,7 +51,6 @@ import com.rednels.ofcgwt.client.model.elements.BarChart.BarStyle;
 import com.rednels.ofcgwt.client.model.elements.LineChart.LineStyle;
 import com.rednels.ofcgwt.client.model.elements.ScatterChart.ScatterStyle;
 import com.rednels.ofcgwt.client.model.elements.StackedBarChart.Stack;
-import com.rednels.ofcgwt.client.model.elements.StackedBarChart.StackValue;
 
 
 /**
@@ -526,11 +525,11 @@ public class Demo implements EntryPoint {
 		
 		StackedBarChart stack = new StackedBarChart();
 		stack.setTooltip("#total#<br>(bar total)");
-		stack.addStack(new Stack(2.5,5));
-		stack.addStack(new Stack(new StackedBarChart.StackValue(7,"#ffdd00")));
-		stack.addStack(new Stack(new StackedBarChart.StackValue(5, "#ff0000")));
-		Stack s = new Stack(2, 2, 2);
-		s.addStackValues(new StackedBarChart.StackValue(2, "#ff00ff"));
+		stack.addStack(new Stack(Random.nextDouble()*2.5,Random.nextDouble()*5));
+		stack.addStack(new Stack(new StackedBarChart.StackValue(Random.nextDouble()*7,"#ffdd00")));
+		stack.addStack(new Stack(new StackedBarChart.StackValue(Random.nextDouble()*5, "#ff0000")));
+		Stack s = new Stack(Random.nextDouble()*2, Random.nextDouble()*2, Random.nextDouble()*2);
+		s.addStackValues(new StackedBarChart.StackValue(Random.nextDouble()*2, "#ff00ff"));
 		stack.addStack(s);
 		
 		XAxis xa = new XAxis();
@@ -543,7 +542,6 @@ public class Demo implements EntryPoint {
 		cd.setYAxis(ya);
 				
 		cd.addElements(stack);
-		System.out.println(cd.toString());
 		return cd;
 	}
 }
