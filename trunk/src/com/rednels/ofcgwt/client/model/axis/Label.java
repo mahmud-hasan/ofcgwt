@@ -21,6 +21,7 @@ import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
 /**
  * Base class for an OFC label  
@@ -184,9 +185,9 @@ public class Label implements JSONizable {
     }
     
 	/* (non-Javadoc)
-	 * @see com.rednels.ofcgwt.client.model.JSONizable#buildJSONObject()
+	 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
 	 */
-	public JSONObject buildJSONObject() {
+	public JSONValue buildJSON() {
     	JSONObject json = new JSONObject();
     	if (text != null) json.put("text", new JSONString(text));
     	if (colour != null) json.put("colour", new JSONString(colour));

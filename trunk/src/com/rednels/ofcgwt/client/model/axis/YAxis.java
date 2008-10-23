@@ -25,6 +25,7 @@ import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
 /**
  * Class for an OFC y-axis that extends AbstractAxis   
@@ -93,10 +94,10 @@ public class YAxis extends AbstractAxis implements JSONizable {
     }    
 
 	/* (non-Javadoc)
-	 * @see com.rednels.ofcgwt.client.model.axis.AbstractAxis#buildJSONObject()
+	 * @see com.rednels.ofcgwt.client.model.axis.AbstractAxis.buildJSON()
 	 */
-	public JSONObject buildJSONObject() {		
-    	JSONObject json = super.buildJSONObject();
+	public JSONValue buildJSON() {		
+    	JSONObject json = (JSONObject)super.buildJSON();
     	if (tickLength != null) json.put("tick-length", new JSONNumber(tickLength));
     	if (labels == null) return json;
     	JSONArray ary = new JSONArray();

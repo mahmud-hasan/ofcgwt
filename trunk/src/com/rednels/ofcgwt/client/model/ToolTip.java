@@ -20,6 +20,7 @@ package com.rednels.ofcgwt.client.model;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONValue;
 /**
  * Base class for an OFC tooltip element   
  */
@@ -155,9 +156,9 @@ public class ToolTip implements JSONizable {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.rednels.ofcgwt.client.model.JSONizable#buildJSONObject()
+	 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
 	 */
-	public JSONObject buildJSONObject() {
+	public JSONValue buildJSON() {
     	JSONObject json = new JSONObject();
     	if (titlestyle != null) json.put("title", new JSONString(titlestyle));
     	if (bodystyle != null) json.put("body", new JSONString(bodystyle));

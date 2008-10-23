@@ -23,6 +23,7 @@ import java.util.Collection;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
 /**
  * Class for an OFC scatter chart that extends Element   
@@ -115,10 +116,10 @@ public class ScatterChart extends Element implements JSONizable {
     }
 
 	/* (non-Javadoc)
-	 * @see com.rednels.ofcgwt.client.model.elements.Element#buildJSONObject()
+	 * @see com.rednels.ofcgwt.client.model.elements.Element.buildJSON()
 	 */
-	public JSONObject buildJSONObject() {
-    	JSONObject json = super.buildJSONObject();
+	public JSONValue buildJSON() {
+    	JSONObject json = (JSONObject)super.buildJSON();
     	if (dotSize != null) json.put("dot-size", new JSONNumber(dotSize.doubleValue()));
     	if (colour != null) json.put("colour", new JSONString(colour));    	
     	return json;
@@ -216,9 +217,9 @@ public class ScatterChart extends Element implements JSONizable {
         }
 
     	/* (non-Javadoc)
-	     * @see com.rednels.ofcgwt.client.model.JSONizable#buildJSONObject()
+	     * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
 	     */
-	    public JSONObject buildJSONObject() {
+	    public JSONValue buildJSON() {
         	JSONObject json = new JSONObject();
         	if (x != null) json.put("x", new JSONNumber(x.doubleValue()));
         	if (y != null) json.put("y", new JSONNumber(y.doubleValue()));

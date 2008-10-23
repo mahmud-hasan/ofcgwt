@@ -23,6 +23,7 @@ import java.util.List;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
 /**
  * Class for an OFC horizontal bar chart that extends Element   
@@ -112,10 +113,10 @@ public class HorizontalBarChart extends Element implements JSONizable {
     }
 
 	/* (non-Javadoc)
-	 * @see com.rednels.ofcgwt.client.model.elements.Element#buildJSONObject()
+	 * @see com.rednels.ofcgwt.client.model.elements.Element.buildJSON()
 	 */
-	public JSONObject buildJSONObject() {
-    	JSONObject json = super.buildJSONObject();
+	public JSONValue buildJSON() {
+    	JSONObject json = (JSONObject)super.buildJSON();
     	if (colour != null) json.put("colour", new JSONString(colour)); 	
     	return json;
 	}
@@ -253,9 +254,9 @@ public class HorizontalBarChart extends Element implements JSONizable {
 		}
 
     	/* (non-Javadoc)
-	     * @see com.rednels.ofcgwt.client.model.JSONizable#buildJSONObject()
+	     * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
 	     */
-	    public JSONObject buildJSONObject() {
+	    public JSONValue buildJSON() {
         	JSONObject json = new JSONObject();
         	if (left != null) json.put("left", new JSONNumber(left.doubleValue()));
         	if (right != null) json.put("right", new JSONNumber(right.doubleValue())); 	

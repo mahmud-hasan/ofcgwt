@@ -17,22 +17,14 @@ See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
 */
 package com.gwttest.client;
 
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.DecoratedTabPanel;
 import com.google.gwt.user.client.ui.DecoratorPanel;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -53,10 +45,13 @@ import com.rednels.ofcgwt.client.model.elements.LineChart;
 import com.rednels.ofcgwt.client.model.elements.PieChart;
 import com.rednels.ofcgwt.client.model.elements.ScatterChart;
 import com.rednels.ofcgwt.client.model.elements.SketchBarChart;
+import com.rednels.ofcgwt.client.model.elements.StackedBarChart;
 import com.rednels.ofcgwt.client.model.elements.AreaChart.AreaStyle;
 import com.rednels.ofcgwt.client.model.elements.BarChart.BarStyle;
 import com.rednels.ofcgwt.client.model.elements.LineChart.LineStyle;
 import com.rednels.ofcgwt.client.model.elements.ScatterChart.ScatterStyle;
+import com.rednels.ofcgwt.client.model.elements.StackedBarChart.Stack;
+import com.rednels.ofcgwt.client.model.elements.StackedBarChart.StackValue;
 
 
 /**
@@ -82,12 +77,12 @@ public class Demo implements EntryPoint {
 	         );
 	    vp.add(homeText);
 	    vp.setCellHeight(homeText, "300");
-	    vp.add(new HTML("Update Speed <i>(0-off, 5-max)</i>"));
-	    final SliderBar slider = new SliderBar(0.0,3.0);
+	    vp.add(new HTML("Update Speed <i>(0-off, 4-max)</i>"));
+	    final SliderBar slider = new SliderBar(0.0,4.0);
 		slider.setStepSize(1.0);
 		slider.setCurrentValue(1.0);
-		slider.setNumTicks(3);
-		slider.setNumLabels(3);
+		slider.setNumTicks(4);
+		slider.setNumLabels(4);
 	    slider.setWidth("100%");
 	    vp.add(slider);
 	    
@@ -188,6 +183,12 @@ public class Demo implements EntryPoint {
 				chart.setJsonData(getSketchChartData().toString());
 			}
 		}));
+
+		chartlist.add(createRadioButton("StackChart",new Command(){
+			public void execute() {
+				chart.setJsonData(getStackChartData().toString());
+			}
+		}));
 					
 		hp.add(chartlist);
 	    hp.setCellWidth(chartlist, "300");
@@ -218,6 +219,10 @@ public class Demo implements EntryPoint {
 
 				case 3:
 					updater.scheduleRepeating(200);
+					break;
+
+				case 4:
+					updater.scheduleRepeating(50);
 					break;
 				}
 			}});
@@ -513,5 +518,32 @@ public class Demo implements EntryPoint {
 		sketch.addValues(Random.nextInt(5)+1,Random.nextInt(5)+1);		
 		cd2.addElements(sketch);
 		return cd2;
+	}
+
+	private ChartData getStackChartData() {	
+		ChartData cd = new ChartData("Investments in ($M)","font-size: 14px; font-family: Verdana; text-align: center;");
+		cd.setBackgroundColour("#ffffff");
+		
+		StackedBarChart stack = new StackedBarChart();
+		stack.setTooltip("#total#<br>(bar total)");
+		stack.addStack(new Stack(2.5,5));
+		stack.addStack(new Stack(new StackedBarChart.StackValue(7,"#ffdd00")));
+		stack.addStack(new Stack(new StackedBarChart.StackValue(5, "#ff0000")));
+		Stack s = new Stack(2, 2, 2);
+		s.addStackValues(new StackedBarChart.StackValue(2, "#ff00ff"));
+		stack.addStack(s);
+		
+		XAxis xa = new XAxis();
+		xa.setLabels("John","Frank","Mary","Andy");
+		xa.setMax(4);
+		cd.setXAxis(xa);
+		
+		YAxis ya = new YAxis();
+		ya.setRange( 0, 14, 7 );
+		cd.setYAxis(ya);
+				
+		cd.addElements(stack);
+		System.out.println(cd.toString());
+		return cd;
 	}
 }

@@ -19,6 +19,7 @@ package com.rednels.ofcgwt.client.model;
 
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONValue;
 
 /**
  * Base class for an OFC text element   
@@ -82,9 +83,9 @@ public class Text implements JSONizable {
     }
 
 	/* (non-Javadoc)
-	 * @see com.rednels.ofcgwt.client.model.JSONizable#buildJSONObject()
+	 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
 	 */
-	public JSONObject buildJSONObject() {
+	public JSONValue buildJSON() {
     	JSONObject json = new JSONObject();
     	if (text != null) json.put("text", new JSONString(text));
     	if (style != null) json.put("style", new JSONString(style));
