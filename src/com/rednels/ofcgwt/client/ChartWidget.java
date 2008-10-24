@@ -86,7 +86,10 @@ public class ChartWidget extends Widget implements IChartData {
 	 * @return the swf url string
 	 */
 	public static String getSWFURL(boolean iefix, String id) {
-		String swfurl = "open-flash-chart.swf";		
+		String baseurl = GWT.getHostPageBaseURL();
+		// test if it in hosted mode or not.
+		if (GWT.isScript()) baseurl = GWT.getModuleBaseURL();	
+		String swfurl = baseurl + "open-flash-chart.swf";
 		if (iefix) swfurl += ("?id="+id+(new Date().getTime())); 
 		return swfurl;
 	}
