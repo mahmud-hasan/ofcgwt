@@ -44,6 +44,9 @@ public abstract class Element implements JSONizable {
     /** The tooltip. */
     private String tooltip; 
     
+    /** The onClick. */
+	private String onClick;
+    
     /** The values. */
     protected List<Object> values = new ArrayList<Object>();
     
@@ -102,6 +105,24 @@ public abstract class Element implements JSONizable {
     }
     
     /**
+     * Gets the onClick.
+     * 
+     * @return the onClick
+     */
+    public String getOnClick() {
+        return onClick;
+    }
+    
+    /**
+     * Sets the onClick.
+     * 
+     * @param onClick the onClick javascript method or url
+     */
+    public void setOnClick(String onClick) {
+        this.onClick = onClick;
+    }
+    
+    /**
      * Gets the values.
      * 
      * @return the values
@@ -148,6 +169,7 @@ public abstract class Element implements JSONizable {
     	if (text != null) json.put("text", new JSONString(text));
     	if (fontSize != null) json.put("font-size", new JSONNumber(fontSize));
     	if (tooltip != null) json.put("tip", new JSONString(tooltip));
+    	if (onClick != null) json.put("on-click", new JSONString(onClick));
     	if (values == null) return json;    	
     	JSONArray ary = new JSONArray();
     	int index = 0;
