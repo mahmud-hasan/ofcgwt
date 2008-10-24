@@ -303,6 +303,9 @@ public class PieChart extends Element implements JSONizable{
         /** The font size. */
         private String fontSize;
         
+        /** The onClick. */
+    	private String onClick;
+        
         /**
          * Creates a new slice.
          * 
@@ -349,6 +352,24 @@ public class PieChart extends Element implements JSONizable{
 		public String getFontSize() {
 			return fontSize;
 		}
+	    
+	    /**
+	     * Gets the onClick.
+	     * 
+	     * @return the onClick
+	     */
+	    public String getOnClick() {
+	        return onClick;
+	    }
+	    
+	    /**
+	     * Sets the onClick.
+	     * 
+	     * @param onClick the onClick javascript method or url
+	     */
+	    public void setOnClick(String onClick) {
+	        this.onClick = onClick;
+	    }
 
 		/**
 		 * Gets the value.
@@ -377,6 +398,7 @@ public class PieChart extends Element implements JSONizable{
         	if (label != null) json.put("label", new JSONString(label));
         	if (labelColour != null) json.put("label-colour", new JSONString(labelColour));
         	if (fontSize != null) json.put("font-size", new JSONString(fontSize));
+        	if (onClick != null) json.put("on-click", new JSONString(onClick));
         	return json;
     	}
     }

@@ -241,6 +241,9 @@ public class LineChart extends Element implements JSONizable {
         /** The colour. */
         private String colour;
         
+        /** The onClick. */
+    	private String onClick;
+        
         /**
          * Creates a new dot.
          * 
@@ -349,6 +352,24 @@ public class LineChart extends Element implements JSONizable {
         public void setColour(String colour) {
             this.colour = colour;
         }
+	    
+	    /**
+	     * Gets the onClick.
+	     * 
+	     * @return the onClick
+	     */
+	    public String getOnClick() {
+	        return onClick;
+	    }
+	    
+	    /**
+	     * Sets the onClick.
+	     * 
+	     * @param onClick the onClick javascript method or url
+	     */
+	    public void setOnClick(String onClick) {
+	        this.onClick = onClick;
+	    }
 
     	/* (non-Javadoc)
 	     * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
@@ -359,6 +380,7 @@ public class LineChart extends Element implements JSONizable {
         	if (dotSize != null) json.put("dot-size", new JSONNumber(dotSize.doubleValue())); 
         	if (value != null) json.put("value", new JSONNumber(value.doubleValue())); 	
         	if (colour != null) json.put("colour", new JSONString(colour));
+        	if (onClick != null) json.put("on-click", new JSONString(onClick));
         	return json;
     	}
     }
