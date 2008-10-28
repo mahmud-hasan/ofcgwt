@@ -47,6 +47,7 @@ public class ChartWidget extends Widget implements IChartData {
 	private String height = "100%";
 	private String innerDivTextForFlashPlayerNotFound = "FlashPlayer ${flashPlayer.version} is required.";
 	private boolean hasFlashPlayer = false;
+	private String flashurl = "open-flash-chart.swf";
 	private static final CacheFixImpl cacheFixImpl = GWT.create(CacheFixImpl.class);
 
 	/**
@@ -70,7 +71,7 @@ public class ChartWidget extends Widget implements IChartData {
 			getElement().setInnerHTML("<div id=\"embed_" + swfId + "\">" + emptyInnerDiv() + "</div>");
 			String w = getWidth();
 			String h = getHeight();
-			injectSWF(getSWFURL(isCacheFixEnabled(),swfId), swfId, w, h, MIN_PLAYER_VERSION, ALTERNATE_SWF_SRC);
+			injectSWF(getInternalSWFURL(isCacheFixEnabled(),flashurl,swfId), swfId, w, h, MIN_PLAYER_VERSION, ALTERNATE_SWF_SRC);
 			isSWFInjected = true;
 		}
 		super.onLoad();
@@ -81,17 +82,13 @@ public class ChartWidget extends Widget implements IChartData {
 	}
 
 	/**
-	 * Returns the open flash chart swf url
+	 * Used internally to returns the correct open flash chart swf url
 	 * 
 	 * @return the swf url string
 	 */
-	public static String getSWFURL(boolean iefix, String id) {
-		String baseurl = GWT.getHostPageBaseURL();
-		// test if it in hosted mode or not.
-		if (GWT.isScript()) baseurl = GWT.getModuleBaseURL();	
-		String swfurl = baseurl + "open-flash-chart.swf";
-		if (iefix) swfurl += ("?id="+id+(new Date().getTime())); 
-		return swfurl;
+	public static String getInternalSWFURL(boolean iefix, String flashurl, String id) {
+		if (!iefix) return flashurl;
+		return flashurl + ("?id="+id+(new Date().getTime()));
 	}
 
 	/**
@@ -170,7 +167,25 @@ public class ChartWidget extends Widget implements IChartData {
 			chart.handleChartReadyEvent();
 		}
 	}
+	
+	/**
+	 * Gets the current OFC flash URL. Defaults to just "open-flash-chart.swf"
+	 * 
+	 * @return the flashurl
+	 */
+	public String getFlashUrl() {		
+		return flashurl;
+	}
 
+	/**
+	 * Sets the OFC flash URL. ie "\path\open-flash-chart.swf"
+	 * 
+	 * @param url string
+	 */
+	public void setFlashUrl(String url) {
+		this.flashurl = url;
+	}
+	
 	/**
 	 * Notifies registered chart listeners that the image was saved
 	 */
