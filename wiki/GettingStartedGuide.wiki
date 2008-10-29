@@ -1,4 +1,4 @@
-#summary Getting Started Guide for OFCGWT (beta6)
+#summary Getting Started Guide for OFCGWT
 #labels Featured
 
 = Introduction =
