@@ -10,18 +10,16 @@ OFCGWT is a wrapper library around [http://teethgrinder.co.uk/open-flash-chart-2
 OFCGWT is based on version 2 of OFC ([http://teethgrinder.co.uk/open-flash-chart-2/ Open Flash Chart v2]). Version 1 is no longer being actively developed, does not have as advanced Javascript interaction (kinda required for GWT) and is built on non-open source tools from Adobe (which makes any specific customisation of OFC kinda limitted).
 
 === Charts don't show when I'm using Netbeans IDE? ===
-Few folk faced the same problem, and we have no clue why the Netbeans module does not fully comply with the GWT URL scheme. A trivial workaround is:
+A few folk faced the same problem, and we have no clue why the Netbeans module does not fully comply with the GWT URL scheme. A trivial workaround is:
 
 Edit the nbproject/build-gwt.xml file and replace the last line of the first target by:
-{{{
-<move todir="${build.web.dir}/${gwt.output.dir}">
+{{{<move todir="${build.web.dir}/${gwt.output.dir}">
             <fileset dir="${build.web.dir}/${gwt.module}"/>
             <fileset dir="${build.web.dir}">
                 <include name="**/*.html"/>
                 <exclude name="**/*.css"/>
             </fileset>
-</move>
-}}}
+</move>}}}
 This will actually move all the .css and .html files of your web folder to the correct output dir. You then need to be sure that the correct .js file is loaded in your welcomeGWT.html file. That is you need to remove the org.test.Main/ part.
 
 === How do I get those great ExtJS containers? ===
