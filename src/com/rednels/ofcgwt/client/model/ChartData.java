@@ -19,7 +19,7 @@ package com.rednels.ofcgwt.client.model;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.Vector;
 
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
@@ -51,7 +51,7 @@ public class ChartData implements JSONizable {
 	private Text y_legend;
 	private Text x_legend;
 	private String bg_colour;
-	private final Collection<Element> elements = new HashSet<Element>();
+	private final Collection<Element> elements = new Vector<Element>();
 
 	/**
 	 * Creates a new chart data instance.
