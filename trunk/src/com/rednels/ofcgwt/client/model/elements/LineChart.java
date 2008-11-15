@@ -24,6 +24,8 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
+import com.rednels.ofcgwt.client.IChartData;
+import com.rednels.ofcgwt.client.IOnClickListener;
 import com.rednels.ofcgwt.client.model.JSONizable;
 /**
  * Class for an OFC line chart that extends Element   
@@ -369,6 +371,15 @@ public class LineChart extends Element implements JSONizable {
 	     */
 	    public void setOnClick(String onClick) {
 	        this.onClick = onClick;
+	    }
+	    
+	    /**
+	     * Adds an onClick event. 
+	     * 
+	     * @param listener the onClick Listener
+	     */
+	    public void addOnClickListener(IChartData chart, IOnClickListener listener) {	    	
+			this.onClick = chart.addOnClickListener(listener);
 	    }
 
     	/* (non-Javadoc)

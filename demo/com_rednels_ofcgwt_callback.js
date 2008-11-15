@@ -27,3 +27,9 @@ function ofc_ready(id)
 	// this function is for callback support for com.rednels.ofcgwt !! DO NOT REMOVE !!
 	window.ofcgwtNotifyReady(id);
 }
+
+function ofc_onclick(id,evt)
+{
+	// this function is for callback support for com.rednels.ofcgwt !! DO NOT REMOVE !!
+	window.ofcgwtOnClick(id,evt);
+}
