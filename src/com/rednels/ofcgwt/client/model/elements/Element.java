@@ -26,6 +26,8 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
+import com.rednels.ofcgwt.client.IChartData;
+import com.rednels.ofcgwt.client.IOnClickListener;
 import com.rednels.ofcgwt.client.model.JSONizable;
 /**
  * Base abstract class for OFC elements 
@@ -46,6 +48,8 @@ public abstract class Element implements JSONizable {
     
     /** The onClick. */
 	private String onClick;
+
+	/// set_on_click("functionname('swfid','eventid')");
     
     /** The values. */
     protected List<Object> values = new ArrayList<Object>();
@@ -120,6 +124,15 @@ public abstract class Element implements JSONizable {
      */
     public void setOnClick(String onClick) {
         this.onClick = onClick;
+    }
+    
+    /**
+     * Adds an onClick event. 
+     * 
+     * @param listener the onClick Listener
+     */
+    public void addOnClickListener(IChartData chart, IOnClickListener listener) {	    	
+		this.onClick = chart.addOnClickListener(listener);
     }
     
     /**

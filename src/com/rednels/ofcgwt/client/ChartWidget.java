@@ -36,7 +36,8 @@ public class ChartWidget extends Widget implements IChartData {
 	public static final String ALTERNATE_SWF_SRC = "expressInstall.swf";
 	private static ArrayList<IChartData> charts = new ArrayList<IChartData>();
 
-	private ArrayList<IChartListener> listeners = new ArrayList<IChartListener>();
+	private ArrayList<IChartListener> chartListeners = new ArrayList<IChartListener>();	
+	private ArrayList<IOnClickListener> clickListeners = new ArrayList<IOnClickListener>();
 	private static int count = 0;
 	private boolean isSWFInjected = false;
 	private boolean cacheFixEnabled = false;
@@ -142,7 +143,18 @@ public class ChartWidget extends Widget implements IChartData {
 	       @com.rednels.ofcgwt.client.ChartWidget::notify(Ljava/lang/String;)(id);
 	   };
 	   
+	   $wnd.ofcgwtOnClick = function (id,evt) {
+	       @com.rednels.ofcgwt.client.ChartWidget::onclick(Ljava/lang/String;Ljava/lang/String;)(id,evt);
+	   };	   
 	}-*/;
+	
+	@SuppressWarnings("unused")
+	private static String jsonData(String id) {
+		for (IChartData chart: charts) {
+			if (chart.getSwfId().equals(id)) return chart.getJsonData();
+		}	
+		return BLANK_CHART_JSON_DATA;
+	}
 	
 	@SuppressWarnings("unused")
 	private static void notify(String id) {
@@ -152,18 +164,26 @@ public class ChartWidget extends Widget implements IChartData {
 	}
 	
 	@SuppressWarnings("unused")
-	private static String jsonData(String id) {
+	private static void onclick(String id,String evt) {
 		for (IChartData chart: charts) {
-			if (chart.getSwfId().equals(id)) return chart.getJsonData();
+			if (chart.getSwfId().equals(id)) chart.notifyOnClick(evt);
 		}	
-		return BLANK_CHART_JSON_DATA;
+	}
+
+	/**
+	 * Notifies registered chart listeners that the chart is ready
+	 */
+	public void notifyOnClick(String evt) {		
+		for (IOnClickListener clicks : clickListeners) {
+			if (evt.equals(""+clicks.hashCode())) clicks.handleOnClickEvent();					
+		}
 	}
 
 	/**
 	 * Notifies registered chart listeners that the chart is ready
 	 */
 	public void notifyReady() {		
-		for (IChartListener chart : listeners) {
+		for (IChartListener chart : chartListeners) {
 			chart.handleChartReadyEvent();
 		}
 	}
@@ -190,7 +210,7 @@ public class ChartWidget extends Widget implements IChartData {
 	 * Notifies registered chart listeners that the image was saved
 	 */
 	public void notifyImageSaved() {		
-		for (IChartListener chart : listeners) {
+		for (IChartListener chart : chartListeners) {
 			chart.imageSavedEvent();
 		}
 	}
@@ -243,7 +263,7 @@ public class ChartWidget extends Widget implements IChartData {
 
 	/**
 	 * Saves a JPG image of this chart and send the JPG to the url provided.
-	 * Calls Does nothing if the required flash player is not loaded.
+	 * Call does nothing if the required flash player is not loaded.
 	 * 
 	 * @param json a JSON string 
 	 */
@@ -354,7 +374,7 @@ public class ChartWidget extends Widget implements IChartData {
 	 * @param chart an IChartListener 
 	 */
 	public void removeChartListeners(IChartListener chart) {
-		listeners.remove(chart);
+		chartListeners.remove(chart);
 	}
 
 	/**
@@ -362,7 +382,20 @@ public class ChartWidget extends Widget implements IChartData {
 	 * 
 	 * @param chart an IChartListener 
 	 */
-	public void addChartListeners(IChartListener chart) {
-		listeners.add(chart);
+	public void addChartListeners(IChartListener listener) {
+		chartListeners.add(listener);
+	}
+
+
+	/**
+	 * Adds an IOnClickListener that implements the handleOnClickEvent method.
+	 * Return the function signature used in OFC JSON
+	 * 
+	 * @param chart an IChartListener 
+	 * @return function signature String
+	 */
+	public String addOnClickListener(IOnClickListener listener) {
+		clickListeners.add(listener);	
+		return "ofc_onclick('"+getSwfId()+"','"+listener.hashCode()+"')";
 	}
 }

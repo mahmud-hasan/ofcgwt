@@ -34,6 +34,16 @@ public interface IChartData {
 	 * Get the currently set swf ID of this chart widget
 	 * @return swf id String
 	 */
-	public String getSwfId();		
-
+	public String getSwfId();	
+	/**
+	 * Add an IOnClickListener to this chart events and return the function signature for JSON
+	 * @param chart an IChartListener 
+	 * @return function signature String
+	 */
+	public String addOnClickListener(IOnClickListener listener);
+	/**
+	 * Notify that the chart onclick listeners
+	 * @param evtid the event id String 
+	 */
+	public void notifyOnClick(String evtid);
 }
