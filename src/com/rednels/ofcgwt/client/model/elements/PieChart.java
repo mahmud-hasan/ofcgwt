@@ -365,7 +365,7 @@ public class PieChart extends Element implements JSONizable{
 	    }
 	    
 	    /**
-	     * Sets the onClick. Removes all OnClickListeners.
+	     * Sets the onClick.
 	     * 
 	     * @param onClick the onClick javascript method or url
 	     */
@@ -374,8 +374,9 @@ public class PieChart extends Element implements JSONizable{
 	    }
 	    
 	    /**
-	     * Adds an onClick event. Sets onClick string to null.
+	     * Adds an onClick event. Requires an ChartWidget to register the event with.
 	     * 
+	     * @param chart the IChartData
 	     * @param listener the onClick Listener
 	     */
 	    public void addOnClickListener(IChartData chart, IOnClickListener listener) {	    	

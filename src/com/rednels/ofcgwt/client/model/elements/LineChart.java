@@ -374,8 +374,9 @@ public class LineChart extends Element implements JSONizable {
 	    }
 	    
 	    /**
-	     * Adds an onClick event. 
+	     * Adds an onClick event. Requires an ChartWidget to register the event with.
 	     * 
+	     * @param chart the IChartData
 	     * @param listener the onClick Listener
 	     */
 	    public void addOnClickListener(IChartData chart, IOnClickListener listener) {	    	
