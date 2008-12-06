@@ -30,11 +30,11 @@ public abstract class AbstractAxis implements JSONizable {
     private Integer stroke;
     private String colour;
     private String gridColour;
-    private Integer steps;
     private Integer offset;
     private Integer zdepth3d; 
-    private Integer min;
-    private Integer max;
+    private Double steps;
+    private Double min;
+    private Double max;
     
     /**
      * Gets the stroke.
@@ -95,7 +95,7 @@ public abstract class AbstractAxis implements JSONizable {
      * 
      * @return the steps
      */
-    public Integer getSteps() {
+    public Double getSteps() {
         return steps;
     }
     
@@ -104,7 +104,7 @@ public abstract class AbstractAxis implements JSONizable {
      * 
      * @param steps the new steps
      */
-    public void setSteps(Integer steps) {
+    public void setSteps(Double steps) {
         this.steps = steps;
     }
     
@@ -150,7 +150,7 @@ public abstract class AbstractAxis implements JSONizable {
      * 
      * @return the min
      */
-    public Integer getMin() {
+    public Double getMin() {
         return min;
     }
     
@@ -159,7 +159,7 @@ public abstract class AbstractAxis implements JSONizable {
      * 
      * @param min the new min
      */
-    public void setMin(Integer min) {
+    public void setMin(Double min) {
         this.min = min;
     }
     
@@ -168,7 +168,7 @@ public abstract class AbstractAxis implements JSONizable {
      * 
      * @return the max
      */
-    public Integer getMax() {
+    public Double getMax() {
         return max;
     }
     
@@ -177,7 +177,7 @@ public abstract class AbstractAxis implements JSONizable {
      * 
      * @param max the new max
      */
-    public void setMax(Integer max) {
+    public void setMax(Double max) {
         this.max = max;
     }
     
@@ -188,7 +188,7 @@ public abstract class AbstractAxis implements JSONizable {
      * @param max the max
      * @param step the step
      */
-    public void setRange(Integer min, Integer max, Integer step) {
+    public void setRange(Double min, Double max, Double step) {
     	setRange(min,max);
         setSteps(step);
     }
@@ -199,7 +199,7 @@ public abstract class AbstractAxis implements JSONizable {
      * @param min the min
      * @param max the max
      */
-    public void setRange(Integer min, Integer max) {
+    public void setRange(Double min, Double max) {
         setMin(min);
         setMax(max);
     }
