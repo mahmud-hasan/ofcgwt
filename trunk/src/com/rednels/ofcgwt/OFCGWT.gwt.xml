@@ -5,6 +5,6 @@
   	</replace-with>
   	
     <inherits name='com.google.gwt.json.JSON'/>
-    <script src="com_rednels_ofcgwt_callback.js"/>
-	<script src="swfobject.js"/>
+    <script src="ofcgwt/com_rednels_ofcgwt_callback.js"/>
+	<script src="ofcgwt/swfobject.js"/>
 </module>

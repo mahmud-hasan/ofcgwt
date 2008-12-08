@@ -52,7 +52,7 @@ public class ChartWidget extends Widget implements IChartData {
 	private String height = "100%";
 	private String innerDivTextForFlashPlayerNotFound = "FlashPlayer ${flashPlayer.version} is required.";
 	private boolean hasFlashPlayer = false;
-	private String flashurl = "open-flash-chart.swf";
+	private String flashurl = "ofcgwt/open-flash-chart.swf";
 	private static final CacheFixImpl cacheFixImpl = GWT.create(CacheFixImpl.class);
 
 	/**
@@ -250,8 +250,10 @@ public class ChartWidget extends Widget implements IChartData {
 	 * 
 	 * @param id
 	 *            the dom id
-	 * @param json
-	 *            a JSON string
+	 * @param url
+	 *            the url to call
+	 * @param debug
+	 *            enable debug
 	 */
 	public static native void saveImage(String id, String url, boolean debug)
 	/*-{				
@@ -286,8 +288,10 @@ public class ChartWidget extends Widget implements IChartData {
 	 * Saves a JPG image of this chart and send the JPG to the url provided.
 	 * Call does nothing if the required flash player is not loaded.
 	 * 
-	 * @param json
-	 *            a JSON string
+	 * @param url
+	 *            the url to call
+	 * @param debug
+	 *            enable debug
 	 */
 	public void saveJpgImagetoURL(String url, boolean debug) {
 		if (hasFlashPlayer && isSWFInjected) {
@@ -399,17 +403,17 @@ public class ChartWidget extends Widget implements IChartData {
 	/**
 	 * Removes an IChartListener
 	 * 
-	 * @param chart
+	 * @param listener
 	 *            an IChartListener
 	 */
-	public void removeChartListeners(IChartListener chart) {
-		chartListeners.remove(chart);
+	public void removeChartListeners(IChartListener listener) {
+		chartListeners.remove(listener);
 	}
 
 	/**
 	 * Adds an IChartListener that implements the handleChartReadyEvent method
 	 * 
-	 * @param chart
+	 * @param listener
 	 *            an IChartListener
 	 */
 	public void addChartListeners(IChartListener listener) {
@@ -426,7 +430,7 @@ public class ChartWidget extends Widget implements IChartData {
 	 * Element/Pie.Slice etc) and this method will get function signature,
 	 * register the event handler and add to JSON string.
 	 * 
-	 * @param chart
+	 * @param listener
 	 *            an IChartListener
 	 * @return function signature String
 	 */
