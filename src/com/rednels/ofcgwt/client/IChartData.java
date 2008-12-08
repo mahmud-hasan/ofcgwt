@@ -37,7 +37,7 @@ public interface IChartData {
 	public String getSwfId();	
 	/**
 	 * Add an IOnClickListener to this chart events and return the function signature for JSON
-	 * @param chart an IChartListener 
+	 * @param listener an IChartListener 
 	 * @return function signature String
 	 */
 	public String addOnClickListener(IOnClickListener listener);

@@ -29,10 +29,12 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.rednels.ofcgwt.client.ChartWidget;
 import com.rednels.ofcgwt.client.model.ChartData;
+import com.rednels.ofcgwt.client.model.Text;
 import com.rednels.ofcgwt.client.model.ToolTip;
 import com.rednels.ofcgwt.client.model.ToolTip.MouseStyle;
 import com.rednels.ofcgwt.client.model.axis.RadarAxis;
@@ -40,6 +42,7 @@ import com.rednels.ofcgwt.client.model.axis.XAxis;
 import com.rednels.ofcgwt.client.model.axis.YAxis;
 import com.rednels.ofcgwt.client.model.elements.AreaChart;
 import com.rednels.ofcgwt.client.model.elements.BarChart;
+import com.rednels.ofcgwt.client.model.elements.CylinderBarChart;
 import com.rednels.ofcgwt.client.model.elements.HorizontalBarChart;
 import com.rednels.ofcgwt.client.model.elements.LineChart;
 import com.rednels.ofcgwt.client.model.elements.PieChart;
@@ -48,6 +51,7 @@ import com.rednels.ofcgwt.client.model.elements.SketchBarChart;
 import com.rednels.ofcgwt.client.model.elements.StackedBarChart;
 import com.rednels.ofcgwt.client.model.elements.AreaChart.AreaStyle;
 import com.rednels.ofcgwt.client.model.elements.BarChart.BarStyle;
+import com.rednels.ofcgwt.client.model.elements.CylinderBarChart.CylinderStyle;
 import com.rednels.ofcgwt.client.model.elements.LineChart.LineStyle;
 import com.rednels.ofcgwt.client.model.elements.ScatterChart.ScatterStyle;
 import com.rednels.ofcgwt.client.model.elements.StackedBarChart.Stack;
@@ -59,6 +63,7 @@ import com.rednels.ofcgwt.client.model.elements.StackedBarChart.Stack;
 public class Demo implements EntryPoint {
 
 	private Command updateCmd = null;
+	private TextArea ta = null;
 
 	public void onModuleLoad() {
 		SimplePanel main = new SimplePanel();
@@ -90,6 +95,7 @@ public class Demo implements EntryPoint {
 	    
 
 		//add chart	    
+		VerticalPanel vp2 = new VerticalPanel();
 	    DecoratorPanel dp = new DecoratorPanel();
 		SimplePanel pieSp = new SimplePanel();
 		final ChartWidget chart = new ChartWidget();	
@@ -97,13 +103,21 @@ public class Demo implements EntryPoint {
 		chart.setJsonData(getPieChartData().toString());
 		pieSp.add(chart);
 		dp.add(pieSp);
-		hp.add(dp);
+		vp2.add(dp);
+		vp2.add(new HTML("Chart's JSON data:"));
+		ta = new TextArea();
+		ta.setWidth("400");
+		ta.setHeight("100");
+		ta.setText(chart.getJsonData());			
+		vp2.add(ta);
+		hp.add(vp2);
 		
 		VerticalPanel chartlist = new VerticalPanel();
 		chartlist.setSpacing(5);
 		Command cmd = new Command(){
 			public void execute() {
-				chart.setJsonData(getPieChartData().toString());					
+				chart.setJsonData(getPieChartData().toString());	
+				ta.setText(chart.getJsonData());				
 			}
 		};
 		RadioButton rb = createRadioButton("PieChart",cmd);
@@ -113,79 +127,106 @@ public class Demo implements EntryPoint {
 		
 		chartlist.add(createRadioButton("PieChart - Animate",new Command(){
 			public void execute() {
-				chart.setJsonData(getAniPieChartData().toString());					
+				chart.setJsonData(getAniPieChartData().toString());		
+				ta.setText(chart.getJsonData());			
 			}
 		}));
 		
 		chartlist.add(createRadioButton("BarChart - Normal",new Command(){
 			public void execute() {
-				chart.setJsonData(getBarChartNormalData().toString());					
+				chart.setJsonData(getBarChartNormalData().toString());		
+				ta.setText(chart.getJsonData());			
 			}
 		}));
 		
 		chartlist.add(createRadioButton("BarChart - Glass",new Command(){
 			public void execute() {
-				chart.setJsonData(getBarChartGlassData().toString());					
+				chart.setJsonData(getBarChartGlassData().toString());	
+				ta.setText(chart.getJsonData());				
 			}
 		}));
 		
 		chartlist.add(createRadioButton("BarChart - 3D",new Command(){
 			public void execute() {
-				chart.setJsonData(getBarChart3DData().toString());					
+				chart.setJsonData(getBarChart3DData().toString());			
+				ta.setText(chart.getJsonData());		
+			}
+		}));
+		
+		chartlist.add(createRadioButton("CylinderChart",new Command(){
+			public void execute() {
+				chart.setJsonData(getCylinderChartData().toString());		
+				ta.setText(chart.getJsonData());			
+			}
+		}));
+		
+		chartlist.add(createRadioButton("CylinderChart - RoundGlass",new Command(){
+			public void execute() {
+				chart.setJsonData(getCylinderChartGlassData().toString());	
+				ta.setText(chart.getJsonData());				
 			}
 		}));
 
 		chartlist.add(createRadioButton("LineChart",new Command(){
 			public void execute() {
 				chart.setJsonData(getLineChartData().toString());
+				ta.setText(chart.getJsonData());
 			}
 		}));
 
 		chartlist.add(createRadioButton("ScatterChart - Point",new Command(){
 			public void execute() {
 				chart.setJsonData(getScatterPointChartData().toString());
+				ta.setText(chart.getJsonData());
 			}
 		}));
 
 		chartlist.add(createRadioButton("ScatterChart - Line",new Command(){
 			public void execute() {
 				chart.setJsonData(getScatterLineChartData().toString());
+				ta.setText(chart.getJsonData());
 			}
 		}));
 
 		chartlist.add(createRadioButton("RadarChart",new Command(){
 			public void execute() {
 				chart.setJsonData(getRadarChartData().toString());
+				ta.setText(chart.getJsonData());
 			}
 		}));
 
 		chartlist.add(createRadioButton("Horizontal-BarChart",new Command(){
 			public void execute() {
 				chart.setJsonData(getHorizBarChartData().toString());
+				ta.setText(chart.getJsonData());
 			}
 		}));
 
 		chartlist.add(createRadioButton("AreaChart - Hollow",new Command(){
 			public void execute() {
 				chart.setJsonData(getAreaHollowChartData().toString());
+				ta.setText(chart.getJsonData());
 			}
 		}));
 
 		chartlist.add(createRadioButton("AreaChart - Line",new Command(){
 			public void execute() {
 				chart.setJsonData(getAreaLineChartData().toString());
+				ta.setText(chart.getJsonData());
 			}
 		}));
 
 		chartlist.add(createRadioButton("SketchChart",new Command(){
 			public void execute() {
 				chart.setJsonData(getSketchChartData().toString());
+				ta.setText(chart.getJsonData());
 			}
 		}));
 
 		chartlist.add(createRadioButton("StackChart",new Command(){
 			public void execute() {
 				chart.setJsonData(getStackChartData().toString());
+				ta.setText(chart.getJsonData());
 			}
 		}));
 					
@@ -276,7 +317,7 @@ public class Demo implements EntryPoint {
 		cd1.setBackgroundColour("#ffffff");
 		XAxis xa = new XAxis();
 		xa.setLabels("J","F","M","A","M","J","J","A","S","O","N","D");
-		xa.setMax(12);
+//		xa.setMax(12);
 		cd1.setXAxis(xa);
 		YAxis ya = new YAxis();
 		ya.setSteps(16);
@@ -296,7 +337,7 @@ public class Demo implements EntryPoint {
 		cd2.setBackgroundColour("#ffffff");
 		XAxis xa = new XAxis();
 		xa.setLabels("J","F","M","A","M","J","J","A","S","O","N","D");
-		xa.setMax(12);
+//		xa.setMax(12);
 		cd2.setXAxis(xa);
 		YAxis ya = new YAxis();
 		ya.setSteps(16);
@@ -318,7 +359,7 @@ public class Demo implements EntryPoint {
 		XAxis xa = new XAxis();
 		xa.setLabels("J","F","M","A","M","J","J","A","S","O","N","D");
 		xa.setZDepth3D(5);
-		xa.setMax(12);
+//		xa.setMax(12);
 		xa.setTickHeight(4);
 		xa.setOffset(true);
 		xa.setColour("#909090");
@@ -332,6 +373,65 @@ public class Demo implements EntryPoint {
 		bchart3.setTooltip("$#val#");
 		for (int t=0;t<12;t++) {
 			bchart3.addValues(Random.nextInt(50)+50);
+		}	
+		cd3.addElements(bchart3);		
+		return cd3;
+	}
+
+	private ChartData getCylinderChartData() {
+		ChartData cd3 = new ChartData("Sales by Quarter 2008","font-size: 14px; font-family: Verdana; text-align: center;");
+		cd3.setBackgroundColour("#ffffff");
+		XAxis xa = new XAxis();
+		xa.setLabels("Q1","Q2","Q3","Q4");
+		xa.setZDepth3D(5);
+//		xa.setMax(4);
+		xa.setTickHeight(4);
+		xa.setOffset(true);
+		xa.setColour("#909090");
+		cd3.setXAxis(xa);
+		YAxis ya = new YAxis();
+		ya.setSteps(16);
+		ya.setMax(160);
+		cd3.setYAxis(ya);
+		CylinderBarChart bchart3 = new CylinderBarChart();
+		bchart3.setColour("#ff0000");
+		bchart3.setAlpha(.8f);
+		bchart3.setTooltip("$#val#");
+		for (int t=0;t<4;t++) {
+			bchart3.addValues(Random.nextInt(50)+50);
+		}	
+		cd3.addElements(bchart3);		
+		return cd3;
+	}
+
+	private ChartData getCylinderChartGlassData() {
+		ChartData cd3 = new ChartData("Sales by Month 2008","font-size: 14px; font-family: Verdana; text-align: center;");
+		cd3.setBackgroundColour("#ffffff");
+		XAxis xa = new XAxis();
+		xa.setLabels("J","F","M","A","M","J","J","A","S","O","N","D");
+		xa.setZDepth3D(5);
+//		xa.setMax(12);
+		xa.setTickHeight(4);
+		xa.setOffset(true);
+		xa.setColour("#B0B0ff");
+		cd3.setXAxis(xa);
+		YAxis ya = new YAxis();
+		ya.setSteps(16);
+		ya.setMax(160);
+		cd3.setYAxis(ya);
+		CylinderBarChart bchart3 = new CylinderBarChart(CylinderStyle.GLASS);
+		bchart3.setColour("#9090ff");
+		bchart3.setAlpha(0.6f);
+		bchart3.setTooltip("$#val#");
+		for (int t=0;t<12;t++) {
+			if (t%2==0) bchart3.addValues(Random.nextInt(50)+50);
+			else
+			{
+				CylinderBarChart.Bar b = new CylinderBarChart.Bar(Random.nextInt(50)+50);
+				b.setColour("#90ff90");
+				bchart3.addBars(b);
+			}
+			
 		}	
 		cd3.addElements(bchart3);		
 		return cd3;
@@ -359,10 +459,16 @@ public class Demo implements EntryPoint {
 		for (int t=0;t<30;t++) {
 			lc3.addValues(Random.nextDouble()*1.1 + .5);
 		}
+		XAxis xa = new XAxis();
+		xa.setSteps(2);
+		cd.setXAxis(xa);
+		
 		YAxis ya = new YAxis();
 		ya.setMax(2);
 		ya.setMin(-1);
 		cd.setYAxis(ya);
+		
+		cd.setXLegend(new Text("Annual performance over 30 years", "{font-size: 10px; color: #000000}"));
 		
 		cd.addElements(lc1);
 		cd.addElements(lc2);
@@ -461,7 +567,6 @@ public class Demo implements EntryPoint {
 		int floor = Random.nextInt(3)+3;
 		double grade = 1.0 + (Random.nextInt(19)+1)/10.0;
 		int ln=0;
-		System.out.println(grade);
 		for( float i=0; i<6.2; i+=0.2 )
 		{
 			xa.addLabels(""+ln++);
@@ -479,7 +584,7 @@ public class Demo implements EntryPoint {
 		cd2.setBackgroundColour("#ffffff");
 		XAxis xa = new XAxis();
 		xa.setLabels("J","F","M","A","M","J","J","A","S","O","N","D");
-		xa.setMax(12);
+//		xa.setMax(12);
 		cd2.setXAxis(xa);
 		AreaChart area2 = new AreaChart(AreaStyle.LINE);
 		area2.setFillAlpha(0.3f);
@@ -505,7 +610,7 @@ public class Demo implements EntryPoint {
 		cd2.setBackgroundColour("#ffffff");
 		XAxis xa = new XAxis();
 		xa.setLabels("John","Frank","Mary","Andy","Mike","James");
-		xa.setMax(6);
+//		xa.setMax(6);
 		cd2.setXAxis(xa);
 		SketchBarChart sketch = new SketchBarChart("#00aa00","#009900",6);
 		sketch.setTooltip("#val# pies");
@@ -534,7 +639,7 @@ public class Demo implements EntryPoint {
 		
 		XAxis xa = new XAxis();
 		xa.setLabels("John","Frank","Mary","Andy");
-		xa.setMax(4);
+//		xa.setMax(4);
 		cd.setXAxis(xa);
 		
 		YAxis ya = new YAxis();
