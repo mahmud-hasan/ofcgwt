@@ -2,7 +2,7 @@
 <project default="gwt.compile" basedir=".">
 	<property environment="env" />
 	<property name="ofcgwt.src" value="src" />
-	<property name="ofcgwt.release" value="release-1.2" />
+	<property name="ofcgwt.release" value="release-1.2.1" />
 	<property name="ofcgwt.target" location="build" />
 	<property name="gwt.install.path" location="C:/eclipse/dev/gwt" />
 	<property name="gwt.compiler.class" value="com.google.gwt.dev.GWTCompiler" />
