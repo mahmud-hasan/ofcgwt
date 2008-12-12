@@ -110,7 +110,7 @@ public class Events implements EntryPoint {
 				chart.setJsonData(getPieChartUSLayer2().toString());
 			}});
 		pie.addSlices(s2);
-		Slice s3 = new Slice(63500,"UK");
+		Slice s3 = new Slice(63500,"EU");
 		s3.addOnClickListener(chart, new IOnClickListener(){
 			public void handleOnClickEvent() {
 				chart.setJsonData(getPieChartUKLayer2().toString());
@@ -171,21 +171,21 @@ public class Events implements EntryPoint {
 	}	
 
 	private ChartData getPieChartUKLayer2() {	
-		ChartData cd = new ChartData("Sales in UK - Layer 2","font-size: 14px; font-family: Verdana; text-align: center;");
+		ChartData cd = new ChartData("Sales in Europe - Layer 2","font-size: 14px; font-family: Verdana; text-align: center;");
 		cd.setBackgroundColour("#EEEEFF");
 		PieChart pie = new PieChart();
 		pie.setTooltip("#label# $#val#<br>#percent#");
 		pie.setAnimate(false);
 		pie.setStartAngle(33);
 		pie.setColours(getColours());
-		pie.addSlices(new Slice(9000,"Scotland"));
-		pie.addSlices(new Slice(9000,"Wales"));
-		pie.addSlices(new Slice(7500,"Central"));
-		pie.addSlices(new Slice(13000,"Greater London"));
-		pie.addSlices(new Slice(6000,"Midlands"));
-		pie.addSlices(new Slice(5000,"East Anglia"));
-		pie.addSlices(new Slice(6000,"South"));
-		pie.addSlices(new Slice(8000,"North"));
+		pie.addSlices(new Slice(9000,"BE"));
+		pie.addSlices(new Slice(9000,"DE"));
+		pie.addSlices(new Slice(7500,"ES"));
+		pie.addSlices(new Slice(13000,"UK"));
+		pie.addSlices(new Slice(6000,"FR"));
+		pie.addSlices(new Slice(5000,"IT"));
+		pie.addSlices(new Slice(6000,"RU"));
+		pie.addSlices(new Slice(8000,"LT"));
 		cd.addElements(pie);
 		chartLabel.setHTML("This graph shows sales in each state of the UK.<p>Click reset to go back up again.");
 		resetBut.setEnabled(true);

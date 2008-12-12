@@ -24,6 +24,8 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
+import com.rednels.ofcgwt.client.IChartData;
+import com.rednels.ofcgwt.client.IOnClickListener;
 import com.rednels.ofcgwt.client.model.JSONizable;
 /**
  * Class for an OFC bar chart that extends Element   
@@ -174,6 +176,9 @@ public class BarChart extends Element implements JSONizable {
     	
 	    /** The tooltip. */
 	    private String tooltip;
+        
+        /** The onClick. */
+    	private String onClick;
     	
     	/**
 	     * Creates a new bar.
@@ -270,6 +275,34 @@ public class BarChart extends Element implements JSONizable {
 		public void setColour(String colour) {
 			this.colour = colour;
 		}
+	    
+	    /**
+	     * Gets the onClick.
+	     * 
+	     * @return the onClick
+	     */
+	    public String getOnClick() {
+	        return onClick;
+	    }
+	    
+	    /**
+	     * Sets the onClick.
+	     * 
+	     * @param onClick the onClick javascript method or url
+	     */
+	    public void setOnClick(String onClick) {
+	        this.onClick = onClick;
+	    }
+	    
+	    /**
+	     * Adds an onClick event. Requires an ChartWidget to register the event with.
+	     * 
+	     * @param chart the IChartData
+	     * @param listener the onClick Listener
+	     */
+	    public void addOnClickListener(IChartData chart, IOnClickListener listener) {	    	
+			this.onClick = chart.addOnClickListener(listener);
+	    }
 		
 		/**
 		 * Gets the tooltip.
@@ -298,6 +331,7 @@ public class BarChart extends Element implements JSONizable {
         	if (bottom != null) json.put("bottom", new JSONNumber(bottom.doubleValue())); 	
         	if (colour != null) json.put("colour", new JSONString(colour));
         	if (tooltip != null) json.put("tip", new JSONString(tooltip));
+        	if (onClick != null) json.put("on-click", new JSONString(onClick));
         	return json;
     	}
     }
