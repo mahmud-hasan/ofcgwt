@@ -54,6 +54,7 @@ public class ChartWidget extends Widget implements IChartData {
 	private boolean hasFlashPlayer = false;
 	private String flashurl = "ofcgwt/open-flash-chart.swf";
 	private static final CacheFixImpl cacheFixImpl = GWT.create(CacheFixImpl.class);
+	private String urlPrefix = GWT.getModuleBaseURL();
 
 	/**
 	 * Creates a new ChartWidget. *
@@ -76,7 +77,7 @@ public class ChartWidget extends Widget implements IChartData {
 			getElement().setInnerHTML("<div id=\"embed_" + swfId + "\">" + emptyInnerDiv() + "</div>");
 			String w = getWidth();
 			String h = getHeight();
-			injectSWF(getInternalSWFURL(isCacheFixEnabled(), flashurl, swfId), swfId, w, h, MIN_PLAYER_VERSION, ALTERNATE_SWF_SRC);
+			injectSWF(getInternalSWFURL(isCacheFixEnabled(), urlPrefix + flashurl, swfId), swfId, w, h, MIN_PLAYER_VERSION, ALTERNATE_SWF_SRC);
 			isSWFInjected = true;
 		}
 		super.onLoad();
@@ -398,6 +399,23 @@ public class ChartWidget extends Widget implements IChartData {
 	 */
 	public String getSwfId() {
 		return swfId;
+	}
+
+	/**
+	 * Sets the url prefix of the OFC flash swf file. Defaults to the value of GWT.getModuleBaseURL()
+	 * 
+	 * @param urlPrefix
+	 *            a URL string
+	 */
+	public void setUrlPrefix(String urlPrefix) {
+		this.urlPrefix = urlPrefix;
+	}
+
+	/**
+	 * @return the urlPrefix
+	 */
+	public String getUrlPrefix() {
+		return urlPrefix;
 	}
 
 	/**
