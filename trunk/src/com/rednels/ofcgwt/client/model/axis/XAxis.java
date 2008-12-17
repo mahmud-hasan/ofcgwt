@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
@@ -148,7 +149,10 @@ public class XAxis extends AbstractAxis implements JSONizable {
 	    
     	/** The steps. */
     	private Integer steps;
-	    
+        private Rotation rotate;
+        private String colour;
+        private Integer size;
+        private Boolean visible;
     	/** The labels. */
     	private List<Object> labels;
 	    	    
@@ -227,6 +231,78 @@ public class XAxis extends AbstractAxis implements JSONizable {
     	public Integer getSteps() {
 	        return steps;
 	    }
+
+        /**
+         * Gets the colour.
+         * 
+         * @return the colour
+         */
+        public String getColour() {
+            return colour;
+        }
+
+        /**
+         * Sets the colour in HTML hex format (#ffffff) 
+         * 
+         * @param colour the colour
+         */
+        public void setColour(String colour) {
+            this.colour = colour;
+        }
+
+        /**
+         * Gets the size.
+         * 
+         * @return the size
+         */
+        public Integer getSize() {
+            return size;
+        }
+
+        /**
+         * Sets the size.
+         * 
+         * @param size the size
+         */
+        public void setSize(Integer size) {
+            this.size = size;
+        }
+
+        /**
+         * Gets the rotation.
+         * 
+         * @return the rotation
+         */
+        public Rotation getRotation() {
+            return rotate;
+        }
+
+        /**
+         * Sets the rotation.
+         * 
+         * @param rotate the rotate
+         */
+        public void setRotation(Rotation rotate) {
+            this.rotate = rotate;
+        }
+
+        /**
+         * Gets the visible.
+         * 
+         * @return the visible
+         */
+        public Boolean getVisible() {
+            return visible;
+        }
+
+        /**
+         * Sets the visible.
+         * 
+         * @param visible the visible
+         */
+        public void setVisible(Boolean visible) {
+            this.visible = visible;
+        }
 	    
 	    /**
     	 * Check labels not null.
@@ -241,6 +317,10 @@ public class XAxis extends AbstractAxis implements JSONizable {
 		public JSONValue buildJSON() {		
 	    	JSONObject json = (JSONObject)super.buildJSON();
 	    	if (steps != null) json.put("steps", new JSONNumber(steps));
+	    	if (colour != null) json.put("colour", new JSONString(colour));
+	    	if (size != null) json.put("size", new JSONNumber(size));
+	    	if (rotate != null) json.put("rotate", new JSONString(rotate.toString()));    	
+	    	if (visible != null) json.put("visible", JSONBoolean.getInstance(visible));    
 	    	if (labels == null) return json;
 	    	JSONArray ary = new JSONArray();
 	    	int index = 0;

@@ -216,7 +216,7 @@ public abstract class AbstractAxis implements JSONizable {
     	if (offset != null) json.put("offset", new JSONNumber(offset));
     	if (zdepth3d != null) json.put("3d", new JSONNumber(zdepth3d));
     	if (min != null) json.put("min", new JSONNumber(min.doubleValue()));
-    	if (max != null) json.put("max", new JSONNumber(max.doubleValue()));    	
+    	if (max != null) json.put("max", new JSONNumber(max.doubleValue()));     	  	
     	return json;
 	}
 }

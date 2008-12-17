@@ -38,45 +38,10 @@ public class Label implements JSONizable {
     private Integer size;
     
     /** The rotate. */
-    private Rotation rotate;
+    private Integer rotateAngle;
     
     /** The visible. */
     private Boolean visible;
-    
-    /**
-     * The Enum Rotation.
-     */
-    public static enum Rotation {
-        
-        /** The VERTICAL. */
-        VERTICAL("vertical"),
-        
-        /** The DIAGONAL. */
-        DIAGONAL("diagonal"),
-        
-        /** The HORIZONTAL. */
-        HORIZONTAL("horizontal");
-        
-        /** The text. */
-        private final String text;
-        
-        /**
-         * Creates a new rotation.
-         * 
-         * @param text the text
-         */
-        Rotation(String text) {
-            this.text = text;
-        }
-        
-        /* (non-Javadoc)
-         * @see java.lang.Enum#toString()
-         */
-        @Override
-        public String toString() {
-            return text;
-        }
-    }
     
     /**
      * Creates a new label.
@@ -92,6 +57,17 @@ public class Label implements JSONizable {
      */
     public Label(String text) {
         setText(text);
+    }
+    
+    /**
+     * Creates a new label.
+     * 
+     * @param text the text
+     * @param angle the rotation angle
+     */
+    public Label(String text,Integer angle) {
+        setText(text);
+        setRotationAngle(angle);
     }
 
     /**
@@ -153,17 +129,17 @@ public class Label implements JSONizable {
      * 
      * @return the rotation
      */
-    public Rotation getRotation() {
-        return rotate;
+    public Integer getRotationAngle() {
+        return rotateAngle;
     }
 
     /**
-     * Sets the rotation.
+     * Sets the rotation in degrees (ie 45 = diagonal, 90 = vertical).
      * 
-     * @param rotate the rotate
+     * @param angle the rotate angle
      */
-    public void setRotation(Rotation rotate) {
-        this.rotate = rotate;
+    public void setRotationAngle(Integer angle) {
+        this.rotateAngle = angle;
     }
 
     /**
@@ -192,7 +168,7 @@ public class Label implements JSONizable {
     	if (text != null) json.put("text", new JSONString(text));
     	if (colour != null) json.put("colour", new JSONString(colour));
     	if (size != null) json.put("size", new JSONNumber(size));
-    	if (rotate != null) json.put("rotate", new JSONString(rotate.toString()));    	
+    	if (rotateAngle != null) json.put("rotate", new JSONNumber(rotateAngle));    	
     	if (visible != null) json.put("visible", JSONBoolean.getInstance(visible));    	
     	return json;
 	}

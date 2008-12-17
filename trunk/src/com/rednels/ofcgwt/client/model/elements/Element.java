@@ -150,6 +150,11 @@ public abstract class Element implements JSONizable {
 	public List<Object> getValues() {
 		return values;
 	}
+	
+	public void addNull(){
+		values.add(null);
+	}
+	
 
 	/**
 	 * Sets the values.
@@ -198,9 +203,10 @@ public abstract class Element implements JSONizable {
 		JSONArray ary = new JSONArray();
 		int index = 0;
 		for (Object o : values) {
+			if (o == null) ary.set(index++, null);
 			if (o instanceof Number) ary.set(index++, new JSONNumber(((Number) o).doubleValue()));
 			if (o instanceof String) ary.set(index++, new JSONString((String) o));
-			if (o instanceof JSONizable) ary.set(index++, ((JSONizable) o).buildJSON());
+			if (o instanceof JSONizable) ary.set(index++, ((JSONizable) o).buildJSON());			
 		}
 		if (index != 0) json.put("values", ary);
 		return json;
