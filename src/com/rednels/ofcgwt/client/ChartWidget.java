@@ -38,6 +38,7 @@ public class ChartWidget extends Widget implements IChartData {
 	public static final String BLANK_CHART_JSON_DATA = "{\"title\":{\"text\":\"\"},\"elements\":[]}";
 	public static final String MIN_PLAYER_VERSION = "9.0.0";
 	public static final String ALTERNATE_SWF_SRC = "expressInstall.swf";
+	
 	private static ArrayList<IChartData> charts = new ArrayList<IChartData>();
 	private static final CacheFixImpl cacheFixImpl = GWT.create(CacheFixImpl.class);
 	private static int count = 0;

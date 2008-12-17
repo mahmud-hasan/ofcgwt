@@ -37,6 +37,7 @@ import com.rednels.ofcgwt.client.model.ChartData;
 import com.rednels.ofcgwt.client.model.Text;
 import com.rednels.ofcgwt.client.model.ToolTip;
 import com.rednels.ofcgwt.client.model.ToolTip.MouseStyle;
+import com.rednels.ofcgwt.client.model.axis.Label;
 import com.rednels.ofcgwt.client.model.axis.RadarAxis;
 import com.rednels.ofcgwt.client.model.axis.XAxis;
 import com.rednels.ofcgwt.client.model.axis.YAxis;
@@ -336,7 +337,12 @@ public class Demo implements EntryPoint {
 		ChartData cd2 = new ChartData("Sales by Month 2007","font-size: 14px; font-family: Verdana; text-align: center;");
 		cd2.setBackgroundColour("#ffffff");
 		XAxis xa = new XAxis();
-		xa.setLabels("J","F","M","A","M","J","J","A","S","O","N","D");
+		xa.setLabels("J","F","M","A","M","J","J","A","S","O","N");
+//		xa.getLabels().setRotation(Rotation.HORIZONTAL);
+		Label l = new Label("Dec",45);
+		l.setSize(10);
+		l.setColour("#000000");
+		xa.addLabels(l);
 //		xa.setMax(12);
 		cd2.setXAxis(xa);
 		YAxis ya = new YAxis();
@@ -590,8 +596,10 @@ public class Demo implements EntryPoint {
 		area2.setFillAlpha(0.3f);
 		area2.setColour("#ff0000");
 		area2.setFillColour("#ff0000");
-		for (int n=0;n<12;n++)
-			area2.addValues(n*Random.nextDouble());		
+		for (int n=0;n<12;n++) {
+			if (n%3!=0)	area2.addNull();
+			else area2.addValues(n*Random.nextDouble());
+		}		
 		cd2.addElements(area2);
 		AreaChart area3 = new AreaChart(AreaStyle.LINE);
 		area3.setFillAlpha(0.3f);
@@ -599,8 +607,10 @@ public class Demo implements EntryPoint {
 		area3.setFillColour("#00aa00");
 		int floor = Random.nextInt(3);
 		double grade = (Random.nextInt(4)+1)/10.0;
-		for (int n=0;n<12;n++)
-			area3.addValues(n*grade+floor);		
+		for (int n=0;n<12;n++) {
+			if (n%2!=0)	area3.addNull();
+			else area3.addValues(n*grade+floor);
+		}
 		cd2.addElements(area3);
 		return cd2;
 	}
