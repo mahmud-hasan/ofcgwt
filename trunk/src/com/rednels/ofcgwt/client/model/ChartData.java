@@ -14,7 +14,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
-*/
+ */
 package com.rednels.ofcgwt.client.model;
 
 import java.util.Arrays;
@@ -29,14 +29,18 @@ import com.rednels.ofcgwt.client.model.axis.RadarAxis;
 import com.rednels.ofcgwt.client.model.axis.XAxis;
 import com.rednels.ofcgwt.client.model.axis.YAxis;
 import com.rednels.ofcgwt.client.model.elements.Element;
+
 /**
  * This is the most important class in the ofcgwt library. Start here,
  * configuring the title, axes, legends, labels, and draw-able elements in your
- * chart. You add an element to the chart data, for example...</br><pre>
- * ChartData cd = new ChartData("Sales by Region");
- * PieChart pie = new PieChart(); 
- * pie.addValues(10,30,40,20);
- * cd.addElements(pie); </pre>
+ * chart. You add an element to the chart data, for example...</br>
+ * 
+ * <pre>
+ * ChartData cd = new ChartData(&quot;Sales by Region&quot;);
+ * PieChart pie = new PieChart();
+ * pie.addValues(10, 30, 40, 20);
+ * cd.addElements(pie);
+ * </pre>
  * 
  * When finished, call toString() and the GWT JSON objects will convert the
  * chart data into a formatted OFC2 JSON data string.
@@ -62,6 +66,7 @@ public class ChartData implements JSONizable {
 
 	/**
 	 * Creates a new chart data instance with the given title.
+	 * 
 	 * @param titleText
 	 */
 	public ChartData(String titleText) {
@@ -70,6 +75,7 @@ public class ChartData implements JSONizable {
 
 	/**
 	 * Creates a new chart data instance with the given title and style.
+	 * 
 	 * @param titleText
 	 * @param style
 	 */
@@ -78,22 +84,28 @@ public class ChartData implements JSONizable {
 	}
 
 	/**
-	 * Adds a collection of chart elements to the list of elements 
-	 * @param collection of type Element
+	 * Adds a collection of chart elements to the list of elements
+	 * 
+	 * @param collection
+	 *            of type Element
 	 */
 	public void addElements(Collection<Element> collection) {
 		this.elements.addAll(collection);
 	}
 
 	/**
-	 * Adds an element to the list of elements 
-	 * @param e the element
+	 * Adds an element to the list of elements
+	 * 
+	 * @param e
+	 *            the element
 	 */
 	public void addElements(Element... e) {
 		this.elements.addAll(Arrays.asList(e));
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
 	 */
 	public JSONValue buildJSON() {
@@ -119,6 +131,7 @@ public class ChartData implements JSONizable {
 
 	/**
 	 * Get the current background colour
+	 * 
 	 * @return String background colour
 	 */
 	public String getBackgroundColour() {
@@ -127,6 +140,7 @@ public class ChartData implements JSONizable {
 
 	/**
 	 * Get the current elements collection
+	 * 
 	 * @return Element collection
 	 */
 	public Collection<Element> getElements() {
@@ -135,7 +149,8 @@ public class ChartData implements JSONizable {
 
 	/**
 	 * Get the current title Text
-	 * @return Text title 
+	 * 
+	 * @return Text title
 	 */
 	public Text getTitle() {
 		return this.title;
@@ -143,6 +158,7 @@ public class ChartData implements JSONizable {
 
 	/**
 	 * Get the current XAxis object
+	 * 
 	 * @return XAxis object
 	 */
 	public XAxis getXAxis() {
@@ -152,6 +168,7 @@ public class ChartData implements JSONizable {
 
 	/**
 	 * Get the current RadarAxis object
+	 * 
 	 * @return RadarAxis object
 	 */
 	public RadarAxis getRadarAxis() {
@@ -161,7 +178,8 @@ public class ChartData implements JSONizable {
 
 	/**
 	 * Get the current x legend Text
-	 * @return Text x legend  
+	 * 
+	 * @return Text x legend
 	 */
 	public Text getXLegend() {
 		return this.x_legend;
@@ -169,7 +187,8 @@ public class ChartData implements JSONizable {
 
 	/**
 	 * Get the current YAxis object (left side)
-	 * @return YAxis object 
+	 * 
+	 * @return YAxis object
 	 */
 	public YAxis getYAxis() {
 		if (this.y_axis == null) this.y_axis = new YAxis();
@@ -178,6 +197,7 @@ public class ChartData implements JSONizable {
 
 	/**
 	 * Get the current YAxis object (right side)
+	 * 
 	 * @return YAxis object
 	 */
 	public YAxis getYAxisRight() {
@@ -186,6 +206,7 @@ public class ChartData implements JSONizable {
 
 	/**
 	 * Get the current y legend Text
+	 * 
 	 * @return Text y legend
 	 */
 	public Text getYLegend() {
@@ -194,7 +215,9 @@ public class ChartData implements JSONizable {
 
 	/**
 	 * Removes an element from the list of elements
-	 * @param e the element
+	 * 
+	 * @param e
+	 *            the element
 	 * @return true if an element was removed as a result of this call
 	 */
 	public boolean removeElement(Element e) {
@@ -202,8 +225,10 @@ public class ChartData implements JSONizable {
 	}
 
 	/**
-	 * Sets the chart background colour in HTML hex format (#ffffff) 
-	 * @param bg_colour String colour
+	 * Sets the chart background colour in HTML hex format (#ffffff)
+	 * 
+	 * @param bg_colour
+	 *            String colour
 	 */
 	public void setBackgroundColour(String bg_colour) {
 		this.bg_colour = bg_colour;
@@ -211,7 +236,9 @@ public class ChartData implements JSONizable {
 
 	/**
 	 * Clears and then sets the list of elements to this collection
-	 * @param elements Collection
+	 * 
+	 * @param elements
+	 *            Collection
 	 */
 	public void setElements(Collection<Element> elements) {
 		this.elements.clear();
@@ -220,7 +247,9 @@ public class ChartData implements JSONizable {
 
 	/**
 	 * Sets the title to this Text object
-	 * @param title Text object
+	 * 
+	 * @param title
+	 *            Text object
 	 */
 	public void setTitle(Text title) {
 		this.title = title;
@@ -228,7 +257,9 @@ public class ChartData implements JSONizable {
 
 	/**
 	 * Sets the XAxis to this XAxis object
-	 * @param x_axis XAxis object
+	 * 
+	 * @param x_axis
+	 *            XAxis object
 	 */
 	public void setXAxis(XAxis x_axis) {
 		this.x_axis = x_axis;
@@ -236,7 +267,9 @@ public class ChartData implements JSONizable {
 
 	/**
 	 * Sets the RadarAxis to this RadarAxis object
-	 * @param radar_axis RadarAxis object
+	 * 
+	 * @param radar_axis
+	 *            RadarAxis object
 	 */
 	public void setRadarAxis(RadarAxis radar_axis) {
 		this.radar_axis = radar_axis;
@@ -244,7 +277,9 @@ public class ChartData implements JSONizable {
 
 	/**
 	 * Sets the x legend to this Text object
-	 * @param x_legend Text object
+	 * 
+	 * @param x_legend
+	 *            Text object
 	 */
 	public void setXLegend(Text x_legend) {
 		this.x_legend = x_legend;
@@ -252,7 +287,9 @@ public class ChartData implements JSONizable {
 
 	/**
 	 * Sets the left YAxis to this YAxis object
-	 * @param y_axis YAxis object
+	 * 
+	 * @param y_axis
+	 *            YAxis object
 	 */
 	public void setYAxis(YAxis y_axis) {
 		this.y_axis = y_axis;
@@ -260,7 +297,9 @@ public class ChartData implements JSONizable {
 
 	/**
 	 * Sets the right YAxis to this YAxis object
-	 * @param y_axis_right YAxis object
+	 * 
+	 * @param y_axis_right
+	 *            YAxis object
 	 */
 	public void setYAxisRight(YAxis y_axis_right) {
 		this.y_axis_right = y_axis_right;
@@ -268,7 +307,9 @@ public class ChartData implements JSONizable {
 
 	/**
 	 * Sets the y legend to this Text object
-	 * @param y_legend Text object
+	 * 
+	 * @param y_legend
+	 *            Text object
 	 */
 	public void setYLegend(Text y_legend) {
 		this.y_legend = y_legend;
@@ -277,7 +318,8 @@ public class ChartData implements JSONizable {
 	/**
 	 * Sets the tooltip.
 	 * 
-	 * @param tooltip the new tooltip
+	 * @param tooltip
+	 *            the new tooltip
 	 */
 	public void setTooltip(ToolTip tooltip) {
 		this.tooltip = tooltip;
@@ -293,7 +335,9 @@ public class ChartData implements JSONizable {
 	}
 
 	/**
-	 * Returns the json formatted string of this chart data object. Calls.buildJSON()
+	 * Returns the json formatted string of this chart data object.
+	 * Calls.buildJSON()
+	 * 
 	 * @return json string
 	 */
 	public String toString() {

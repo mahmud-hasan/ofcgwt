@@ -14,18 +14,22 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
-*/
+ */
 package com.rednels.ofcgwt.client;
+
 /**
- * An interface that listeners of chart events should implement   
+ * An interface that listeners of chart events should implement
  */
 public interface IChartListener {
 	/**
-	 * Sent when a Chart Ready event that the listener has registered for occurs.
+	 * Sent when a Chart Ready event that the listener has registered for
+	 * occurs.
 	 */
 	public void handleChartReadyEvent();
+
 	/**
-	 * Sent when a Image Saved  event that the listener has registered for occurs.
+	 * Sent when a Image Saved event that the listener has registered for
+	 * occurs.
 	 */
 	public void imageSavedEvent();
 }

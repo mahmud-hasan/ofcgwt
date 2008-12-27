@@ -14,7 +14,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
-*/
+ */
 package com.rednels.ofcgwt.client.model.axis;
 
 import java.util.ArrayList;
@@ -27,85 +27,92 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
+
 /**
- * Class for an OFC y-axis that extends AbstractAxis   
+ * Class for an OFC y-axis that extends AbstractAxis
+ * 
  * @see com.rednels.ofcgwt.client.model.axis.AbstractAxis
  */
 public class YAxis extends AbstractAxis implements JSONizable {
-    
-    /** The tick length. */
-    private Integer tickLength;
-    
-    /** The labels. */
-    private List<String> labels;
-    
-    /**
-     * Sets the tick length.
-     * 
-     * @param tick_length the new tick length
-     */
-    public void setTickLength(Integer tick_length) {
-        this.tickLength = tick_length;
-    }
-    
-    /**
-     * Gets the tick length.
-     * 
-     * @return the tick length
-     */
-    public Integer getTickLength() {
-        return tickLength;
-    }
-    
-    /**
-     * Adds the labels.
-     * 
-     * @param labels the labels
-     */
-    public void addLabels(String... labels) {
-        checkLabelsNotNull();
-        this.labels.addAll(Arrays.asList(labels));
-    }
-    
-    /**
-     * Adds the labels.
-     * 
-     * @param labels the labels
-     */
-    public void addLabels(List<String> labels) {
-        checkLabelsNotNull();
-        this.labels.addAll(labels);
-    }
-    
-    /**
-     * Gets the labels.
-     * 
-     * @return the labels
-     */
-    public List<String> getLabels() {
-        return labels;
-    }
-    
-    /**
-     * Check labels not null.
-     */
-    private synchronized void checkLabelsNotNull() {
-        if (labels == null) labels = new ArrayList<String>();
-    }    
 
-	/* (non-Javadoc)
+	/** The tick length. */
+	private Integer tickLength;
+
+	/** The labels. */
+	private List<String> labels;
+
+	/**
+	 * Sets the tick length.
+	 * 
+	 * @param tick_length
+	 *            the new tick length
+	 */
+	public void setTickLength(Integer tick_length) {
+		this.tickLength = tick_length;
+	}
+
+	/**
+	 * Gets the tick length.
+	 * 
+	 * @return the tick length
+	 */
+	public Integer getTickLength() {
+		return tickLength;
+	}
+
+	/**
+	 * Adds the labels.
+	 * 
+	 * @param labels
+	 *            the labels
+	 */
+	public void addLabels(String... labels) {
+		checkLabelsNotNull();
+		this.labels.addAll(Arrays.asList(labels));
+	}
+
+	/**
+	 * Adds the labels.
+	 * 
+	 * @param labels
+	 *            the labels
+	 */
+	public void addLabels(List<String> labels) {
+		checkLabelsNotNull();
+		this.labels.addAll(labels);
+	}
+
+	/**
+	 * Gets the labels.
+	 * 
+	 * @return the labels
+	 */
+	public List<String> getLabels() {
+		return labels;
+	}
+
+	/**
+	 * Check labels not null.
+	 */
+	private synchronized void checkLabelsNotNull() {
+		if (labels == null) labels = new ArrayList<String>();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.rednels.ofcgwt.client.model.axis.AbstractAxis.buildJSON()
 	 */
-	public JSONValue buildJSON() {		
-    	JSONObject json = (JSONObject)super.buildJSON();
-    	if (tickLength != null) json.put("tick-length", new JSONNumber(tickLength));
-    	if (labels == null) return json;
-    	JSONArray ary = new JSONArray();
-    	int index = 0;
-    	for (String o : labels) {
-    		ary.set(index++, new JSONString(o));
-        }
-    	if (index != 0) json.put("labels",ary);
-    	return json;
+	public JSONValue buildJSON() {
+		JSONObject json = (JSONObject) super.buildJSON();
+		if (tickLength != null) json.put("tick-length", new JSONNumber(tickLength));
+		if (labels == null) return json;
+		JSONArray ary = new JSONArray();
+		int index = 0;
+		for (String o : labels) {
+			ary.set(index++, new JSONString(o));
+		}
+		if (index != 0) json.put("labels", ary);
+		return json;
 	}
 }

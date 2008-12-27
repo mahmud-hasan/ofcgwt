@@ -14,38 +14,39 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
-*/
+ */
 package com.rednels.ofcgwt.client.model;
 
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
+
 /**
- * Base class for an OFC tooltip element   
+ * Base class for an OFC tooltip element
  */
 public class ToolTip implements JSONizable {
-   	private String titlestyle;
-    private String bodystyle;
-    private String colour;
-    private String backgroundcolour;
-    private MouseStyle mouse;
-    private Integer stroke;
-    
-    /**
-     * Create a new ToolTip instance
-     */
-    public ToolTip() {
-    }
-    
-    /**
-     * Create a new ToolTip instance with the given mouse style
-     * 
-     * @param mouse MouseStyle
-     */
-    public ToolTip(MouseStyle mouse) {
-    	setMouse(mouse);
-    }    
+	private String titlestyle;
+	private String bodystyle;
+	private String colour;
+	private String backgroundcolour;
+	private MouseStyle mouse;
+	private Integer stroke;
+
+	/**
+	 * Create a new ToolTip instance
+	 */
+	public ToolTip() {}
+
+	/**
+	 * Create a new ToolTip instance with the given mouse style
+	 * 
+	 * @param mouse
+	 *            MouseStyle
+	 */
+	public ToolTip(MouseStyle mouse) {
+		setMouse(mouse);
+	}
 
 	/**
 	 * Gets the title style.
@@ -59,7 +60,8 @@ public class ToolTip implements JSONizable {
 	/**
 	 * Sets the title style.
 	 * 
-	 * @param titlestyle the title style to set
+	 * @param titlestyle
+	 *            the title style to set
 	 */
 	public void setTitlestyle(String titlestyle) {
 		this.titlestyle = titlestyle;
@@ -77,7 +79,8 @@ public class ToolTip implements JSONizable {
 	/**
 	 * Sets the body style.
 	 * 
-	 * @param bodystyle the body style to set
+	 * @param bodystyle
+	 *            the body style to set
 	 */
 	public void setBodystyle(String bodystyle) {
 		this.bodystyle = bodystyle;
@@ -95,7 +98,8 @@ public class ToolTip implements JSONizable {
 	/**
 	 * Sets the colour.
 	 * 
-	 * @param colour the colour to set
+	 * @param colour
+	 *            the colour to set
 	 */
 	public void setColour(String colour) {
 		this.colour = colour;
@@ -113,7 +117,8 @@ public class ToolTip implements JSONizable {
 	/**
 	 * Sets the background colour.
 	 * 
-	 * @param backgroundcolour the background colour to set
+	 * @param backgroundcolour
+	 *            the background colour to set
 	 */
 	public void setBackgroundcolour(String backgroundcolour) {
 		this.backgroundcolour = backgroundcolour;
@@ -131,7 +136,8 @@ public class ToolTip implements JSONizable {
 	/**
 	 * Sets the mouse.
 	 * 
-	 * @param mouse the mouse to set
+	 * @param mouse
+	 *            the mouse to set
 	 */
 	public void setMouse(MouseStyle mouse) {
 		this.mouse = mouse;
@@ -149,59 +155,63 @@ public class ToolTip implements JSONizable {
 	/**
 	 * Sets the stroke.
 	 * 
-	 * @param stroke the stroke to set
+	 * @param stroke
+	 *            the stroke to set
 	 */
 	public void setStroke(Integer stroke) {
 		this.stroke = stroke;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
 	 */
 	public JSONValue buildJSON() {
-    	JSONObject json = new JSONObject();
-    	if (titlestyle != null) json.put("title", new JSONString(titlestyle));
-    	if (bodystyle != null) json.put("body", new JSONString(bodystyle));
-    	if (colour != null) json.put("colour", new JSONString(colour));
-    	if (backgroundcolour != null) json.put("background", new JSONString(backgroundcolour));
-    	if (mouse != null) json.put("mouse", new JSONNumber(mouse.getStyle()));
-    	if (stroke != null) json.put("stroke", new JSONNumber(stroke));
-    	return json;
+		JSONObject json = new JSONObject();
+		if (titlestyle != null) json.put("title", new JSONString(titlestyle));
+		if (bodystyle != null) json.put("body", new JSONString(bodystyle));
+		if (colour != null) json.put("colour", new JSONString(colour));
+		if (backgroundcolour != null) json.put("background", new JSONString(backgroundcolour));
+		if (mouse != null) json.put("mouse", new JSONNumber(mouse.getStyle()));
+		if (stroke != null) json.put("stroke", new JSONNumber(stroke));
+		return json;
 	}
-	
-    /**
-     * Enumeration MouseStyle - used with tooltip.
-     */
-    public static enum MouseStyle {
 
-        /** CLOSEST */
+	/**
+	 * Enumeration MouseStyle - used with tooltip.
+	 */
+	public static enum MouseStyle {
+
+		/** CLOSEST */
 		CLOSEST(0),
-        
-        /** FOLLOW */
+
+		/** FOLLOW */
 		FOLLOW(1),
-        
-        /** NORMAL */
+
+		/** NORMAL */
 		NORMAL(2);
-        
-        /** The style. */
-        private int style;
-        
-        /**
-         * Creates a new bar style.
-         * 
-         * @param style the style
-         */
-        MouseStyle(int style) {
-            this.style = style;
-        }
-        
-        /**
-         * Gets the style.
-         * 
-         * @return the style
-         */
-        public int getStyle() {
-            return style;
-        }
-    }
+
+		/** The style. */
+		private int style;
+
+		/**
+		 * Creates a new bar style.
+		 * 
+		 * @param style
+		 *            the style
+		 */
+		MouseStyle(int style) {
+			this.style = style;
+		}
+
+		/**
+		 * Gets the style.
+		 * 
+		 * @return the style
+		 */
+		public int getStyle() {
+			return style;
+		}
+	}
 }
