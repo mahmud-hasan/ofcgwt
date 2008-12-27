@@ -18,6 +18,7 @@ See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
 package com.rednels.ofcgwt.client.model.elements;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -29,6 +30,7 @@ import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.IChartData;
 import com.rednels.ofcgwt.client.IOnClickListener;
 import com.rednels.ofcgwt.client.model.JSONizable;
+import com.rednels.ofcgwt.client.model.axis.Keys;
 
 /**
  * Base abstract class for OFC elements
@@ -50,7 +52,8 @@ public abstract class Element implements JSONizable {
 	/** The onClick. */
 	private String onClick;
 
-	// / set_on_click("functionname('swfid','eventid')");
+	/** The keys. */
+	private List<Keys> keys = new ArrayList<Keys>();
 
 	/** The values. */
 	protected List<Object> values = new ArrayList<Object>();
@@ -135,8 +138,10 @@ public abstract class Element implements JSONizable {
 	 * Adds an onClick event. Requires an ChartWidget to register the event
 	 * with.
 	 * 
-	 * @param chart the IChartData
-	 * @param listener the onClick Listener
+	 * @param chart
+	 *            the IChartData
+	 * @param listener
+	 *            the onClick Listener
 	 */
 	public void addOnClickListener(IChartData chart, IOnClickListener listener) {
 		this.onClick = chart.addOnClickListener(listener);
@@ -150,11 +155,31 @@ public abstract class Element implements JSONizable {
 	public List<Object> getValues() {
 		return values;
 	}
-	
-	public void addNull(){
+
+	public void addNull() {
 		values.add(null);
 	}
-	
+
+	/**
+	 * Sets the stack keys.
+	 * 
+	 * @param keys
+	 *            the keys
+	 */
+	public void setKeys(List<Keys> keys) {
+		this.keys.clear();
+		this.keys.addAll(keys);
+	}
+
+	/**
+	 * Sets the stack keys.
+	 * 
+	 * @param keys
+	 *            the keys
+	 */
+	public void setKeys(Keys... keys) {
+		setKeys(Arrays.asList(keys));
+	}
 
 	/**
 	 * Sets the values.
@@ -199,14 +224,22 @@ public abstract class Element implements JSONizable {
 		if (fontSize != null) json.put("font-size", new JSONNumber(fontSize));
 		if (tooltip != null) json.put("tip", new JSONString(tooltip));
 		if (onClick != null) json.put("on-click", new JSONString(onClick));
-		if (values == null) return json;
+		
 		JSONArray ary = new JSONArray();
 		int index = 0;
+		for (Keys k : keys) {			
+			ary.set(index++, k.buildJSON());			
+		}
+		if (index != 0) json.put("keys", ary);
+		
+		if (values == null) return json;		
+		ary = new JSONArray();
+		index = 0;
 		for (Object o : values) {
 			if (o == null) ary.set(index++, null);
 			if (o instanceof Number) ary.set(index++, new JSONNumber(((Number) o).doubleValue()));
 			if (o instanceof String) ary.set(index++, new JSONString((String) o));
-			if (o instanceof JSONizable) ary.set(index++, ((JSONizable) o).buildJSON());			
+			if (o instanceof JSONizable) ary.set(index++, ((JSONizable) o).buildJSON());
 		}
 		if (index != 0) json.put("values", ary);
 		return json;

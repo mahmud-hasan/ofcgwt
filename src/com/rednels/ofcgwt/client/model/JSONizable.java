@@ -14,19 +14,21 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
-*/
+ */
 package com.rednels.ofcgwt.client.model;
 
 import com.google.gwt.json.client.JSONValue;
 
 /**
- * An interface that objects that build JSON strings should implement   
+ * An interface that objects that build JSON strings should implement
  */
 public interface JSONizable {
 
 	/**
-	 * Build (and return) a JSONObject that contains all the items of this object. If required, 
-	 * will call.buildJSON() on any contained JSONizable objects, thus producing an entire JSON tree. 
+	 * Build (and return) a JSONObject that contains all the items of this
+	 * object. If required, will call.buildJSON() on any contained JSONizable
+	 * objects, thus producing an entire JSON tree.
+	 * 
 	 * @return the JSONObject
 	 */
 	public JSONValue buildJSON();

@@ -38,7 +38,7 @@ public class ChartWidget extends Widget implements IChartData {
 	public static final String BLANK_CHART_JSON_DATA = "{\"title\":{\"text\":\"\"},\"elements\":[]}";
 	public static final String MIN_PLAYER_VERSION = "9.0.0";
 	public static final String ALTERNATE_SWF_SRC = "expressInstall.swf";
-	
+
 	private static ArrayList<IChartData> charts = new ArrayList<IChartData>();
 	private static final CacheFixImpl cacheFixImpl = GWT.create(CacheFixImpl.class);
 	private static int count = 0;
@@ -403,7 +403,8 @@ public class ChartWidget extends Widget implements IChartData {
 	}
 
 	/**
-	 * Sets the url prefix of the OFC flash swf file. Defaults to the value of GWT.getModuleBaseURL()
+	 * Sets the url prefix of the OFC flash swf file. Defaults to the value of
+	 * GWT.getModuleBaseURL()
 	 * 
 	 * @param urlPrefix
 	 *            a URL string

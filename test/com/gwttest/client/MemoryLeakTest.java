@@ -14,7 +14,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
-*/
+ */
 package com.gwttest.client;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -42,22 +42,23 @@ public class MemoryLeakTest implements EntryPoint {
 		chart.setJsonData(tpc.getJSON());
 		pieSp.add(chart);
 		RootPanel.get().add(pieSp);
-		
+
 		final Timer t = new Timer() {
 			public void run() {
 				chart.setJsonData(tpc.getJSON());
 			}
-	    };
-	    t.scheduleRepeating(100);
-	    
-	    Button b = new Button("stop");
-	    b.addClickListener(new ClickListener(){
+		};
+		t.scheduleRepeating(100);
+
+		Button b = new Button("stop");
+		b.addClickListener(new ClickListener() {
 			public void onClick(Widget sender) {
-				t.cancel();				
-			}});
+				t.cancel();
+			}
+		});
 		RootPanel.get().add(b);
 	}
-	
+
 	public class TestPieChart {
 		ChartData c;
 		PieChart p;

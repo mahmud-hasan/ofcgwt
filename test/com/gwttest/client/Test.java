@@ -14,7 +14,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
-*/
+ */
 package com.gwttest.client;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -25,7 +25,8 @@ import com.google.gwt.core.client.EntryPoint;
 public class Test implements EntryPoint {
 
 	public void onModuleLoad() {
-		new Demo().onModuleLoad();
-//		new MemoryLeakTest().onModuleLoad();
+		new Snippet().onModuleLoad();
+		// new Demo().onModuleLoad();
+		// new MemoryLeakTest().onModuleLoad();
 	}
 }

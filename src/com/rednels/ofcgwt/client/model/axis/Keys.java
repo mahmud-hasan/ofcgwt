@@ -15,86 +15,95 @@ GNU General Public License for more details.
 
 See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
  */
-package com.rednels.ofcgwt.client.model;
+package com.rednels.ofcgwt.client.model.axis;
 
+import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
+import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
- * Base class for an OFC text element
+ * Base class for an OFC keys
  */
-public class Text implements JSONizable {
+public class Keys implements JSONizable {
+
+	/** The text. */
 	private String text;
-	private String style;
+
+	/** The colour. */
+	private String colour;
+
+	/** The font-size. */
+	private Integer fontsize;
 
 	/**
-	 * Create a new Text instance
-	 */
-	public Text() {
-		this(null, null);
-	}
-
-	/**
-	 * Create a new Text instance with the given text
+	 * Creates a new key.
 	 * 
 	 * @param text
-	 *            String
+	 *            the text
 	 */
-	public Text(String text) {
-		this(text, null);
-	}
-
-	/**
-	 * Create a new Text instance with the given text and style. Style is a CSS
-	 * string for formatting text.
-	 * 
-	 * @param text
-	 *            String
-	 * @param style
-	 *            String
-	 */
-	public Text(String text, String style) {
+	public Keys(String text,String colour,Integer fontsize) {
 		setText(text);
-		setStyle(style);
+		setColour(colour);
+		setFontSize(fontsize);
 	}
 
 	/**
-	 * Get the text
+	 * Gets the text.
 	 * 
-	 * @return String text
+	 * @return the text
 	 */
 	public String getText() {
 		return text;
 	}
 
 	/**
-	 * Sets the text string.
+	 * Sets the text.
 	 * 
 	 * @param text
-	 *            String
+	 *            the text
 	 */
 	public void setText(String text) {
 		this.text = text;
 	}
 
 	/**
-	 * Get the style
+	 * Gets the colour.
 	 * 
-	 * @return String style
+	 * @return the colour
 	 */
-	public String getStyle() {
-		return style;
+	public String getColour() {
+		return colour;
 	}
 
 	/**
-	 * Sets the text string.
+	 * Sets the colour in HTML hex format (#ffffff)
 	 * 
-	 * @param style
-	 *            String
+	 * @param colour
+	 *            the colour
 	 */
-	public void setStyle(String style) {
-		this.style = style;
+	public void setColour(String colour) {
+		this.colour = colour;
+	}
+
+	/**
+	 * Gets the font size.
+	 * 
+	 * @return the font size
+	 */
+	public Integer getFontSize() {
+		return fontsize;
+	}
+
+	/**
+	 * Sets the font size.
+	 * 
+	 * @param fontsize
+	 *            the fontsize
+	 */
+	public void setFontSize(Integer fontsize) {
+		this.fontsize = fontsize;
 	}
 
 	/*
@@ -105,7 +114,8 @@ public class Text implements JSONizable {
 	public JSONValue buildJSON() {
 		JSONObject json = new JSONObject();
 		if (text != null) json.put("text", new JSONString(text));
-		if (style != null) json.put("style", new JSONString(style));
+		if (colour != null) json.put("colour", new JSONString(colour));
+		if (fontsize != null) json.put("font-size", new JSONNumber(fontsize));
 		return json;
 	}
 }

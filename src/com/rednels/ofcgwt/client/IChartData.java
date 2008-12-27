@@ -14,36 +14,48 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
-*/
+ */
 package com.rednels.ofcgwt.client;
+
 /**
- * An interface that ChartWidgets should implement   
+ * An interface that ChartWidgets should implement
  */
 public interface IChartData {
 
 	/**
 	 * Get the currently set JSON data
+	 * 
 	 * @return json String
 	 */
 	public String getJsonData();
+
 	/**
 	 * Notify that the chart widget is ready to go
 	 */
 	public void notifyReady();
+
 	/**
 	 * Get the currently set swf ID of this chart widget
+	 * 
 	 * @return swf id String
 	 */
-	public String getSwfId();	
+	public String getSwfId();
+
 	/**
-	 * Add an IOnClickListener to this chart events and return the function signature for JSON
-	 * @param listener an IChartListener 
+	 * Add an IOnClickListener to this chart events and return the function
+	 * signature for JSON
+	 * 
+	 * @param listener
+	 *            an IChartListener
 	 * @return function signature String
 	 */
 	public String addOnClickListener(IOnClickListener listener);
+
 	/**
 	 * Notify that the chart onclick listeners
-	 * @param evtid the event id String 
+	 * 
+	 * @param evtid
+	 *            the event id String
 	 */
 	public void notifyOnClick(String evtid);
 }
