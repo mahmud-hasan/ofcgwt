@@ -361,8 +361,8 @@ public class Demo implements EntryPoint {
 		xa.setLabels("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D");
 		xa.setZDepth3D(5);
 		// xa.setMax(12);
-		xa.setTickHeight(4);
-		xa.setOffset(true);
+//		xa.setTickHeight(4);
+//		xa.setOffset(true);
 		xa.setColour("#909090");
 		cd3.setXAxis(xa);
 		YAxis ya = new YAxis();
