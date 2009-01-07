@@ -18,111 +18,91 @@ See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
 package com.gwttest.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.Random;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 import com.rednels.ofcgwt.client.ChartWidget;
 import com.rednels.ofcgwt.client.model.ChartData;
-import com.rednels.ofcgwt.client.model.Text;
-import com.rednels.ofcgwt.client.model.axis.Label;
-import com.rednels.ofcgwt.client.model.axis.XAxis;
-import com.rednels.ofcgwt.client.model.axis.YAxis;
-import com.rednels.ofcgwt.client.model.elements.BarChart;
-import com.rednels.ofcgwt.client.model.elements.LineChart;
-import com.rednels.ofcgwt.client.model.elements.BarChart.BarStyle;
-import com.rednels.ofcgwt.client.model.elements.LineChart.LineStyle;
+import com.rednels.ofcgwt.client.model.elements.PieChart;
 
 /**
  * Example Test using OFCGWT
  */
-public class Snippet implements EntryPoint {
+public class Snippet implements EntryPoint, ClickListener {
+
+	// Instantiate the dialog box and show it.
+	MyDialog d = new MyDialog();
+	
+	public class TestPieChart {
+		ChartData c;
+		PieChart p;
+
+		public TestPieChart() {
+			p = new PieChart();
+			p.setGradientFill(true);
+			p.setAnimate(false);
+			p.setStartAngle(35);
+			p.setBorder(2);
+			p.setColours("#d01f3c", "#345678", "#356aa0", "#C79810");
+			p.setTooltip("#label#<br>$#val# (#percent#)");
+			p.setAlpha(0.6f);
+			p.setNoLabels(true);
+
+			c = new ChartData("Pie Chart");
+			c.addElements(p);
+			c.setBackgroundColour("#eeffee");
+		}
+
+		public String getJSON() {
+			p.getValues().clear();
+			int n = Random.nextInt(6) + 2;
+			for (int i = 0; i < n; i++) {
+				p.addSlice(Random.nextInt(12) * 1000, "Slice #" + (i + 1));
+			}
+			return c.toString();
+		}
+	}
+	
+	class MyDialog extends DialogBox {
+
+		public MyDialog() {
+			setText("My First Dialog");
+			
+			VerticalPanel vp = new VerticalPanel();
+			
+			Button ok = new Button("OK");
+			ok.addClickListener(new ClickListener() {
+				public void onClick(Widget sender) {
+					MyDialog.this.hide();
+				}
+			});
+			vp.add(ok);
+			vp.setCellHorizontalAlignment(ok,HasHorizontalAlignment.ALIGN_CENTER );
+
+			final TestPieChart tpc = new TestPieChart();
+			final ChartWidget chart = new ChartWidget();
+			chart.setJsonData(tpc.getJSON());
+			chart.setSize("300px","300px");
+			
+			vp.add(chart);
+			
+			setWidget(vp);
+		}
+	}
 
 	public void onModuleLoad() {
-		SimplePanel main = new SimplePanel();
-		main.setHeight("400");
-		main.setWidth("600");
+		Button b = new Button("Click me");
+		b.addClickListener(this);
 
-		main.add(addChart());
-
-		RootPanel.get().add(main);
+		RootPanel.get().add(b);
 	}
 
-	private ChartWidget addChart() {
-		String seriesColors[] = { "#ffcc33", "#6699ff", "#339966" };
-
-		ChartWidget chartW = new ChartWidget();
-		// chartW.setSize("100%", "200");
-		ChartData chrtData = new ChartData("Demo", "font-size: 12px; font-family: Tahoma; text-align: center;");
-		chrtData.setBackgroundColour("#ffffff");
-
-		// prepare X axis
-		XAxis xa = new XAxis();
-		Label lblsX[] = new Label[3];
-		for (int i = 0; i < 3; i++) {
-			lblsX[i] = new Label("2008ww01");
-			lblsX[i].setRotationAngle(45);
-		}
-		xa.addLabels(lblsX);
-		chrtData.setXAxis(xa);
-
-		// prepare LEFT Y axis
-		double yMax = 155;
-		int yStep = (int) (yMax + 2) / 10;
-		YAxis ya = new YAxis();
-		ya.setMax((int) yMax + 2);
-		ya.setSteps(yStep);
-		ya.setGridColour("#ffffff");
-		chrtData.setYAxis(ya);
-
-		/*
-		 * Create three bars for the left Y axis
-		 */
-		BarChart bchart1 = new BarChart(BarStyle.NORMAL);
-		bchart1.setTooltip("$#val#");
-		bchart1.setText("bar1");
-		bchart1.setColour(seriesColors[0]);
-		bchart1.addValues(133, 123, 144);
-
-		BarChart bchart2 = new BarChart(BarStyle.NORMAL);
-		bchart2.setTooltip("$#val#");
-		bchart2.setText("bar2");
-		bchart2.setColour(seriesColors[1]);
-		bchart2.addValues(122, 155, 123);
-
-		BarChart bchart3 = new BarChart(BarStyle.NORMAL);
-		bchart3.setTooltip("$#val#");
-		bchart3.setText("bar2");
-		bchart3.setColour(seriesColors[2]);
-		bchart3.addValues(135, 153, 123);
-
-		chrtData.addElements(bchart1);
-		chrtData.addElements(bchart2);
-		chrtData.addElements(bchart3);
-
-		chrtData.setYLegend(new Text("Left Y", "{font-size: 10px; color:#000000}"));
-
-		// Examining right Y axis
-		yStep = (int) (500 + 2) / 10;
-		ya = new YAxis();
-		ya.setMax((int) 500 + 2);
-		ya.setSteps(yStep);
-		ya.setGridColour("#ffffff");
-		chrtData.setYAxisRight(ya);
-
-		/*
-		 * Now the question is how to attach line charts to the right Yaxis?
-		 */
-		LineChart lc1 = new LineChart(LineStyle.NORMAL);
-		lc1.setTooltip("$#val#");
-		lc1.setText("line1");
-		lc1.setColour("#000000");
-		lc1.setRightAxis(true);
-		lc1.addValues(233, 223, 500);
-
-		chrtData.addElements(lc1);
-
-		chartW.setJsonData(chrtData.toString());
-
-		return chartW;
+	public void onClick(Widget sender) {
+		d.show();
 	}
-
 }

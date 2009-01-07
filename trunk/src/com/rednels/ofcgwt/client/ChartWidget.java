@@ -48,8 +48,8 @@ public class ChartWidget extends Widget implements IChartData {
 	private boolean isSWFInjected = false;
 	private boolean cacheFixEnabled = false;
 	private boolean hasFlashPlayer = false;
-	private final String swfId;
-	private final String swfDivId;
+	private String swfId;
+	private String swfDivId;
 	private String jsonData = BLANK_CHART_JSON_DATA;
 	private String width = "100%";
 	private String height = "100%";
@@ -67,21 +67,19 @@ public class ChartWidget extends Widget implements IChartData {
 		++count;
 		Element element = DOM.createElement("div");
 		DOM.setElementProperty(element, "id", swfDivId);
-		setElement(element);
+		element.setInnerHTML("<div id=\"embed_" + swfId + "\">" + emptyInnerDiv() + "</div>");
+		setElement(element);		
 		setSize(width, height);
 		hasFlashPlayer = hasFlashPlayerVersion(MIN_PLAYER_VERSION);
 		cacheFixEnabled = cacheFixImpl.isCacheFixNeeded();
 	}
 
-	protected void onLoad() {
+	protected void onAttach() {
+		super.onAttach();
 		if (!isSWFInjected) {
-			getElement().setInnerHTML("<div id=\"embed_" + swfId + "\">" + emptyInnerDiv() + "</div>");
-			String w = getWidth();
-			String h = getHeight();
-			injectSWF(getInternalSWFURL(isCacheFixEnabled(), urlPrefix + flashurl, swfId), swfId, w, h, MIN_PLAYER_VERSION, ALTERNATE_SWF_SRC);
+			injectSWF(getInternalSWFURL(isCacheFixEnabled(), urlPrefix + flashurl, swfId), swfId, getWidth(), getHeight(), MIN_PLAYER_VERSION, ALTERNATE_SWF_SRC);			
 			isSWFInjected = true;
 		}
-		super.onLoad();
 	}
 
 	private String emptyInnerDiv() {
@@ -118,9 +116,14 @@ public class ChartWidget extends Widget implements IChartData {
 	public static native void injectSWF(String swf, String id, String w, String h, String ver, String alt)
 	/*-{ 	     
 		var flashvars = {id: id,allowResize: true};
-		var params = {scale: 'noscale', allowscriptaccess:'always',wmode: 'transparent'};
-	    var attributes = { id: id, name: id };
-		$wnd.swfobject.embedSWF(swf, "embed_"+id, w, h, ver, alt, flashvars, params, attributes);	        
+		var params = {scale: 'noscale', allowscriptaccess:'always',wmode: 'transparent'};		
+	    var attributes = { data: swf, width: w, height: h, id: id, name: id };
+		$wnd.swfobject.embedSWF(swf, "embed_"+id, w, h, ver, alt, flashvars, params, attributes);
+	}-*/;
+
+	public static native void removeSWF(String id)
+	/*-{ 	     
+		$wnd.swfobject.removeSWF(id);
 	}-*/;
 
 	/**
@@ -299,12 +302,6 @@ public class ChartWidget extends Widget implements IChartData {
 		if (hasFlashPlayer && isSWFInjected) {
 			saveImage(swfId, url, debug);
 		}
-	}
-
-	protected void onUnload() {
-		getElement().removeChild(DOM.getFirstChild(getElement()));
-		isSWFInjected = false;
-		super.onUnload();
 	}
 
 	public void setHeight(String height) {
