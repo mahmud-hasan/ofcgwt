@@ -2,7 +2,7 @@
 <project default="gwt.compile" basedir=".">
 	<property environment="env" />
 	<property name="ofcgwt.src" value="src" />
-	<property name="ofcgwt.release" value="ofcgwt-1.2.3" />
+	<property name="ofcgwt.release" value="ofcgwt-1.2.4" />
 	<property name="ofcgwt.target" location="build" />
 	<property name="gwt.compiler.class" value="com.google.gwt.dev.GWTCompiler" />
 	<property name="gwt.output.dir" value="www" />

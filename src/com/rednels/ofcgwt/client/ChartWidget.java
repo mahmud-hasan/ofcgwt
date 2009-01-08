@@ -91,7 +91,7 @@ public class ChartWidget extends Widget implements IChartData {
 	 * 
 	 * @return the swf url string
 	 */
-	public static String getInternalSWFURL(boolean iefix, String flashurl, String id) {
+	private String getInternalSWFURL(boolean iefix, String flashurl, String id) {
 		if (!iefix) return flashurl;
 		return flashurl + ("?id=" + id + (new Date().getTime()));
 	}
@@ -113,17 +113,12 @@ public class ChartWidget extends Widget implements IChartData {
 	 * @param alt
 	 *            alternate swf to load if wrong version
 	 */
-	public static native void injectSWF(String swf, String id, String w, String h, String ver, String alt)
+	private native void injectSWF(String swf, String id, String w, String h, String ver, String alt)
 	/*-{ 	     
 		var flashvars = {id: id,allowResize: true};
 		var params = {scale: 'noscale', allowscriptaccess:'always',wmode: 'transparent'};		
 	    var attributes = { data: swf, width: w, height: h, id: id, name: id };
 		$wnd.swfobject.embedSWF(swf, "embed_"+id, w, h, ver, alt, flashvars, params, attributes);
-	}-*/;
-
-	public static native void removeSWF(String id)
-	/*-{ 	     
-		$wnd.swfobject.removeSWF(id);
 	}-*/;
 
 	/**
@@ -134,7 +129,7 @@ public class ChartWidget extends Widget implements IChartData {
 	 *            String version
 	 * @return true if flash version equals or is higher
 	 */
-	public static native boolean hasFlashPlayerVersion(String v)
+	private native boolean hasFlashPlayerVersion(String v)
 	/*-{	    
 	  	return $wnd.swfobject.hasFlashPlayerVersion(v);	        
 	}-*/;
@@ -146,7 +141,7 @@ public class ChartWidget extends Widget implements IChartData {
 	 * @param chartclass
 	 *            an instance of IChartData
 	 */
-	public static void initJSCallback(IChartData chartclass) {
+	private void initJSCallback(IChartData chartclass) {
 		charts.add(chartclass);
 		initCallback();
 	}
@@ -243,10 +238,10 @@ public class ChartWidget extends Widget implements IChartData {
 	 * @param json
 	 *            a JSON string
 	 */
-	public static native void loadJSON(String id, String json)
+	private native void loadJSON(String id, String json)
 	/*-{				
 		var swf = $doc.getElementById(id);
-		x = swf.load(json);
+		if ('load' in swf) swf.load(json);
 	}-*/;
 
 	/**
@@ -260,10 +255,10 @@ public class ChartWidget extends Widget implements IChartData {
 	 * @param debug
 	 *            enable debug
 	 */
-	public static native void saveImage(String id, String url, boolean debug)
+	private native void saveImage(String id, String url, boolean debug)
 	/*-{				
 		var swf = $doc.getElementById(id);
-		x = swf.save_image( url, 'this.@com.rednels.ofcgwt.client.ChartWidget::notifyImageSaved()()', debug );
+		if ('save_image' in swf) swf.save_image( url, 'this.@com.rednels.ofcgwt.client.ChartWidget::notifyImageSaved()()', debug );
 	}-*/;
 
 	/**
