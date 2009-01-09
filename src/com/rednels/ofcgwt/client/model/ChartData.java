@@ -53,6 +53,7 @@ public class ChartData implements JSONizable {
 	private RadarAxis radar_axis;
 	private YAxis y_axis_right;
 	private Text y_legend;
+	private Text y2_legend;
 	private Text x_legend;
 	private String bg_colour;
 	private final Collection<Element> elements = new Vector<Element>();
@@ -70,7 +71,7 @@ public class ChartData implements JSONizable {
 	 * @param titleText
 	 */
 	public ChartData(String titleText) {
-		this(titleText, null);
+		this(titleText, "");
 	}
 
 	/**
@@ -117,6 +118,7 @@ public class ChartData implements JSONizable {
 		if (this.y_axis_right != null) json.put("y_axis_right", this.y_axis_right.buildJSON());
 		if (this.radar_axis != null) json.put("radar_axis", this.radar_axis.buildJSON());
 		if (this.y_legend != null) json.put("y_legend", this.y_legend.buildJSON());
+		if (this.y2_legend != null) json.put("y2_legend", this.y2_legend.buildJSON());
 		if (this.x_legend != null) json.put("x_legend", this.x_legend.buildJSON());
 		if (this.bg_colour != null) json.put("bg_colour", new JSONString(this.bg_colour));
 		if (this.elements == null) return json;
@@ -211,6 +213,15 @@ public class ChartData implements JSONizable {
 	 */
 	public Text getYLegend() {
 		return this.y_legend;
+	}
+
+	/**
+	 * Get the current y right legend Text
+	 * 
+	 * @return Text y right legend
+	 */
+	public Text getYRightLegend() {
+		return this.y2_legend;
 	}
 
 	/**
@@ -313,6 +324,16 @@ public class ChartData implements JSONizable {
 	 */
 	public void setYLegend(Text y_legend) {
 		this.y_legend = y_legend;
+	}
+
+	/**
+	 * Sets the y right legend to this Text object
+	 * 
+	 * @param y_legend
+	 *            Text object
+	 */
+	public void setYRightLegend(Text y2_legend) {
+		this.y2_legend = y2_legend;
 	}
 
 	/**
