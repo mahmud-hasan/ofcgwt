@@ -29,23 +29,6 @@ public class Text implements JSONizable {
 	private String style;
 
 	/**
-	 * Create a new Text instance
-	 */
-	public Text() {
-		this(null, null);
-	}
-
-	/**
-	 * Create a new Text instance with the given text
-	 * 
-	 * @param text
-	 *            String
-	 */
-	public Text(String text) {
-		this(text, null);
-	}
-
-	/**
 	 * Create a new Text instance with the given text and style. Style is a CSS
 	 * string for formatting text.
 	 * 

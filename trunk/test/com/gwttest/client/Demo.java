@@ -371,7 +371,7 @@ public class Demo implements EntryPoint {
 		cd3.setYAxis(ya);
 		BarChart bchart3 = new BarChart(BarStyle.THREED);
 		bchart3.setColour("#ff8800");
-		bchart3.setTooltip("$#val#");
+//		bchart3.setTooltip("$#val#<br>s#x_label#");
 		for (int t = 0; t < 12; t++) {
 			bchart3.addValues(Random.nextInt(50) + 50);
 		}
@@ -383,6 +383,10 @@ public class Demo implements EntryPoint {
 		ya.setSteps(50);
 		ya.setGridColour("#000000");
 		cd3.setYAxisRight(ya);
+		
+		cd3.setYLegend(new Text("$M in Sales", "font-size: 11px;"));
+		cd3.setYRightLegend(new Text("$M in Sales", "font-size: 11px;"));
+		cd3.setXLegend(new Text("2008/9 Financial Year", "font-size: 11px;"));		
 		
 		LineChart lc1 = new LineChart(LineStyle.NORMAL);
 		lc1.setTooltip("$#val#");
