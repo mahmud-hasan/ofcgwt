@@ -389,7 +389,7 @@ public class Demo implements EntryPoint {
 		cd3.setXLegend(new Text("2008/9 Financial Year", "font-size: 11px;"));		
 		
 		LineChart lc1 = new LineChart(LineStyle.NORMAL);
-		lc1.setTooltip("$#val#");
+//		lc1.setTooltip("$#val#");
 		lc1.setText("Global Avg");
 		lc1.setColour("#000000");
 		lc1.setRightAxis(true);

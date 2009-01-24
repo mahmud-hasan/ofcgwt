@@ -18,6 +18,7 @@ See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
 package com.gwttest.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -37,7 +38,7 @@ public class Snippet implements EntryPoint, ClickListener {
 
 	// Instantiate the dialog box and show it.
 	MyDialog d = new MyDialog();
-	
+
 	public class TestPieChart {
 		ChartData c;
 		PieChart p;
@@ -46,6 +47,7 @@ public class Snippet implements EntryPoint, ClickListener {
 			p = new PieChart();
 			p.setGradientFill(true);
 			p.setAnimate(false);
+			p.setAlphaHighlight(true);
 			p.setStartAngle(35);
 			p.setBorder(2);
 			p.setColours("#d01f3c", "#345678", "#356aa0", "#C79810");
@@ -55,7 +57,7 @@ public class Snippet implements EntryPoint, ClickListener {
 
 			c = new ChartData("Pie Chart");
 			c.addElements(p);
-			c.setBackgroundColour("#eeffee");
+			c.setBackgroundColour("-1");
 		}
 
 		public String getJSON() {
@@ -67,14 +69,17 @@ public class Snippet implements EntryPoint, ClickListener {
 			return c.toString();
 		}
 	}
-	
+
 	class MyDialog extends DialogBox {
 
 		public MyDialog() {
 			setText("My First Dialog");
-			
+
 			VerticalPanel vp = new VerticalPanel();
-			
+
+			DOM.setStyleAttribute(vp.getElement(), "border", "6px solid black");
+			DOM.setStyleAttribute(vp.getElement(), "backgroundColor", "#ffeeee");
+
 			Button ok = new Button("OK");
 			ok.addClickListener(new ClickListener() {
 				public void onClick(Widget sender) {
@@ -82,15 +87,15 @@ public class Snippet implements EntryPoint, ClickListener {
 				}
 			});
 			vp.add(ok);
-			vp.setCellHorizontalAlignment(ok,HasHorizontalAlignment.ALIGN_CENTER );
+			vp.setCellHorizontalAlignment(ok, HasHorizontalAlignment.ALIGN_CENTER);
 
 			final TestPieChart tpc = new TestPieChart();
 			final ChartWidget chart = new ChartWidget();
 			chart.setJsonData(tpc.getJSON());
-			chart.setSize("300px","300px");
-			
+			chart.setSize("300px", "300px");
+
 			vp.add(chart);
-			
+
 			setWidget(vp);
 		}
 	}

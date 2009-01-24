@@ -71,7 +71,7 @@ public class ChartData implements JSONizable {
 	 * @param titleText
 	 */
 	public ChartData(String titleText) {
-		this(titleText, "");
+		this(titleText, null);
 	}
 
 	/**
@@ -236,7 +236,7 @@ public class ChartData implements JSONizable {
 	}
 
 	/**
-	 * Sets the chart background colour in HTML hex format (#ffffff)
+	 * Sets the chart background colour in HTML hex format (#ffffff). Set to "-1" to set transparent.
 	 * 
 	 * @param bg_colour
 	 *            String colour
