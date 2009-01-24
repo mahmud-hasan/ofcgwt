@@ -47,6 +47,9 @@ public class PieChart extends Element implements JSONizable {
 
 	/** The alpha. */
 	private Float alpha;
+	
+	/** The alphaHighlight. */
+	private Boolean alphaHighlight;
 
 	/** The animate. */
 	private Boolean animate;
@@ -65,6 +68,25 @@ public class PieChart extends Element implements JSONizable {
 	 */
 	public PieChart() {
 		super("pie");
+	}
+
+	/**
+	 * Sets animation
+	 * 
+	 * @param animate
+	 *            true or false
+	 */
+	public void setAlphaHighlight(boolean alphaHighlight) {
+		this.alphaHighlight = alphaHighlight;
+	}
+
+	/**
+	 * Gets the animation value
+	 * 
+	 * @return true if animate is enabled
+	 */
+	public Boolean getAlphaHighlight() {
+		return alphaHighlight;
 	}
 
 	/**
@@ -291,7 +313,8 @@ public class PieChart extends Element implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (startAngle != null) json.put("start-angle", new JSONNumber(startAngle.doubleValue()));
+		if (startAngle != null) json.put("start-angle", new JSONNumber(startAngle.doubleValue()));		
+		if (alphaHighlight != null && alphaHighlight) json.put("highlight", new JSONString("alpha"));
 		if (animate != null) json.put("animate", JSONBoolean.getInstance(animate));
 		if (gradientFill != null) json.put("gradient-fill", JSONBoolean.getInstance(gradientFill));
 		if (alpha != null) json.put("alpha", new JSONNumber(alpha));
