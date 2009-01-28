@@ -282,6 +282,7 @@ public class Demo implements EntryPoint {
 		pie.setNoLabels(true);
 		pie.setTooltip("#label# $#val#<br>#percent#");
 		pie.setAnimate(false);
+		pie.setAlphaHighlight(true);
 		pie.setGradientFill(true);
 		pie.setColours("#ff0000", "#00ff00", "#0000ff", "#ff9900", "#ff00ff");
 		pie.addSlices(new PieChart.Slice(Random.nextInt(11) * 1000, "AU"));
