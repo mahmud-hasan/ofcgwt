@@ -329,7 +329,7 @@ public class ChartData implements JSONizable {
 	/**
 	 * Sets the y right legend to this Text object
 	 * 
-	 * @param y_legend
+	 * @param y2_legend
 	 *            Text object
 	 */
 	public void setYRightLegend(Text y2_legend) {
