@@ -71,9 +71,9 @@ public class PieChart extends Element implements JSONizable {
 	}
 
 	/**
-	 * Sets animation
+	 * Sets alpha colour toggle as the highlight, or slice slide out animation
 	 * 
-	 * @param animate
+	 * @param alphaHighlight
 	 *            true or false
 	 */
 	public void setAlphaHighlight(boolean alphaHighlight) {
@@ -81,16 +81,16 @@ public class PieChart extends Element implements JSONizable {
 	}
 
 	/**
-	 * Gets the animation value
+	 * Gets the alphaHighlight value
 	 * 
-	 * @return true if animate is enabled
+	 * @return true if alphaHighlight is enabled
 	 */
 	public Boolean getAlphaHighlight() {
 		return alphaHighlight;
 	}
 
 	/**
-	 * Sets animation
+	 * Sets if animation of slice rotation build is enabled 
 	 * 
 	 * @param animate
 	 *            true or false
