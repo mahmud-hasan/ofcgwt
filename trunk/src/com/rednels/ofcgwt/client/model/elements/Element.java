@@ -52,6 +52,9 @@ public abstract class Element implements JSONizable {
 	/** The onClick. */
 	private String onClick;
 
+	/** The keyOnClick. */
+	private String keyOnClick;
+
 	/** The keys. */
 	private List<Keys> keys = new ArrayList<Keys>();
 
@@ -135,6 +138,38 @@ public abstract class Element implements JSONizable {
 	}
 
 	/**
+	 * Gets the keyOnClick.
+	 * 
+	 * @return the keyOnClick
+	 */
+	public String getKeyOnClick() {
+		return keyOnClick;
+	}
+
+	/**
+	 * Sets the keyOnClick.
+	 * 
+	 * @param keyOnClick
+	 *            the keyOnClick javascript method or url
+	 */
+	public void setKeyOnClick(String keyOnClick) {
+		this.keyOnClick = keyOnClick;
+	}
+
+	/**
+	 * If true, sets keyOnClick to toggle visibility
+	 * 
+	 * @param toggleKeyOnClick
+	 *            boolean
+	 */
+	public void setKeyToggleOnClick(boolean toggleKeyOnClick) {
+		if (toggleKeyOnClick)
+			this.keyOnClick = "toggle-visibility";
+		else
+			this.keyOnClick = null;
+	}
+
+	/**
 	 * Adds an onClick event. Requires an ChartWidget to register the event
 	 * with.
 	 * 
@@ -145,6 +180,19 @@ public abstract class Element implements JSONizable {
 	 */
 	public void addOnClickListener(IChartData chart, IOnClickListener listener) {
 		this.onClick = chart.addOnClickListener(listener);
+	}
+
+	/**
+	 * Adds an onClick event. Requires an ChartWidget to register the event
+	 * with.
+	 * 
+	 * @param chart
+	 *            the IChartData
+	 * @param listener
+	 *            the onClick Listener
+	 */
+	public void addKeyOnClickListener(IChartData chart, IOnClickListener listener) {
+		this.keyOnClick = chart.addOnClickListener(listener);
 	}
 
 	/**
@@ -224,6 +272,7 @@ public abstract class Element implements JSONizable {
 		if (fontSize != null) json.put("font-size", new JSONNumber(fontSize));
 		if (tooltip != null) json.put("tip", new JSONString(tooltip));
 		if (onClick != null) json.put("on-click", new JSONString(onClick));
+		if (keyOnClick != null) json.put("key-on-click", new JSONString(keyOnClick));
 		
 		JSONArray ary = new JSONArray();
 		int index = 0;

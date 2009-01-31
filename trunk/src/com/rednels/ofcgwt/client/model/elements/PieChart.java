@@ -338,6 +338,9 @@ public class PieChart extends Element implements JSONizable {
 		/** The label. */
 		private final String label;
 
+		/** The text. */
+		private final String text;
+
 		/** The value. */
 		private final Number value;
 
@@ -355,11 +358,28 @@ public class PieChart extends Element implements JSONizable {
 		 * 
 		 * @param value
 		 *            the value
+		 * @param label
+		 *            the label
+		 */
+		public Slice(Number value, String label) {
+			this.label = label;
+			this.text = label;
+			this.value = value;
+		}
+		
+		/**
+		 * Creates a new slice.
+		 * 
+		 * @param value
+		 *            the value
+		 * @param label
+		 *            the label
 		 * @param text
 		 *            the text
 		 */
-		public Slice(Number value, String text) {
-			this.label = text;
+		public Slice(Number value, String label,String text) {
+			this.label = label;
+			this.text = text;
 			this.value = value;
 		}
 
@@ -448,6 +468,15 @@ public class PieChart extends Element implements JSONizable {
 		 * @return the text
 		 */
 		public String getText() {
+			return text;
+		}
+
+		/**
+		 * Gets the text.
+		 * 
+		 * @return the text
+		 */
+		public String getLabel() {
 			return label;
 		}
 
@@ -460,6 +489,7 @@ public class PieChart extends Element implements JSONizable {
 			JSONObject json = new JSONObject();
 			if (value != null) json.put("value", new JSONNumber(value.doubleValue()));
 			if (label != null) json.put("label", new JSONString(label));
+			if (text != null) json.put("text", new JSONString(text));
 			if (labelColour != null) json.put("label-colour", new JSONString(labelColour));
 			if (fontSize != null) json.put("font-size", new JSONString(fontSize));
 			if (onClick != null) json.put("on-click", new JSONString(onClick));

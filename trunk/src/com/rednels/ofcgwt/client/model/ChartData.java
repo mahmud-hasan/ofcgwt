@@ -55,6 +55,7 @@ public class ChartData implements JSONizable {
 	private Text y_legend;
 	private Text y2_legend;
 	private Text x_legend;
+	private Legend legend;
 	private String bg_colour;
 	private final Collection<Element> elements = new Vector<Element>();
 
@@ -120,6 +121,7 @@ public class ChartData implements JSONizable {
 		if (this.y_legend != null) json.put("y_legend", this.y_legend.buildJSON());
 		if (this.y2_legend != null) json.put("y2_legend", this.y2_legend.buildJSON());
 		if (this.x_legend != null) json.put("x_legend", this.x_legend.buildJSON());
+		if (this.legend != null) json.put("legend", this.legend.buildJSON());
 		if (this.bg_colour != null) json.put("bg_colour", new JSONString(this.bg_colour));
 		if (this.elements == null) return json;
 		final JSONArray ary = new JSONArray();
@@ -176,6 +178,15 @@ public class ChartData implements JSONizable {
 	public RadarAxis getRadarAxis() {
 		if (this.radar_axis == null) this.radar_axis = new RadarAxis();
 		return this.radar_axis;
+	}
+
+	/**
+	 * Get the current chart legend 
+	 * 
+	 * @return Legend chart legend
+	 */
+	public Legend getLegend() {
+		return this.legend;
 	}
 
 	/**
@@ -284,6 +295,16 @@ public class ChartData implements JSONizable {
 	 */
 	public void setRadarAxis(RadarAxis radar_axis) {
 		this.radar_axis = radar_axis;
+	}
+
+	/**
+	 * Sets the chart legend 
+	 * 
+	 * @param legend
+	 *            Legend object
+	 */
+	public void setLegend(Legend legend) {
+		this.legend = legend;
 	}
 
 	/**
