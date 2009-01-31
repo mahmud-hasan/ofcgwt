@@ -196,7 +196,7 @@ public class ToolTip implements JSONizable {
 		private int style;
 
 		/**
-		 * Creates a new bar style.
+		 * Creates a new mouse style.
 		 * 
 		 * @param style
 		 *            the style

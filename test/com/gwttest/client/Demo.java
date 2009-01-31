@@ -34,8 +34,10 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.rednels.ofcgwt.client.ChartWidget;
 import com.rednels.ofcgwt.client.model.ChartData;
+import com.rednels.ofcgwt.client.model.Legend;
 import com.rednels.ofcgwt.client.model.Text;
 import com.rednels.ofcgwt.client.model.ToolTip;
+import com.rednels.ofcgwt.client.model.Legend.Position;
 import com.rednels.ofcgwt.client.model.ToolTip.MouseStyle;
 import com.rednels.ofcgwt.client.model.axis.Keys;
 import com.rednels.ofcgwt.client.model.axis.Label;
@@ -277,19 +279,21 @@ public class Demo implements EntryPoint {
 	private ChartData getPieChartData() {
 		ChartData cd = new ChartData("Sales by Region", "font-size: 14px; font-family: Verdana; text-align: center;");
 		cd.setBackgroundColour("#ffffff");
+		cd.setLegend(new Legend(Position.RIGHT,true));
 		PieChart pie = new PieChart();
-		pie.setAlpha(0.3f);
+		pie.setKeyToggleOnClick(true);
+		pie.setAlpha(0.5f);
 		pie.setNoLabels(true);
 		pie.setTooltip("#label# $#val#<br>#percent#");
 		pie.setAnimate(false);
 		pie.setAlphaHighlight(true);
 		pie.setGradientFill(true);
-		pie.setColours("#ff0000", "#00ff00", "#0000ff", "#ff9900", "#ff00ff");
-		pie.addSlices(new PieChart.Slice(Random.nextInt(11) * 1000, "AU"));
+		pie.setColours("#ff0000", "#00aa00", "#0000ff", "#ff9900", "#ff00ff");
+		pie.addSlices(new PieChart.Slice(Random.nextInt(11) * 1000, "AU","Australia"));
 		pie.addSlices(new PieChart.Slice(Random.nextInt(88) * 1000, "USA"));
-		pie.addSlices(new PieChart.Slice(Random.nextInt(62) * 1000, "UK"));
-		pie.addSlices(new PieChart.Slice(Random.nextInt(14) * 1000, "JP"));
-		pie.addSlices(new PieChart.Slice(Random.nextInt(43) * 1000, "EU"));
+		pie.addSlices(new PieChart.Slice(Random.nextInt(62) * 1000, "UK","United Kingdom"));
+		pie.addSlices(new PieChart.Slice(Random.nextInt(14) * 1000, "JP","Japan"));
+		pie.addSlices(new PieChart.Slice(Random.nextInt(43) * 1000, "EU","Europe"));
 		cd.addElements(pie);
 		return cd;
 	}
@@ -303,7 +307,7 @@ public class Demo implements EntryPoint {
 		pie.setGradientFill(false);
 		pie.setColours("#ff0000", "#00ff00", "#0000ff", "#ff9900", "#ff00ff", "#FFFF00", "#6699FF", "#339933");
 		for (int t = 0; t < Random.nextInt(10) + 10; t++) {
-			pie.addSlices(new PieChart.Slice(Random.nextDouble() * 1.1 + .5, "" + (t + 1)));
+			pie.addSlices(new PieChart.Slice(Random.nextDouble() * 1.1 + .5, "" + (t + 1),null));
 		}
 		cd.addElements(pie);
 		return cd;
@@ -356,8 +360,9 @@ public class Demo implements EntryPoint {
 	}
 
 	private ChartData get3DBarLineChartData() {
-		ChartData cd3 = new ChartData("Sales by Month 2008", "font-size: 14px; font-family: Verdana; text-align: center;");
-		cd3.setBackgroundColour("#ffffff");
+		ChartData cd = new ChartData("Sales by Month 2008", "font-size: 14px; font-family: Verdana; text-align: center;");
+		cd.setBackgroundColour("#ffffff");
+		
 		XAxis xa = new XAxis();
 		xa.setLabels("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D");
 		xa.setZDepth3D(5);
@@ -365,29 +370,29 @@ public class Demo implements EntryPoint {
 //		xa.setTickHeight(4);
 //		xa.setOffset(true);
 		xa.setColour("#909090");
-		cd3.setXAxis(xa);
+		cd.setXAxis(xa);
 		YAxis ya = new YAxis();
 		ya.setSteps(16);
 		ya.setMax(160);
-		cd3.setYAxis(ya);
+		cd.setYAxis(ya);
 		BarChart bchart3 = new BarChart(BarStyle.THREED);
 		bchart3.setColour("#ff8800");
 //		bchart3.setTooltip("$#val#<br>s#x_label#");
 		for (int t = 0; t < 12; t++) {
 			bchart3.addValues(Random.nextInt(50) + 50);
 		}
-		cd3.addElements(bchart3);
+		cd.addElements(bchart3);
 
 		// right axis and line chart
 		ya = new YAxis();
 		ya.setMax(450);
 		ya.setSteps(50);
 		ya.setGridColour("#000000");
-		cd3.setYAxisRight(ya);
+		cd.setYAxisRight(ya);
 		
-		cd3.setYLegend(new Text("$M in Sales", "font-size: 11px;"));
-		cd3.setYRightLegend(new Text("$M in Sales", "font-size: 11px;"));
-		cd3.setXLegend(new Text("2008/9 Financial Year", "font-size: 11px;"));		
+		cd.setYLegend(new Text("$M in Sales", "font-size: 11px;"));
+		cd.setYRightLegend(new Text("$M in Sales", "font-size: 11px;"));
+		cd.setXLegend(new Text("2008/9 Financial Year", "font-size: 11px;"));		
 		
 		LineChart lc1 = new LineChart(LineStyle.NORMAL);
 //		lc1.setTooltip("$#val#");
@@ -397,9 +402,9 @@ public class Demo implements EntryPoint {
 		for (int t = 0; t < 12; t++) {
 			lc1.addValues(Random.nextInt(60)*4 + 200);
 		}
-		cd3.addElements(lc1);
+		cd.addElements(lc1);
 		
-		return cd3;
+		return cd;
 	}
 
 	private ChartData getCylinderChartData() {
@@ -463,20 +468,24 @@ public class Demo implements EntryPoint {
 	private ChartData getLineChartData() {
 		ChartData cd = new ChartData("Relative Performance", "font-size: 14px; font-family: Verdana; text-align: center;");
 		cd.setBackgroundColour("#ffffff");
+		cd.setLegend(new Legend(Position.TOP,true));
 
 		LineChart lc1 = new LineChart(LineStyle.NORMAL);
+		lc1.setKeyToggleOnClick(true);
 		lc1.setText("PoorEnterprises Pty");
 		lc1.setColour("#ff0000");
 		for (int t = 0; t < 30; t++) {
 			lc1.addValues(Random.nextDouble() * .5 - .5);
 		}
 		LineChart lc2 = new LineChart(LineStyle.HOLLOW);
+		lc2.setKeyToggleOnClick(true);
 		lc2.setColour("#00ff00");
 		lc2.setText("Ave-Ridge Co LLC");
 		for (int t = 0; t < 30; t++) {
 			lc2.addValues(Random.nextDouble() * .8);
 		}
 		LineChart lc3 = new LineChart(LineStyle.DOT);
+		lc3.setKeyToggleOnClick(true);
 		lc3.setColour("#0000ff");
 		lc3.setText("Suu Perb Enterprises");
 		for (int t = 0; t < 30; t++) {
