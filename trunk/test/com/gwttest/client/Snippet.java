@@ -18,7 +18,6 @@ See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
 package com.gwttest.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -29,7 +28,12 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.rednels.ofcgwt.client.ChartWidget;
 import com.rednels.ofcgwt.client.model.ChartData;
+import com.rednels.ofcgwt.client.model.axis.Label;
+import com.rednels.ofcgwt.client.model.axis.XAxis;
+import com.rednels.ofcgwt.client.model.axis.YAxis;
+import com.rednels.ofcgwt.client.model.elements.BarChart;
 import com.rednels.ofcgwt.client.model.elements.PieChart;
+import com.rednels.ofcgwt.client.model.elements.BarChart.BarStyle;
 
 /**
  * Example Test using OFCGWT
@@ -70,6 +74,53 @@ public class Snippet implements EntryPoint, ClickListener {
 		}
 	}
 
+	class TestBarChart {
+		ChartData c;
+		BarChart b;
+
+		public TestBarChart() {
+			c = new ChartData("Sales by Month 2006", "font-size: 14px; font-family: Verdana; color: #ffffff; text-align: center;");
+			c.setBackgroundColour("-1");
+
+			XAxis xa = new XAxis();
+			xa.setColour("#ffffff");
+			xa.setGridColour("#888888");
+			Label lab = new Label("Q1");
+			lab.setColour("#ffffff");
+			xa.addLabels(lab);
+			lab = new Label("Q2");
+			lab.setColour("#ffffff");
+			xa.addLabels(lab);
+			lab = new Label("Q3");
+			lab.setColour("#ffffff");
+			xa.addLabels(lab);
+			lab = new Label("Q4");
+			lab.setColour("#ffffff");
+			xa.addLabels(lab);
+			c.setXAxis(xa);
+
+			YAxis ya = new YAxis();
+			ya.setColour("#ffffff");
+			ya.setGridColour("#888888");
+			ya.setRange(0, 100);
+			ya.setSteps(5);
+			c.setYAxisLabelStyle(12, "#ffffff");
+			c.setYAxis(ya);
+
+			b = new BarChart(BarStyle.NORMAL);
+			b.setTooltip("$#val#");
+			c.addElements(b);
+		}
+
+		public String getJSON() {
+			b.getValues().clear();
+			for (int t = 0; t < 4; t++) {
+				b.addValues(Random.nextInt(50) + 50);
+			}
+			return c.toString();
+		}
+	}
+
 	class MyDialog extends DialogBox {
 
 		public MyDialog() {
@@ -77,8 +128,12 @@ public class Snippet implements EntryPoint, ClickListener {
 
 			VerticalPanel vp = new VerticalPanel();
 
-			DOM.setStyleAttribute(vp.getElement(), "border", "6px solid black");
-			DOM.setStyleAttribute(vp.getElement(), "backgroundColor", "#ffeeee");
+			// DOM.setStyleAttribute(vp.getElement(), "border",
+			// "6px solid black");
+			// DOM.setStyleAttribute(vp.getElement(),
+			// "backgroundColor","#000000");
+
+			vp.setStylePrimaryName("chartPanel");
 
 			Button ok = new Button("OK");
 			ok.addClickListener(new ClickListener() {
@@ -89,7 +144,8 @@ public class Snippet implements EntryPoint, ClickListener {
 			vp.add(ok);
 			vp.setCellHorizontalAlignment(ok, HasHorizontalAlignment.ALIGN_CENTER);
 
-			final TestPieChart tpc = new TestPieChart();
+			// final TestPieChart tpc = new TestPieChart();
+			final TestBarChart tpc = new TestBarChart();
 			final ChartWidget chart = new ChartWidget();
 			chart.setJsonData(tpc.getJSON());
 			chart.setSize("300px", "300px");

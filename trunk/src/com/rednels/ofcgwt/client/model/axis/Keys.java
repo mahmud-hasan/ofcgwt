@@ -43,7 +43,7 @@ public class Keys implements JSONizable {
 	 * @param text
 	 *            the text
 	 */
-	public Keys(String text,String colour,Integer fontsize) {
+	public Keys(String text, String colour, Integer fontsize) {
 		setText(text);
 		setColour(colour);
 		setFontSize(fontsize);

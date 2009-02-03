@@ -18,18 +18,19 @@ See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
 package com.rednels.ofcgwt.client.model;
 
 import com.google.gwt.json.client.JSONBoolean;
+import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 
 /**
- * Base class for an OFC text element
+ * Base class for an OFC legend element
  */
 public class Legend implements JSONizable {
 	private Position position;
 	private boolean border;
 	private Integer stroke;
-	private boolean shadow;
+	private boolean shadow = true;
 	private String borderColour;
 	private String bgColour;
 	private Float alpha;
@@ -69,7 +70,7 @@ public class Legend implements JSONizable {
 	}
 
 	/**
-	 * Get the border 
+	 * Get the border
 	 * 
 	 * @return true if border is enabled
 	 */
@@ -87,6 +88,104 @@ public class Legend implements JSONizable {
 		this.border = border;
 	}
 
+	/**
+	 * @return the stroke
+	 */
+	public Integer getStroke() {
+		return stroke;
+	}
+
+	/**
+	 * @param stroke the stroke to set
+	 */
+	public void setStroke(Integer stroke) {
+		this.stroke = stroke;
+	}
+
+	/**
+	 * @return the shadow
+	 */
+	public boolean isShadow() {
+		return shadow;
+	}
+
+	/**
+	 * @param shadow the shadow to set
+	 */
+	public void setShadow(boolean shadow) {
+		this.shadow = shadow;
+	}
+
+	/**
+	 * @return the borderColour
+	 */
+	public String getBorderColour() {
+		return borderColour;
+	}
+
+	/**
+	 * @param borderColour the borderColour to set
+	 */
+	public void setBorderColour(String borderColour) {
+		this.borderColour = borderColour;
+	}
+
+	/**
+	 * @return the bgColour
+	 */
+	public String getBgColour() {
+		return bgColour;
+	}
+
+	/**
+	 * @param bgColour the bgColour to set
+	 */
+	public void setBgColour(String bgColour) {
+		this.bgColour = bgColour;
+	}
+
+	/**
+	 * @return the alpha
+	 */
+	public Float getAlpha() {
+		return alpha;
+	}
+
+	/**
+	 * @param alpha the alpha to set
+	 */
+	public void setAlpha(Float alpha) {
+		this.alpha = alpha;
+	}
+
+	/**
+	 * @return the margin
+	 */
+	public Integer getMargin() {
+		return margin;
+	}
+
+	/**
+	 * @param margin the margin to set
+	 */
+	public void setMargin(Integer margin) {
+		this.margin = margin;
+	}
+
+	/**
+	 * @return the padding
+	 */
+	public Integer getPadding() {
+		return padding;
+	}
+
+	/**
+	 * @param padding the padding to set
+	 */
+	public void setPadding(Integer padding) {
+		this.padding = padding;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -95,10 +194,16 @@ public class Legend implements JSONizable {
 	public JSONValue buildJSON() {
 		JSONObject json = new JSONObject();
 		json.put("visible", JSONBoolean.getInstance(true));
-		json.put("bg_colour",  new JSONString("#fefefe"));
-		if (position != null)
-			json.put("position", new JSONString(position.getString()));
+		json.put("bg_colour", new JSONString("#fefefe"));
+		if (position != null) json.put("position", new JSONString(position.getString()));
 		json.put("border", JSONBoolean.getInstance(border));
+		json.put("shadow", JSONBoolean.getInstance(shadow));
+		if (alpha != null) json.put("alpha", new JSONNumber(alpha));
+		if (stroke != null) json.put("stroke", new JSONNumber(stroke));
+		if (margin != null) json.put("margin", new JSONNumber(margin));
+		if (padding != null) json.put("padding", new JSONNumber(padding));	
+		if (borderColour != null) json.put("border_colour", new JSONString(borderColour));
+		if (bgColour != null) json.put("bg_colour", new JSONString(bgColour));
 		return json;
 	}
 

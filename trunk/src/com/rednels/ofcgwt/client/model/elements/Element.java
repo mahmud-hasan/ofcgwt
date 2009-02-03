@@ -163,10 +163,8 @@ public abstract class Element implements JSONizable {
 	 *            boolean
 	 */
 	public void setKeyToggleOnClick(boolean toggleKeyOnClick) {
-		if (toggleKeyOnClick)
-			this.keyOnClick = "toggle-visibility";
-		else
-			this.keyOnClick = null;
+		if (toggleKeyOnClick) this.keyOnClick = "toggle-visibility";
+		else this.keyOnClick = null;
 	}
 
 	/**
@@ -273,15 +271,15 @@ public abstract class Element implements JSONizable {
 		if (tooltip != null) json.put("tip", new JSONString(tooltip));
 		if (onClick != null) json.put("on-click", new JSONString(onClick));
 		if (keyOnClick != null) json.put("key-on-click", new JSONString(keyOnClick));
-		
+
 		JSONArray ary = new JSONArray();
 		int index = 0;
-		for (Keys k : keys) {			
-			ary.set(index++, k.buildJSON());			
+		for (Keys k : keys) {
+			ary.set(index++, k.buildJSON());
 		}
 		if (index != 0) json.put("keys", ary);
-		
-		if (values == null) return json;		
+
+		if (values == null) return json;
 		ary = new JSONArray();
 		index = 0;
 		for (Object o : values) {
