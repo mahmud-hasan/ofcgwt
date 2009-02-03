@@ -57,6 +57,8 @@ public class ChartData implements JSONizable {
 	private Text x_legend;
 	private Legend legend;
 	private String bg_colour;
+	private String yaxis_label_style;
+	private String yaxisright_label_style;
 	private final Collection<Element> elements = new Vector<Element>();
 
 	/**
@@ -116,7 +118,9 @@ public class ChartData implements JSONizable {
 		if (this.tooltip != null) json.put("tooltip", this.tooltip.buildJSON());
 		if (this.x_axis != null) json.put("x_axis", this.x_axis.buildJSON());
 		if (this.y_axis != null) json.put("y_axis", this.y_axis.buildJSON());
+		if (this.yaxis_label_style != null) json.put("y_label__label_style", new JSONString(this.yaxis_label_style));
 		if (this.y_axis_right != null) json.put("y_axis_right", this.y_axis_right.buildJSON());
+		if (this.yaxisright_label_style != null) json.put("y_label_2__label_style", new JSONString(this.yaxisright_label_style));
 		if (this.radar_axis != null) json.put("radar_axis", this.radar_axis.buildJSON());
 		if (this.y_legend != null) json.put("y_legend", this.y_legend.buildJSON());
 		if (this.y2_legend != null) json.put("y2_legend", this.y2_legend.buildJSON());
@@ -181,7 +185,7 @@ public class ChartData implements JSONizable {
 	}
 
 	/**
-	 * Get the current chart legend 
+	 * Get the current chart legend
 	 * 
 	 * @return Legend chart legend
 	 */
@@ -247,7 +251,8 @@ public class ChartData implements JSONizable {
 	}
 
 	/**
-	 * Sets the chart background colour in HTML hex format (#ffffff). Set to "-1" to set transparent.
+	 * Sets the chart background colour in HTML hex format (#ffffff). Set to
+	 * "-1" to set transparent.
 	 * 
 	 * @param bg_colour
 	 *            String colour
@@ -265,6 +270,36 @@ public class ChartData implements JSONizable {
 	public void setElements(Collection<Element> elements) {
 		this.elements.clear();
 		this.elements.addAll(elements);
+	}
+
+	/**
+	 * Sets the y axis label style.
+	 * 
+	 * @param size
+	 *            the size
+	 * @param colour
+	 *            the label colour
+	 */
+	public void setYAxisLabelStyle(Integer size, String colour) {
+		yaxis_label_style = createLabelStyle(size, colour);
+	}
+
+	/**
+	 * Sets the y axis right label style.
+	 * 
+	 * @param size
+	 *            the size
+	 * @param colour
+	 *            the label colour
+	 */
+	public void setYAxisRightLabelStyle(Integer size, String colour) {
+		yaxisright_label_style = createLabelStyle(size, colour);
+	}
+
+	private String createLabelStyle(Integer size, String colour) {
+		String label_style = size.toString();
+		if (colour != null && colour.length() > 0) label_style += "," + colour;
+		return label_style;
 	}
 
 	/**
@@ -298,7 +333,7 @@ public class ChartData implements JSONizable {
 	}
 
 	/**
-	 * Sets the chart legend 
+	 * Sets the chart legend
 	 * 
 	 * @param legend
 	 *            Legend object

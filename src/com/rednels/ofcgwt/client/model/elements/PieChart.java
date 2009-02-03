@@ -47,7 +47,7 @@ public class PieChart extends Element implements JSONizable {
 
 	/** The alpha. */
 	private Float alpha;
-	
+
 	/** The alphaHighlight. */
 	private Boolean alphaHighlight;
 
@@ -90,7 +90,7 @@ public class PieChart extends Element implements JSONizable {
 	}
 
 	/**
-	 * Sets if animation of slice rotation build is enabled 
+	 * Sets if animation of slice rotation build is enabled
 	 * 
 	 * @param animate
 	 *            true or false
@@ -313,7 +313,7 @@ public class PieChart extends Element implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (startAngle != null) json.put("start-angle", new JSONNumber(startAngle.doubleValue()));		
+		if (startAngle != null) json.put("start-angle", new JSONNumber(startAngle.doubleValue()));
 		if (alphaHighlight != null && alphaHighlight) json.put("highlight", new JSONString("alpha"));
 		if (animate != null) json.put("animate", JSONBoolean.getInstance(animate));
 		if (gradientFill != null) json.put("gradient-fill", JSONBoolean.getInstance(gradientFill));
@@ -366,7 +366,7 @@ public class PieChart extends Element implements JSONizable {
 			this.text = label;
 			this.value = value;
 		}
-		
+
 		/**
 		 * Creates a new slice.
 		 * 
@@ -377,7 +377,7 @@ public class PieChart extends Element implements JSONizable {
 		 * @param text
 		 *            the text
 		 */
-		public Slice(Number value, String label,String text) {
+		public Slice(Number value, String label, String text) {
 			this.label = label;
 			this.text = text;
 			this.value = value;

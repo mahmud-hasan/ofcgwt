@@ -1,4 +1,7 @@
 
+.chartPanel {
+  background-image:url(background-ocean.jpg);
+}
 /**
  * Applied to SliderBar.
  */

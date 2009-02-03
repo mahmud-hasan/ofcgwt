@@ -61,6 +61,26 @@ public class YAxis extends AbstractAxis implements JSONizable {
 	}
 
 	/**
+	 * Sets the labels.
+	 * 
+	 * @param labels
+	 *            the new labels
+	 */
+	public void setLabels(String... labels) {
+		setLabels(Arrays.asList(labels));
+	}
+
+	/**
+	 * Sets the labels.
+	 * 
+	 * @param labels
+	 *            the new labels
+	 */
+	public void setLabels(List<String> labels) {
+		this.labels = labels;
+	}
+
+	/**
 	 * Adds the labels.
 	 * 
 	 * @param labels

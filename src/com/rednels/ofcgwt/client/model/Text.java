@@ -29,7 +29,7 @@ public class Text implements JSONizable {
 	private String style;
 
 	/**
-	 * Create a new Text instance with the given text and no style. 
+	 * Create a new Text instance with the given text and no style.
 	 * 
 	 * @param text
 	 *            String

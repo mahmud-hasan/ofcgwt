@@ -68,7 +68,7 @@ public class ChartWidget extends Widget implements IChartData {
 		Element element = DOM.createElement("div");
 		DOM.setElementProperty(element, "id", swfDivId);
 		element.setInnerHTML("<div id=\"embed_" + swfId + "\">" + emptyInnerDiv() + "</div>");
-		setElement(element);		
+		setElement(element);
 		setSize(width, height);
 		hasFlashPlayer = hasFlashPlayerVersion(MIN_PLAYER_VERSION);
 		cacheFixEnabled = cacheFixImpl.isCacheFixNeeded();
@@ -77,7 +77,7 @@ public class ChartWidget extends Widget implements IChartData {
 	protected void onAttach() {
 		super.onAttach();
 		if (!isSWFInjected) {
-			injectSWF(getInternalSWFURL(isCacheFixEnabled(), urlPrefix + flashurl, swfId), swfId, getWidth(), getHeight(), MIN_PLAYER_VERSION, ALTERNATE_SWF_SRC);			
+			injectSWF(getInternalSWFURL(isCacheFixEnabled(), urlPrefix + flashurl, swfId), swfId, getWidth(), getHeight(), MIN_PLAYER_VERSION, ALTERNATE_SWF_SRC);
 			isSWFInjected = true;
 		}
 	}
