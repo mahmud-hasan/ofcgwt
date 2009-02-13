@@ -33,106 +33,79 @@ import com.rednels.ofcgwt.client.model.JSONizable;
  */
 public class ScatterChart extends Element implements JSONizable {
 
-	/** The colour. */
-	private String colour;
-
-	/** The dot size. */
-	private Integer dotSize;
-
 	/**
-	 * Creates a new scatter chart with ScatterStyle.POINT style
+	 * Base class for OFC scatter points
 	 */
-	public ScatterChart() {
-		this(ScatterStyle.POINT);
-	}
+	public static class Point implements JSONizable {
 
-	/**
-	 * Creates a new scatter chart with provided style.
-	 */
-	public ScatterChart(ScatterStyle style) {
-		super(style.getStyle());
-	}
+		/** The x. */
+		private Number x;
 
-	/**
-	 * Adds the points.
-	 * 
-	 * @param points
-	 *            the points
-	 */
-	public void addPoints(Point... points) {
-		getValues().addAll(Arrays.asList(points));
-	}
+		/** The y. */
+		private Number y;
 
-	/**
-	 * Adds the point.
-	 * 
-	 * @param x
-	 *            the x
-	 * @param y
-	 *            the y
-	 */
-	public void addPoint(Number x, Number y) {
-		addPoints(new Point(x, y));
-	}
+		/**
+		 * Creates a new point.
+		 * 
+		 * @param x
+		 *            the x
+		 * @param y
+		 *            the y
+		 */
+		public Point(Number x, Number y) {
+			this.x = x;
+			this.y = y;
+		}
 
-	/**
-	 * Adds the points.
-	 * 
-	 * @param points
-	 *            the points
-	 */
-	public void addPoints(Collection<Point> points) {
-		getValues().addAll(points);
-	}
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
+		 */
+		public JSONValue buildJSON() {
+			JSONObject json = new JSONObject();
+			if (x != null) json.put("x", new JSONNumber(x.doubleValue()));
+			if (y != null) json.put("y", new JSONNumber(y.doubleValue()));
+			return json;
+		}
 
-	/**
-	 * Gets the colour.
-	 * 
-	 * @return the colour
-	 */
-	public String getColour() {
-		return colour;
-	}
+		/**
+		 * Gets the x.
+		 * 
+		 * @return the x
+		 */
+		public Number getX() {
+			return x;
+		}
 
-	/**
-	 * Sets the colour in HTML hex format (#ffffff)
-	 * 
-	 * @param colour
-	 *            the new colour
-	 */
-	public void setColour(String colour) {
-		this.colour = colour;
-	}
+		/**
+		 * Gets the y.
+		 * 
+		 * @return the y
+		 */
+		public Number getY() {
+			return y;
+		}
 
-	/**
-	 * Gets the dot size.
-	 * 
-	 * @return the dot size
-	 */
-	public Integer getDotSize() {
-		return dotSize;
-	}
+		/**
+		 * Sets the x.
+		 * 
+		 * @param x
+		 *            the new x
+		 */
+		public void setX(Number x) {
+			this.x = x;
+		}
 
-	/**
-	 * Sets the dot size.
-	 * 
-	 * @param dotSize
-	 *            the new dot size
-	 */
-	public void setDotSize(Integer dotSize) {
-		this.dotSize = dotSize;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.rednels.ofcgwt.client.model.elements.Element.buildJSON()
-	 */
-	public JSONValue buildJSON() {
-		JSONObject json = (JSONObject) super.buildJSON();
-		if (dotSize != null) json.put("dot-size", new JSONNumber(dotSize.doubleValue()));
-		if (colour != null) json.put("colour", new JSONString(colour));
-		return json;
+		/**
+		 * Sets the y.
+		 * 
+		 * @param y
+		 *            the new y
+		 */
+		public void setY(Number y) {
+			this.y = y;
+		}
 	}
 
 	/**
@@ -169,78 +142,105 @@ public class ScatterChart extends Element implements JSONizable {
 		}
 	}
 
+	/** The colour. */
+	private String colour;
+
+	/** The dot size. */
+	private Integer dotSize;
+
 	/**
-	 * Base class for OFC scatter points
+	 * Creates a new scatter chart with ScatterStyle.POINT style
 	 */
-	public static class Point implements JSONizable {
+	public ScatterChart() {
+		this(ScatterStyle.POINT);
+	}
 
-		/** The x. */
-		private Number x;
+	/**
+	 * Creates a new scatter chart with provided style.
+	 */
+	public ScatterChart(ScatterStyle style) {
+		super(style.getStyle());
+	}
 
-		/** The y. */
-		private Number y;
+	/**
+	 * Adds the point.
+	 * 
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 */
+	public void addPoint(Number x, Number y) {
+		addPoints(new Point(x, y));
+	}
 
-		/**
-		 * Creates a new point.
-		 * 
-		 * @param x
-		 *            the x
-		 * @param y
-		 *            the y
-		 */
-		public Point(Number x, Number y) {
-			this.x = x;
-			this.y = y;
-		}
+	/**
+	 * Adds the points.
+	 * 
+	 * @param points
+	 *            the points
+	 */
+	public void addPoints(Collection<Point> points) {
+		getValues().addAll(points);
+	}
 
-		/**
-		 * Gets the x.
-		 * 
-		 * @return the x
-		 */
-		public Number getX() {
-			return x;
-		}
+	/**
+	 * Adds the points.
+	 * 
+	 * @param points
+	 *            the points
+	 */
+	public void addPoints(Point... points) {
+		getValues().addAll(Arrays.asList(points));
+	}
 
-		/**
-		 * Sets the x.
-		 * 
-		 * @param x
-		 *            the new x
-		 */
-		public void setX(Number x) {
-			this.x = x;
-		}
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.rednels.ofcgwt.client.model.elements.Element.buildJSON()
+	 */
+	public JSONValue buildJSON() {
+		JSONObject json = (JSONObject) super.buildJSON();
+		if (dotSize != null) json.put("dot-size", new JSONNumber(dotSize.doubleValue()));
+		if (colour != null) json.put("colour", new JSONString(colour));
+		return json;
+	}
 
-		/**
-		 * Gets the y.
-		 * 
-		 * @return the y
-		 */
-		public Number getY() {
-			return y;
-		}
+	/**
+	 * Gets the colour.
+	 * 
+	 * @return the colour
+	 */
+	public String getColour() {
+		return colour;
+	}
 
-		/**
-		 * Sets the y.
-		 * 
-		 * @param y
-		 *            the new y
-		 */
-		public void setY(Number y) {
-			this.y = y;
-		}
+	/**
+	 * Gets the dot size.
+	 * 
+	 * @return the dot size
+	 */
+	public Integer getDotSize() {
+		return dotSize;
+	}
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
-		 */
-		public JSONValue buildJSON() {
-			JSONObject json = new JSONObject();
-			if (x != null) json.put("x", new JSONNumber(x.doubleValue()));
-			if (y != null) json.put("y", new JSONNumber(y.doubleValue()));
-			return json;
-		}
+	/**
+	 * Sets the colour in HTML hex format (#ffffff)
+	 * 
+	 * @param colour
+	 *            the new colour
+	 */
+	public void setColour(String colour) {
+		this.colour = colour;
+	}
+
+	/**
+	 * Sets the dot size.
+	 * 
+	 * @param dotSize
+	 *            the new dot size
+	 */
+	public void setDotSize(Integer dotSize) {
+		this.dotSize = dotSize;
 	}
 }

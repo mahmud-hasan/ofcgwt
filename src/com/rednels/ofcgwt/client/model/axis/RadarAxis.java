@@ -34,138 +34,6 @@ import com.rednels.ofcgwt.client.model.JSONizable;
  */
 public class RadarAxis extends AbstractAxis implements JSONizable {
 
-	/** The labels. */
-	private Labels labels;
-
-	/** The spoke-labels. */
-	private Labels spokelabels;
-
-	/**
-	 * Gets the labels.
-	 * 
-	 * @return the labels
-	 */
-	public Labels getLabels() {
-		return labels;
-	}
-
-	/**
-	 * Sets the radar axis labels.
-	 * 
-	 * @param labels
-	 *            the new radar axis labels
-	 */
-	public void setRadarAxisLabels(Labels labels) {
-		this.labels = labels;
-	}
-
-	/**
-	 * Sets the labels.
-	 * 
-	 * @param labels
-	 *            the new labels
-	 */
-	public void setLabels(String... labels) {
-		this.labels = new Labels(labels);
-	}
-
-	/**
-	 * Sets the labels.
-	 * 
-	 * @param labels
-	 *            the new labels
-	 */
-	public void setLabels(List<String> labels) {
-		this.labels = new Labels(labels);
-	}
-
-	/**
-	 * Adds the labels.
-	 * 
-	 * @param labels
-	 *            the labels
-	 */
-	public void addLabels(String... labels) {
-		checkLabelsNotNull();
-		this.labels.addLabels(labels);
-	}
-
-	/**
-	 * Check labels not null.
-	 */
-	private synchronized void checkLabelsNotNull() {
-		if (labels == null) labels = new Labels();
-	}
-
-	/**
-	 * Gets the spoke labels.
-	 * 
-	 * @return the labels
-	 */
-	public Labels getSpokeLabels() {
-		return spokelabels;
-	}
-
-	/**
-	 * Sets the radar axis spoke labels.
-	 * 
-	 * @param labels
-	 *            the new radar axis spoke labels
-	 */
-	public void setSpokeLabels(Labels labels) {
-		this.spokelabels = labels;
-	}
-
-	/**
-	 * Sets the spoke labels.
-	 * 
-	 * @param labels
-	 *            the new spoke labels
-	 */
-	public void setSpokeLabels(String... labels) {
-		this.spokelabels = new Labels(labels);
-	}
-
-	/**
-	 * Sets the spoke labels.
-	 * 
-	 * @param labels
-	 *            the new spoke labels
-	 */
-	public void setSpokeLabels(List<String> labels) {
-		this.spokelabels = new Labels(labels);
-	}
-
-	/**
-	 * Adds the spoke labels.
-	 * 
-	 * @param labels
-	 *            the labels
-	 */
-	public void addSpokeLabels(String... labels) {
-		checkSpokeLabelsNotNull();
-		this.spokelabels.addLabels(labels);
-	}
-
-	/**
-	 * Check labels not null.
-	 */
-	private synchronized void checkSpokeLabelsNotNull() {
-		if (spokelabels == null) spokelabels = new Labels();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.rednels.ofcgwt.client.model.axis.AbstractAxis.buildJSON()
-	 */
-	public JSONValue buildJSON() {
-		JSONObject json = (JSONObject) super.buildJSON();
-		if (labels != null) json.put("labels", labels.buildJSON());
-		if (spokelabels != null) json.put("spoke-labels", spokelabels.buildJSON());
-		return json;
-	}
-
 	/**
 	 * Class for an OFC radar axis label
 	 */
@@ -183,8 +51,9 @@ public class RadarAxis extends AbstractAxis implements JSONizable {
 		 * @param labels
 		 *            the labels
 		 */
-		public Labels(String... labels) {
-			addLabels(labels);
+		public Labels(List<String> labels) {
+			checkLabelsNotNull();
+			this.labels.addAll(labels);
 		}
 
 		/**
@@ -193,29 +62,8 @@ public class RadarAxis extends AbstractAxis implements JSONizable {
 		 * @param labels
 		 *            the labels
 		 */
-		public Labels(List<String> labels) {
-			checkLabelsNotNull();
-			this.labels.addAll(labels);
-		}
-
-		/**
-		 * Gets the labels.
-		 * 
-		 * @return the labels
-		 */
-		public List<Object> getLabels() {
-			return labels;
-		}
-
-		/**
-		 * Adds the labels.
-		 * 
-		 * @param labels
-		 *            the labels
-		 */
-		public void addLabels(String... labels) {
-			checkLabelsNotNull();
-			this.labels.addAll(Arrays.asList(labels));
+		public Labels(String... labels) {
+			addLabels(labels);
 		}
 
 		/**
@@ -241,29 +89,14 @@ public class RadarAxis extends AbstractAxis implements JSONizable {
 		}
 
 		/**
-		 * Check labels not null.
-		 */
-		private synchronized void checkLabelsNotNull() {
-			if (labels == null) labels = new ArrayList<Object>();
-		}
-
-		/**
-		 * Gets the colour.
+		 * Adds the labels.
 		 * 
-		 * @return the colour
+		 * @param labels
+		 *            the labels
 		 */
-		public String getColour() {
-			return colour;
-		}
-
-		/**
-		 * Sets the colour in HTML hex format (#ffffff)
-		 * 
-		 * @param colour
-		 *            the new colour
-		 */
-		public void setColour(String colour) {
-			this.colour = colour;
+		public void addLabels(String... labels) {
+			checkLabelsNotNull();
+			this.labels.addAll(Arrays.asList(labels));
 		}
 
 		/*
@@ -284,5 +117,172 @@ public class RadarAxis extends AbstractAxis implements JSONizable {
 			if (index != 0) json.put("labels", ary);
 			return json;
 		}
+
+		/**
+		 * Check labels not null.
+		 */
+		private synchronized void checkLabelsNotNull() {
+			if (labels == null) labels = new ArrayList<Object>();
+		}
+
+		/**
+		 * Gets the colour.
+		 * 
+		 * @return the colour
+		 */
+		public String getColour() {
+			return colour;
+		}
+
+		/**
+		 * Gets the labels.
+		 * 
+		 * @return the labels
+		 */
+		public List<Object> getLabels() {
+			return labels;
+		}
+
+		/**
+		 * Sets the colour in HTML hex format (#ffffff)
+		 * 
+		 * @param colour
+		 *            the new colour
+		 */
+		public void setColour(String colour) {
+			this.colour = colour;
+		}
+	}
+
+	/** The labels. */
+	private Labels labels;
+
+	/** The spoke-labels. */
+	private Labels spokelabels;
+
+	/**
+	 * Adds the labels.
+	 * 
+	 * @param labels
+	 *            the labels
+	 */
+	public void addLabels(String... labels) {
+		checkLabelsNotNull();
+		this.labels.addLabels(labels);
+	}
+
+	/**
+	 * Adds the spoke labels.
+	 * 
+	 * @param labels
+	 *            the labels
+	 */
+	public void addSpokeLabels(String... labels) {
+		checkSpokeLabelsNotNull();
+		this.spokelabels.addLabels(labels);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.rednels.ofcgwt.client.model.axis.AbstractAxis.buildJSON()
+	 */
+	public JSONValue buildJSON() {
+		JSONObject json = (JSONObject) super.buildJSON();
+		if (labels != null) json.put("labels", labels.buildJSON());
+		if (spokelabels != null) json.put("spoke-labels", spokelabels.buildJSON());
+		return json;
+	}
+
+	/**
+	 * Check labels not null.
+	 */
+	private synchronized void checkLabelsNotNull() {
+		if (labels == null) labels = new Labels();
+	}
+
+	/**
+	 * Check labels not null.
+	 */
+	private synchronized void checkSpokeLabelsNotNull() {
+		if (spokelabels == null) spokelabels = new Labels();
+	}
+
+	/**
+	 * Gets the labels.
+	 * 
+	 * @return the labels
+	 */
+	public Labels getLabels() {
+		return labels;
+	}
+
+	/**
+	 * Gets the spoke labels.
+	 * 
+	 * @return the labels
+	 */
+	public Labels getSpokeLabels() {
+		return spokelabels;
+	}
+
+	/**
+	 * Sets the labels.
+	 * 
+	 * @param labels
+	 *            the new labels
+	 */
+	public void setLabels(List<String> labels) {
+		this.labels = new Labels(labels);
+	}
+
+	/**
+	 * Sets the labels.
+	 * 
+	 * @param labels
+	 *            the new labels
+	 */
+	public void setLabels(String... labels) {
+		this.labels = new Labels(labels);
+	}
+
+	/**
+	 * Sets the radar axis labels.
+	 * 
+	 * @param labels
+	 *            the new radar axis labels
+	 */
+	public void setRadarAxisLabels(Labels labels) {
+		this.labels = labels;
+	}
+
+	/**
+	 * Sets the radar axis spoke labels.
+	 * 
+	 * @param labels
+	 *            the new radar axis spoke labels
+	 */
+	public void setSpokeLabels(Labels labels) {
+		this.spokelabels = labels;
+	}
+
+	/**
+	 * Sets the spoke labels.
+	 * 
+	 * @param labels
+	 *            the new spoke labels
+	 */
+	public void setSpokeLabels(List<String> labels) {
+		this.spokelabels = new Labels(labels);
+	}
+
+	/**
+	 * Sets the spoke labels.
+	 * 
+	 * @param labels
+	 *            the new spoke labels
+	 */
+	public void setSpokeLabels(String... labels) {
+		this.spokelabels = new Labels(labels);
 	}
 }

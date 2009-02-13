@@ -23,25 +23,6 @@ package com.rednels.ofcgwt.client;
 public interface IChartData {
 
 	/**
-	 * Get the currently set JSON data
-	 * 
-	 * @return json String
-	 */
-	public String getJsonData();
-
-	/**
-	 * Notify that the chart widget is ready to go
-	 */
-	public void notifyReady();
-
-	/**
-	 * Get the currently set swf ID of this chart widget
-	 * 
-	 * @return swf id String
-	 */
-	public String getSwfId();
-
-	/**
 	 * Add an IOnClickListener to this chart events and return the function
 	 * signature for JSON
 	 * 
@@ -52,10 +33,29 @@ public interface IChartData {
 	public String addOnClickListener(IOnClickListener listener);
 
 	/**
+	 * Get the currently set JSON data
+	 * 
+	 * @return json String
+	 */
+	public String getJsonData();
+
+	/**
+	 * Get the currently set swf ID of this chart widget
+	 * 
+	 * @return swf id String
+	 */
+	public String getSwfId();
+
+	/**
 	 * Notify that the chart onclick listeners
 	 * 
 	 * @param evtid
 	 *            the event id String
 	 */
 	public void notifyOnClick(String evtid);
+
+	/**
+	 * Notify that the chart widget is ready to go
+	 */
+	public void notifyReady();
 }

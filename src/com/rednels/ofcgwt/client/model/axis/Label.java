@@ -74,101 +74,6 @@ public class Label implements JSONizable {
 		setRotationAngle(angle);
 	}
 
-	/**
-	 * Gets the text.
-	 * 
-	 * @return the text
-	 */
-	public String getText() {
-		return text;
-	}
-
-	/**
-	 * Sets the text.
-	 * 
-	 * @param text
-	 *            the text
-	 */
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	/**
-	 * Gets the colour.
-	 * 
-	 * @return the colour
-	 */
-	public String getColour() {
-		return colour;
-	}
-
-	/**
-	 * Sets the colour in HTML hex format (#ffffff)
-	 * 
-	 * @param colour
-	 *            the colour
-	 */
-	public void setColour(String colour) {
-		this.colour = colour;
-	}
-
-	/**
-	 * Gets the size.
-	 * 
-	 * @return the size
-	 */
-	public Integer getSize() {
-		return size;
-	}
-
-	/**
-	 * Sets the size.
-	 * 
-	 * @param size
-	 *            the size
-	 */
-	public void setSize(Integer size) {
-		this.size = size;
-	}
-
-	/**
-	 * Gets the rotation.
-	 * 
-	 * @return the rotation
-	 */
-	public Integer getRotationAngle() {
-		return rotateAngle;
-	}
-
-	/**
-	 * Sets the rotation in degrees (ie 45 = diagonal, 90 = vertical).
-	 * 
-	 * @param angle
-	 *            the rotate angle
-	 */
-	public void setRotationAngle(Integer angle) {
-		this.rotateAngle = angle;
-	}
-
-	/**
-	 * Gets the visible.
-	 * 
-	 * @return the visible
-	 */
-	public Boolean getVisible() {
-		return visible;
-	}
-
-	/**
-	 * Sets the visible.
-	 * 
-	 * @param visible
-	 *            the visible
-	 */
-	public void setVisible(Boolean visible) {
-		this.visible = visible;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -182,5 +87,100 @@ public class Label implements JSONizable {
 		if (rotateAngle != null) json.put("rotate", new JSONNumber(rotateAngle));
 		if (visible != null) json.put("visible", JSONBoolean.getInstance(visible));
 		return json;
+	}
+
+	/**
+	 * Gets the colour.
+	 * 
+	 * @return the colour
+	 */
+	public String getColour() {
+		return colour;
+	}
+
+	/**
+	 * Gets the rotation.
+	 * 
+	 * @return the rotation
+	 */
+	public Integer getRotationAngle() {
+		return rotateAngle;
+	}
+
+	/**
+	 * Gets the size.
+	 * 
+	 * @return the size
+	 */
+	public Integer getSize() {
+		return size;
+	}
+
+	/**
+	 * Gets the text.
+	 * 
+	 * @return the text
+	 */
+	public String getText() {
+		return text;
+	}
+
+	/**
+	 * Gets the visible.
+	 * 
+	 * @return the visible
+	 */
+	public Boolean getVisible() {
+		return visible;
+	}
+
+	/**
+	 * Sets the colour in HTML hex format (#ffffff)
+	 * 
+	 * @param colour
+	 *            the colour
+	 */
+	public void setColour(String colour) {
+		this.colour = colour;
+	}
+
+	/**
+	 * Sets the rotation in degrees (ie 45 = diagonal, 90 = vertical).
+	 * 
+	 * @param angle
+	 *            the rotate angle
+	 */
+	public void setRotationAngle(Integer angle) {
+		this.rotateAngle = angle;
+	}
+
+	/**
+	 * Sets the size.
+	 * 
+	 * @param size
+	 *            the size
+	 */
+	public void setSize(Integer size) {
+		this.size = size;
+	}
+
+	/**
+	 * Sets the text.
+	 * 
+	 * @param text
+	 *            the text
+	 */
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	/**
+	 * Sets the visible.
+	 * 
+	 * @param visible
+	 *            the visible
+	 */
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
 	}
 }

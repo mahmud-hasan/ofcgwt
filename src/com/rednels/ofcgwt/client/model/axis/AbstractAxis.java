@@ -36,6 +36,78 @@ public abstract class AbstractAxis implements JSONizable {
 	private Number min;
 	private Number max;
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
+	 */
+	public JSONValue buildJSON() {
+		JSONObject json = new JSONObject();
+		if (stroke != null) json.put("stroke", new JSONNumber(stroke));
+		if (colour != null) json.put("colour", new JSONString(colour));
+		if (gridColour != null) json.put("grid-colour", new JSONString(gridColour));
+		if (steps != null) json.put("steps", new JSONNumber(steps.doubleValue()));
+		if (offset != null) json.put("offset", new JSONNumber(offset));
+		if (zdepth3d != null) json.put("3d", new JSONNumber(zdepth3d));
+		if (min != null) json.put("min", new JSONNumber(min.doubleValue()));
+		if (max != null) json.put("max", new JSONNumber(max.doubleValue()));
+		return json;
+	}
+
+	/**
+	 * Gets the colour.
+	 * 
+	 * @return the colour
+	 */
+	public String getColour() {
+		return colour;
+	}
+
+	/**
+	 * Gets the grid colour.
+	 * 
+	 * @return the grid colour
+	 */
+	public String getGridColour() {
+		return gridColour;
+	}
+
+	/**
+	 * Gets the max.
+	 * 
+	 * @return the max
+	 */
+	public Number getMax() {
+		return max;
+	}
+
+	/**
+	 * Gets the min.
+	 * 
+	 * @return the min
+	 */
+	public Number getMin() {
+		return min;
+	}
+
+	/**
+	 * Gets the offset.
+	 * 
+	 * @return the offset
+	 */
+	public Integer getOffset() {
+		return offset;
+	}
+
+	/**
+	 * Gets the steps.
+	 * 
+	 * @return the steps
+	 */
+	public Number getSteps() {
+		return steps;
+	}
+
 	/**
 	 * Gets the stroke.
 	 * 
@@ -46,22 +118,12 @@ public abstract class AbstractAxis implements JSONizable {
 	}
 
 	/**
-	 * Sets the stroke.
+	 * Gets the z-depth (3D).
 	 * 
-	 * @param stroke
-	 *            the new stroke
+	 * @return the zdepth3d
 	 */
-	public void setStroke(Integer stroke) {
-		this.stroke = stroke;
-	}
-
-	/**
-	 * Gets the colour.
-	 * 
-	 * @return the colour
-	 */
-	public String getColour() {
-		return colour;
+	public Integer getZDepth3D() {
+		return zdepth3d;
 	}
 
 	/**
@@ -75,15 +137,6 @@ public abstract class AbstractAxis implements JSONizable {
 	}
 
 	/**
-	 * Gets the grid colour.
-	 * 
-	 * @return the grid colour
-	 */
-	public String getGridColour() {
-		return gridColour;
-	}
-
-	/**
 	 * Sets the grid colour in HTML hex format (#ffffff)
 	 * 
 	 * @param grid_colour
@@ -94,31 +147,23 @@ public abstract class AbstractAxis implements JSONizable {
 	}
 
 	/**
-	 * Gets the steps.
+	 * Sets the max.
 	 * 
-	 * @return the steps
+	 * @param max
+	 *            the new max
 	 */
-	public Number getSteps() {
-		return steps;
+	public void setMax(Number max) {
+		this.max = max;
 	}
 
 	/**
-	 * Sets the steps.
+	 * Sets the min.
 	 * 
-	 * @param steps
-	 *            the new steps
+	 * @param min
+	 *            the new min
 	 */
-	public void setSteps(Number steps) {
-		this.steps = steps;
-	}
-
-	/**
-	 * Gets the offset.
-	 * 
-	 * @return the offset
-	 */
-	public Integer getOffset() {
-		return offset;
+	public void setMin(Number min) {
+		this.min = min;
 	}
 
 	/**
@@ -133,60 +178,16 @@ public abstract class AbstractAxis implements JSONizable {
 	}
 
 	/**
-	 * Gets the z-depth (3D).
-	 * 
-	 * @return the zdepth3d
-	 */
-	public Integer getZDepth3D() {
-		return zdepth3d;
-	}
-
-	/**
-	 * Sets the z-depth (3D).
-	 * 
-	 * @param zdepth3d
-	 *            the new zdepth3d
-	 */
-	public void setZDepth3D(Integer zdepth3d) {
-		this.zdepth3d = zdepth3d;
-	}
-
-	/**
-	 * Gets the min.
-	 * 
-	 * @return the min
-	 */
-	public Number getMin() {
-		return min;
-	}
-
-	/**
-	 * Sets the min.
+	 * Sets the range.
 	 * 
 	 * @param min
-	 *            the new min
-	 */
-	public void setMin(Number min) {
-		this.min = min;
-	}
-
-	/**
-	 * Gets the max.
-	 * 
-	 * @return the max
-	 */
-	public Number getMax() {
-		return max;
-	}
-
-	/**
-	 * Sets the max.
-	 * 
+	 *            the min
 	 * @param max
-	 *            the new max
+	 *            the max
 	 */
-	public void setMax(Number max) {
-		this.max = max;
+	public void setRange(Number min, Number max) {
+		setMin(min);
+		setMax(max);
 	}
 
 	/**
@@ -205,33 +206,32 @@ public abstract class AbstractAxis implements JSONizable {
 	}
 
 	/**
-	 * Sets the range.
+	 * Sets the steps.
 	 * 
-	 * @param min
-	 *            the min
-	 * @param max
-	 *            the max
+	 * @param steps
+	 *            the new steps
 	 */
-	public void setRange(Number min, Number max) {
-		setMin(min);
-		setMax(max);
+	public void setSteps(Number steps) {
+		this.steps = steps;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Sets the stroke.
 	 * 
-	 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
+	 * @param stroke
+	 *            the new stroke
 	 */
-	public JSONValue buildJSON() {
-		JSONObject json = new JSONObject();
-		if (stroke != null) json.put("stroke", new JSONNumber(stroke));
-		if (colour != null) json.put("colour", new JSONString(colour));
-		if (gridColour != null) json.put("grid-colour", new JSONString(gridColour));
-		if (steps != null) json.put("steps", new JSONNumber(steps.doubleValue()));
-		if (offset != null) json.put("offset", new JSONNumber(offset));
-		if (zdepth3d != null) json.put("3d", new JSONNumber(zdepth3d));
-		if (min != null) json.put("min", new JSONNumber(min.doubleValue()));
-		if (max != null) json.put("max", new JSONNumber(max.doubleValue()));
-		return json;
+	public void setStroke(Integer stroke) {
+		this.stroke = stroke;
+	}
+
+	/**
+	 * Sets the z-depth (3D).
+	 * 
+	 * @param zdepth3d
+	 *            the new zdepth3d
+	 */
+	public void setZDepth3D(Integer zdepth3d) {
+		this.zdepth3d = zdepth3d;
 	}
 }

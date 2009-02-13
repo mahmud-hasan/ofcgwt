@@ -39,297 +39,6 @@ import com.rednels.ofcgwt.client.model.JSONizable;
  */
 public class PieChart extends Element implements JSONizable {
 
-	/** The start angle. */
-	private Integer startAngle;
-
-	/** The colours. */
-	private Collection<String> colours;
-
-	/** The alpha. */
-	private Float alpha;
-
-	/** The alphaHighlight. */
-	private Boolean alphaHighlight;
-
-	/** The animate. */
-	private Boolean animate;
-
-	/** The gradient fill. */
-	private Boolean gradientFill;
-
-	/** The nolabels. */
-	private Boolean nolabels;
-
-	/** The border. */
-	private Integer border;
-
-	/**
-	 * Creates a new pie chart.
-	 */
-	public PieChart() {
-		super("pie");
-	}
-
-	/**
-	 * Sets alpha colour toggle as the highlight, or slice slide out animation
-	 * 
-	 * @param alphaHighlight
-	 *            true or false
-	 */
-	public void setAlphaHighlight(boolean alphaHighlight) {
-		this.alphaHighlight = alphaHighlight;
-	}
-
-	/**
-	 * Gets the alphaHighlight value
-	 * 
-	 * @return true if alphaHighlight is enabled
-	 */
-	public Boolean getAlphaHighlight() {
-		return alphaHighlight;
-	}
-
-	/**
-	 * Sets if animation of slice rotation build is enabled
-	 * 
-	 * @param animate
-	 *            true or false
-	 */
-	public void setAnimate(boolean animate) {
-		this.animate = animate;
-	}
-
-	/**
-	 * Gets the animation value
-	 * 
-	 * @return true if animate is enabled
-	 */
-	public Boolean getAnimate() {
-		return animate;
-	}
-
-	/**
-	 * Sets the gradient fill.
-	 * 
-	 * @param gradientFill
-	 *            true or false
-	 */
-	public void setGradientFill(boolean gradientFill) {
-		this.gradientFill = gradientFill;
-	}
-
-	/**
-	 * Gets the gradient fill.
-	 * 
-	 * @return true if gradient fill is enabled
-	 */
-	public Boolean getGradientFill() {
-		return gradientFill;
-	}
-
-	/**
-	 * Sets the no labels.
-	 * 
-	 * @param nolabels
-	 *            true or false
-	 */
-	public void setNoLabels(boolean nolabels) {
-		this.nolabels = nolabels;
-	}
-
-	/**
-	 * Gets the no labels value
-	 * 
-	 * @return true if no labels is enabled
-	 */
-	public Boolean getNoLabels() {
-		return nolabels;
-	}
-
-	/**
-	 * Gets the start angle.
-	 * 
-	 * @return the start angle
-	 */
-	public Integer getStartAngle() {
-		return startAngle;
-	}
-
-	/**
-	 * Sets the start angle.
-	 * 
-	 * @param startAngle
-	 *            the new start angle
-	 */
-	public void setStartAngle(Integer startAngle) {
-		this.startAngle = startAngle;
-	}
-
-	/**
-	 * Gets the alpha.
-	 * 
-	 * @return the alpha
-	 */
-	public Float getAlpha() {
-		return alpha;
-	}
-
-	/**
-	 * Sets the alpha.
-	 * 
-	 * @param alpha
-	 *            the alpha
-	 */
-	public void setAlpha(Float alpha) {
-		this.alpha = alpha;
-	}
-
-	/**
-	 * Gets the colours.
-	 * 
-	 * @return the colours
-	 */
-	public Collection<String> getColours() {
-		return colours;
-	}
-
-	/**
-	 * Sets colours in HTML hex format (#ffffff)
-	 * 
-	 * @param colours
-	 *            the new colours
-	 */
-	public void setColours(Collection<String> colours) {
-		checkColours();
-		this.colours = colours;
-	}
-
-	/**
-	 * Sets colours in HTML hex format (#ffffff)
-	 * 
-	 * @param colours
-	 *            the new colours
-	 */
-	public void setColours(String... colours) {
-		checkColours();
-		this.colours.clear();
-		this.colours.addAll(Arrays.asList(colours));
-	}
-
-	/**
-	 * Sets the colours.
-	 * 
-	 * @param colours
-	 *            the new colours
-	 */
-	public void setColours(List<String> colours) {
-		checkColours();
-		this.colours.clear();
-		this.colours.addAll(colours);
-	}
-
-	/**
-	 * Gets the border.
-	 * 
-	 * @return the border
-	 */
-	public Integer getBorder() {
-		return border;
-	}
-
-	/**
-	 * Sets the border.
-	 * 
-	 * @param border
-	 *            the new border
-	 */
-	public void setBorder(Integer border) {
-		this.border = border;
-	}
-
-	/**
-	 * Adds values.
-	 * 
-	 * @param values
-	 *            the values
-	 */
-	public void addValues(Number... values) {
-		getValues().addAll(Arrays.asList(values));
-	}
-
-	/**
-	 * Adds the values.
-	 * 
-	 * @param values
-	 *            the values
-	 */
-	public void addValues(List<Number> values) {
-		getValues().addAll(values);
-	}
-
-	/**
-	 * Adds a slice.
-	 * 
-	 * @param value
-	 *            the value
-	 * @param text
-	 *            the text
-	 */
-	public void addSlice(Number value, String text) {
-		addSlices(new Slice(value, text));
-	}
-
-	/**
-	 * Adds slices.
-	 * 
-	 * @param slice
-	 *            the slice
-	 */
-	public void addSlices(Slice... slice) {
-		getValues().addAll(Arrays.asList(slice));
-	}
-
-	/**
-	 * Adds slices.
-	 * 
-	 * @param slices
-	 *            the slices
-	 */
-	public void addSlices(List<Slice> slices) {
-		getValues().addAll(slices);
-	}
-
-	/**
-	 * Check colours.
-	 */
-	private synchronized void checkColours() {
-		if (colours == null) colours = new ArrayList<String>();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.rednels.ofcgwt.client.model.elements.Element.buildJSON()
-	 */
-	public JSONValue buildJSON() {
-		JSONObject json = (JSONObject) super.buildJSON();
-		if (startAngle != null) json.put("start-angle", new JSONNumber(startAngle.doubleValue()));
-		if (alphaHighlight != null && alphaHighlight) json.put("highlight", new JSONString("alpha"));
-		if (animate != null) json.put("animate", JSONBoolean.getInstance(animate));
-		if (gradientFill != null) json.put("gradient-fill", JSONBoolean.getInstance(gradientFill));
-		if (alpha != null) json.put("alpha", new JSONNumber(alpha));
-		if (nolabels != null) json.put("no-labels", JSONBoolean.getInstance(nolabels));
-		if (border != null) json.put("border", new JSONNumber(border.doubleValue()));
-		if (colours == null) return json;
-		JSONArray ary = new JSONArray();
-		int index = 0;
-		for (String s : colours) {
-			ary.set(index++, new JSONString(s));
-		}
-		if (index != 0) json.put("colours", ary);
-		return json;
-	}
-
 	/**
 	 * Base class for OFC pie slices
 	 */
@@ -384,63 +93,6 @@ public class PieChart extends Element implements JSONizable {
 		}
 
 		/**
-		 * Sets the label colour.
-		 * 
-		 * @param labelColour
-		 *            the new label colour
-		 */
-		public void setLabelColour(String labelColour) {
-			this.labelColour = labelColour;
-		}
-
-		/**
-		 * Gets the label colour.
-		 * 
-		 * @return the label colour
-		 */
-		public String getLabelColour() {
-			return labelColour;
-		}
-
-		/**
-		 * Sets the font size.
-		 * 
-		 * @param fontSize
-		 *            the new font size
-		 */
-		public void setFontSize(String fontSize) {
-			this.fontSize = fontSize;
-		}
-
-		/**
-		 * Gets the font size.
-		 * 
-		 * @return the font size
-		 */
-		public String getFontSize() {
-			return fontSize;
-		}
-
-		/**
-		 * Gets the onClick.
-		 * 
-		 * @return the onClick
-		 */
-		public String getOnClick() {
-			return onClick;
-		}
-
-		/**
-		 * Sets the onClick.
-		 * 
-		 * @param onClick
-		 *            the onClick javascript method or url
-		 */
-		public void setOnClick(String onClick) {
-			this.onClick = onClick;
-		}
-
-		/**
 		 * Adds an onClick event. Requires an ChartWidget to register the event
 		 * with.
 		 * 
@@ -451,33 +103,6 @@ public class PieChart extends Element implements JSONizable {
 		 */
 		public void addOnClickListener(IChartData chart, IOnClickListener listener) {
 			this.onClick = chart.addOnClickListener(listener);
-		}
-
-		/**
-		 * Gets the value.
-		 * 
-		 * @return the value
-		 */
-		public Number getValue() {
-			return value;
-		}
-
-		/**
-		 * Gets the text.
-		 * 
-		 * @return the text
-		 */
-		public String getText() {
-			return text;
-		}
-
-		/**
-		 * Gets the text.
-		 * 
-		 * @return the text
-		 */
-		public String getLabel() {
-			return label;
 		}
 
 		/*
@@ -495,5 +120,398 @@ public class PieChart extends Element implements JSONizable {
 			if (onClick != null) json.put("on-click", new JSONString(onClick));
 			return json;
 		}
+
+		/**
+		 * Gets the font size.
+		 * 
+		 * @return the font size
+		 */
+		public String getFontSize() {
+			return fontSize;
+		}
+
+		/**
+		 * Gets the text.
+		 * 
+		 * @return the text
+		 */
+		public String getLabel() {
+			return label;
+		}
+
+		/**
+		 * Gets the label colour.
+		 * 
+		 * @return the label colour
+		 */
+		public String getLabelColour() {
+			return labelColour;
+		}
+
+		/**
+		 * Gets the onClick.
+		 * 
+		 * @return the onClick
+		 */
+		public String getOnClick() {
+			return onClick;
+		}
+
+		/**
+		 * Gets the text.
+		 * 
+		 * @return the text
+		 */
+		public String getText() {
+			return text;
+		}
+
+		/**
+		 * Gets the value.
+		 * 
+		 * @return the value
+		 */
+		public Number getValue() {
+			return value;
+		}
+
+		/**
+		 * Sets the font size.
+		 * 
+		 * @param fontSize
+		 *            the new font size
+		 */
+		public void setFontSize(String fontSize) {
+			this.fontSize = fontSize;
+		}
+
+		/**
+		 * Sets the label colour.
+		 * 
+		 * @param labelColour
+		 *            the new label colour
+		 */
+		public void setLabelColour(String labelColour) {
+			this.labelColour = labelColour;
+		}
+
+		/**
+		 * Sets the onClick.
+		 * 
+		 * @param onClick
+		 *            the onClick javascript method or url
+		 */
+		public void setOnClick(String onClick) {
+			this.onClick = onClick;
+		}
+	}
+
+	/** The start angle. */
+	private Integer startAngle;
+	
+	/** The radius. */
+	private Integer radius;
+
+	/** The colours. */
+	private Collection<String> colours;
+
+	/** The alpha. */
+	private Float alpha;
+
+	/** The alphaHighlight. */
+	private Boolean alphaHighlight;
+
+	/** The animate. */
+	private Boolean animate;
+
+	/** The gradient fill. */
+	private Boolean gradientFill;
+
+	/** The nolabels. */
+	private Boolean nolabels;
+
+	/** The border. */
+	private Integer border;
+
+	/**
+	 * Creates a new pie chart.
+	 */
+	public PieChart() {
+		super("pie");
+	}
+
+	/**
+	 * Adds a slice.
+	 * 
+	 * @param value
+	 *            the value
+	 * @param text
+	 *            the text
+	 */
+	public void addSlice(Number value, String text) {
+		addSlices(new Slice(value, text));
+	}
+
+	/**
+	 * Adds slices.
+	 * 
+	 * @param slices
+	 *            the slices
+	 */
+	public void addSlices(List<Slice> slices) {
+		getValues().addAll(slices);
+	}
+
+	/**
+	 * Adds slices.
+	 * 
+	 * @param slice
+	 *            the slice
+	 */
+	public void addSlices(Slice... slice) {
+		getValues().addAll(Arrays.asList(slice));
+	}
+
+	/**
+	 * Adds the values.
+	 * 
+	 * @param values
+	 *            the values
+	 */
+	public void addValues(List<Number> values) {
+		getValues().addAll(values);
+	}
+
+	/**
+	 * Adds values.
+	 * 
+	 * @param values
+	 *            the values
+	 */
+	public void addValues(Number... values) {
+		getValues().addAll(Arrays.asList(values));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.rednels.ofcgwt.client.model.elements.Element.buildJSON()
+	 */
+	public JSONValue buildJSON() {
+		JSONObject json = (JSONObject) super.buildJSON();
+		if (startAngle != null) json.put("start-angle", new JSONNumber(startAngle.intValue()));
+		if (radius != null) json.put("radius", new JSONNumber(radius.intValue()));
+		if (alphaHighlight != null && alphaHighlight) json.put("highlight", new JSONString("alpha"));
+		if (animate != null) json.put("animate", JSONBoolean.getInstance(animate));
+		if (gradientFill != null) json.put("gradient-fill", JSONBoolean.getInstance(gradientFill));
+		if (alpha != null) json.put("alpha", new JSONNumber(alpha));
+		if (nolabels != null) json.put("no-labels", JSONBoolean.getInstance(nolabels));
+		if (border != null) json.put("border", new JSONNumber(border.doubleValue()));
+		if (colours == null) return json;
+		JSONArray ary = new JSONArray();
+		int index = 0;
+		for (String s : colours) {
+			ary.set(index++, new JSONString(s));
+		}
+		if (index != 0) json.put("colours", ary);
+		return json;
+	}
+
+	/**
+	 * Check colours.
+	 */
+	private synchronized void checkColours() {
+		if (colours == null) colours = new ArrayList<String>();
+	}
+
+	/**
+	 * Gets the alpha.
+	 * 
+	 * @return the alpha
+	 */
+	public Float getAlpha() {
+		return alpha;
+	}
+
+	/**
+	 * Gets the alphaHighlight value
+	 * 
+	 * @return true if alphaHighlight is enabled
+	 */
+	public Boolean getAlphaHighlight() {
+		return alphaHighlight;
+	}
+
+	/**
+	 * Gets the animation value
+	 * 
+	 * @return true if animate is enabled
+	 */
+	public Boolean getAnimate() {
+		return animate;
+	}
+
+	/**
+	 * Gets the border.
+	 * 
+	 * @return the border
+	 */
+	public Integer getBorder() {
+		return border;
+	}
+
+	/**
+	 * Gets the colours.
+	 * 
+	 * @return the colours
+	 */
+	public Collection<String> getColours() {
+		return colours;
+	}
+
+	/**
+	 * Gets the gradient fill.
+	 * 
+	 * @return true if gradient fill is enabled
+	 */
+	public Boolean getGradientFill() {
+		return gradientFill;
+	}
+
+	/**
+	 * Gets the no labels value
+	 * 
+	 * @return true if no labels is enabled
+	 */
+	public Boolean getNoLabels() {
+		return nolabels;
+	}
+
+	/**
+	 * Gets the start angle.
+	 * 
+	 * @return the start angle
+	 */
+	public Integer getStartAngle() {
+		return startAngle;
+	}
+
+	/**
+	 * @return the radius
+	 */
+	public Integer getRadius() {
+		return radius;
+	}
+
+	/**
+	 * Sets the alpha.
+	 * 
+	 * @param alpha
+	 *            the alpha
+	 */
+	public void setAlpha(Float alpha) {
+		this.alpha = alpha;
+	}
+
+	/**
+	 * Sets alpha colour toggle as the highlight, or slice slide out animation
+	 * 
+	 * @param alphaHighlight
+	 *            true or false
+	 */
+	public void setAlphaHighlight(boolean alphaHighlight) {
+		this.alphaHighlight = alphaHighlight;
+	}
+
+	/**
+	 * Sets if animation of slice rotation build is enabled
+	 * 
+	 * @param animate
+	 *            true or false
+	 */
+	public void setAnimate(boolean animate) {
+		this.animate = animate;
+	}
+
+	/**
+	 * Sets the border.
+	 * 
+	 * @param border
+	 *            the new border
+	 */
+	public void setBorder(Integer border) {
+		this.border = border;
+	}
+
+	/**
+	 * Sets colours in HTML hex format (#ffffff)
+	 * 
+	 * @param colours
+	 *            the new colours
+	 */
+	public void setColours(Collection<String> colours) {
+		checkColours();
+		this.colours = colours;
+	}
+
+	/**
+	 * Sets the colours.
+	 * 
+	 * @param colours
+	 *            the new colours
+	 */
+	public void setColours(List<String> colours) {
+		checkColours();
+		this.colours.clear();
+		this.colours.addAll(colours);
+	}
+
+	/**
+	 * Sets colours in HTML hex format (#ffffff)
+	 * 
+	 * @param colours
+	 *            the new colours
+	 */
+	public void setColours(String... colours) {
+		checkColours();
+		this.colours.clear();
+		this.colours.addAll(Arrays.asList(colours));
+	}
+
+	/**
+	 * Sets the gradient fill.
+	 * 
+	 * @param gradientFill
+	 *            true or false
+	 */
+	public void setGradientFill(boolean gradientFill) {
+		this.gradientFill = gradientFill;
+	}
+
+	/**
+	 * Sets the no labels.
+	 * 
+	 * @param nolabels
+	 *            true or false
+	 */
+	public void setNoLabels(boolean nolabels) {
+		this.nolabels = nolabels;
+	}
+
+	/**
+	 * Sets the start angle.
+	 * 
+	 * @param startAngle
+	 *            the new start angle
+	 */
+	public void setStartAngle(Integer startAngle) {
+		this.startAngle = startAngle;
+	}
+
+	/**
+	 * @param radius the radius to set
+	 */
+	public void setRadius(Integer radius) {
+		this.radius = radius;
 	}
 }

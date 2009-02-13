@@ -53,23 +53,16 @@ public class Text implements JSONizable {
 		setStyle(style);
 	}
 
-	/**
-	 * Get the text
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return String text
+	 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
 	 */
-	public String getText() {
-		return text;
-	}
-
-	/**
-	 * Sets the text string.
-	 * 
-	 * @param text
-	 *            String
-	 */
-	public void setText(String text) {
-		this.text = text;
+	public JSONValue buildJSON() {
+		JSONObject json = new JSONObject();
+		if (text != null) json.put("text", new JSONString(text));
+		if (style != null) json.put("style", new JSONString(style));
+		return json;
 	}
 
 	/**
@@ -82,6 +75,15 @@ public class Text implements JSONizable {
 	}
 
 	/**
+	 * Get the text
+	 * 
+	 * @return String text
+	 */
+	public String getText() {
+		return text;
+	}
+
+	/**
 	 * Sets the text string.
 	 * 
 	 * @param style
@@ -91,15 +93,13 @@ public class Text implements JSONizable {
 		this.style = style;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Sets the text string.
 	 * 
-	 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
+	 * @param text
+	 *            String
 	 */
-	public JSONValue buildJSON() {
-		JSONObject json = new JSONObject();
-		if (text != null) json.put("text", new JSONString(text));
-		if (style != null) json.put("style", new JSONString(style));
-		return json;
+	public void setText(String text) {
+		this.text = text;
 	}
 }

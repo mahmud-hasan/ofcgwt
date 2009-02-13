@@ -26,158 +26,6 @@ import com.google.gwt.json.client.JSONValue;
  * Base class for an OFC tooltip element
  */
 public class ToolTip implements JSONizable {
-	private String titlestyle;
-	private String bodystyle;
-	private String colour;
-	private String backgroundcolour;
-	private MouseStyle mouse;
-	private Integer stroke;
-
-	/**
-	 * Create a new ToolTip instance
-	 */
-	public ToolTip() {}
-
-	/**
-	 * Create a new ToolTip instance with the given mouse style
-	 * 
-	 * @param mouse
-	 *            MouseStyle
-	 */
-	public ToolTip(MouseStyle mouse) {
-		setMouse(mouse);
-	}
-
-	/**
-	 * Gets the title style.
-	 * 
-	 * @return the titlestyle
-	 */
-	public String getTitlestyle() {
-		return titlestyle;
-	}
-
-	/**
-	 * Sets the title style.
-	 * 
-	 * @param titlestyle
-	 *            the title style to set
-	 */
-	public void setTitlestyle(String titlestyle) {
-		this.titlestyle = titlestyle;
-	}
-
-	/**
-	 * Gets the body style.
-	 * 
-	 * @return the bodystyle
-	 */
-	public String getBodystyle() {
-		return bodystyle;
-	}
-
-	/**
-	 * Sets the body style.
-	 * 
-	 * @param bodystyle
-	 *            the body style to set
-	 */
-	public void setBodystyle(String bodystyle) {
-		this.bodystyle = bodystyle;
-	}
-
-	/**
-	 * Gets the colour.
-	 * 
-	 * @return the colour
-	 */
-	public String getColour() {
-		return colour;
-	}
-
-	/**
-	 * Sets the colour.
-	 * 
-	 * @param colour
-	 *            the colour to set
-	 */
-	public void setColour(String colour) {
-		this.colour = colour;
-	}
-
-	/**
-	 * Gets the background colour.
-	 * 
-	 * @return the backgroundcolour
-	 */
-	public String getBackgroundcolour() {
-		return backgroundcolour;
-	}
-
-	/**
-	 * Sets the background colour.
-	 * 
-	 * @param backgroundcolour
-	 *            the background colour to set
-	 */
-	public void setBackgroundcolour(String backgroundcolour) {
-		this.backgroundcolour = backgroundcolour;
-	}
-
-	/**
-	 * Gets the mouse.
-	 * 
-	 * @return the mouse
-	 */
-	public MouseStyle getMouse() {
-		return mouse;
-	}
-
-	/**
-	 * Sets the mouse.
-	 * 
-	 * @param mouse
-	 *            the mouse to set
-	 */
-	public void setMouse(MouseStyle mouse) {
-		this.mouse = mouse;
-	}
-
-	/**
-	 * Gets the stroke.
-	 * 
-	 * @return the stroke
-	 */
-	public Integer getStroke() {
-		return stroke;
-	}
-
-	/**
-	 * Sets the stroke.
-	 * 
-	 * @param stroke
-	 *            the stroke to set
-	 */
-	public void setStroke(Integer stroke) {
-		this.stroke = stroke;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
-	 */
-	public JSONValue buildJSON() {
-		JSONObject json = new JSONObject();
-		if (titlestyle != null) json.put("title", new JSONString(titlestyle));
-		if (bodystyle != null) json.put("body", new JSONString(bodystyle));
-		if (colour != null) json.put("colour", new JSONString(colour));
-		if (backgroundcolour != null) json.put("background", new JSONString(backgroundcolour));
-		if (mouse != null) json.put("mouse", new JSONNumber(mouse.getStyle()));
-		if (stroke != null) json.put("stroke", new JSONNumber(stroke));
-		return json;
-	}
-
 	/**
 	 * Enumeration MouseStyle - used with tooltip.
 	 */
@@ -213,5 +61,157 @@ public class ToolTip implements JSONizable {
 		public int getStyle() {
 			return style;
 		}
+	}
+	private String titlestyle;
+	private String bodystyle;
+	private String colour;
+	private String backgroundcolour;
+	private MouseStyle mouse;
+
+	private Integer stroke;
+
+	/**
+	 * Create a new ToolTip instance
+	 */
+	public ToolTip() {}
+
+	/**
+	 * Create a new ToolTip instance with the given mouse style
+	 * 
+	 * @param mouse
+	 *            MouseStyle
+	 */
+	public ToolTip(MouseStyle mouse) {
+		setMouse(mouse);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
+	 */
+	public JSONValue buildJSON() {
+		JSONObject json = new JSONObject();
+		if (titlestyle != null) json.put("title", new JSONString(titlestyle));
+		if (bodystyle != null) json.put("body", new JSONString(bodystyle));
+		if (colour != null) json.put("colour", new JSONString(colour));
+		if (backgroundcolour != null) json.put("background", new JSONString(backgroundcolour));
+		if (mouse != null) json.put("mouse", new JSONNumber(mouse.getStyle()));
+		if (stroke != null) json.put("stroke", new JSONNumber(stroke));
+		return json;
+	}
+
+	/**
+	 * Gets the background colour.
+	 * 
+	 * @return the backgroundcolour
+	 */
+	public String getBackgroundcolour() {
+		return backgroundcolour;
+	}
+
+	/**
+	 * Gets the body style.
+	 * 
+	 * @return the bodystyle
+	 */
+	public String getBodystyle() {
+		return bodystyle;
+	}
+
+	/**
+	 * Gets the colour.
+	 * 
+	 * @return the colour
+	 */
+	public String getColour() {
+		return colour;
+	}
+
+	/**
+	 * Gets the mouse.
+	 * 
+	 * @return the mouse
+	 */
+	public MouseStyle getMouse() {
+		return mouse;
+	}
+
+	/**
+	 * Gets the stroke.
+	 * 
+	 * @return the stroke
+	 */
+	public Integer getStroke() {
+		return stroke;
+	}
+
+	/**
+	 * Gets the title style.
+	 * 
+	 * @return the titlestyle
+	 */
+	public String getTitlestyle() {
+		return titlestyle;
+	}
+
+	/**
+	 * Sets the background colour.
+	 * 
+	 * @param backgroundcolour
+	 *            the background colour to set
+	 */
+	public void setBackgroundcolour(String backgroundcolour) {
+		this.backgroundcolour = backgroundcolour;
+	}
+
+	/**
+	 * Sets the body style.
+	 * 
+	 * @param bodystyle
+	 *            the body style to set
+	 */
+	public void setBodystyle(String bodystyle) {
+		this.bodystyle = bodystyle;
+	}
+
+	/**
+	 * Sets the colour.
+	 * 
+	 * @param colour
+	 *            the colour to set
+	 */
+	public void setColour(String colour) {
+		this.colour = colour;
+	}
+
+	/**
+	 * Sets the mouse.
+	 * 
+	 * @param mouse
+	 *            the mouse to set
+	 */
+	public void setMouse(MouseStyle mouse) {
+		this.mouse = mouse;
+	}
+
+	/**
+	 * Sets the stroke.
+	 * 
+	 * @param stroke
+	 *            the stroke to set
+	 */
+	public void setStroke(Integer stroke) {
+		this.stroke = stroke;
+	}
+
+	/**
+	 * Sets the title style.
+	 * 
+	 * @param titlestyle
+	 *            the title style to set
+	 */
+	public void setTitlestyle(String titlestyle) {
+		this.titlestyle = titlestyle;
 	}
 }
