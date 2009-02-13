@@ -29,66 +29,6 @@ import com.rednels.ofcgwt.client.model.JSONizable;
  */
 public class SketchBarChart extends FilledBarChart implements JSONizable {
 
-	/** The Constant TYPE. */
-	private static final transient String TYPE = "bar_sketch";
-
-	/** The offset. */
-	private Integer offset;
-
-	/**
-	 * Creates a new sketch bar chart.
-	 */
-	public SketchBarChart() {
-		super(TYPE);
-	}
-
-	/**
-	 * Creates a new sketch bar chart.
-	 * 
-	 * @param colour
-	 *            the colour
-	 * @param outlineColour
-	 *            the outline colour
-	 * @param offset
-	 *            the offset
-	 */
-	public SketchBarChart(String colour, String outlineColour, Integer offset) {
-		super(TYPE);
-		setColour(colour);
-		setOutlineColour(outlineColour);
-		setOffset(offset);
-	}
-
-	/**
-	 * Gets the offset.
-	 * 
-	 * @return the offset
-	 */
-	public Integer getOffset() {
-		return offset;
-	}
-
-	/**
-	 * Sets the offset (the fun factor).
-	 * 
-	 * @param offset
-	 *            the new offset
-	 */
-	public void setOffset(Integer offset) {
-		this.offset = offset;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.rednels.ofcgwt.client.model.elements.FilledBarChart.buildJSON()
-	 */
-	public JSONValue buildJSON() {
-		JSONObject json = (JSONObject) super.buildJSON();
-		if (offset != null) json.put("offset", new JSONNumber(offset.doubleValue()));
-		return json;
-	}
-
 	/**
 	 * Class for OFC sketch bar chart bars, extends FilledBarChart.Bar
 	 * 
@@ -137,25 +77,6 @@ public class SketchBarChart extends FilledBarChart implements JSONizable {
 			setOffset(offset);
 		}
 
-		/**
-		 * Sets the offset (the fun factor).
-		 * 
-		 * @param offset
-		 *            the new offset
-		 */
-		public void setOffset(Integer offset) {
-			this.offset = offset;
-		}
-
-		/**
-		 * Gets the offset.
-		 * 
-		 * @return the offset
-		 */
-		public Integer getOffset() {
-			return offset;
-		}
-
 		/*
 		 * (non-Javadoc)
 		 * 
@@ -168,5 +89,84 @@ public class SketchBarChart extends FilledBarChart implements JSONizable {
 			if (offset != null) json.put("offset", new JSONNumber(offset.doubleValue()));
 			return json;
 		}
+
+		/**
+		 * Gets the offset.
+		 * 
+		 * @return the offset
+		 */
+		public Integer getOffset() {
+			return offset;
+		}
+
+		/**
+		 * Sets the offset (the fun factor).
+		 * 
+		 * @param offset
+		 *            the new offset
+		 */
+		public void setOffset(Integer offset) {
+			this.offset = offset;
+		}
+	}
+
+	/** The Constant TYPE. */
+	private static final transient String TYPE = "bar_sketch";
+
+	/** The offset. */
+	private Integer offset;
+
+	/**
+	 * Creates a new sketch bar chart.
+	 */
+	public SketchBarChart() {
+		super(TYPE);
+	}
+
+	/**
+	 * Creates a new sketch bar chart.
+	 * 
+	 * @param colour
+	 *            the colour
+	 * @param outlineColour
+	 *            the outline colour
+	 * @param offset
+	 *            the offset
+	 */
+	public SketchBarChart(String colour, String outlineColour, Integer offset) {
+		super(TYPE);
+		setColour(colour);
+		setOutlineColour(outlineColour);
+		setOffset(offset);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.rednels.ofcgwt.client.model.elements.FilledBarChart.buildJSON()
+	 */
+	public JSONValue buildJSON() {
+		JSONObject json = (JSONObject) super.buildJSON();
+		if (offset != null) json.put("offset", new JSONNumber(offset.doubleValue()));
+		return json;
+	}
+
+	/**
+	 * Gets the offset.
+	 * 
+	 * @return the offset
+	 */
+	public Integer getOffset() {
+		return offset;
+	}
+
+	/**
+	 * Sets the offset (the fun factor).
+	 * 
+	 * @param offset
+	 *            the new offset
+	 */
+	public void setOffset(Integer offset) {
+		this.offset = offset;
 	}
 }

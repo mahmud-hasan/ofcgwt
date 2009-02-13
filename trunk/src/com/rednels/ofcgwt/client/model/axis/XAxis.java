@@ -36,122 +36,6 @@ import com.rednels.ofcgwt.client.model.JSONizable;
  */
 public class XAxis extends AbstractAxis implements JSONizable {
 
-	/** The tick height. */
-	private Integer tickHeight;
-
-	/** The labels. */
-	private Labels labels;
-
-	/**
-	 * Sets the tick height.
-	 * 
-	 * @param tick_height
-	 *            the new tick height
-	 */
-	public void setTickHeight(Integer tick_height) {
-		this.tickHeight = tick_height;
-	}
-
-	/**
-	 * Gets the tick height.
-	 * 
-	 * @return the tick height
-	 */
-	public Integer getTickHeight() {
-		return tickHeight;
-	}
-
-	/**
-	 * Gets the labels.
-	 * 
-	 * @return the labels
-	 */
-	public Labels getLabels() {
-		return labels;
-	}
-
-	/**
-	 * Sets the x axis labels.
-	 * 
-	 * @param labels
-	 *            the new x axis labels
-	 */
-	public void setXAxisLabels(Labels labels) {
-		this.labels = labels;
-	}
-
-	/**
-	 * Sets the labels.
-	 * 
-	 * @param labels
-	 *            the new labels
-	 */
-	public void setLabels(String... labels) {
-		this.labels = new Labels(labels);
-	}
-
-	/**
-	 * Sets the labels.
-	 * 
-	 * @param labels
-	 *            the new labels
-	 */
-	public void setLabels(List<String> labels) {
-		this.labels = new Labels(labels);
-	}
-
-	/**
-	 * Adds the labels.
-	 * 
-	 * @param labels
-	 *            the labels
-	 */
-	public void addLabels(String... labels) {
-		checkLabelsNotNull();
-		this.labels.addLabels(labels);
-	}
-
-	/**
-	 * Adds the labels.
-	 * 
-	 * @param labels
-	 *            the labels
-	 */
-	public void addLabels(Label... labels) {
-		checkLabelsNotNull();
-		this.labels.addLabels(labels);
-	}
-
-	/**
-	 * Adds the labels.
-	 * 
-	 * @param labels
-	 *            the labels
-	 */
-	public void addLabels(List<Label> labels) {
-		checkLabelsNotNull();
-		this.labels.addLabels(labels);
-	}
-
-	/**
-	 * Check labels not null.
-	 */
-	private synchronized void checkLabelsNotNull() {
-		if (labels == null) labels = new Labels();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.rednels.ofcgwt.client.model.axis.AbstractAxis.buildJSON()
-	 */
-	public JSONValue buildJSON() {
-		JSONObject json = (JSONObject) super.buildJSON();
-		if (tickHeight != null) json.put("tick-height", new JSONNumber(tickHeight));
-		if (labels != null) json.put("labels", labels.buildJSON());
-		return json;
-	}
-
 	/**
 	 * Class for an OFC x-axis label that extends Label
 	 * 
@@ -174,8 +58,9 @@ public class XAxis extends AbstractAxis implements JSONizable {
 		 * @param labels
 		 *            the labels
 		 */
-		public Labels(String... labels) {
-			addLabels(labels);
+		public Labels(List<String> labels) {
+			checkLabelsNotNull();
+			this.labels.addAll(labels);
 		}
 
 		/**
@@ -184,29 +69,8 @@ public class XAxis extends AbstractAxis implements JSONizable {
 		 * @param labels
 		 *            the labels
 		 */
-		public Labels(List<String> labels) {
-			checkLabelsNotNull();
-			this.labels.addAll(labels);
-		}
-
-		/**
-		 * Gets the labels.
-		 * 
-		 * @return the labels
-		 */
-		public List<Object> getLabels() {
-			return labels;
-		}
-
-		/**
-		 * Adds the labels.
-		 * 
-		 * @param labels
-		 *            the labels
-		 */
-		public void addLabels(String... labels) {
-			checkLabelsNotNull();
-			this.labels.addAll(Arrays.asList(labels));
+		public Labels(String... labels) {
+			addLabels(labels);
 		}
 
 		/**
@@ -232,105 +96,14 @@ public class XAxis extends AbstractAxis implements JSONizable {
 		}
 
 		/**
-		 * Sets the steps.
+		 * Adds the labels.
 		 * 
-		 * @param steps
-		 *            the new steps
+		 * @param labels
+		 *            the labels
 		 */
-		public void setSteps(Integer steps) {
-			this.steps = steps;
-		}
-
-		/**
-		 * Gets the steps.
-		 * 
-		 * @return the steps
-		 */
-		public Integer getSteps() {
-			return steps;
-		}
-
-		/**
-		 * Gets the colour.
-		 * 
-		 * @return the colour
-		 */
-		public String getColour() {
-			return colour;
-		}
-
-		/**
-		 * Sets the colour in HTML hex format (#ffffff)
-		 * 
-		 * @param colour
-		 *            the colour
-		 */
-		public void setColour(String colour) {
-			this.colour = colour;
-		}
-
-		/**
-		 * Gets the size.
-		 * 
-		 * @return the size
-		 */
-		public Integer getSize() {
-			return size;
-		}
-
-		/**
-		 * Sets the size.
-		 * 
-		 * @param size
-		 *            the size
-		 */
-		public void setSize(Integer size) {
-			this.size = size;
-		}
-
-		/**
-		 * Gets the rotation.
-		 * 
-		 * @return the rotation
-		 */
-		public Rotation getRotation() {
-			return rotate;
-		}
-
-		/**
-		 * Sets the rotation.
-		 * 
-		 * @param rotate
-		 *            the rotate
-		 */
-		public void setRotation(Rotation rotate) {
-			this.rotate = rotate;
-		}
-
-		/**
-		 * Gets the visible.
-		 * 
-		 * @return the visible
-		 */
-		public Boolean getVisible() {
-			return visible;
-		}
-
-		/**
-		 * Sets the visible.
-		 * 
-		 * @param visible
-		 *            the visible
-		 */
-		public void setVisible(Boolean visible) {
-			this.visible = visible;
-		}
-
-		/**
-		 * Check labels not null.
-		 */
-		private synchronized void checkLabelsNotNull() {
-			if (labels == null) labels = new ArrayList<Object>();
+		public void addLabels(String... labels) {
+			checkLabelsNotNull();
+			this.labels.addAll(Arrays.asList(labels));
 		}
 
 		/*
@@ -355,5 +128,232 @@ public class XAxis extends AbstractAxis implements JSONizable {
 			if (index != 0) json.put("labels", ary);
 			return json;
 		}
+
+		/**
+		 * Check labels not null.
+		 */
+		private synchronized void checkLabelsNotNull() {
+			if (labels == null) labels = new ArrayList<Object>();
+		}
+
+		/**
+		 * Gets the colour.
+		 * 
+		 * @return the colour
+		 */
+		public String getColour() {
+			return colour;
+		}
+
+		/**
+		 * Gets the labels.
+		 * 
+		 * @return the labels
+		 */
+		public List<Object> getLabels() {
+			return labels;
+		}
+
+		/**
+		 * Gets the rotation.
+		 * 
+		 * @return the rotation
+		 */
+		public Rotation getRotation() {
+			return rotate;
+		}
+
+		/**
+		 * Gets the size.
+		 * 
+		 * @return the size
+		 */
+		public Integer getSize() {
+			return size;
+		}
+
+		/**
+		 * Gets the steps.
+		 * 
+		 * @return the steps
+		 */
+		public Integer getSteps() {
+			return steps;
+		}
+
+		/**
+		 * Gets the visible.
+		 * 
+		 * @return the visible
+		 */
+		public Boolean getVisible() {
+			return visible;
+		}
+
+		/**
+		 * Sets the colour in HTML hex format (#ffffff)
+		 * 
+		 * @param colour
+		 *            the colour
+		 */
+		public void setColour(String colour) {
+			this.colour = colour;
+		}
+
+		/**
+		 * Sets the rotation.
+		 * 
+		 * @param rotate
+		 *            the rotate
+		 */
+		public void setRotation(Rotation rotate) {
+			this.rotate = rotate;
+		}
+
+		/**
+		 * Sets the size.
+		 * 
+		 * @param size
+		 *            the size
+		 */
+		public void setSize(Integer size) {
+			this.size = size;
+		}
+
+		/**
+		 * Sets the steps.
+		 * 
+		 * @param steps
+		 *            the new steps
+		 */
+		public void setSteps(Integer steps) {
+			this.steps = steps;
+		}
+
+		/**
+		 * Sets the visible.
+		 * 
+		 * @param visible
+		 *            the visible
+		 */
+		public void setVisible(Boolean visible) {
+			this.visible = visible;
+		}
+	}
+
+	/** The tick height. */
+	private Integer tickHeight;
+
+	/** The labels. */
+	private Labels labels;
+
+	/**
+	 * Adds the labels.
+	 * 
+	 * @param labels
+	 *            the labels
+	 */
+	public void addLabels(Label... labels) {
+		checkLabelsNotNull();
+		this.labels.addLabels(labels);
+	}
+
+	/**
+	 * Adds the labels.
+	 * 
+	 * @param labels
+	 *            the labels
+	 */
+	public void addLabels(List<Label> labels) {
+		checkLabelsNotNull();
+		this.labels.addLabels(labels);
+	}
+
+	/**
+	 * Adds the labels.
+	 * 
+	 * @param labels
+	 *            the labels
+	 */
+	public void addLabels(String... labels) {
+		checkLabelsNotNull();
+		this.labels.addLabels(labels);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.rednels.ofcgwt.client.model.axis.AbstractAxis.buildJSON()
+	 */
+	public JSONValue buildJSON() {
+		JSONObject json = (JSONObject) super.buildJSON();
+		if (tickHeight != null) json.put("tick-height", new JSONNumber(tickHeight));
+		if (labels != null) json.put("labels", labels.buildJSON());
+		return json;
+	}
+
+	/**
+	 * Check labels not null.
+	 */
+	private synchronized void checkLabelsNotNull() {
+		if (labels == null) labels = new Labels();
+	}
+
+	/**
+	 * Gets the labels.
+	 * 
+	 * @return the labels
+	 */
+	public Labels getLabels() {
+		return labels;
+	}
+
+	/**
+	 * Gets the tick height.
+	 * 
+	 * @return the tick height
+	 */
+	public Integer getTickHeight() {
+		return tickHeight;
+	}
+
+	/**
+	 * Sets the labels.
+	 * 
+	 * @param labels
+	 *            the new labels
+	 */
+	public void setLabels(List<String> labels) {
+		this.labels = new Labels(labels);
+	}
+
+	/**
+	 * Sets the labels.
+	 * 
+	 * @param labels
+	 *            the new labels
+	 */
+	public void setLabels(String... labels) {
+		this.labels = new Labels(labels);
+	}
+
+	/**
+	 * Sets the tick height.
+	 * 
+	 * @param tick_height
+	 *            the new tick height
+	 */
+	public void setTickHeight(Integer tick_height) {
+		this.tickHeight = tick_height;
+	}
+
+	/**
+	 * Sets the x axis labels.
+	 * 
+	 * @param labels
+	 *            the new x axis labels
+	 */
+	public void setXAxisLabels(Labels labels) {
+		this.labels = labels;
 	}
 }

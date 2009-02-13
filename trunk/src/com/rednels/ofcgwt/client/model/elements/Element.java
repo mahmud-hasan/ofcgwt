@@ -72,99 +72,20 @@ public abstract class Element implements JSONizable {
 	}
 
 	/**
-	 * Gets the type.
+	 * Adds an onClick event. Requires an ChartWidget to register the event
+	 * with.
 	 * 
-	 * @return the type
+	 * @param chart
+	 *            the IChartData
+	 * @param listener
+	 *            the onClick Listener
 	 */
-	public String getType() {
-		return type;
+	public void addKeyOnClickListener(IChartData chart, IOnClickListener listener) {
+		this.keyOnClick = chart.addOnClickListener(listener);
 	}
 
-	/**
-	 * Gets the text.
-	 * 
-	 * @return the text
-	 */
-	public String getText() {
-		return text;
-	}
-
-	/**
-	 * Sets the text.
-	 * 
-	 * @param text
-	 *            the text
-	 */
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	/**
-	 * Gets the font size.
-	 * 
-	 * @return the font size
-	 */
-	public Integer getFontSize() {
-		return fontSize;
-	}
-
-	/**
-	 * Sets the font size.
-	 * 
-	 * @param fontSize
-	 *            the font size
-	 */
-	public void setFontSize(Integer fontSize) {
-		this.fontSize = fontSize;
-	}
-
-	/**
-	 * Gets the onClick.
-	 * 
-	 * @return the onClick
-	 */
-	public String getOnClick() {
-		return onClick;
-	}
-
-	/**
-	 * Sets the onClick.
-	 * 
-	 * @param onClick
-	 *            the onClick javascript method or url
-	 */
-	public void setOnClick(String onClick) {
-		this.onClick = onClick;
-	}
-
-	/**
-	 * Gets the keyOnClick.
-	 * 
-	 * @return the keyOnClick
-	 */
-	public String getKeyOnClick() {
-		return keyOnClick;
-	}
-
-	/**
-	 * Sets the keyOnClick.
-	 * 
-	 * @param keyOnClick
-	 *            the keyOnClick javascript method or url
-	 */
-	public void setKeyOnClick(String keyOnClick) {
-		this.keyOnClick = keyOnClick;
-	}
-
-	/**
-	 * If true, sets keyOnClick to toggle visibility
-	 * 
-	 * @param toggleKeyOnClick
-	 *            boolean
-	 */
-	public void setKeyToggleOnClick(boolean toggleKeyOnClick) {
-		if (toggleKeyOnClick) this.keyOnClick = "toggle-visibility";
-		else this.keyOnClick = null;
+	public void addNull() {
+		values.add(null);
 	}
 
 	/**
@@ -178,84 +99,6 @@ public abstract class Element implements JSONizable {
 	 */
 	public void addOnClickListener(IChartData chart, IOnClickListener listener) {
 		this.onClick = chart.addOnClickListener(listener);
-	}
-
-	/**
-	 * Adds an onClick event. Requires an ChartWidget to register the event
-	 * with.
-	 * 
-	 * @param chart
-	 *            the IChartData
-	 * @param listener
-	 *            the onClick Listener
-	 */
-	public void addKeyOnClickListener(IChartData chart, IOnClickListener listener) {
-		this.keyOnClick = chart.addOnClickListener(listener);
-	}
-
-	/**
-	 * Gets the values.
-	 * 
-	 * @return the values
-	 */
-	public List<Object> getValues() {
-		return values;
-	}
-
-	public void addNull() {
-		values.add(null);
-	}
-
-	/**
-	 * Sets the stack keys.
-	 * 
-	 * @param keys
-	 *            the keys
-	 */
-	public void setKeys(List<Keys> keys) {
-		this.keys.clear();
-		this.keys.addAll(keys);
-	}
-
-	/**
-	 * Sets the stack keys.
-	 * 
-	 * @param keys
-	 *            the keys
-	 */
-	public void setKeys(Keys... keys) {
-		setKeys(Arrays.asList(keys));
-	}
-
-	/**
-	 * Sets the values.
-	 * 
-	 * @param values
-	 *            the values
-	 */
-	@SuppressWarnings("unchecked")
-	public void setValues(Collection values) {
-		this.values.clear();
-		this.values.addAll(values);
-	}
-
-	/**
-	 * Sets the tooltip text (#val# is the default)
-	 * 
-	 * @param tooltip
-	 *            the tooltip
-	 */
-	public void setTooltip(String tooltip) {
-		this.tooltip = tooltip;
-	}
-
-	/**
-	 * Gets the tooltip.
-	 * 
-	 * @return the tooltip
-	 */
-	public String getTooltip() {
-		return tooltip;
 	}
 
 	/*
@@ -290,5 +133,162 @@ public abstract class Element implements JSONizable {
 		}
 		if (index != 0) json.put("values", ary);
 		return json;
+	}
+
+	/**
+	 * Gets the font size.
+	 * 
+	 * @return the font size
+	 */
+	public Integer getFontSize() {
+		return fontSize;
+	}
+
+	/**
+	 * Gets the keyOnClick.
+	 * 
+	 * @return the keyOnClick
+	 */
+	public String getKeyOnClick() {
+		return keyOnClick;
+	}
+
+	/**
+	 * Gets the onClick.
+	 * 
+	 * @return the onClick
+	 */
+	public String getOnClick() {
+		return onClick;
+	}
+
+	/**
+	 * Gets the text.
+	 * 
+	 * @return the text
+	 */
+	public String getText() {
+		return text;
+	}
+
+	/**
+	 * Gets the tooltip.
+	 * 
+	 * @return the tooltip
+	 */
+	public String getTooltip() {
+		return tooltip;
+	}
+
+	/**
+	 * Gets the type.
+	 * 
+	 * @return the type
+	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * Gets the values.
+	 * 
+	 * @return the values
+	 */
+	public List<Object> getValues() {
+		return values;
+	}
+
+	/**
+	 * Sets the font size.
+	 * 
+	 * @param fontSize
+	 *            the font size
+	 */
+	public void setFontSize(Integer fontSize) {
+		this.fontSize = fontSize;
+	}
+
+	/**
+	 * Sets the keyOnClick.
+	 * 
+	 * @param keyOnClick
+	 *            the keyOnClick javascript method or url
+	 */
+	public void setKeyOnClick(String keyOnClick) {
+		this.keyOnClick = keyOnClick;
+	}
+
+	/**
+	 * Sets the stack keys.
+	 * 
+	 * @param keys
+	 *            the keys
+	 */
+	public void setKeys(Keys... keys) {
+		setKeys(Arrays.asList(keys));
+	}
+
+	/**
+	 * Sets the stack keys.
+	 * 
+	 * @param keys
+	 *            the keys
+	 */
+	public void setKeys(List<Keys> keys) {
+		this.keys.clear();
+		this.keys.addAll(keys);
+	}
+
+	/**
+	 * If true, sets keyOnClick to toggle visibility
+	 * 
+	 * @param toggleKeyOnClick
+	 *            boolean
+	 */
+	public void setKeyToggleOnClick(boolean toggleKeyOnClick) {
+		if (toggleKeyOnClick) this.keyOnClick = "toggle-visibility";
+		else this.keyOnClick = null;
+	}
+
+	/**
+	 * Sets the onClick.
+	 * 
+	 * @param onClick
+	 *            the onClick javascript method or url
+	 */
+	public void setOnClick(String onClick) {
+		this.onClick = onClick;
+	}
+
+	/**
+	 * Sets the text.
+	 * 
+	 * @param text
+	 *            the text
+	 */
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	/**
+	 * Sets the tooltip text (#val# is the default)
+	 * 
+	 * @param tooltip
+	 *            the tooltip
+	 */
+	public void setTooltip(String tooltip) {
+		this.tooltip = tooltip;
+	}
+
+	/**
+	 * Sets the values.
+	 * 
+	 * @param values
+	 *            the values
+	 */
+	@SuppressWarnings("unchecked")
+	public void setValues(Collection values) {
+		this.values.clear();
+		this.values.addAll(values);
 	}
 }

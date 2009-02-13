@@ -33,6 +33,81 @@ import com.rednels.ofcgwt.client.model.JSONizable;
  */
 public class Shape extends Element implements JSONizable {
 
+	/**
+	 * Base class for OFC shape points
+	 */
+	public static class Point implements JSONizable {
+
+		/** The x. */
+		private Number x;
+
+		/** The y. */
+		private Number y;
+
+		/**
+		 * Creates a new point.
+		 * 
+		 * @param x
+		 *            the x
+		 * @param y
+		 *            the y
+		 */
+		public Point(Number x, Number y) {
+			this.x = x;
+			this.y = y;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
+		 */
+		public JSONValue buildJSON() {
+			JSONObject json = new JSONObject();
+			if (x != null) json.put("x", new JSONNumber(x.doubleValue()));
+			if (y != null) json.put("y", new JSONNumber(y.doubleValue()));
+			return json;
+		}
+
+		/**
+		 * Gets the x.
+		 * 
+		 * @return the x
+		 */
+		public Number getX() {
+			return x;
+		}
+
+		/**
+		 * Gets the y.
+		 * 
+		 * @return the y
+		 */
+		public Number getY() {
+			return y;
+		}
+
+		/**
+		 * Sets the x.
+		 * 
+		 * @param x
+		 *            the new x
+		 */
+		public void setX(Number x) {
+			this.x = x;
+		}
+
+		/**
+		 * Sets the y.
+		 * 
+		 * @param y
+		 *            the new y
+		 */
+		public void setY(Number y) {
+			this.y = y;
+		}
+	}
+
 	/** The Constant TYPE. */
 	private static final transient String TYPE = "shape";
 
@@ -47,16 +122,6 @@ public class Shape extends Element implements JSONizable {
 	 */
 	public Shape() {
 		super(TYPE);
-	}
-
-	/**
-	 * Adds the points.
-	 * 
-	 * @param points
-	 *            the points
-	 */
-	public void addPoints(Point... points) {
-		getValues().addAll(Arrays.asList(points));
 	}
 
 	/**
@@ -82,41 +147,13 @@ public class Shape extends Element implements JSONizable {
 	}
 
 	/**
-	 * Gets the alpha.
+	 * Adds the points.
 	 * 
-	 * @return the alpha
+	 * @param points
+	 *            the points
 	 */
-	public Float getAlpha() {
-		return alpha;
-	}
-
-	/**
-	 * Sets the alpha.
-	 * 
-	 * @param alpha
-	 *            the alpha
-	 */
-	public void setAlpha(Float alpha) {
-		this.alpha = alpha;
-	}
-
-	/**
-	 * Gets the colour.
-	 * 
-	 * @return the colour
-	 */
-	public String getColour() {
-		return colour;
-	}
-
-	/**
-	 * Sets the colour in HTML hex format (#ffffff)
-	 * 
-	 * @param colour
-	 *            the new colour
-	 */
-	public void setColour(String colour) {
-		this.colour = colour;
+	public void addPoints(Point... points) {
+		getValues().addAll(Arrays.asList(points));
 	}
 
 	/*
@@ -132,77 +169,40 @@ public class Shape extends Element implements JSONizable {
 	}
 
 	/**
-	 * Base class for OFC shape points
+	 * Gets the alpha.
+	 * 
+	 * @return the alpha
 	 */
-	public static class Point implements JSONizable {
+	public Float getAlpha() {
+		return alpha;
+	}
 
-		/** The x. */
-		private Number x;
+	/**
+	 * Gets the colour.
+	 * 
+	 * @return the colour
+	 */
+	public String getColour() {
+		return colour;
+	}
 
-		/** The y. */
-		private Number y;
+	/**
+	 * Sets the alpha.
+	 * 
+	 * @param alpha
+	 *            the alpha
+	 */
+	public void setAlpha(Float alpha) {
+		this.alpha = alpha;
+	}
 
-		/**
-		 * Creates a new point.
-		 * 
-		 * @param x
-		 *            the x
-		 * @param y
-		 *            the y
-		 */
-		public Point(Number x, Number y) {
-			this.x = x;
-			this.y = y;
-		}
-
-		/**
-		 * Gets the x.
-		 * 
-		 * @return the x
-		 */
-		public Number getX() {
-			return x;
-		}
-
-		/**
-		 * Sets the x.
-		 * 
-		 * @param x
-		 *            the new x
-		 */
-		public void setX(Number x) {
-			this.x = x;
-		}
-
-		/**
-		 * Gets the y.
-		 * 
-		 * @return the y
-		 */
-		public Number getY() {
-			return y;
-		}
-
-		/**
-		 * Sets the y.
-		 * 
-		 * @param y
-		 *            the new y
-		 */
-		public void setY(Number y) {
-			this.y = y;
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
-		 */
-		public JSONValue buildJSON() {
-			JSONObject json = new JSONObject();
-			if (x != null) json.put("x", new JSONNumber(x.doubleValue()));
-			if (y != null) json.put("y", new JSONNumber(y.doubleValue()));
-			return json;
-		}
+	/**
+	 * Sets the colour in HTML hex format (#ffffff)
+	 * 
+	 * @param colour
+	 *            the new colour
+	 */
+	public void setColour(String colour) {
+		this.colour = colour;
 	}
 }

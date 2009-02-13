@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.Vector;
 
 import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
@@ -60,6 +61,11 @@ public class ChartData implements JSONizable {
 	private String yaxis_label_style;
 	private String yaxisright_label_style;
 	private final Collection<Element> elements = new Vector<Element>();
+	private boolean isDecimalSeparatorComma = false;
+	private boolean isFixedNumDecimalsForced = false;
+	private boolean isThousandSeparatorDisabled = false;
+
+	private Integer numDecimals;
 
 	/**
 	 * Creates a new chart data instance.
@@ -114,36 +120,45 @@ public class ChartData implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		final JSONObject json = new JSONObject();
-		if (this.title != null) json.put("title", this.title.buildJSON());
-		if (this.tooltip != null) json.put("tooltip", this.tooltip.buildJSON());
-		if (this.x_axis != null) json.put("x_axis", this.x_axis.buildJSON());
-		if (this.y_axis != null) json.put("y_axis", this.y_axis.buildJSON());
-		if (this.yaxis_label_style != null) json.put("y_label__label_style", new JSONString(this.yaxis_label_style));
-		if (this.y_axis_right != null) json.put("y_axis_right", this.y_axis_right.buildJSON());
-		if (this.yaxisright_label_style != null) json.put("y_label_2__label_style", new JSONString(this.yaxisright_label_style));
-		if (this.radar_axis != null) json.put("radar_axis", this.radar_axis.buildJSON());
-		if (this.y_legend != null) json.put("y_legend", this.y_legend.buildJSON());
-		if (this.y2_legend != null) json.put("y2_legend", this.y2_legend.buildJSON());
-		if (this.x_legend != null) json.put("x_legend", this.x_legend.buildJSON());
-		if (this.legend != null) json.put("legend", this.legend.buildJSON());
-		if (this.bg_colour != null) json.put("bg_colour", new JSONString(this.bg_colour));
-		if (this.elements == null) return json;
+		if (title != null) json.put("title", title.buildJSON());
+		if (tooltip != null) json.put("tooltip", tooltip.buildJSON());
+		if (x_axis != null) json.put("x_axis", x_axis.buildJSON());
+		if (y_axis != null) json.put("y_axis", y_axis.buildJSON());
+		if (yaxis_label_style != null) json.put("y_label__label_style", new JSONString(yaxis_label_style));
+		if (y_axis_right != null) json.put("y_axis_right", y_axis_right.buildJSON());
+		if (yaxisright_label_style != null) json.put("y_label_2__label_style", new JSONString(yaxisright_label_style));
+		if (radar_axis != null) json.put("radar_axis", radar_axis.buildJSON());
+		if (y_legend != null) json.put("y_legend", y_legend.buildJSON());
+		if (y2_legend != null) json.put("y2_legend", y2_legend.buildJSON());
+		if (x_legend != null) json.put("x_legend", x_legend.buildJSON());
+		if (legend != null) json.put("legend", legend.buildJSON());
+		if (bg_colour != null) json.put("bg_colour", new JSONString(bg_colour));
+		if (isDecimalSeparatorComma) json.put("is_decimal_separator_comma", new JSONNumber(1));
+		if (isFixedNumDecimalsForced) json.put("is_fixed_num_decimals_forced", new JSONNumber(1));
+		if (isThousandSeparatorDisabled) json.put("is_thousand_separator_disabled", new JSONNumber(1));
+		if (numDecimals != null) json.put("num_decimals", new JSONNumber(numDecimals));				
+		if (elements == null) return json;
 		final JSONArray ary = new JSONArray();
 		int index = 0;
-		for (final Element e : this.elements) {
+		for (final Element e : elements) {
 			ary.set(index++, e.buildJSON());
 		}
 		json.put("elements", ary);
 		return json;
 	}
 
+	private String createLabelStyle(Integer size, String colour) {
+		String label_style = size.toString();
+		if (colour != null && colour.length() > 0) label_style += "," + colour;
+		return label_style;
+	}
 	/**
 	 * Get the current background colour
 	 * 
 	 * @return String background colour
 	 */
 	public String getBackgroundColour() {
-		return this.bg_colour;
+		return bg_colour;
 	}
 
 	/**
@@ -152,36 +167,7 @@ public class ChartData implements JSONizable {
 	 * @return Element collection
 	 */
 	public Collection<Element> getElements() {
-		return this.elements;
-	}
-
-	/**
-	 * Get the current title Text
-	 * 
-	 * @return Text title
-	 */
-	public Text getTitle() {
-		return this.title;
-	}
-
-	/**
-	 * Get the current XAxis object
-	 * 
-	 * @return XAxis object
-	 */
-	public XAxis getXAxis() {
-		if (this.x_axis == null) this.x_axis = new XAxis();
-		return this.x_axis;
-	}
-
-	/**
-	 * Get the current RadarAxis object
-	 * 
-	 * @return RadarAxis object
-	 */
-	public RadarAxis getRadarAxis() {
-		if (this.radar_axis == null) this.radar_axis = new RadarAxis();
-		return this.radar_axis;
+		return elements;
 	}
 
 	/**
@@ -190,7 +176,52 @@ public class ChartData implements JSONizable {
 	 * @return Legend chart legend
 	 */
 	public Legend getLegend() {
-		return this.legend;
+		return legend;
+	}
+
+	/**
+	 * @return the numDecimals
+	 */
+	public Integer getNumDecimals() {
+		return numDecimals;
+	}
+
+	/**
+	 * Get the current RadarAxis object
+	 * 
+	 * @return RadarAxis object
+	 */
+	public RadarAxis getRadarAxis() {
+		if (radar_axis == null) radar_axis = new RadarAxis();
+		return radar_axis;
+	}
+
+	/**
+	 * Get the current title Text
+	 * 
+	 * @return Text title
+	 */
+	public Text getTitle() {
+		return title;
+	}
+
+	/**
+	 * Gets the tooltip.
+	 * 
+	 * @return the tooltip
+	 */
+	public ToolTip getTooltip() {
+		return tooltip;
+	}
+
+	/**
+	 * Get the current XAxis object
+	 * 
+	 * @return XAxis object
+	 */
+	public XAxis getXAxis() {
+		if (x_axis == null) x_axis = new XAxis();
+		return x_axis;
 	}
 
 	/**
@@ -199,7 +230,7 @@ public class ChartData implements JSONizable {
 	 * @return Text x legend
 	 */
 	public Text getXLegend() {
-		return this.x_legend;
+		return x_legend;
 	}
 
 	/**
@@ -208,8 +239,8 @@ public class ChartData implements JSONizable {
 	 * @return YAxis object
 	 */
 	public YAxis getYAxis() {
-		if (this.y_axis == null) this.y_axis = new YAxis();
-		return this.y_axis;
+		if (y_axis == null) y_axis = new YAxis();
+		return y_axis;
 	}
 
 	/**
@@ -218,7 +249,7 @@ public class ChartData implements JSONizable {
 	 * @return YAxis object
 	 */
 	public YAxis getYAxisRight() {
-		return this.y_axis_right;
+		return y_axis_right;
 	}
 
 	/**
@@ -227,7 +258,7 @@ public class ChartData implements JSONizable {
 	 * @return Text y legend
 	 */
 	public Text getYLegend() {
-		return this.y_legend;
+		return y_legend;
 	}
 
 	/**
@@ -237,6 +268,27 @@ public class ChartData implements JSONizable {
 	 */
 	public Text getYRightLegend() {
 		return this.y2_legend;
+	}
+
+	/**
+	 * @return the isDecimalSeparatorComma
+	 */
+	public boolean isDecimalSeparatorComma() {
+		return isDecimalSeparatorComma;
+	}
+
+	/**
+	 * @return the isFixedNumDecimalsForced
+	 */
+	public boolean isFixedNumDecimalsForced() {
+		return isFixedNumDecimalsForced;
+	}
+
+	/**
+	 * @return the isThousandSeparatorDisabled
+	 */
+	public boolean isThousandSeparatorDisabled() {
+		return isThousandSeparatorDisabled;
 	}
 
 	/**
@@ -262,6 +314,13 @@ public class ChartData implements JSONizable {
 	}
 
 	/**
+	 * @param isDecimalSeparatorComma the isDecimalSeparatorComma to set
+	 */
+	public void setDecimalSeparatorComma(boolean isDecimalSeparatorComma) {
+		this.isDecimalSeparatorComma = isDecimalSeparatorComma;
+	}
+
+	/**
 	 * Clears and then sets the list of elements to this collection
 	 * 
 	 * @param elements
@@ -273,53 +332,27 @@ public class ChartData implements JSONizable {
 	}
 
 	/**
-	 * Sets the y axis label style.
-	 * 
-	 * @param size
-	 *            the size
-	 * @param colour
-	 *            the label colour
+	 * @param isFixedNumDecimalsForced the isFixedNumDecimalsForced to set
 	 */
-	public void setYAxisLabelStyle(Integer size, String colour) {
-		yaxis_label_style = createLabelStyle(size, colour);
+	public void setFixedNumDecimalsForced(boolean isFixedNumDecimalsForced) {
+		this.isFixedNumDecimalsForced = isFixedNumDecimalsForced;
 	}
 
 	/**
-	 * Sets the y axis right label style.
+	 * Sets the chart legend
 	 * 
-	 * @param size
-	 *            the size
-	 * @param colour
-	 *            the label colour
+	 * @param legend
+	 *            Legend object
 	 */
-	public void setYAxisRightLabelStyle(Integer size, String colour) {
-		yaxisright_label_style = createLabelStyle(size, colour);
-	}
-
-	private String createLabelStyle(Integer size, String colour) {
-		String label_style = size.toString();
-		if (colour != null && colour.length() > 0) label_style += "," + colour;
-		return label_style;
+	public void setLegend(Legend legend) {
+		this.legend = legend;
 	}
 
 	/**
-	 * Sets the title to this Text object
-	 * 
-	 * @param title
-	 *            Text object
+	 * @param numDecimals the numDecimals to set
 	 */
-	public void setTitle(Text title) {
-		this.title = title;
-	}
-
-	/**
-	 * Sets the XAxis to this XAxis object
-	 * 
-	 * @param x_axis
-	 *            XAxis object
-	 */
-	public void setXAxis(XAxis x_axis) {
-		this.x_axis = x_axis;
+	public void setNumDecimals(Integer numDecimals) {
+		this.numDecimals = numDecimals;
 	}
 
 	/**
@@ -333,13 +366,40 @@ public class ChartData implements JSONizable {
 	}
 
 	/**
-	 * Sets the chart legend
-	 * 
-	 * @param legend
-	 *            Legend object
+	 * @param isThousandSeparatorDisabled the isThousandSeparatorDisabled to set
 	 */
-	public void setLegend(Legend legend) {
-		this.legend = legend;
+	public void setThousandSeparatorDisabled(boolean isThousandSeparatorDisabled) {
+		this.isThousandSeparatorDisabled = isThousandSeparatorDisabled;
+	}
+
+	/**
+	 * Sets the title to this Text object
+	 * 
+	 * @param title
+	 *            Text object
+	 */
+	public void setTitle(Text title) {
+		this.title = title;
+	}
+
+	/**
+	 * Sets the tooltip.
+	 * 
+	 * @param tooltip
+	 *            the new tooltip
+	 */
+	public void setTooltip(ToolTip tooltip) {
+		this.tooltip = tooltip;
+	}
+
+	/**
+	 * Sets the XAxis to this XAxis object
+	 * 
+	 * @param x_axis
+	 *            XAxis object
+	 */
+	public void setXAxis(XAxis x_axis) {
+		this.x_axis = x_axis;
 	}
 
 	/**
@@ -363,6 +423,18 @@ public class ChartData implements JSONizable {
 	}
 
 	/**
+	 * Sets the y axis label style.
+	 * 
+	 * @param size
+	 *            the size
+	 * @param colour
+	 *            the label colour
+	 */
+	public void setYAxisLabelStyle(Integer size, String colour) {
+		yaxis_label_style = createLabelStyle(size, colour);
+	}
+
+	/**
 	 * Sets the right YAxis to this YAxis object
 	 * 
 	 * @param y_axis_right
@@ -370,6 +442,18 @@ public class ChartData implements JSONizable {
 	 */
 	public void setYAxisRight(YAxis y_axis_right) {
 		this.y_axis_right = y_axis_right;
+	}
+
+	/**
+	 * Sets the y axis right label style.
+	 * 
+	 * @param size
+	 *            the size
+	 * @param colour
+	 *            the label colour
+	 */
+	public void setYAxisRightLabelStyle(Integer size, String colour) {
+		yaxisright_label_style = createLabelStyle(size, colour);
 	}
 
 	/**
@@ -390,25 +474,6 @@ public class ChartData implements JSONizable {
 	 */
 	public void setYRightLegend(Text y2_legend) {
 		this.y2_legend = y2_legend;
-	}
-
-	/**
-	 * Sets the tooltip.
-	 * 
-	 * @param tooltip
-	 *            the new tooltip
-	 */
-	public void setTooltip(ToolTip tooltip) {
-		this.tooltip = tooltip;
-	}
-
-	/**
-	 * Gets the tooltip.
-	 * 
-	 * @return the tooltip
-	 */
-	public ToolTip getTooltip() {
-		return tooltip;
 	}
 
 	/**

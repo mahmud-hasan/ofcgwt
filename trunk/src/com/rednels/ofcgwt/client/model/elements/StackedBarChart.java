@@ -35,36 +35,6 @@ import com.rednels.ofcgwt.client.model.JSONizable;
  */
 public class StackedBarChart extends Element implements JSONizable {
 
-	/** The Constant TYPE. */
-	private static final transient String TYPE = "bar_stack";
-
-	/**
-	 * Creates a new stacked bar chart.
-	 */
-	public StackedBarChart() {
-		super(TYPE);
-	}
-
-	/**
-	 * Adds the stack.
-	 * 
-	 * @param stacks
-	 *            the stacks
-	 */
-	public void addStack(Stack... stacks) {
-		addStack(Arrays.asList(stacks));
-	}
-
-	/**
-	 * Adds the stack.
-	 * 
-	 * @param stacks
-	 *            the stacks
-	 */
-	public void addStack(List<Stack> stacks) {
-		values.addAll(stacks);
-	}
-
 	/**
 	 * Base class for OFC stack bar chart stacks
 	 */
@@ -102,8 +72,8 @@ public class StackedBarChart extends Element implements JSONizable {
 		 * @param values
 		 *            the values
 		 */
-		public void addStackValues(StackValue... values) {
-			this.values.addAll(Arrays.asList(values));
+		public void addStackValues(List<StackValue> values) {
+			this.values.addAll(values);
 		}
 
 		/**
@@ -112,18 +82,8 @@ public class StackedBarChart extends Element implements JSONizable {
 		 * @param values
 		 *            the values
 		 */
-		public void addStackValues(List<StackValue> values) {
-			this.values.addAll(values);
-		}
-
-		/**
-		 * Adds the values.
-		 * 
-		 * @param numbers
-		 *            the numbers
-		 */
-		public void addValues(Number... numbers) {
-			this.values.addAll(Arrays.asList(numbers));
+		public void addStackValues(StackValue... values) {
+			this.values.addAll(Arrays.asList(values));
 		}
 
 		/**
@@ -137,12 +97,13 @@ public class StackedBarChart extends Element implements JSONizable {
 		}
 
 		/**
-		 * Gets the values.
+		 * Adds the values.
 		 * 
-		 * @return the values
+		 * @param numbers
+		 *            the numbers
 		 */
-		public List<Object> getValues() {
-			return this.values;
+		public void addValues(Number... numbers) {
+			this.values.addAll(Arrays.asList(numbers));
 		}
 
 		/*
@@ -159,6 +120,15 @@ public class StackedBarChart extends Element implements JSONizable {
 				if (o instanceof StackValue) ary.set(index++, ((StackValue) o).buildJSON());
 			}
 			return ary;
+		}
+
+		/**
+		 * Gets the values.
+		 * 
+		 * @return the values
+		 */
+		public List<Object> getValues() {
+			return this.values;
 		}
 	}
 
@@ -196,23 +166,16 @@ public class StackedBarChart extends Element implements JSONizable {
 			setColour(colour);
 		}
 
-		/**
-		 * Gets the value.
+		/*
+		 * (non-Javadoc)
 		 * 
-		 * @return the value
+		 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
 		 */
-		public Number getValue() {
-			return val;
-		}
-
-		/**
-		 * Sets the value.
-		 * 
-		 * @param val
-		 *            the new value
-		 */
-		public void setValue(Number val) {
-			this.val = val;
+		public JSONValue buildJSON() {
+			JSONObject json = new JSONObject();
+			if (val != null) json.put("val", new JSONNumber(val.doubleValue()));
+			if (colour != null) json.put("colour", new JSONString(colour));
+			return json;
 		}
 
 		/**
@@ -225,6 +188,15 @@ public class StackedBarChart extends Element implements JSONizable {
 		}
 
 		/**
+		 * Gets the value.
+		 * 
+		 * @return the value
+		 */
+		public Number getValue() {
+			return val;
+		}
+
+		/**
 		 * Sets the colour in HTML hex format (#ffffff)
 		 * 
 		 * @param colour
@@ -234,16 +206,44 @@ public class StackedBarChart extends Element implements JSONizable {
 			this.colour = colour;
 		}
 
-		/*
-		 * (non-Javadoc)
+		/**
+		 * Sets the value.
 		 * 
-		 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
+		 * @param val
+		 *            the new value
 		 */
-		public JSONValue buildJSON() {
-			JSONObject json = new JSONObject();
-			if (val != null) json.put("val", new JSONNumber(val.doubleValue()));
-			if (colour != null) json.put("colour", new JSONString(colour));
-			return json;
+		public void setValue(Number val) {
+			this.val = val;
 		}
+	}
+
+	/** The Constant TYPE. */
+	private static final transient String TYPE = "bar_stack";
+
+	/**
+	 * Creates a new stacked bar chart.
+	 */
+	public StackedBarChart() {
+		super(TYPE);
+	}
+
+	/**
+	 * Adds the stack.
+	 * 
+	 * @param stacks
+	 *            the stacks
+	 */
+	public void addStack(List<Stack> stacks) {
+		values.addAll(stacks);
+	}
+
+	/**
+	 * Adds the stack.
+	 * 
+	 * @param stacks
+	 *            the stacks
+	 */
+	public void addStack(Stack... stacks) {
+		addStack(Arrays.asList(stacks));
 	}
 }

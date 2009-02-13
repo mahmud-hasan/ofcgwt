@@ -30,91 +30,86 @@ import com.rednels.ofcgwt.client.model.JSONizable;
  */
 public class CylinderBarChart extends BarChart implements JSONizable {
 
-	/** The outline colour. */
-	private String outlineColour;
-
-	/** The alpha. */
-	private Float alpha;
-
 	/**
-	 * Creates a new cylinder bar chart with normal style.
-	 */
-	public CylinderBarChart() {
-		this(CylinderStyle.NORMAL);
-	}
-
-	/**
-	 * Creates a new cylinder bar chart.
+	 * Class for OFC filled bar cylinder bars, extends BarChart.Bar
 	 * 
-	 * @param style
-	 *            the style
+	 * @see com.rednels.ofcgwt.client.model.elements.BarChart.Bar
 	 */
-	public CylinderBarChart(CylinderStyle style) {
-		super(style.getStyle());
-	}
+	public static class Bar extends BarChart.Bar implements JSONizable {
 
-	/**
-	 * Creates a new cylinder bar chart.
-	 * 
-	 * @param colour
-	 *            the colour
-	 * @param outlineColour
-	 *            the outline colour
-	 */
-	public CylinderBarChart(String colour, String outlineColour) {
-		this();
-		setColour(colour);
-		setOutlineColour(outlineColour);
-	}
+		/** The outline colour. */
+		private String outlineColour;
 
-	/**
-	 * Gets the outline colour.
-	 * 
-	 * @return the outline colour
-	 */
-	public String getOutlineColour() {
-		return outlineColour;
-	}
+		/**
+		 * Creates a new bar.
+		 * 
+		 * @param top
+		 *            the top
+		 */
+		public Bar(Number top) {
+			super(top);
+		}
 
-	/**
-	 * Sets the outline colour in HTML hex format (#ffffff)
-	 * 
-	 * @param outlineColour
-	 *            the new outline colour
-	 */
-	public void setOutlineColour(String outlineColour) {
-		this.outlineColour = outlineColour;
-	}
+		/**
+		 * Creates a new bar.
+		 * 
+		 * @param top
+		 *            the top
+		 * @param bottom
+		 *            the bottom
+		 */
+		public Bar(Number top, Number bottom) {
+			super(top, bottom);
+		}
 
-	/**
-	 * Gets the alpha.
-	 * 
-	 * @return the alpha
-	 */
-	public Float getAlpha() {
-		return alpha;
-	}
+		/**
+		 * Creates a new bar.
+		 * 
+		 * @param top
+		 *            the top
+		 * @param bottom
+		 *            the bottom
+		 * @param colour
+		 *            the colour
+		 * @param outlineColour
+		 *            the outline colour
+		 */
+		public Bar(Number top, Number bottom, String colour, String outlineColour) {
+			super(top, bottom);
+			setColour(colour);
+			setOutlineColour(outlineColour);
+		}
 
-	/**
-	 * Sets the alpha.
-	 * 
-	 * @param alpha
-	 *            the alpha
-	 */
-	public void setAlpha(Float alpha) {
-		this.alpha = alpha;
-	}
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * com.rednels.ofcgwt.client.model.elements.BarChart.Bar.buildJSON()
+		 */
+		public JSONValue buildJSON() {
+			JSONObject json = (JSONObject) super.buildJSON();
+			if (outlineColour != null) json.put("outline-colour", new JSONString(outlineColour));
+			return json;
+		}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.rednels.ofcgwt.client.model.elements.BarChart.buildJSON()
-	 */
-	public JSONValue buildJSON() {
-		JSONObject json = (JSONObject) super.buildJSON();
-		if (alpha != null) json.put("alpha", new JSONNumber(alpha));
-		if (outlineColour != null) json.put("outline-colour", new JSONString(outlineColour));
-		return json;
+		/**
+		 * Gets the outline colour.
+		 * 
+		 * @return the outline colour
+		 */
+		public String getOutlineColour() {
+			return outlineColour;
+		}
+
+		/**
+		 * Sets the outline colour in HTML hex format (#ffffff)
+		 * 
+		 * @param outlineColour
+		 *            the new outline colour
+		 */
+		public void setOutlineColour(String outlineColour) {
+			this.outlineColour = outlineColour;
+		}
 	}
 
 	/**
@@ -159,85 +154,90 @@ public class CylinderBarChart extends BarChart implements JSONizable {
 		}
 	}
 
+	/** The outline colour. */
+	private String outlineColour;
+
+	/** The alpha. */
+	private Float alpha;
+
 	/**
-	 * Class for OFC filled bar cylinder bars, extends BarChart.Bar
-	 * 
-	 * @see com.rednels.ofcgwt.client.model.elements.BarChart.Bar
+	 * Creates a new cylinder bar chart with normal style.
 	 */
-	public static class Bar extends BarChart.Bar implements JSONizable {
+	public CylinderBarChart() {
+		this(CylinderStyle.NORMAL);
+	}
 
-		/** The outline colour. */
-		private String outlineColour;
+	/**
+	 * Creates a new cylinder bar chart.
+	 * 
+	 * @param style
+	 *            the style
+	 */
+	public CylinderBarChart(CylinderStyle style) {
+		super(style.getStyle());
+	}
 
-		/**
-		 * Creates a new bar.
-		 * 
-		 * @param top
-		 *            the top
-		 * @param bottom
-		 *            the bottom
-		 */
-		public Bar(Number top, Number bottom) {
-			super(top, bottom);
-		}
+	/**
+	 * Creates a new cylinder bar chart.
+	 * 
+	 * @param colour
+	 *            the colour
+	 * @param outlineColour
+	 *            the outline colour
+	 */
+	public CylinderBarChart(String colour, String outlineColour) {
+		this();
+		setColour(colour);
+		setOutlineColour(outlineColour);
+	}
 
-		/**
-		 * Creates a new bar.
-		 * 
-		 * @param top
-		 *            the top
-		 * @param bottom
-		 *            the bottom
-		 * @param colour
-		 *            the colour
-		 * @param outlineColour
-		 *            the outline colour
-		 */
-		public Bar(Number top, Number bottom, String colour, String outlineColour) {
-			super(top, bottom);
-			setColour(colour);
-			setOutlineColour(outlineColour);
-		}
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.rednels.ofcgwt.client.model.elements.BarChart.buildJSON()
+	 */
+	public JSONValue buildJSON() {
+		JSONObject json = (JSONObject) super.buildJSON();
+		if (alpha != null) json.put("alpha", new JSONNumber(alpha));
+		if (outlineColour != null) json.put("outline-colour", new JSONString(outlineColour));
+		return json;
+	}
 
-		/**
-		 * Creates a new bar.
-		 * 
-		 * @param top
-		 *            the top
-		 */
-		public Bar(Number top) {
-			super(top);
-		}
+	/**
+	 * Gets the alpha.
+	 * 
+	 * @return the alpha
+	 */
+	public Float getAlpha() {
+		return alpha;
+	}
 
-		/**
-		 * Sets the outline colour in HTML hex format (#ffffff)
-		 * 
-		 * @param outlineColour
-		 *            the new outline colour
-		 */
-		public void setOutlineColour(String outlineColour) {
-			this.outlineColour = outlineColour;
-		}
+	/**
+	 * Gets the outline colour.
+	 * 
+	 * @return the outline colour
+	 */
+	public String getOutlineColour() {
+		return outlineColour;
+	}
 
-		/**
-		 * Gets the outline colour.
-		 * 
-		 * @return the outline colour
-		 */
-		public String getOutlineColour() {
-			return outlineColour;
-		}
+	/**
+	 * Sets the alpha.
+	 * 
+	 * @param alpha
+	 *            the alpha
+	 */
+	public void setAlpha(Float alpha) {
+		this.alpha = alpha;
+	}
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * com.rednels.ofcgwt.client.model.elements.BarChart.Bar.buildJSON()
-		 */
-		public JSONValue buildJSON() {
-			JSONObject json = (JSONObject) super.buildJSON();
-			if (outlineColour != null) json.put("outline-colour", new JSONString(outlineColour));
-			return json;
-		}
+	/**
+	 * Sets the outline colour in HTML hex format (#ffffff)
+	 * 
+	 * @param outlineColour
+	 *            the new outline colour
+	 */
+	public void setOutlineColour(String outlineColour) {
+		this.outlineColour = outlineColour;
 	}
 }

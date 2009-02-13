@@ -49,23 +49,17 @@ public class Keys implements JSONizable {
 		setFontSize(fontsize);
 	}
 
-	/**
-	 * Gets the text.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return the text
+	 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
 	 */
-	public String getText() {
-		return text;
-	}
-
-	/**
-	 * Sets the text.
-	 * 
-	 * @param text
-	 *            the text
-	 */
-	public void setText(String text) {
-		this.text = text;
+	public JSONValue buildJSON() {
+		JSONObject json = new JSONObject();
+		if (text != null) json.put("text", new JSONString(text));
+		if (colour != null) json.put("colour", new JSONString(colour));
+		if (fontsize != null) json.put("font-size", new JSONNumber(fontsize));
+		return json;
 	}
 
 	/**
@@ -75,6 +69,24 @@ public class Keys implements JSONizable {
 	 */
 	public String getColour() {
 		return colour;
+	}
+
+	/**
+	 * Gets the font size.
+	 * 
+	 * @return the font size
+	 */
+	public Integer getFontSize() {
+		return fontsize;
+	}
+
+	/**
+	 * Gets the text.
+	 * 
+	 * @return the text
+	 */
+	public String getText() {
+		return text;
 	}
 
 	/**
@@ -88,15 +100,6 @@ public class Keys implements JSONizable {
 	}
 
 	/**
-	 * Gets the font size.
-	 * 
-	 * @return the font size
-	 */
-	public Integer getFontSize() {
-		return fontsize;
-	}
-
-	/**
 	 * Sets the font size.
 	 * 
 	 * @param fontsize
@@ -106,16 +109,13 @@ public class Keys implements JSONizable {
 		this.fontsize = fontsize;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Sets the text.
 	 * 
-	 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
+	 * @param text
+	 *            the text
 	 */
-	public JSONValue buildJSON() {
-		JSONObject json = new JSONObject();
-		if (text != null) json.put("text", new JSONString(text));
-		if (colour != null) json.put("colour", new JSONString(colour));
-		if (fontsize != null) json.put("font-size", new JSONNumber(fontsize));
-		return json;
+	public void setText(String text) {
+		this.text = text;
 	}
 }

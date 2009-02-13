@@ -283,6 +283,7 @@ public class Demo implements EntryPoint {
 		cd.setLegend(new Legend(Position.RIGHT, true));
 		PieChart pie = new PieChart();
 		pie.setAlpha(0.5f);
+		pie.setRadius(130);
 		pie.setNoLabels(true);
 		pie.setTooltip("#label# $#val#<br>#percent#");
 		pie.setAnimate(false);
@@ -316,6 +317,7 @@ public class Demo implements EntryPoint {
 	private ChartData getBarChartTransparentData() {
 		ChartData cd = new ChartData("Sales by Month 2006", "font-size: 16px; font-weight: bold; font-family: Verdana; color:#ff9900; text-align: center;");
 		cd.setBackgroundColour("-1");
+		cd.setDecimalSeparatorComma(true);
 		XAxis xa = new XAxis();
 		xa.setLabels("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D");
 		xa.getLabels().setColour("#ffff00");
@@ -323,8 +325,8 @@ public class Demo implements EntryPoint {
 		xa.setColour("#FF9900");
 		cd.setXAxis(xa);
 		YAxis ya = new YAxis();
-		ya.setSteps(16);
-		ya.setMax(160);
+		ya.setRange(5000, 20000);
+		ya.setSteps(1000);
 		ya.setGridColour("#aaaaff");
 		ya.setColour("#FF9900");
 		cd.setYAxisLabelStyle(10, "#ffff00");
@@ -333,7 +335,7 @@ public class Demo implements EntryPoint {
 		bchart.setColour("#000088");
 		bchart.setTooltip("$#val#");
 		for (int t = 0; t < 12; t++) {
-			bchart.addValues(Random.nextInt(50) + 50);
+			bchart.addValues(Random.nextInt(5000) + 10000);
 		}
 		cd.addElements(bchart);
 		return cd;

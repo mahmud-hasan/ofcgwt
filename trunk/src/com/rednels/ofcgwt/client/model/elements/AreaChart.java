@@ -30,99 +30,6 @@ import com.google.gwt.json.client.JSONValue;
  */
 public class AreaChart extends LineChart {
 
-	/** The fill alpha. */
-	private Float fillAlpha;
-
-	/** The fill colour. */
-	private String fillColour;
-
-	/** The animate. */
-	private Boolean loop;
-
-	/**
-	 * Creates a new area chart with AreaStyle.LINE style
-	 */
-	public AreaChart() {
-		this(AreaStyle.LINE);
-	}
-
-	/**
-	 * Creates a new area chart with provided style
-	 */
-	public AreaChart(AreaStyle style) {
-		super(style.getStyle());
-	}
-
-	/**
-	 * Gets the fill alpha.
-	 * 
-	 * @return the fill alpha
-	 */
-	public Float getFillAlpha() {
-		return fillAlpha;
-	}
-
-	/**
-	 * Sets the fill alpha.
-	 * 
-	 * @param fillAlpha
-	 *            the new fill alpha
-	 */
-	public void setFillAlpha(Float fillAlpha) {
-		this.fillAlpha = fillAlpha;
-	}
-
-	/**
-	 * Sets loop
-	 * 
-	 * @param loop
-	 *            true or false
-	 */
-	public void setLoop(boolean loop) {
-		this.loop = loop;
-	}
-
-	/**
-	 * Gets the loop value
-	 * 
-	 * @return true if loop is enabled
-	 */
-	public Boolean getLoop() {
-		return loop;
-	}
-
-	/**
-	 * Gets the fill colour.
-	 * 
-	 * @return the fill colour
-	 */
-	public String getFillColour() {
-		return fillColour;
-	}
-
-	/**
-	 * Sets the fill colour in HTML hex format (#ffffff)
-	 * 
-	 * @param colour
-	 *            the new fill colour
-	 */
-	public void setFillColour(String colour) {
-		this.fillColour = colour;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.rednels.ofcgwt.client.model.elements.LineChart.buildJSON()
-	 */
-	public JSONValue buildJSON() {
-		JSONObject json = (JSONObject) super.buildJSON();
-		if (fillAlpha != null) json.put("fill-alpha", new JSONNumber(fillAlpha));
-		if (fillColour != null) json.put("fill", new JSONString(fillColour));
-		if (loop != null) json.put("loop", JSONBoolean.getInstance(loop));
-		return json;
-	}
-
 	/**
 	 * Enumeration AreaStyle - used with AreaChart.
 	 */
@@ -155,5 +62,98 @@ public class AreaChart extends LineChart {
 		public String getStyle() {
 			return style;
 		}
+	}
+
+	/** The fill alpha. */
+	private Float fillAlpha;
+
+	/** The fill colour. */
+	private String fillColour;
+
+	/** The animate. */
+	private Boolean loop;
+
+	/**
+	 * Creates a new area chart with AreaStyle.LINE style
+	 */
+	public AreaChart() {
+		this(AreaStyle.LINE);
+	}
+
+	/**
+	 * Creates a new area chart with provided style
+	 */
+	public AreaChart(AreaStyle style) {
+		super(style.getStyle());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.rednels.ofcgwt.client.model.elements.LineChart.buildJSON()
+	 */
+	public JSONValue buildJSON() {
+		JSONObject json = (JSONObject) super.buildJSON();
+		if (fillAlpha != null) json.put("fill-alpha", new JSONNumber(fillAlpha));
+		if (fillColour != null) json.put("fill", new JSONString(fillColour));
+		if (loop != null) json.put("loop", JSONBoolean.getInstance(loop));
+		return json;
+	}
+
+	/**
+	 * Gets the fill alpha.
+	 * 
+	 * @return the fill alpha
+	 */
+	public Float getFillAlpha() {
+		return fillAlpha;
+	}
+
+	/**
+	 * Gets the fill colour.
+	 * 
+	 * @return the fill colour
+	 */
+	public String getFillColour() {
+		return fillColour;
+	}
+
+	/**
+	 * Gets the loop value
+	 * 
+	 * @return true if loop is enabled
+	 */
+	public Boolean getLoop() {
+		return loop;
+	}
+
+	/**
+	 * Sets the fill alpha.
+	 * 
+	 * @param fillAlpha
+	 *            the new fill alpha
+	 */
+	public void setFillAlpha(Float fillAlpha) {
+		this.fillAlpha = fillAlpha;
+	}
+
+	/**
+	 * Sets the fill colour in HTML hex format (#ffffff)
+	 * 
+	 * @param colour
+	 *            the new fill colour
+	 */
+	public void setFillColour(String colour) {
+		this.fillColour = colour;
+	}
+
+	/**
+	 * Sets loop
+	 * 
+	 * @param loop
+	 *            true or false
+	 */
+	public void setLoop(boolean loop) {
+		this.loop = loop;
 	}
 }

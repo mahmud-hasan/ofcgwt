@@ -33,6 +33,164 @@ import com.rednels.ofcgwt.client.model.JSONizable;
  */
 public class HorizontalBarChart extends Element implements JSONizable {
 
+	/**
+	 * Base class for OFC horizontal bar chart bars
+	 */
+	public static class Bar implements JSONizable {
+
+		/** The left. */
+		private Number left;
+
+		/** The right. */
+		private Number right;
+
+		/** The colour. */
+		private String colour;
+
+		/** The tooltip. */
+		private String tooltip;
+
+		/**
+		 * Creates a new bar.
+		 * 
+		 * @param right
+		 *            the right
+		 */
+		public Bar(Number right) {
+			this(null, right, null);
+		}
+
+		/**
+		 * Creates a new bar.
+		 * 
+		 * @param left
+		 *            the left
+		 * @param right
+		 *            the right
+		 */
+		public Bar(Number left, Number right) {
+			this(left, right, null);
+		}
+
+		/**
+		 * Creates a new bar.
+		 * 
+		 * @param left
+		 *            the left
+		 * @param right
+		 *            the right
+		 * @param colour
+		 *            the colour
+		 */
+		public Bar(Number left, Number right, String colour) {
+			setLeft(left);
+			setRight(right);
+			setColour(colour);
+		}
+
+		/**
+		 * Creates a new bar.
+		 * 
+		 * @param right
+		 *            the right
+		 * @param colour
+		 *            the colour
+		 */
+		public Bar(Number right, String colour) {
+			this(null, right, colour);
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
+		 */
+		public JSONValue buildJSON() {
+			JSONObject json = new JSONObject();
+			if (left != null) json.put("left", new JSONNumber(left.doubleValue()));
+			if (right != null) json.put("right", new JSONNumber(right.doubleValue()));
+			if (colour != null) json.put("colour", new JSONString(colour));
+			if (tooltip != null) json.put("tip", new JSONString(tooltip));
+			return json;
+		}
+
+		/**
+		 * Gets the colour.
+		 * 
+		 * @return the colour
+		 */
+		public String getColour() {
+			return colour;
+		}
+
+		/**
+		 * Gets the left.
+		 * 
+		 * @return the left
+		 */
+		public Number getLeft() {
+			return left;
+		}
+
+		/**
+		 * Gets the right.
+		 * 
+		 * @return the right
+		 */
+		public Number getRight() {
+			return right;
+		}
+
+		/**
+		 * Gets the tooltip.
+		 * 
+		 * @return the tooltip
+		 */
+		public String getTooltip() {
+			return tooltip;
+		}
+
+		/**
+		 * Sets the colour in HTML hex format (#ffffff)
+		 * 
+		 * @param colour
+		 *            the new colour
+		 */
+		public void setColour(String colour) {
+			this.colour = colour;
+		}
+
+		/**
+		 * Sets the left.
+		 * 
+		 * @param left
+		 *            the new left
+		 */
+		public void setLeft(Number left) {
+			this.left = left;
+		}
+
+		/**
+		 * Sets the right.
+		 * 
+		 * @param right
+		 *            the new right
+		 */
+		public void setRight(Number right) {
+			this.right = right;
+		}
+
+		/**
+		 * Sets the tooltip.
+		 * 
+		 * @param tooltip
+		 *            the new tooltip
+		 */
+		public void setTooltip(String tooltip) {
+			this.tooltip = tooltip;
+		}
+	}
+
 	/** The Constant TYPE. */
 	private static final transient String TYPE = "hbar";
 
@@ -47,22 +205,15 @@ public class HorizontalBarChart extends Element implements JSONizable {
 	}
 
 	/**
-	 * Gets the colour.
+	 * Adds the bar.
 	 * 
-	 * @return the colour
+	 * @param left
+	 *            the left
+	 * @param right
+	 *            the right
 	 */
-	public String getColour() {
-		return colour;
-	}
-
-	/**
-	 * Sets the colour in HTML hex format (#ffffff)
-	 * 
-	 * @param colour
-	 *            the new colour
-	 */
-	public void setColour(String colour) {
-		this.colour = colour;
+	public void addBar(Number left, Number right) {
+		addBars(new Bar(left, right));
 	}
 
 	/**
@@ -91,12 +242,8 @@ public class HorizontalBarChart extends Element implements JSONizable {
 	 * @param values
 	 *            the right side values
 	 */
-	public void addValues(Number... values) {
-		Bar[] v = new Bar[values.length];
-		for (int i = 0; i < values.length; ++i) {
-			v[i] = new Bar(values[i]);
-		}
-		addBars(v);
+	public void addValues(List<Number> values) {
+		getValues().addAll(values);
 	}
 
 	/**
@@ -105,20 +252,12 @@ public class HorizontalBarChart extends Element implements JSONizable {
 	 * @param values
 	 *            the right side values
 	 */
-	public void addValues(List<Number> values) {
-		getValues().addAll(values);
-	}
-
-	/**
-	 * Adds the bar.
-	 * 
-	 * @param left
-	 *            the left
-	 * @param right
-	 *            the right
-	 */
-	public void addBar(Number left, Number right) {
-		addBars(new Bar(left, right));
+	public void addValues(Number... values) {
+		Bar[] v = new Bar[values.length];
+		for (int i = 0; i < values.length; ++i) {
+			v[i] = new Bar(values[i]);
+		}
+		addBars(v);
 	}
 
 	/*
@@ -133,160 +272,21 @@ public class HorizontalBarChart extends Element implements JSONizable {
 	}
 
 	/**
-	 * Base class for OFC horizontal bar chart bars
+	 * Gets the colour.
+	 * 
+	 * @return the colour
 	 */
-	public static class Bar implements JSONizable {
+	public String getColour() {
+		return colour;
+	}
 
-		/** The left. */
-		private Number left;
-
-		/** The right. */
-		private Number right;
-
-		/** The colour. */
-		private String colour;
-
-		/** The tooltip. */
-		private String tooltip;
-
-		/**
-		 * Creates a new bar.
-		 * 
-		 * @param left
-		 *            the left
-		 * @param right
-		 *            the right
-		 * @param colour
-		 *            the colour
-		 */
-		public Bar(Number left, Number right, String colour) {
-			setLeft(left);
-			setRight(right);
-			setColour(colour);
-		}
-
-		/**
-		 * Creates a new bar.
-		 * 
-		 * @param left
-		 *            the left
-		 * @param right
-		 *            the right
-		 */
-		public Bar(Number left, Number right) {
-			this(left, right, null);
-		}
-
-		/**
-		 * Creates a new bar.
-		 * 
-		 * @param right
-		 *            the right
-		 * @param colour
-		 *            the colour
-		 */
-		public Bar(Number right, String colour) {
-			this(null, right, colour);
-		}
-
-		/**
-		 * Creates a new bar.
-		 * 
-		 * @param right
-		 *            the right
-		 */
-		public Bar(Number right) {
-			this(null, right, null);
-		}
-
-		/**
-		 * Gets the left.
-		 * 
-		 * @return the left
-		 */
-		public Number getLeft() {
-			return left;
-		}
-
-		/**
-		 * Sets the left.
-		 * 
-		 * @param left
-		 *            the new left
-		 */
-		public void setLeft(Number left) {
-			this.left = left;
-		}
-
-		/**
-		 * Gets the right.
-		 * 
-		 * @return the right
-		 */
-		public Number getRight() {
-			return right;
-		}
-
-		/**
-		 * Sets the right.
-		 * 
-		 * @param right
-		 *            the new right
-		 */
-		public void setRight(Number right) {
-			this.right = right;
-		}
-
-		/**
-		 * Gets the colour.
-		 * 
-		 * @return the colour
-		 */
-		public String getColour() {
-			return colour;
-		}
-
-		/**
-		 * Sets the colour in HTML hex format (#ffffff)
-		 * 
-		 * @param colour
-		 *            the new colour
-		 */
-		public void setColour(String colour) {
-			this.colour = colour;
-		}
-
-		/**
-		 * Gets the tooltip.
-		 * 
-		 * @return the tooltip
-		 */
-		public String getTooltip() {
-			return tooltip;
-		}
-
-		/**
-		 * Sets the tooltip.
-		 * 
-		 * @param tooltip
-		 *            the new tooltip
-		 */
-		public void setTooltip(String tooltip) {
-			this.tooltip = tooltip;
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
-		 */
-		public JSONValue buildJSON() {
-			JSONObject json = new JSONObject();
-			if (left != null) json.put("left", new JSONNumber(left.doubleValue()));
-			if (right != null) json.put("right", new JSONNumber(right.doubleValue()));
-			if (colour != null) json.put("colour", new JSONString(colour));
-			if (tooltip != null) json.put("tip", new JSONString(tooltip));
-			return json;
-		}
+	/**
+	 * Sets the colour in HTML hex format (#ffffff)
+	 * 
+	 * @param colour
+	 *            the new colour
+	 */
+	public void setColour(String colour) {
+		this.colour = colour;
 	}
 }

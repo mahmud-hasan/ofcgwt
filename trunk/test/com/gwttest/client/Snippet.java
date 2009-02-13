@@ -18,152 +18,99 @@ See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
 package com.gwttest.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Random;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.rednels.ofcgwt.client.ChartWidget;
 import com.rednels.ofcgwt.client.model.ChartData;
-import com.rednels.ofcgwt.client.model.axis.Label;
 import com.rednels.ofcgwt.client.model.axis.XAxis;
 import com.rednels.ofcgwt.client.model.axis.YAxis;
-import com.rednels.ofcgwt.client.model.elements.BarChart;
-import com.rednels.ofcgwt.client.model.elements.PieChart;
-import com.rednels.ofcgwt.client.model.elements.BarChart.BarStyle;
+import com.rednels.ofcgwt.client.model.elements.ScatterChart;
 
 /**
  * Example Test using OFCGWT
  */
-public class Snippet implements EntryPoint, ClickListener {
+public class Snippet implements EntryPoint {
+    public void onModuleLoad() {
 
-	// Instantiate the dialog box and show it.
-	MyDialog d = new MyDialog();
+        AbsolutePanel main = new AbsolutePanel();
+        DOM.setStyleAttribute(main.getElement(), "width", "100%");
+        DOM.setStyleAttribute(main.getElement(), "height", "100%");
+        DOM.setStyleAttribute(main.getElement(), "overflow", "auto");
 
-	public class TestPieChart {
-		ChartData c;
-		PieChart p;
+        // Create a blue panel with z-index at 200000
+        main.add(this.createSimplePanel(300, 250, 0, 0, "blue", 200000));
 
-		public TestPieChart() {
-			p = new PieChart();
-			p.setGradientFill(true);
-			p.setAnimate(false);
-			p.setAlphaHighlight(true);
-			p.setStartAngle(35);
-			p.setBorder(2);
-			p.setColours("#d01f3c", "#345678", "#356aa0", "#C79810");
-			p.setTooltip("#label#<br>$#val# (#percent#)");
-			p.setAlpha(0.6f);
-			p.setNoLabels(true);
+        // Create a blue panel with z-index at 100000
+        main.add(this.createSimplePanel(300, 250, 100, 100, "red", 100000));
 
-			c = new ChartData("Pie Chart");
-			c.addElements(p);
-			c.setBackgroundColour("-1");
-		}
+        RootPanel.get().add(main);
+}
 
-		public String getJSON() {
-			p.getValues().clear();
-			int n = Random.nextInt(6) + 2;
-			for (int i = 0; i < n; i++) {
-				p.addSlice(Random.nextInt(12) * 1000, "Slice #" + (i + 1));
-			}
-			return c.toString();
-		}
-	}
+/**
+ * Creates a SimplePanel which contains a GraphWidget.
+ *
+ * @param widthel
+ * @param height
+ * @param top
+ * @param left
+ * @param backgroundColor
+ * @param zIndex
+ * @return
+ */
+public SimplePanel createSimplePanel(int width, int height, int top, int left, String backgroundColor, int zIndex) {
+        SimplePanel simplePanel = new SimplePanel();
+        DOM.setStyleAttribute(simplePanel.getElement(), "position","absolute");
+        DOM.setStyleAttribute(simplePanel.getElement(), "width", width +"px");
+        DOM.setStyleAttribute(simplePanel.getElement(), "height", height +"px");
+        DOM.setStyleAttribute(simplePanel.getElement(), "top", top + "px");
+        DOM.setStyleAttribute(simplePanel.getElement(), "left", left +"px");
+        DOM.setStyleAttribute(simplePanel.getElement(), "backgroundColor", backgroundColor);
+        DOM.setIntStyleAttribute(simplePanel.getElement(), "zIndex",zIndex);
 
-	class TestBarChart {
-		ChartData c;
-		BarChart b;
+        // Add a GraphWidget into this panel with a z-index at panel's z-index + 1
+        simplePanel.add(this.createChartWidget(zIndex + 1));
 
-		public TestBarChart() {
-			c = new ChartData("Sales by Month 2006", "font-size: 14px; font-family: Verdana; color: #ffffff; text-align: center;");
-			c.setBackgroundColour("-1");
+        return simplePanel;
+}
 
-			XAxis xa = new XAxis();
-			xa.setColour("#ffffff");
-			xa.setGridColour("#888888");
-			Label lab = new Label("Q1");
-			lab.setColour("#ffffff");
-			xa.addLabels(lab);
-			lab = new Label("Q2");
-			lab.setColour("#ffffff");
-			xa.addLabels(lab);
-			lab = new Label("Q3");
-			lab.setColour("#ffffff");
-			xa.addLabels(lab);
-			lab = new Label("Q4");
-			lab.setColour("#ffffff");
-			xa.addLabels(lab);
-			c.setXAxis(xa);
+/**
+ * Creates a ChartWidget with the specified z-index.
+ *
+ * @param zIndex
+ * @return
+ */
+public ChartWidget createChartWidget(int zIndex) {
 
-			YAxis ya = new YAxis();
-			ya.setColour("#ffffff");
-			ya.setGridColour("#888888");
-			ya.setRange(0, 100);
-			ya.setSteps(5);
-			c.setYAxisLabelStyle(12, "#ffffff");
-			c.setYAxis(ya);
+        /* Create a ChartWidget */
+        ChartWidget chartWidget = new ChartWidget();
+        ChartData chartData = new ChartData();
+        XAxis x_axis = new XAxis();
+        x_axis.setRange(0, 50, 10);
+        chartData.setXAxis(x_axis);
+        YAxis y_axis = new YAxis();
+        y_axis.setRange(0, 5, 1);
+        chartData.setYAxis(y_axis);
+        // Add a fake scatter chart
+        ScatterChart sc = new ScatterChart(ScatterChart.ScatterStyle.LINE);
+        for (int i = 0; i < 50; i++) {
+                // Generate a random value
+                double randomValue = Random.nextDouble() * 5;
+                // Add the generated value in the chart
+                sc.addPoint(i, randomValue);
+        }
+        chartData.addElements(sc);
 
-			b = new BarChart(BarStyle.NORMAL);
-			b.setTooltip("$#val#");
-			c.addElements(b);
-		}
+        chartWidget.setJsonData(chartData.toString());
+        DOM.setStyleAttribute(chartWidget.getElement(), "position","absolute");
+        DOM.setStyleAttribute(chartWidget.getElement(), "width", "80%");
+        DOM.setStyleAttribute(chartWidget.getElement(), "height", "80%");
+        DOM.setStyleAttribute(chartWidget.getElement(), "top", "10%");
+        DOM.setStyleAttribute(chartWidget.getElement(), "left", "10%");
+        DOM.setIntStyleAttribute(chartWidget.getElement(), "zIndex",zIndex);
 
-		public String getJSON() {
-			b.getValues().clear();
-			for (int t = 0; t < 4; t++) {
-				b.addValues(Random.nextInt(50) + 50);
-			}
-			return c.toString();
-		}
-	}
-
-	class MyDialog extends DialogBox {
-
-		public MyDialog() {
-			setText("My First Dialog");
-
-			VerticalPanel vp = new VerticalPanel();
-
-			// DOM.setStyleAttribute(vp.getElement(), "border",
-			// "6px solid black");
-			// DOM.setStyleAttribute(vp.getElement(),
-			// "backgroundColor","#000000");
-
-			vp.setStylePrimaryName("chartPanel");
-
-			Button ok = new Button("OK");
-			ok.addClickListener(new ClickListener() {
-				public void onClick(Widget sender) {
-					MyDialog.this.hide();
-				}
-			});
-			vp.add(ok);
-			vp.setCellHorizontalAlignment(ok, HasHorizontalAlignment.ALIGN_CENTER);
-
-			// final TestPieChart tpc = new TestPieChart();
-			final TestBarChart tpc = new TestBarChart();
-			final ChartWidget chart = new ChartWidget();
-			chart.setJsonData(tpc.getJSON());
-			chart.setSize("300px", "300px");
-
-			vp.add(chart);
-
-			setWidget(vp);
-		}
-	}
-
-	public void onModuleLoad() {
-		Button b = new Button("Click me");
-		b.addClickListener(this);
-
-		RootPanel.get().add(b);
-	}
-
-	public void onClick(Widget sender) {
-		d.show();
-	}
+        return chartWidget;
+} 
 }

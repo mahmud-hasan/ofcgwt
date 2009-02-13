@@ -93,6 +93,7 @@ public class Events implements EntryPoint {
 		pie.setTooltip("#label# $#val#<br>#percent#");
 		pie.setAnimate(false);
 		pie.setStartAngle(33);
+		pie.setRadius(130);
 		pie.setColours(getColours());
 		Slice s1 = new Slice(33400, "AU");
 		s1.addOnClickListener(chart, new IOnClickListener() {
@@ -111,7 +112,7 @@ public class Events implements EntryPoint {
 		Slice s3 = new Slice(63500, "EU");
 		s3.addOnClickListener(chart, new IOnClickListener() {
 			public void handleOnClickEvent() {
-				chart.setJsonData(getPieChartUKLayer2().toString());
+				chart.setJsonData(getPieChartEULayer2().toString());
 			}
 		});
 		pie.addSlices(s3);
@@ -169,8 +170,9 @@ public class Events implements EntryPoint {
 		return cd;
 	}
 
-	private ChartData getPieChartUKLayer2() {
+	private ChartData getPieChartEULayer2() {
 		ChartData cd = new ChartData("Sales in Europe - Layer 2", "font-size: 14px; font-family: Verdana; text-align: center;");
+		cd.setDecimalSeparatorComma(true);
 		cd.setBackgroundColour("#EEEEFF");
 		PieChart pie = new PieChart();
 		pie.setTooltip("#label# $#val#<br>#percent#");
@@ -186,8 +188,9 @@ public class Events implements EntryPoint {
 		pie.addSlices(new Slice(6000, "RU"));
 		pie.addSlices(new Slice(8000, "LT"));
 		cd.addElements(pie);
-		chartLabel.setHTML("This graph shows sales in each state of the UK.<p>Click reset to go back up again.");
+		chartLabel.setHTML("This graph shows sales in each country of Europe.<p>Click reset to go back up again.");
 		resetBut.setEnabled(true);
+		System.out.println(cd.toString());
 		return cd;
 	}
 
