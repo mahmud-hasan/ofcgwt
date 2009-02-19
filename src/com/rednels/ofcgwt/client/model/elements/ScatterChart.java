@@ -44,6 +44,9 @@ public class ScatterChart extends Element implements JSONizable {
 		/** The y. */
 		private Number y;
 
+		/** The tooltip. */
+		private String tooltip;
+
 		/**
 		 * Creates a new point.
 		 * 
@@ -66,6 +69,7 @@ public class ScatterChart extends Element implements JSONizable {
 			JSONObject json = new JSONObject();
 			if (x != null) json.put("x", new JSONNumber(x.doubleValue()));
 			if (y != null) json.put("y", new JSONNumber(y.doubleValue()));
+			if (tooltip != null) json.put("tip", new JSONString(tooltip));
 			return json;
 		}
 
@@ -88,6 +92,15 @@ public class ScatterChart extends Element implements JSONizable {
 		}
 
 		/**
+		 * Gets the tooltip.
+		 * 
+		 * @return the tooltip
+		 */
+		public String getTooltip() {
+			return tooltip;
+		}
+
+		/**
 		 * Sets the x.
 		 * 
 		 * @param x
@@ -105,6 +118,16 @@ public class ScatterChart extends Element implements JSONizable {
 		 */
 		public void setY(Number y) {
 			this.y = y;
+		}
+
+		/**
+		 * Sets the tooltip.
+		 * 
+		 * @param tooltip
+		 *            the new tooltip
+		 */
+		public void setTooltip(String tooltip) {
+			this.tooltip = tooltip;
 		}
 	}
 

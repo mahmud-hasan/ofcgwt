@@ -51,6 +51,9 @@ public class LineChart extends Element implements JSONizable {
 
 		/** The colour. */
 		private String colour;
+		
+		/** The tooltip. */
+		private String tooltip;
 
 		/** The onClick. */
 		private String onClick;
@@ -120,6 +123,7 @@ public class LineChart extends Element implements JSONizable {
 			if (dotSize != null) json.put("dot-size", new JSONNumber(dotSize.doubleValue()));
 			if (value != null) json.put("value", new JSONNumber(value.doubleValue()));
 			if (colour != null) json.put("colour", new JSONString(colour));
+			if (tooltip != null) json.put("tip", new JSONString(tooltip));
 			if (onClick != null) json.put("on-click", new JSONString(onClick));
 			return json;
 		}
@@ -158,6 +162,15 @@ public class LineChart extends Element implements JSONizable {
 		 */
 		public String getOnClick() {
 			return onClick;
+		}
+
+		/**
+		 * Gets the tooltip.
+		 * 
+		 * @return the tooltip
+		 */
+		public String getTooltip() {
+			return tooltip;
 		}
 
 		/**
@@ -210,6 +223,16 @@ public class LineChart extends Element implements JSONizable {
 		 */
 		public void setOnClick(String onClick) {
 			this.onClick = onClick;
+		}
+
+		/**
+		 * Sets the tooltip.
+		 * 
+		 * @param tooltip
+		 *            the new tooltip
+		 */
+		public void setTooltip(String tooltip) {
+			this.tooltip = tooltip;
 		}
 
 		/**
