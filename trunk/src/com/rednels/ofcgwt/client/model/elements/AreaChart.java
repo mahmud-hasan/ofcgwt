@@ -24,67 +24,19 @@ import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 
 /**
- * Class for an OFC area chart that extends LineChart
- * 
- * @see com.rednels.ofcgwt.client.model.elements.LineChart
+ * OFC area chart 
  */
 public class AreaChart extends LineChart {
 
-	/**
-	 * Enumeration AreaStyle - used with AreaChart.
-	 */
-	public static enum AreaStyle {
-
-		/** NORMAL */
-		LINE("area_line"),
-
-		/** HOLLOW */
-		HOLLOW("area_hollow");
-
-		/** The style. */
-		private String style;
-
-		/**
-		 * Creates a new area style.
-		 * 
-		 * @param style
-		 *            the style
-		 */
-		AreaStyle(String style) {
-			this.style = style;
-		}
-
-		/**
-		 * Gets the style.
-		 * 
-		 * @return the style
-		 */
-		public String getStyle() {
-			return style;
-		}
-	}
-
-	/** The fill alpha. */
 	private Float fillAlpha;
-
-	/** The fill colour. */
 	private String fillColour;
-
-	/** The animate. */
 	private Boolean loop;
 
 	/**
 	 * Creates a new area chart with AreaStyle.LINE style
 	 */
 	public AreaChart() {
-		this(AreaStyle.LINE);
-	}
-
-	/**
-	 * Creates a new area chart with provided style
-	 */
-	public AreaChart(AreaStyle style) {
-		super(style.getStyle());
+		super("area");
 	}
 
 	/*

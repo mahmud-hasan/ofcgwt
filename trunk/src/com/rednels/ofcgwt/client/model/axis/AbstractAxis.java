@@ -24,7 +24,7 @@ import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
- * Base abstract class for an OFC axis
+ * Abstract class for an OFC axis
  */
 public abstract class AbstractAxis implements JSONizable {
 	private Integer stroke;

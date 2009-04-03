@@ -24,20 +24,15 @@ import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
- * Class for an OFC filled bar chart (outlined) that extends BarChart
- * 
- * @see com.rednels.ofcgwt.client.model.elements.BarChart
+ * OFC cylinder bar chart
  */
 public class CylinderBarChart extends BarChart implements JSONizable {
 
 	/**
-	 * Class for OFC filled bar cylinder bars, extends BarChart.Bar
-	 * 
-	 * @see com.rednels.ofcgwt.client.model.elements.BarChart.Bar
+	 * OFC bar chart bars
 	 */
 	public static class Bar extends BarChart.Bar implements JSONizable {
 
-		/** The outline colour. */
 		private String outlineColour;
 
 		/**
@@ -112,52 +107,23 @@ public class CylinderBarChart extends BarChart implements JSONizable {
 		}
 	}
 
-	/**
-	 * Enumeration CylinderStyle - used with CylinderChart.
-	 */
 	public static enum CylinderStyle {
-		/** NORMAL */
-		NORMAL("bar_cylinder"),
+		
+		NORMAL("bar_cylinder"),	OUTLINE("bar_cylinder_outline"), 
+		GLASS("bar_round_glass"), ROUND("bar_round"), DOME("bar_dome");
 
-		/** OUTLINE */
-		OUTLINE("bar_cylinder_outline"),
-
-		/** ROUND GLASS */
-		GLASS("bar_round_glass"),
-
-		/** ROUND */
-		ROUND("bar_round"),
-
-		/** DOME */
-		DOME("bar_dome");
-
-		/** The style. */
 		private String style;
 
-		/**
-		 * Creates a new cylinder style.
-		 * 
-		 * @param style
-		 *            the style
-		 */
 		CylinderStyle(String style) {
 			this.style = style;
 		}
-
-		/**
-		 * Gets the style.
-		 * 
-		 * @return the style
-		 */
+		
 		public String getStyle() {
 			return style;
 		}
 	}
 
-	/** The outline colour. */
 	private String outlineColour;
-
-	/** The alpha. */
 	private Float alpha;
 
 	/**

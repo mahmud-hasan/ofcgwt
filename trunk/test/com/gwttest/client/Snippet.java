@@ -103,7 +103,7 @@ public ChartWidget createChartWidget(int zIndex) {
         }
         chartData.addElements(sc);
 
-        chartWidget.setJsonData(chartData.toString());
+        chartWidget.setChartData(chartData);
         DOM.setStyleAttribute(chartWidget.getElement(), "position","absolute");
         DOM.setStyleAttribute(chartWidget.getElement(), "width", "80%");
         DOM.setStyleAttribute(chartWidget.getElement(), "height", "80%");

@@ -2,9 +2,7 @@
   	<replace-with class="com.rednels.ofcgwt.client.CacheFixImplIE">
     	<when-type-is class="com.rednels.ofcgwt.client.CacheFixImpl" />
     	<when-property-is name="user.agent" value="ie6" />
-  	</replace-with>
-  	
+  	</replace-with>  	
     <inherits name='com.google.gwt.json.JSON'/>
-    <script src="ofcgwt/com_rednels_ofcgwt_callback.js"/>
 	<script src="ofcgwt/swfobject.js"/>
 </module>

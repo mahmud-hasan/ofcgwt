@@ -17,56 +17,38 @@ See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
  */
 package com.rednels.ofcgwt.client.model;
 
+import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 
 /**
- * Base class for an OFC tooltip element
+ * OFC tooltip 
  */
 public class ToolTip implements JSONizable {
-	/**
-	 * Enumeration MouseStyle - used with tooltip.
-	 */
+	
 	public static enum MouseStyle {
 
-		/** CLOSEST */
-		CLOSEST(0),
+		CLOSEST(0), FOLLOW(1), NORMAL(2);
 
-		/** FOLLOW */
-		FOLLOW(1),
-
-		/** NORMAL */
-		NORMAL(2);
-
-		/** The style. */
 		private int style;
 
-		/**
-		 * Creates a new mouse style.
-		 * 
-		 * @param style
-		 *            the style
-		 */
 		MouseStyle(int style) {
 			this.style = style;
 		}
 
-		/**
-		 * Gets the style.
-		 * 
-		 * @return the style
-		 */
 		public int getStyle() {
 			return style;
 		}
 	}
+	
 	private String titlestyle;
 	private String bodystyle;
 	private String colour;
 	private String backgroundcolour;
 	private MouseStyle mouse;
+	private Boolean shadow;
 
 	private Integer stroke;
 
@@ -98,6 +80,7 @@ public class ToolTip implements JSONizable {
 		if (backgroundcolour != null) json.put("background", new JSONString(backgroundcolour));
 		if (mouse != null) json.put("mouse", new JSONNumber(mouse.getStyle()));
 		if (stroke != null) json.put("stroke", new JSONNumber(stroke));
+		if (shadow != null) json.put("shadow", JSONBoolean.getInstance(shadow));
 		return json;
 	}
 
@@ -135,6 +118,15 @@ public class ToolTip implements JSONizable {
 	 */
 	public MouseStyle getMouse() {
 		return mouse;
+	}
+
+	/**
+	 * Gets the shadow.
+	 * 
+	 * @return the shadow
+	 */
+	public Boolean getShadow() {
+		return shadow;
 	}
 
 	/**
@@ -193,6 +185,16 @@ public class ToolTip implements JSONizable {
 	 */
 	public void setMouse(MouseStyle mouse) {
 		this.mouse = mouse;
+	}
+
+	/**
+	 * Sets the shadow.
+	 * 
+	 * @param shadow
+	 *            the shadow
+	 */
+	public void setShadow(Boolean shadow) {
+		this.shadow = shadow;
 	}
 
 	/**

@@ -29,16 +29,11 @@ import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
- * Class for an OFC y-axis that extends AbstractAxis
- * 
- * @see com.rednels.ofcgwt.client.model.axis.AbstractAxis
+ * OFC y-axis 
  */
 public class YAxis extends AbstractAxis implements JSONizable {
 
-	/** The tick length. */
 	private Integer tickLength;
-
-	/** The labels. */
 	private List<String> labels;
 
 	/**

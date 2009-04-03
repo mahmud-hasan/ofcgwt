@@ -18,17 +18,18 @@ See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
 package com.gwttest.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 import com.rednels.ofcgwt.client.ChartWidget;
-import com.rednels.ofcgwt.client.IOnClickListener;
+import com.rednels.ofcgwt.client.event.ChartClickEvent;
+import com.rednels.ofcgwt.client.event.ChartClickHandler;
 import com.rednels.ofcgwt.client.model.ChartData;
 import com.rednels.ofcgwt.client.model.elements.PieChart;
 import com.rednels.ofcgwt.client.model.elements.PieChart.Slice;
@@ -70,15 +71,17 @@ public class Events implements EntryPoint {
 		VerticalPanel chartlist = new VerticalPanel();
 		chartlist.setSpacing(5);
 
-		resetBut = new Button("Reset", new ClickListener() {
-			public void onClick(Widget sender) {
-				chart.setJsonData(getPieChartLayer1().toString());
+		resetBut = new Button("Reset", new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				chart.setChartData(getPieChartLayer1());				
 			}
 		});
 		chartlist.add(chartLabel);
 		chartlist.add(resetBut);
 
-		chart.setJsonData(getPieChartLayer1().toString());
+		ChartData cd = getPieChartLayer1();
+		chart.setChartData(cd);
 
 		hp.add(chartlist);
 		hp.setCellWidth(chartlist, "300");
@@ -96,23 +99,26 @@ public class Events implements EntryPoint {
 		pie.setRadius(130);
 		pie.setColours(getColours());
 		Slice s1 = new Slice(33400, "AU");
-		s1.addOnClickListener(chart, new IOnClickListener() {
-			public void handleOnClickEvent() {
-				chart.setJsonData(getPieChartAULayer2().toString());
+		s1.addChartClickHandler( new ChartClickHandler() {
+			@Override
+			public void onClick(ChartClickEvent event) {
+				chart.setChartData(getPieChartAULayer2());				
 			}
 		});
 		pie.addSlices(s1);
 		Slice s2 = new Slice(75000, "USA");
-		s2.addOnClickListener(chart, new IOnClickListener() {
-			public void handleOnClickEvent() {
-				chart.setJsonData(getPieChartUSLayer2().toString());
+		s2.addChartClickHandler( new ChartClickHandler() {
+			@Override
+			public void onClick(ChartClickEvent event) {
+				chart.setChartData(getPieChartUSLayer2());
 			}
 		});
 		pie.addSlices(s2);
 		Slice s3 = new Slice(63500, "EU");
-		s3.addOnClickListener(chart, new IOnClickListener() {
-			public void handleOnClickEvent() {
-				chart.setJsonData(getPieChartEULayer2().toString());
+		s3.addChartClickHandler( new ChartClickHandler() {
+			@Override
+			public void onClick(ChartClickEvent event) {
+				chart.setChartData(getPieChartEULayer2());
 			}
 		});
 		pie.addSlices(s3);
@@ -190,7 +196,6 @@ public class Events implements EntryPoint {
 		cd.addElements(pie);
 		chartLabel.setHTML("This graph shows sales in each country of Europe.<p>Click reset to go back up again.");
 		resetBut.setEnabled(true);
-		System.out.println(cd.toString());
 		return cd;
 	}
 

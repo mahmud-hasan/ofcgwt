@@ -27,38 +27,20 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
-import com.rednels.ofcgwt.client.IChartData;
-import com.rednels.ofcgwt.client.IOnClickListener;
 import com.rednels.ofcgwt.client.model.JSONizable;
 import com.rednels.ofcgwt.client.model.axis.Keys;
 
 /**
- * Base abstract class for OFC elements
+ * Base abstract class for OFC chart elements
  */
 public abstract class Element implements JSONizable {
 
-	/** The type. */
 	private final String type;
-
-	/** The text. */
 	private String text;
-
-	/** The font size. */
 	private Integer fontSize;
-
-	/** The tooltip. */
 	private String tooltip;
-
-	/** The onClick. */
 	private String onClick;
-
-	/** The keyOnClick. */
-	private String keyOnClick;
-
-	/** The keys. */
 	private List<Keys> keys = new ArrayList<Keys>();
-
-	/** The values. */
 	protected List<Object> values = new ArrayList<Object>();
 
 	/**
@@ -71,34 +53,9 @@ public abstract class Element implements JSONizable {
 		this.type = type;
 	}
 
-	/**
-	 * Adds an onClick event. Requires an ChartWidget to register the event
-	 * with.
-	 * 
-	 * @param chart
-	 *            the IChartData
-	 * @param listener
-	 *            the onClick Listener
-	 */
-	public void addKeyOnClickListener(IChartData chart, IOnClickListener listener) {
-		this.keyOnClick = chart.addOnClickListener(listener);
-	}
 
 	public void addNull() {
 		values.add(null);
-	}
-
-	/**
-	 * Adds an onClick event. Requires an ChartWidget to register the event
-	 * with.
-	 * 
-	 * @param chart
-	 *            the IChartData
-	 * @param listener
-	 *            the onClick Listener
-	 */
-	public void addOnClickListener(IChartData chart, IOnClickListener listener) {
-		this.onClick = chart.addOnClickListener(listener);
 	}
 
 	/*
@@ -113,7 +70,6 @@ public abstract class Element implements JSONizable {
 		if (fontSize != null) json.put("font-size", new JSONNumber(fontSize));
 		if (tooltip != null) json.put("tip", new JSONString(tooltip));
 		if (onClick != null) json.put("on-click", new JSONString(onClick));
-		if (keyOnClick != null) json.put("key-on-click", new JSONString(keyOnClick));
 
 		JSONArray ary = new JSONArray();
 		int index = 0;
@@ -142,15 +98,6 @@ public abstract class Element implements JSONizable {
 	 */
 	public Integer getFontSize() {
 		return fontSize;
-	}
-
-	/**
-	 * Gets the keyOnClick.
-	 * 
-	 * @return the keyOnClick
-	 */
-	public String getKeyOnClick() {
-		return keyOnClick;
 	}
 
 	/**
@@ -209,16 +156,6 @@ public abstract class Element implements JSONizable {
 	}
 
 	/**
-	 * Sets the keyOnClick.
-	 * 
-	 * @param keyOnClick
-	 *            the keyOnClick javascript method or url
-	 */
-	public void setKeyOnClick(String keyOnClick) {
-		this.keyOnClick = keyOnClick;
-	}
-
-	/**
 	 * Sets the stack keys.
 	 * 
 	 * @param keys
@@ -237,17 +174,6 @@ public abstract class Element implements JSONizable {
 	public void setKeys(List<Keys> keys) {
 		this.keys.clear();
 		this.keys.addAll(keys);
-	}
-
-	/**
-	 * If true, sets keyOnClick to toggle visibility
-	 * 
-	 * @param toggleKeyOnClick
-	 *            boolean
-	 */
-	public void setKeyToggleOnClick(boolean toggleKeyOnClick) {
-		if (toggleKeyOnClick) this.keyOnClick = "toggle-visibility";
-		else this.keyOnClick = null;
 	}
 
 	/**

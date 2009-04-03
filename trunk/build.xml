@@ -2,19 +2,19 @@
 <project default="gwt.compile" basedir=".">
 	<property environment="env" />
 	<property name="ofcgwt.src" value="src" />
-	<property name="ofcgwt.release" value="ofcgwt-1.3.0" />
+	<property name="ofcgwt.release" value="ofcgwt-2.0.0" />
 	<property name="ofcgwt.target" location="build" />
-	<property name="gwt.compiler.class" value="com.google.gwt.dev.GWTCompiler" />
-	<property name="gwt.output.dir" value="www" />
+	<property name="gwt.compiler.class" value="com.google.gwt.dev.Compiler" />
+	<property name="gwt.war.dir" value="war" />
 	<property name="gwt.output.style" value="OBF" />
 	<property name="javac.out" location="${ofcgwt.target}/bin" />
-	<fail unless="env.GWT_HOME_1_5">GWT_HOME_1_5 environment variable is not
+	<fail unless="env.GWT_HOME_1_6">GWT_HOME_1_6 environment variable is not
 		defined</fail>
 	<path id="project.class.path">
 		<pathelement path="${java.class.path}/" />
 		<pathelement path="${classpath}" />
-		<pathelement path="${env.GWT_HOME_1_5}/gwt-user.jar" />
-		<pathelement path="${env.GWT_HOME_1_5}/gwt-dev-windows.jar" />
+		<pathelement path="${env.GWT_HOME_1_6}/gwt-user.jar" />
+		<pathelement path="${env.GWT_HOME_1_6}/gwt-dev-windows.jar" />
 		<pathelement path="src" />
 		<pathelement path="test" />
 	</path>
@@ -58,19 +58,19 @@
 		</zip>
 	</target>
 	<target name="gwt.compile" depends="package" description="Compile to Javascript">		
-		<mkdir dir="${gwt.output.dir}" />
+		<mkdir dir="${gwt.war.dir}" />
 		<java classname="${gwt.compiler.class}" classpathref="project.class.path"
 			maxmemory="512M" fork="true" failonerror="true" dir=".">
-			<arg value="-out" />
-			<arg value="${gwt.output.dir}" />
+			<arg value="-war" />
+			<arg value="${gwt.war.dir}" />
 			<arg value="-style" />
 			<arg value="${gwt.output.style}" />
 			<arg value="com.gwttest.Demo" />
 		</java>
 		<java classname="${gwt.compiler.class}" classpathref="project.class.path"
 			maxmemory="512M" fork="true" failonerror="true" dir=".">
-			<arg value="-out" />
-			<arg value="${gwt.output.dir}" />
+			<arg value="-war" />
+			<arg value="${gwt.war.dir}" />
 			<arg value="-style" />
 			<arg value="${gwt.output.style}" />
 			<arg value="com.gwttest.Events" />

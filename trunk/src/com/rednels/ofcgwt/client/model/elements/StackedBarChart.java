@@ -26,21 +26,19 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
+import com.rednels.ofcgwt.client.event.EventElement;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
- * Class for an OFC stacked bar chart that extends Element
- * 
- * @see com.rednels.ofcgwt.client.model.elements.Element
+ * OFC stacked bar chart 
  */
 public class StackedBarChart extends Element implements JSONizable {
 
 	/**
-	 * Base class for OFC stack bar chart stacks
+	 * OFC stack bar 
 	 */
 	public static class Stack implements JSONizable {
 
-		/** The values. */
 		private transient ArrayList<Object> values;
 
 		/**
@@ -133,14 +131,11 @@ public class StackedBarChart extends Element implements JSONizable {
 	}
 
 	/**
-	 * Base class for OFC stack bar chart values
+	 * OFC stack bar chart values
 	 */
-	public static class StackValue implements JSONizable {
+	public static class StackValue extends EventElement implements JSONizable {
 
-		/** The val. */
 		private Number val;
-
-		/** The colour. */
 		private String colour;
 
 		/**
@@ -217,14 +212,11 @@ public class StackedBarChart extends Element implements JSONizable {
 		}
 	}
 
-	/** The Constant TYPE. */
-	private static final transient String TYPE = "bar_stack";
-
 	/**
 	 * Creates a new stacked bar chart.
 	 */
 	public StackedBarChart() {
-		super(TYPE);
+		super("bar_stack");
 	}
 
 	/**

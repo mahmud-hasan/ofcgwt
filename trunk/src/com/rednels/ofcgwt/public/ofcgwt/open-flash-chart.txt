@@ -1,4 +1,4 @@
-<< This application uses a SVN build of OFC that has been tested to work with OFCGWT >>
+<< OFCGWT uses Version 2 Ichor (20th March 2008) from http://teethgrinder.co.uk/open-flash-chart-2/downloads.php >>
 
 Open Flash Chart Copyright (C) 2007 John Glazebrook
 

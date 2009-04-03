@@ -23,20 +23,15 @@ import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
- * Class for an OFC filled bar chart (outlined) that extends BarChart
- * 
- * @see com.rednels.ofcgwt.client.model.elements.BarChart
+ * OFC filled bar chart (outlined)
  */
 public class FilledBarChart extends BarChart implements JSONizable {
 
 	/**
-	 * Class for OFC filled bar chart bars, extends BarChart.Bar
-	 * 
-	 * @see com.rednels.ofcgwt.client.model.elements.BarChart.Bar
+	 * OFC filled bar chart bars
 	 */
 	public static class Bar extends BarChart.Bar implements JSONizable {
 
-		/** The outline colour. */
 		private String outlineColour;
 
 		/**
@@ -111,17 +106,13 @@ public class FilledBarChart extends BarChart implements JSONizable {
 		}
 	}
 
-	/** The Constant TYPE. */
-	private static final transient String TYPE = "bar_filled";
-
-	/** The outline colour. */
 	private String outlineColour;
 
 	/**
 	 * Creates a new filled bar chart.
 	 */
 	public FilledBarChart() {
-		super(TYPE);
+		this(null,null);
 	}
 
 	/**
@@ -143,7 +134,7 @@ public class FilledBarChart extends BarChart implements JSONizable {
 	 *            the outline colour
 	 */
 	public FilledBarChart(String colour, String outlineColour) {
-		super(TYPE);
+		super("bar_filled");
 		setColour(colour);
 		setOutlineColour(outlineColour);
 	}
