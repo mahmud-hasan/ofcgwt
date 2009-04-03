@@ -24,35 +24,23 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
-import com.rednels.ofcgwt.client.IChartData;
-import com.rednels.ofcgwt.client.IOnClickListener;
+import com.rednels.ofcgwt.client.event.EventElement;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
- * Class for an OFC bar chart that extends Element
- * 
- * @see com.rednels.ofcgwt.client.model.elements.Element
+ * OFC bar chart 
  */
 public class BarChart extends Element implements JSONizable {
 
 	/**
-	 * Base class for OFC bar chart bars
+	 * OFC bar chart bars
 	 */
-	public static class Bar implements JSONizable {
+	public static class Bar extends EventElement implements JSONizable {
 
-		/** The top. */
 		private Number top;
-
-		/** The bottom. */
 		private Number bottom;
-
-		/** The colour. */
 		private String colour;
-
-		/** The tooltip. */
 		private String tooltip;
-
-		/** The onClick. */
 		private String onClick;
 
 		/**
@@ -103,19 +91,6 @@ public class BarChart extends Element implements JSONizable {
 		 */
 		public Bar(Number top, String colour) {
 			this(top, null, colour);
-		}
-
-		/**
-		 * Adds an onClick event. Requires an ChartWidget to register the event
-		 * with.
-		 * 
-		 * @param chart
-		 *            the IChartData
-		 * @param listener
-		 *            the onClick Listener
-		 */
-		public void addOnClickListener(IChartData chart, IOnClickListener listener) {
-			this.onClick = chart.addOnClickListener(listener);
 		}
 
 		/*
@@ -229,44 +204,21 @@ public class BarChart extends Element implements JSONizable {
 		}
 	}
 
-	/**
-	 * Enumeration BarStyle - used with BarChart.
-	 */
 	public static enum BarStyle {
 
-		/** NORMAL */
-		NORMAL("bar"),
+		NORMAL("bar"),THREED("bar_3d"),GLASS("bar_glass");
 
-		/** 3D */
-		THREED("bar_3d"),
-
-		/** GLASS */
-		GLASS("bar_glass");
-
-		/** The style. */
 		private String style;
-
-		/**
-		 * Creates a new bar style.
-		 * 
-		 * @param style
-		 *            the style
-		 */
+		
 		BarStyle(String style) {
 			this.style = style;
 		}
 
-		/**
-		 * Gets the style.
-		 * 
-		 * @return the style
-		 */
 		public String getStyle() {
 			return style;
 		}
 	}
 
-	/** The colour. */
 	private String colour;
 
 	/**

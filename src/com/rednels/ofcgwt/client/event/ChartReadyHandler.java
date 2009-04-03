@@ -15,21 +15,20 @@ GNU General Public License for more details.
 
 See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
  */
-package com.rednels.ofcgwt.client;
+package com.rednels.ofcgwt.client.event;
+
+import com.google.gwt.event.shared.EventHandler;
+
 
 /**
- * An interface that listeners of chart events should implement
+ * Handler for {@link ChartReadyEvent} events.
  */
-public interface IChartListener {
-	/**
-	 * Sent when a Chart Ready event that the listener has registered for
-	 * occurs.
-	 */
-	public void handleChartReadyEvent();
+public interface ChartReadyHandler extends EventHandler {
 
-	/**
-	 * Sent when a Image Saved event that the listener has registered for
-	 * occurs.
-	 */
-	public void imageSavedEvent();
+  /**
+   * Called when a chart ready event is fired.
+   * 
+   * @param event the {@link ChartReadyEvent} that was fired
+   */
+  void onReady(ChartReadyEvent event);
 }

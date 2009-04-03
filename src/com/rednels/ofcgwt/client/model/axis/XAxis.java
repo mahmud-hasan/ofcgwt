@@ -30,26 +30,20 @@ import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
- * Class for an OFC x-axis that extends AbstractAxis
- * 
- * @see com.rednels.ofcgwt.client.model.axis.AbstractAxis
+ * OFC x-axis 
  */
 public class XAxis extends AbstractAxis implements JSONizable {
 
 	/**
-	 * Class for an OFC x-axis label that extends Label
-	 * 
-	 * @see com.rednels.ofcgwt.client.model.axis.Label
+	 * OFC x-axis label 
 	 */
 	public class Labels extends Label implements JSONizable {
 
-		/** The steps. */
 		private Integer steps;
 		private Rotation rotate;
 		private String colour;
 		private Integer size;
 		private Boolean visible;
-		/** The labels. */
 		private List<Object> labels;
 
 		/**
@@ -241,10 +235,7 @@ public class XAxis extends AbstractAxis implements JSONizable {
 		}
 	}
 
-	/** The tick height. */
 	private Integer tickHeight;
-
-	/** The labels. */
 	private Labels labels;
 
 	/**

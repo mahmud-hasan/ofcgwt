@@ -18,11 +18,12 @@ See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
 package com.gwttest.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.ChangeListener;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -34,10 +35,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.rednels.ofcgwt.client.ChartWidget;
 import com.rednels.ofcgwt.client.model.ChartData;
-import com.rednels.ofcgwt.client.model.Legend;
 import com.rednels.ofcgwt.client.model.Text;
 import com.rednels.ofcgwt.client.model.ToolTip;
-import com.rednels.ofcgwt.client.model.Legend.Position;
 import com.rednels.ofcgwt.client.model.ToolTip.MouseStyle;
 import com.rednels.ofcgwt.client.model.axis.Keys;
 import com.rednels.ofcgwt.client.model.axis.Label;
@@ -53,18 +52,20 @@ import com.rednels.ofcgwt.client.model.elements.PieChart;
 import com.rednels.ofcgwt.client.model.elements.ScatterChart;
 import com.rednels.ofcgwt.client.model.elements.SketchBarChart;
 import com.rednels.ofcgwt.client.model.elements.StackedBarChart;
-import com.rednels.ofcgwt.client.model.elements.AreaChart.AreaStyle;
 import com.rednels.ofcgwt.client.model.elements.BarChart.BarStyle;
 import com.rednels.ofcgwt.client.model.elements.CylinderBarChart.CylinderStyle;
-import com.rednels.ofcgwt.client.model.elements.LineChart.LineStyle;
 import com.rednels.ofcgwt.client.model.elements.ScatterChart.ScatterStyle;
 import com.rednels.ofcgwt.client.model.elements.StackedBarChart.Stack;
+import com.rednels.ofcgwt.client.model.elements.dot.HollowDot;
+import com.rednels.ofcgwt.client.model.elements.dot.SolidDot;
+import com.rednels.ofcgwt.client.model.elements.dot.Star;
 
 /**
  * Example Test using OFCGWT
  */
 public class Demo implements EntryPoint {
 
+	private String[] colours = {"#ff0000", "#00ff00", "#0000ff", "#ff9900", "#ff00ff", "#FFFF00", "#6699FF", "#339933", "#1199aa"};
 	private Command updateCmd = null;
 	private TextArea ta = null;
 
@@ -97,7 +98,7 @@ public class Demo implements EntryPoint {
 		chartPanel.setStylePrimaryName("chartPanel");
 		final ChartWidget chart = new ChartWidget();
 		chart.setSize("400", "300");
-		chart.setJsonData(getPieChartData().toString());
+		chart.setChartData(getPieChartData());
 		chartPanel.add(chart);
 		dp.add(chartPanel);
 		vp2.add(dp);
@@ -113,116 +114,116 @@ public class Demo implements EntryPoint {
 		chartlist.setSpacing(5);
 		Command cmd = new Command() {
 			public void execute() {
-				chart.setJsonData(getPieChartData().toString());
+				chart.setChartData(getPieChartData());
 				ta.setText(chart.getJsonData());
 			}
 		};
-		RadioButton rb = createRadioButton("PieChart - Legend", cmd);
+		RadioButton rb = createRadioButton("PieChart - No Labels", cmd);
 		updateCmd = cmd;
-		rb.setChecked(true);
+		rb.setValue(true);
 		chartlist.add(rb);
 
 		chartlist.add(createRadioButton("PieChart - Animate", new Command() {
 			public void execute() {
-				chart.setJsonData(getAniPieChartData().toString());
+				chart.setChartData(getAniPieChartData());
 				ta.setText(chart.getJsonData());
 			}
 		}));
 
 		chartlist.add(createRadioButton("BarChart - Transparent", new Command() {
 			public void execute() {
-				chart.setJsonData(getBarChartTransparentData().toString());
+				chart.setChartData(getBarChartTransparentData());
 				ta.setText(chart.getJsonData());
 			}
 		}));
 
 		chartlist.add(createRadioButton("BarChart - Glass", new Command() {
 			public void execute() {
-				chart.setJsonData(getBarChartGlassData().toString());
+				chart.setChartData(getBarChartGlassData());
 				ta.setText(chart.getJsonData());
 			}
 		}));
 
 		chartlist.add(createRadioButton("3DBarChart + Line", new Command() {
 			public void execute() {
-				chart.setJsonData(get3DBarLineChartData().toString());
+				chart.setChartData(get3DBarLineChartData());
 				ta.setText(chart.getJsonData());
 			}
 		}));
 
 		chartlist.add(createRadioButton("CylinderChart", new Command() {
 			public void execute() {
-				chart.setJsonData(getCylinderChartData().toString());
+				chart.setChartData(getCylinderChartData());
 				ta.setText(chart.getJsonData());
 			}
 		}));
 
 		chartlist.add(createRadioButton("CylinderChart - RoundGlass", new Command() {
 			public void execute() {
-				chart.setJsonData(getCylinderChartGlassData().toString());
+				chart.setChartData(getCylinderChartGlassData());
 				ta.setText(chart.getJsonData());
 			}
 		}));
 
-		chartlist.add(createRadioButton("LineChart - Click Legend", new Command() {
+		chartlist.add(createRadioButton("LineChart - 3 Dot Types", new Command() {
 			public void execute() {
-				chart.setJsonData(getLineChartData().toString());
+				chart.setChartData(getLineChartData());
 				ta.setText(chart.getJsonData());
 			}
 		}));
 
-		chartlist.add(createRadioButton("ScatterChart - Point", new Command() {
+		chartlist.add(createRadioButton("ScatterChart - Star Dot", new Command() {
 			public void execute() {
-				chart.setJsonData(getScatterPointChartData().toString());
+				chart.setChartData(getScatterPointChartData());
 				ta.setText(chart.getJsonData());
 			}
 		}));
 
 		chartlist.add(createRadioButton("ScatterChart - Line", new Command() {
 			public void execute() {
-				chart.setJsonData(getScatterLineChartData().toString());
+				chart.setChartData(getScatterLineChartData());
 				ta.setText(chart.getJsonData());
 			}
 		}));
 
 		chartlist.add(createRadioButton("RadarChart", new Command() {
 			public void execute() {
-				chart.setJsonData(getRadarChartData().toString());
+				chart.setChartData(getRadarChartData());
 				ta.setText(chart.getJsonData());
 			}
 		}));
 
 		chartlist.add(createRadioButton("Horizontal-BarChart", new Command() {
 			public void execute() {
-				chart.setJsonData(getHorizBarChartData().toString());
+				chart.setChartData(getHorizBarChartData());
 				ta.setText(chart.getJsonData());
 			}
 		}));
 
 		chartlist.add(createRadioButton("AreaChart - Hollow", new Command() {
 			public void execute() {
-				chart.setJsonData(getAreaHollowChartData().toString());
+				chart.setChartData(getAreaHollowChartData());
 				ta.setText(chart.getJsonData());
 			}
 		}));
 
 		chartlist.add(createRadioButton("AreaChart - Line", new Command() {
 			public void execute() {
-				chart.setJsonData(getAreaLineChartData().toString());
+				chart.setChartData(getAreaLineChartData());
 				ta.setText(chart.getJsonData());
 			}
 		}));
 
 		chartlist.add(createRadioButton("SketchChart", new Command() {
 			public void execute() {
-				chart.setJsonData(getSketchChartData().toString());
+				chart.setChartData(getSketchChartData());
 				ta.setText(chart.getJsonData());
 			}
 		}));
 
 		chartlist.add(createRadioButton("StackChart", new Command() {
 			public void execute() {
-				chart.setJsonData(getStackChartData().toString());
+				chart.setChartData(getStackChartData());
 				ta.setText(chart.getJsonData());
 			}
 		}));
@@ -268,33 +269,30 @@ public class Demo implements EntryPoint {
 
 	private RadioButton createRadioButton(String string, final Command command) {
 		RadioButton rb = new RadioButton("chartlist", string);
-		rb.addClickListener(new ClickListener() {
-			public void onClick(Widget sender) {
+		rb.addClickHandler(new ClickHandler(){
+			public void onClick(ClickEvent event) {
 				updateCmd = command;
-				command.execute();
-			}
-		});
+				command.execute();				
+			}});
 		return rb;
 	}
 
 	private ChartData getPieChartData() {
 		ChartData cd = new ChartData("Sales by Region", "font-size: 14px; font-family: Verdana; text-align: center;");
 		cd.setBackgroundColour("#ffffff");
-		cd.setLegend(new Legend(Position.RIGHT, true));
 		PieChart pie = new PieChart();
 		pie.setAlpha(0.5f);
 		pie.setRadius(130);
 		pie.setNoLabels(true);
 		pie.setTooltip("#label# $#val#<br>#percent#");
-		pie.setAnimate(false);
 		pie.setAlphaHighlight(true);
 		pie.setGradientFill(true);
 		pie.setColours("#ff0000", "#00aa00", "#0000ff", "#ff9900", "#ff00ff");
-		pie.addSlices(new PieChart.Slice(Random.nextInt(11) * 1000, "AU", "Australia"));
+		pie.addSlices(new PieChart.Slice(Random.nextInt(11) * 1000, "AU"));
 		pie.addSlices(new PieChart.Slice(Random.nextInt(88) * 1000, "USA"));
-		pie.addSlices(new PieChart.Slice(Random.nextInt(62) * 1000, "UK", "United Kingdom"));
-		pie.addSlices(new PieChart.Slice(Random.nextInt(14) * 1000, "JP", "Japan"));
-		pie.addSlices(new PieChart.Slice(Random.nextInt(43) * 1000, "EU", "Europe"));
+		pie.addSlices(new PieChart.Slice(Random.nextInt(62) * 1000, "UK"));
+		pie.addSlices(new PieChart.Slice(Random.nextInt(14) * 1000, "JP"));
+		pie.addSlices(new PieChart.Slice(Random.nextInt(43) * 1000, "EU"));
 		cd.addElements(pie);
 		return cd;
 	}
@@ -306,9 +304,9 @@ public class Demo implements EntryPoint {
 		pie.setTooltip("#label# $#val#<br>#percent#");
 		pie.setAnimate(true);
 		pie.setGradientFill(false);
-		pie.setColours("#ff0000", "#00ff00", "#0000ff", "#ff9900", "#ff00ff", "#FFFF00", "#6699FF", "#339933");
+		pie.setColours(colours);
 		for (int t = 0; t < Random.nextInt(10) + 10; t++) {
-			pie.addSlices(new PieChart.Slice(Random.nextDouble() * 1.1 + .5, "" + (t + 1), null));
+			pie.addSlices(new PieChart.Slice(Random.nextDouble() * 1.1 + .5, "" + (t + 1)));
 		}
 		cd.addElements(pie);
 		return cd;
@@ -371,10 +369,7 @@ public class Demo implements EntryPoint {
 
 		XAxis xa = new XAxis();
 		xa.setLabels("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D");
-		xa.setZDepth3D(5);
-		// xa.setMax(12);
-		// xa.setTickHeight(4);
-		// xa.setOffset(true);
+		xa.setZDepth3D(8);
 		xa.setColour("#909090");
 		cd.setXAxis(xa);
 		YAxis ya = new YAxis();
@@ -383,7 +378,6 @@ public class Demo implements EntryPoint {
 		cd.setYAxis(ya);
 		BarChart bchart3 = new BarChart(BarStyle.THREED);
 		bchart3.setColour("#ff8800");
-		// bchart3.setTooltip("$#val#<br>s#x_label#");
 		for (int t = 0; t < 12; t++) {
 			bchart3.addValues(Random.nextInt(50) + 50);
 		}
@@ -391,22 +385,21 @@ public class Demo implements EntryPoint {
 
 		// right axis and line chart
 		YAxis yar = new YAxis();
-		yar.setMax(450);
-		yar.setSteps(50);
+//		yar.setMax(450);
+//		yar.setSteps(50);
 		yar.setGridColour("#000000");
 		cd.setYAxisRight(yar);
 
 		cd.setYLegend(new Text("$M in Sales", "font-size: 11px;"));
-		cd.setYRightLegend(new Text("$M in Sales", "font-size: 11px;"));
+		cd.setYRightLegend(new Text("$B in Sales", "font-size: 11px;"));
 		cd.setXLegend(new Text("2008/9 Financial Year", "font-size: 11px;"));
 
-		LineChart lc1 = new LineChart(LineStyle.NORMAL);
-		// lc1.setTooltip("$#val#");
+		LineChart lc1 = new LineChart();
 		lc1.setText("Global Avg");
 		lc1.setColour("#000000");
 		lc1.setRightAxis(true);
 		for (int t = 0; t < 12; t++) {
-			lc1.addValues(Random.nextInt(60) * 4 + 200);
+			lc1.addValues(Random.nextInt(10));
 		}
 		cd.addElements(lc1);
 
@@ -418,10 +411,7 @@ public class Demo implements EntryPoint {
 		cd3.setBackgroundColour("#ffffff");
 		XAxis xa = new XAxis();
 		xa.setLabels("Q1", "Q2", "Q3", "Q4");
-		xa.setZDepth3D(5);
-		// xa.setMax(4);
-		xa.setTickHeight(4);
-		xa.setOffset(true);
+		xa.setZDepth3D(10);
 		xa.setColour("#909090");
 		cd3.setXAxis(xa);
 		YAxis ya = new YAxis();
@@ -474,24 +464,24 @@ public class Demo implements EntryPoint {
 	private ChartData getLineChartData() {
 		ChartData cd = new ChartData("Relative Performance", "font-size: 14px; font-family: Verdana; text-align: center;");
 		cd.setBackgroundColour("#ffffff");
-		cd.setLegend(new Legend(Position.TOP, true));
 
-		LineChart lc1 = new LineChart(LineStyle.NORMAL);
-		lc1.setKeyToggleOnClick(true);
+		LineChart lc1 = new LineChart();
+		lc1.setLineStyle(new LineChart.LineStyle(2,4));
+		lc1.setDotStyle(null);
 		lc1.setText("PoorEnterprises Pty");
 		lc1.setColour("#ff0000");
 		for (int t = 0; t < 30; t++) {
 			lc1.addValues(Random.nextDouble() * .5 - .5);
 		}
-		LineChart lc2 = new LineChart(LineStyle.HOLLOW);
-		lc2.setKeyToggleOnClick(true);
-		lc2.setColour("#00ff00");
+		LineChart lc2 = new LineChart();
+		lc2.setDotStyle(new HollowDot());
+		lc2.setColour("#009900");
 		lc2.setText("Ave-Ridge Co LLC");
 		for (int t = 0; t < 30; t++) {
 			lc2.addValues(Random.nextDouble() * .8);
 		}
-		LineChart lc3 = new LineChart(LineStyle.DOT);
-		lc3.setKeyToggleOnClick(true);
+		LineChart lc3 = new LineChart();
+		lc3.setDotStyle(new Star());
 		lc3.setColour("#0000ff");
 		lc3.setText("Suu Perb Enterprises");
 		for (int t = 0; t < 30; t++) {
@@ -518,11 +508,21 @@ public class Demo implements EntryPoint {
 		ChartData cd = new ChartData("X Y Distribution", "font-size: 14px; font-family: Verdana; text-align: center;");
 		cd.setBackgroundColour("#ffffff");
 		ScatterChart scat = new ScatterChart();
-		scat.setDotSize(3);
-		for (int n = 0; n < 50; n++) {
+//		Star star = new Star();
+//		star.setSize(10);
+//		star.setColour("#FF9900");
+//		star.setTooltip("#x#,#y#");
+//		scat.setDotStyle(star);
+		for (int n = 0; n < 20; n++) {
 			int x = Random.nextInt(50) - 25;
 			int y = Random.nextInt(50) - 25;
-			scat.addPoints(new ScatterChart.Point(x, y));
+			Star star = new Star();
+			star.setSize(Random.nextInt(8)+2);
+			star.setColour(colours[Random.nextInt(8)]);
+			star.setTooltip("#x#,#y#");
+			star.setXY(x, y);
+			scat.addPoints(star);
+//			scat.addPoint(x, y);
 		}
 		XAxis xa = new XAxis();
 		xa.setRange(-25, 25, 5);
@@ -538,11 +538,14 @@ public class Demo implements EntryPoint {
 		ChartData cd = new ChartData("X Y Distribution", "font-size: 14px; font-family: Verdana; text-align: center;");
 		cd.setBackgroundColour("#ffffff");
 		ScatterChart scat = new ScatterChart(ScatterStyle.LINE);
-		scat.setDotSize(3);
+
+		//FIXME does not work in flash
+		scat.setTooltip("#x#,#y#");
+		
 		for (int n = 0; n < 25; n++) {
 			int x = n * 2 - 25;
 			int y = Random.nextInt(30) - 15;
-			scat.addPoints(new ScatterChart.Point(x, y));
+			scat.addPoint(x, y);
 		}
 		XAxis xa = new XAxis();
 		xa.setRange(-25, 25, 5);
@@ -564,7 +567,8 @@ public class Demo implements EntryPoint {
 		ra.setGridColour("#C0DEBF");
 		ra.setSpokeLabels("Financial", "Brand", "Legal", "Market", "Service");
 		cd2.setRadarAxis(ra);
-		AreaChart area2 = new AreaChart(AreaStyle.LINE);
+		AreaChart area2 = new AreaChart();
+		area2.setDotStyle(null);
 		area2.setFillAlpha(0.3f);
 		area2.setColour("#ff0000");
 		area2.setFillColour("#ff0000");
@@ -598,19 +602,25 @@ public class Demo implements EntryPoint {
 	private ChartData getAreaHollowChartData() {
 		ChartData cd1 = new ChartData("Volume Consumed", "font-size: 14px; font-family: Verdana; text-align: center;");
 		cd1.setBackgroundColour("#ffffff");
-		AreaChart area1 = new AreaChart(AreaStyle.HOLLOW);
+		AreaChart area1 = new AreaChart();
+		area1.setDotStyle(null);
 		area1.setFillAlpha(0.6f);
-		area1.setDotSize(3);
 		XAxis xa = new XAxis();
 		int floor = Random.nextInt(3) + 3;
 		double grade = 1.0 + (Random.nextInt(19) + 1) / 10.0;
 		int ln = 0;
 		for (float i = 0; i < 6.2; i += 0.2) {
-			xa.addLabels("" + ln++);
+			if (ln%3==0) {
+				xa.addLabels("" + ln);
+			}
+			else
+			{
+				xa.addLabels("");				
+			}
+			ln++;
 			area1.addValues(Math.sin(i) * grade + floor);
 		}
 
-		xa.getLabels().setSteps(3);
 		cd1.setXAxis(xa);
 		cd1.addElements(area1);
 		return cd1;
@@ -623,7 +633,8 @@ public class Demo implements EntryPoint {
 		xa.setLabels("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D");
 		// xa.setMax(12);
 		cd2.setXAxis(xa);
-		AreaChart area2 = new AreaChart(AreaStyle.LINE);
+		AreaChart area2 = new AreaChart();
+		area2.setDotStyle(new HollowDot());
 		area2.setFillAlpha(0.3f);
 		area2.setColour("#ff0000");
 		area2.setFillColour("#ff0000");
@@ -632,7 +643,10 @@ public class Demo implements EntryPoint {
 			else area2.addValues(n * Random.nextDouble());
 		}
 		cd2.addElements(area2);
-		AreaChart area3 = new AreaChart(AreaStyle.LINE);
+		AreaChart area3 = new AreaChart();
+		SolidDot d = new SolidDot();
+		d.setSize(2);
+		area3.setDotStyle(d);
 		area3.setFillAlpha(0.3f);
 		area3.setColour("#00aa00");
 		area3.setFillColour("#00aa00");

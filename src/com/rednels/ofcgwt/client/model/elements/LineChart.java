@@ -24,94 +24,35 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
-import com.rednels.ofcgwt.client.IChartData;
-import com.rednels.ofcgwt.client.IOnClickListener;
 import com.rednels.ofcgwt.client.model.JSONizable;
+import com.rednels.ofcgwt.client.model.elements.dot.BaseDot;
+import com.rednels.ofcgwt.client.model.elements.dot.SolidDot;
 
 /**
- * Class for an OFC line chart that extends Element
- * 
- * @see com.rednels.ofcgwt.client.model.elements.Element
+ OFC line chart
  */
 public class LineChart extends Element implements JSONizable {
 
-	/**
-	 * Base class for OFC line dots
-	 */
-	public static class Dot implements JSONizable {
+	public static class LineStyle implements JSONizable {
 
-		/** The halo size. */
-		private Integer haloSize;
+		private Number on;
+		private Number off;
+		private String style;
 
-		/** The dot size. */
-		private Integer dotSize;
-
-		/** The value. */
-		private Number value;
-
-		/** The colour. */
-		private String colour;
+		/**
+		 * Line style - dash
+		 * 
+		 * @param on
+		 *            the on
+		 * @param off
+		 *            the off
+		 */
+		public LineStyle(Number on, Number off) {
+			style = "dash";
+			this.on = on;
+			this.off = off;
+		}
 		
-		/** The tooltip. */
-		private String tooltip;
-
-		/** The onClick. */
-		private String onClick;
-
-		/**
-		 * Creates a new dot.
-		 * 
-		 * @param value
-		 *            the value
-		 */
-		public Dot(Number value) {
-			this(value, null, null, null);
-		}
-
-		/**
-		 * Creates a new dot.
-		 * 
-		 * @param value
-		 *            the value
-		 * @param colour
-		 *            the colour
-		 */
-		public Dot(Number value, String colour) {
-			this(value, colour, null, null);
-		}
-
-		/**
-		 * Creates a new dot.
-		 * 
-		 * @param value
-		 *            the value
-		 * @param colour
-		 *            the colour
-		 * @param dotSize
-		 *            the dot size
-		 * @param haloSize
-		 *            the halo size
-		 */
-		public Dot(Number value, String colour, Integer dotSize, Integer haloSize) {
-			setValue(value);
-			setColour(colour);
-			setDotSize(dotSize);
-			setHaloSize(haloSize);
-		}
-
-		/**
-		 * Adds an onClick event. Requires an ChartWidget to register the event
-		 * with.
-		 * 
-		 * @param chart
-		 *            the IChartData
-		 * @param listener
-		 *            the onClick Listener
-		 */
-		public void addOnClickListener(IChartData chart, IOnClickListener listener) {
-			this.onClick = chart.addOnClickListener(listener);
-		}
-
 		/*
 		 * (non-Javadoc)
 		 * 
@@ -119,200 +60,25 @@ public class LineChart extends Element implements JSONizable {
 		 */
 		public JSONValue buildJSON() {
 			JSONObject json = new JSONObject();
-			if (haloSize != null) json.put("halo-size", new JSONNumber(haloSize.doubleValue()));
-			if (dotSize != null) json.put("dot-size", new JSONNumber(dotSize.doubleValue()));
-			if (value != null) json.put("value", new JSONNumber(value.doubleValue()));
-			if (colour != null) json.put("colour", new JSONString(colour));
-			if (tooltip != null) json.put("tip", new JSONString(tooltip));
-			if (onClick != null) json.put("on-click", new JSONString(onClick));
+			if (on != null) json.put("on", new JSONNumber(on.doubleValue()));
+			if (off != null) json.put("off", new JSONNumber(off.doubleValue()));
+			if (style != null) json.put("style", new JSONString(style));
 			return json;
 		}
-
-		/**
-		 * Gets the colour.
-		 * 
-		 * @return the colour
-		 */
-		public String getColour() {
-			return colour;
-		}
-
-		/**
-		 * Gets the dot size.
-		 * 
-		 * @return the dot size
-		 */
-		public Integer getDotSize() {
-			return dotSize;
-		}
-
-		/**
-		 * Gets the halo size.
-		 * 
-		 * @return the halo size
-		 */
-		public Integer getHaloSize() {
-			return haloSize;
-		}
-
-		/**
-		 * Gets the onClick.
-		 * 
-		 * @return the onClick
-		 */
-		public String getOnClick() {
-			return onClick;
-		}
-
-		/**
-		 * Gets the tooltip.
-		 * 
-		 * @return the tooltip
-		 */
-		public String getTooltip() {
-			return tooltip;
-		}
-
-		/**
-		 * Gets the value.
-		 * 
-		 * @return the value
-		 */
-		public Number getValue() {
-			return value;
-		}
-
-		/**
-		 * Sets the colour in HTML hex format (#ffffff)
-		 * 
-		 * @param colour
-		 *            the colour
-		 */
-		public void setColour(String colour) {
-			this.colour = colour;
-		}
-
-		/**
-		 * Sets the dot size.
-		 * 
-		 * @param dotSize
-		 *            the dot size
-		 */
-		public void setDotSize(Integer dotSize) {
-			this.dotSize = dotSize;
-		}
-
-		/**
-		 * Sets the halo size.
-		 * 
-		 * @param haloSize
-		 *            the halo size
-		 * 
-		 * @return the dot
-		 */
-		public Dot setHaloSize(Integer haloSize) {
-			this.haloSize = haloSize;
-			return this;
-		}
-
-		/**
-		 * Sets the onClick.
-		 * 
-		 * @param onClick
-		 *            the onClick javascript method or url
-		 */
-		public void setOnClick(String onClick) {
-			this.onClick = onClick;
-		}
-
-		/**
-		 * Sets the tooltip.
-		 * 
-		 * @param tooltip
-		 *            the new tooltip
-		 */
-		public void setTooltip(String tooltip) {
-			this.tooltip = tooltip;
-		}
-
-		/**
-		 * Sets the value.
-		 * 
-		 * @param value
-		 *            the value
-		 */
-		public void setValue(Number value) {
-			this.value = value;
-		}
 	}
-
-	/**
-	 * Enumeration LineStyle - used with LineChart.
-	 */
-	public static enum LineStyle {
-
-		/** NORMAL */
-		NORMAL("line"),
-
-		/** DOT */
-		DOT("line_dot"),
-
-		/** HOLLOW */
-		HOLLOW("line_hollow");
-
-		/** The style. */
-		private String style;
-
-		/**
-		 * Creates a new line style.
-		 * 
-		 * @param style
-		 *            the style
-		 */
-		LineStyle(String style) {
-			this.style = style;
-		}
-
-		/**
-		 * Gets the style.
-		 * 
-		 * @return the style
-		 */
-		public String getStyle() {
-			return style;
-		}
-	}
-
-	/** The width. */
+	
 	private Integer width;
-
-	/** The dot size. */
-	private Integer dotSize;
-
-	/** The halo size. */
-	private Integer haloSize;
-
-	/** The colour. */
+	private String text;
 	private String colour;
-
-	/** The rightAxis. */
 	private boolean rightAxis;
+	private BaseDot dotStyle= new SolidDot();
+	private LineStyle lineStyle;
 
 	/**
 	 * Creates a new line chart with normal style.
 	 */
 	public LineChart() {
-		this(LineStyle.NORMAL);
-	}
-
-	/**
-	 * Creates a new line chart.
-	 * 
-	 * @param style
-	 *            the style
-	 */
-	public LineChart(LineStyle style) {
-		this(style.getStyle());
+		super("line");
 	}
 
 	/**
@@ -331,7 +97,7 @@ public class LineChart extends Element implements JSONizable {
 	 * @param dots
 	 *            the dots
 	 */
-	public void addDots(Dot... dots) {
+	public void addDots(BaseDot... dots) {
 		addDots(Arrays.asList(dots));
 	}
 
@@ -341,7 +107,7 @@ public class LineChart extends Element implements JSONizable {
 	 * @param dots
 	 *            the dots
 	 */
-	public void addDots(List<Dot> dots) {
+	public void addDots(List<BaseDot> dots) {
 		getValues().addAll(dots);
 	}
 
@@ -373,10 +139,11 @@ public class LineChart extends Element implements JSONizable {
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
 		if (width != null) json.put("width", new JSONNumber(width));
-		if (dotSize != null) json.put("dot-size", new JSONNumber(dotSize));
-		if (haloSize != null) json.put("halo-size", new JSONNumber(haloSize));
+		if (text != null) json.put("text", new JSONString(text));
 		if (colour != null) json.put("colour", new JSONString(colour));
 		if (this.rightAxis) json.put("axis", new JSONString("right"));
+		if (this.dotStyle!= null) json.put("dot-style", dotStyle.buildJSON());
+		if (this.lineStyle!= null) json.put("line-style", lineStyle.buildJSON());				
 		return json;
 	}
 
@@ -389,26 +156,20 @@ public class LineChart extends Element implements JSONizable {
 		return colour;
 	}
 
-	/**
-	 * Gets the dot size.
-	 * 
-	 * @return the dot size
+	/** 
+	 * @return true if right axis
 	 */
-	public Integer getDotSize() {
-		return dotSize;
-	}
-
-	/**
-	 * Gets the halo size.
-	 * 
-	 * @return the halo size
-	 */
-	public Integer getHaloSize() {
-		return haloSize;
-	}
-
-	public boolean getRightAxis() {
+	public boolean isRightAxis() {
 		return this.rightAxis;
+	}
+
+	/**
+	 * Get the text
+	 * 
+	 * @return String text
+	 */
+	public String getText() {
+		return text;
 	}
 
 	/**
@@ -431,27 +192,43 @@ public class LineChart extends Element implements JSONizable {
 	}
 
 	/**
-	 * Sets the dot size.
+	 * Sets the dot style.
 	 * 
-	 * @param dotSize
-	 *            the new dot size
+	 * @param dotStyle
+	 *            the new dot style
 	 */
-	public void setDotSize(Integer dotSize) {
-		this.dotSize = dotSize;
+	public void setDotStyle(BaseDot dotStyle) {
+		this.dotStyle = dotStyle;
 	}
 
 	/**
-	 * Sets the halo size.
+	 * Sets the line style.
 	 * 
-	 * @param haloSize
-	 *            the new halo size
+	 * @param lineStyle
+	 *            the new line style
 	 */
-	public void setHaloSize(Integer haloSize) {
-		this.haloSize = haloSize;
+	public void setLineStyle(LineStyle lineStyle) {
+		this.lineStyle = lineStyle;
 	}
 
+	/**
+	 * Sets the right axis
+	 * 
+	 * @param rightAxis
+	 *            the rightAxis
+	 */
 	public void setRightAxis(boolean rightAxis) {
 		this.rightAxis = rightAxis;
+	}
+
+	/**
+	 * Sets the text string.
+	 * 
+	 * @param text
+	 *            String
+	 */
+	public void setText(String text) {
+		this.text = text;
 	}
 
 	/**

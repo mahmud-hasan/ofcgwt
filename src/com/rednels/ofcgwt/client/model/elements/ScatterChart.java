@@ -25,151 +25,32 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
+import com.rednels.ofcgwt.client.model.elements.dot.BaseDot;
+import com.rednels.ofcgwt.client.model.elements.dot.SolidDot;
 
 /**
- * Class for an OFC scatter chart that extends Element
- * 
- * @see com.rednels.ofcgwt.client.model.elements.Element
+ * OFC scatter chart 
  */
 public class ScatterChart extends Element implements JSONizable {
 
-	/**
-	 * Base class for OFC scatter points
-	 */
-	public static class Point implements JSONizable {
-
-		/** The x. */
-		private Number x;
-
-		/** The y. */
-		private Number y;
-
-		/** The tooltip. */
-		private String tooltip;
-
-		/**
-		 * Creates a new point.
-		 * 
-		 * @param x
-		 *            the x
-		 * @param y
-		 *            the y
-		 */
-		public Point(Number x, Number y) {
-			this.x = x;
-			this.y = y;
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
-		 */
-		public JSONValue buildJSON() {
-			JSONObject json = new JSONObject();
-			if (x != null) json.put("x", new JSONNumber(x.doubleValue()));
-			if (y != null) json.put("y", new JSONNumber(y.doubleValue()));
-			if (tooltip != null) json.put("tip", new JSONString(tooltip));
-			return json;
-		}
-
-		/**
-		 * Gets the x.
-		 * 
-		 * @return the x
-		 */
-		public Number getX() {
-			return x;
-		}
-
-		/**
-		 * Gets the y.
-		 * 
-		 * @return the y
-		 */
-		public Number getY() {
-			return y;
-		}
-
-		/**
-		 * Gets the tooltip.
-		 * 
-		 * @return the tooltip
-		 */
-		public String getTooltip() {
-			return tooltip;
-		}
-
-		/**
-		 * Sets the x.
-		 * 
-		 * @param x
-		 *            the new x
-		 */
-		public void setX(Number x) {
-			this.x = x;
-		}
-
-		/**
-		 * Sets the y.
-		 * 
-		 * @param y
-		 *            the new y
-		 */
-		public void setY(Number y) {
-			this.y = y;
-		}
-
-		/**
-		 * Sets the tooltip.
-		 * 
-		 * @param tooltip
-		 *            the new tooltip
-		 */
-		public void setTooltip(String tooltip) {
-			this.tooltip = tooltip;
-		}
-	}
-
-	/**
-	 * Enumeration ScatterStyle - used with ScatterChart.
-	 */
 	public static enum ScatterStyle {
 
-		/** NORMAL */
-		LINE("scatter_line"),
+		LINE("scatter_line"), POINT("scatter");
 
-		/** HOLLOW */
-		POINT("scatter");
-
-		/** The style. */
 		private String style;
 
-		/**
-		 * Creates a new scatter style.
-		 * 
-		 * @param style
-		 *            the style
-		 */
 		ScatterStyle(String style) {
 			this.style = style;
 		}
 
-		/**
-		 * Gets the style.
-		 * 
-		 * @return the style
-		 */
 		public String getStyle() {
 			return style;
 		}
 	}
 
-	/** The colour. */
 	private String colour;
-
-	/** The dot size. */
 	private Integer dotSize;
+	private BaseDot dotStyle= new SolidDot();
 
 	/**
 	 * Creates a new scatter chart with ScatterStyle.POINT style
@@ -194,7 +75,9 @@ public class ScatterChart extends Element implements JSONizable {
 	 *            the y
 	 */
 	public void addPoint(Number x, Number y) {
-		addPoints(new Point(x, y));
+		BaseDot bd = new BaseDot(null){};
+		bd.setXY(x,y);
+		addPoints(bd);
 	}
 
 	/**
@@ -203,7 +86,7 @@ public class ScatterChart extends Element implements JSONizable {
 	 * @param points
 	 *            the points
 	 */
-	public void addPoints(Collection<Point> points) {
+	public void addPoints(Collection<BaseDot> points) {
 		getValues().addAll(points);
 	}
 
@@ -213,7 +96,7 @@ public class ScatterChart extends Element implements JSONizable {
 	 * @param points
 	 *            the points
 	 */
-	public void addPoints(Point... points) {
+	public void addPoints(BaseDot... points) {
 		getValues().addAll(Arrays.asList(points));
 	}
 
@@ -225,6 +108,7 @@ public class ScatterChart extends Element implements JSONizable {
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
 		if (dotSize != null) json.put("dot-size", new JSONNumber(dotSize.doubleValue()));
+		if (this.dotStyle!= null) json.put("dot-style", dotStyle.buildJSON());
 		if (colour != null) json.put("colour", new JSONString(colour));
 		return json;
 	}
@@ -265,5 +149,15 @@ public class ScatterChart extends Element implements JSONizable {
 	 */
 	public void setDotSize(Integer dotSize) {
 		this.dotSize = dotSize;
+	}
+
+	/**
+	 * Sets the dot style.
+	 * 
+	 * @param dotStyle
+	 *            the new dot style
+	 */
+	public void setDotStyle(BaseDot dotStyle) {
+		this.dotStyle = dotStyle;
 	}
 }

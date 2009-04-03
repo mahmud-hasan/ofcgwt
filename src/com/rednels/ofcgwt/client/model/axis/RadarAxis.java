@@ -28,21 +28,16 @@ import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
- * Class for an OFC radar axis that extends AbstractAxis
- * 
- * @see com.rednels.ofcgwt.client.model.axis.AbstractAxis
+ * OFC radar axis 
  */
 public class RadarAxis extends AbstractAxis implements JSONizable {
 
 	/**
-	 * Class for an OFC radar axis label
+	 * OFC radar axis label
 	 */
 	public class Labels implements JSONizable {
 
-		/** The steps. */
 		private String colour;
-
-		/** The labels. */
 		private List<Object> labels;
 
 		/**
@@ -154,10 +149,7 @@ public class RadarAxis extends AbstractAxis implements JSONizable {
 		}
 	}
 
-	/** The labels. */
 	private Labels labels;
-
-	/** The spoke-labels. */
 	private Labels spokelabels;
 
 	/**

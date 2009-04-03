@@ -24,17 +24,12 @@ import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
- * Base class for an OFC keys
+ * OFC keys
  */
 public class Keys implements JSONizable {
 
-	/** The text. */
 	private String text;
-
-	/** The colour. */
 	private String colour;
-
-	/** The font-size. */
 	private Integer fontsize;
 
 	/**

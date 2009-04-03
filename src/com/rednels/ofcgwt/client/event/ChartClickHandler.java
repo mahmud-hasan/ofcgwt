@@ -15,15 +15,20 @@ GNU General Public License for more details.
 
 See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
  */
-package com.rednels.ofcgwt.client;
+package com.rednels.ofcgwt.client.event;
+
+import com.google.gwt.event.shared.EventHandler;
+
 
 /**
- * An interface that listeners of chart onclick events should implement
+ * Handler for {@link ChartClickEvent} events.
  */
-public interface IOnClickListener {
-	/**
-	 * Sent when a Chart OnClick event that the listener has registered for
-	 * occurs.
-	 */
-	public void handleOnClickEvent();
+public interface ChartClickHandler extends EventHandler {
+
+  /**
+   * Called when a chart click event is fired.
+   * 
+   * @param event the {@link ChartClickEvent} that was fired
+   */
+  void onClick(ChartClickEvent event);
 }

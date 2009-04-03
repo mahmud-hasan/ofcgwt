@@ -25,23 +25,14 @@ import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
- * Base class for an OFC label
+ * OFC label
  */
 public class Label implements JSONizable {
 
-	/** The text. */
 	private String text;
-
-	/** The colour. */
 	private String colour;
-
-	/** The size. */
 	private Integer size;
-
-	/** The rotate. */
 	private Integer rotateAngle;
-
-	/** The visible. */
 	private Boolean visible;
 
 	/**

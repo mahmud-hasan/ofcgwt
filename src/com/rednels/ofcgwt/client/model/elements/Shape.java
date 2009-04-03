@@ -24,24 +24,20 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
+import com.rednels.ofcgwt.client.event.EventElement;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
- * Class for an OFC shape that extends Element (polygon drawn under a chart)
- * 
- * @see com.rednels.ofcgwt.client.model.elements.Element
+ * OFC shape 
  */
 public class Shape extends Element implements JSONizable {
 
 	/**
-	 * Base class for OFC shape points
+	 * OFC shape points
 	 */
-	public static class Point implements JSONizable {
+	public static class Point extends EventElement implements JSONizable {
 
-		/** The x. */
 		private Number x;
-
-		/** The y. */
 		private Number y;
 
 		/**
@@ -108,20 +104,14 @@ public class Shape extends Element implements JSONizable {
 		}
 	}
 
-	/** The Constant TYPE. */
-	private static final transient String TYPE = "shape";
-
-	/** The alpha. */
 	private Float alpha;
-
-	/** The colour. */
 	private String colour;
 
 	/**
 	 * Creates a new shape.
 	 */
 	public Shape() {
-		super(TYPE);
+		super("shape");
 	}
 
 	/**

@@ -17,88 +17,50 @@ See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
  */
 package com.rednels.ofcgwt.client;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Widget;
+import com.rednels.ofcgwt.client.event.ChartClickEvent;
+import com.rednels.ofcgwt.client.event.ChartClickHandler;
+import com.rednels.ofcgwt.client.event.EventElement;
 import com.rednels.ofcgwt.client.model.ChartData;
 
 /**
  * A gwt chart widget based on Open Flash Chart.</br></br>
  * 
  * Create the ChartWidget and add anywhere a GWT widget can be used. Use
- * {@link ChartData}.toString() to produce a JSON string that this chart widget
- * uses via its {@link #setJsonData(String)} method.
+ * the model {@link ChartData} to build a chart and then pass to {@link ChartWidget#setChartData(ChartData)} and it will generate and set the correct JSON data.
+ * <p/>You can also set JSON via the {@link #setJsonData(String)} method.
  * 
  */
-public class ChartWidget extends Widget implements IChartData {
-	public static final String BLANK_CHART_JSON_DATA = "{\"title\":{\"text\":\"\"},\"elements\":[]}";
+public class ChartWidget extends Widget {
 	public static final String MIN_PLAYER_VERSION = "9.0.0";
 	public static final String ALTERNATE_SWF_SRC = "expressInstall.swf";
 
-	private static ArrayList<IChartData> charts = new ArrayList<IChartData>();
 	private static final CacheFixImpl cacheFixImpl = GWT.create(CacheFixImpl.class);
 	private static int count = 0;
 
-	private static native void initCallback()
-	/*-{
-	   $wnd.ofcgwtGetJsonData = function (id) {
-	       return @com.rednels.ofcgwt.client.ChartWidget::jsonData(Ljava/lang/String;)(id);
-	   };
-	   
-	   $wnd.ofcgwtNotifyReady = function (id) {
-	       @com.rednels.ofcgwt.client.ChartWidget::notify(Ljava/lang/String;)(id);
-	   };
-	   
-	   $wnd.ofcgwtOnClick = function (id,evt) {
-	       @com.rednels.ofcgwt.client.ChartWidget::onclick(Ljava/lang/String;Ljava/lang/String;)(id,evt);
-	   };	   
-	}-*/;
-	@SuppressWarnings("unused")
-	private static String jsonData(String id) {
-		for (IChartData chart : charts) {
-			if (chart.getSwfId().equals(id)) return chart.getJsonData();
-		}
-		return BLANK_CHART_JSON_DATA;
-	}
-	@SuppressWarnings("unused")
-	private static void notify(String id) {
-		for (IChartData chart : charts) {
-			if (chart.getSwfId().equals(id)) chart.notifyReady();
-		}
-	}
-	@SuppressWarnings("unused")
-	private static void onclick(String id, String evt) {
-		for (IChartData chart : charts) {
-			if (chart.getSwfId().equals(id)) chart.notifyOnClick(evt);
-		}
-	}
-	private ArrayList<IChartListener> chartListeners = new ArrayList<IChartListener>();
-	private ArrayList<IOnClickListener> clickListeners = new ArrayList<IOnClickListener>();
 	private boolean isSWFInjected = false;
 	private boolean cacheFixEnabled = false;
 	private boolean hasFlashPlayer = false;
 	private String swfId;
 	private String swfDivId;
-	private String jsonData = BLANK_CHART_JSON_DATA;
+	private String jsonData = ChartFactory.BLANK_CHART_JSON_DATA;
 	private String width = "100%";
-
 	private String height = "100%";
-
 	private String innerDivTextForFlashPlayerNotFound = "FlashPlayer ${flashPlayer.version} is required.";
-
 	private String flashurl = "ofcgwt/open-flash-chart.swf";
-
 	private String urlPrefix = GWT.getModuleBaseURL();
+	private ChartData chartData;
 
 	/**
 	 * Creates a new ChartWidget. *
 	 */
 	public ChartWidget() {
-		initJSCallback(this);
 		swfId = "swfID_" + count;
 		swfDivId = "swfDivID_" + count;
 		++count;
@@ -112,32 +74,43 @@ public class ChartWidget extends Widget implements IChartData {
 	}
 
 	/**
-	 * Adds an IChartListener that implements the handleChartReadyEvent method
-	 * 
-	 * @param listener
-	 *            an IChartListener
+	 * Sets this charts ChartData and processes it for handlers/events
+	 * @param cd
+	 * 		the ChartData model
 	 */
-	public void addChartListeners(IChartListener listener) {
-		chartListeners.add(listener);
+	public void setChartData(ChartData cd) {
+		this.chartData = cd;		
+		for (com.rednels.ofcgwt.client.model.elements.Element e: chartData.getElements()) {
+			for (Object o : e.getValues()) {
+				if (o instanceof EventElement) {
+					EventElement ee = (EventElement)o;
+					for (ChartClickHandler ch : ee.getHandlers()) {
+						String onclick = "ofc_onclick('" + getSwfId() + "','" + ch.hashCode() + "')";
+						ee.setOnClick(onclick);
+					}
+				}
+			}
+		}
+		setJsonData(chartData.buildJSON().toString());
 	}
-
-	/**
-	 * Adds an IOnClickListener that implements the handleOnClickEvent method.
-	 * <p>
-	 * <b>Note: not really intended to be used directly </b>- you must add the
-	 * returned function signature to the JSON onClick event.
-	 * <p>
-	 * <i>Easier Option: </i>Use addOnClickListener within the models (such as
-	 * Element/Pie.Slice etc) and this method will get function signature,
-	 * register the event handler and add to JSON string.
-	 * 
-	 * @param listener
-	 *            an IChartListener
-	 * @return function signature String
-	 */
-	public String addOnClickListener(IOnClickListener listener) {
-		clickListeners.add(listener);
-		return "ofc_onclick('" + getSwfId() + "','" + listener.hashCode() + "')";
+	
+	protected void doOnChartClick(String evt) {
+		for (com.rednels.ofcgwt.client.model.elements.Element e: chartData.getElements()) {
+			for (Object o : e.getValues()) {
+				if (o instanceof EventElement) {
+					EventElement ee = (EventElement)o;
+					for (ChartClickHandler ch : ee.getHandlers()) {
+						if (evt.equals("" + ch.hashCode())) {
+							ch.onClick(new ChartClickEvent());
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	protected List<ChartClickHandler> getHandlers() {
+		return null;
 	}
 
 	private String emptyInnerDiv() {
@@ -228,18 +201,6 @@ public class ChartWidget extends Widget implements IChartData {
 	}-*/;
 
 	/**
-	 * Inits the call back functions.<br>
-	 * Internal widget use only - made public for integration.
-	 * 
-	 * @param chartclass
-	 *            an instance of IChartData
-	 */
-	private void initJSCallback(IChartData chartclass) {
-		charts.add(chartclass);
-		initCallback();
-	}
-
-	/**
 	 * Injects the swf into the dom.<br>
 	 * Internal widget use only - made public for integration.
 	 * 
@@ -288,50 +249,19 @@ public class ChartWidget extends Widget implements IChartData {
 		if ('load' in swf) swf.load(json);
 	}-*/;
 
-	/**
-	 * Notifies registered chart listeners that the image was saved
-	 */
-	public void notifyImageSaved() {
-		for (IChartListener chart : chartListeners) {
-			chart.imageSavedEvent();
-		}
-	}
-
-	/**
-	 * Notifies registered chart listeners that the chart is ready
-	 */
-	public void notifyOnClick(String evt) {
-		for (IOnClickListener clicks : clickListeners) {
-			if (evt.equals("" + clicks.hashCode())) clicks.handleOnClickEvent();
-		}
-	}
-
-	/**
-	 * Notifies registered chart listeners that the chart is ready
-	 */
-	public void notifyReady() {
-		for (IChartListener chart : chartListeners) {
-			chart.handleChartReadyEvent();
-		}
-	}
-
 	protected void onAttach() {
 		super.onAttach();
+		ChartFactory.get().register(this);
 		if (!isSWFInjected) {
 			injectSWF(getInternalSWFURL(isCacheFixEnabled(), urlPrefix + flashurl, swfId), swfId, getWidth(), getHeight(), MIN_PLAYER_VERSION, ALTERNATE_SWF_SRC);
 			isSWFInjected = true;
 		}
 	}
-
-	/**
-	 * Removes an IChartListener
-	 * 
-	 * @param listener
-	 *            an IChartListener
-	 */
-	public void removeChartListeners(IChartListener listener) {
-		chartListeners.remove(listener);
-	}
+	
+	protected void onDetach() {
+		super.onDetach();
+		ChartFactory.get().unregister(this);
+	  }
 
 	/**
 	 * Calls the save_image method on the OFC swf.<br>
@@ -422,6 +352,7 @@ public class ChartWidget extends Widget implements IChartData {
 	 *            a JSON string
 	 */
 	public void setJsonData(String json) {
+//		System.out.println(json);
 		this.jsonData = json;
 		if (hasFlashPlayer && isSWFInjected) {
 			loadJSON(swfId, jsonData);

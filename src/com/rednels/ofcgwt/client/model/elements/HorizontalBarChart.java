@@ -27,27 +27,18 @@ import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
- * Class for an OFC horizontal bar chart that extends Element
- * 
- * @see com.rednels.ofcgwt.client.model.elements.Element
+ * OFC horizontal bar chart
  */
 public class HorizontalBarChart extends Element implements JSONizable {
 
 	/**
-	 * Base class for OFC horizontal bar chart bars
+	 * OFC horizontal bar chart bars
 	 */
 	public static class Bar implements JSONizable {
 
-		/** The left. */
 		private Number left;
-
-		/** The right. */
 		private Number right;
-
-		/** The colour. */
 		private String colour;
-
-		/** The tooltip. */
 		private String tooltip;
 
 		/**
@@ -191,17 +182,13 @@ public class HorizontalBarChart extends Element implements JSONizable {
 		}
 	}
 
-	/** The Constant TYPE. */
-	private static final transient String TYPE = "hbar";
-
-	/** The colour. */
 	private String colour;
 
 	/**
 	 * Creates a new horizontal bar chart.
 	 */
 	public HorizontalBarChart() {
-		super(TYPE);
+		super("hbar");
 	}
 
 	/**
