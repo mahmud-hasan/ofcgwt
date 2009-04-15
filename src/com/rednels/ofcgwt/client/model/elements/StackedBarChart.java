@@ -30,12 +30,12 @@ import com.rednels.ofcgwt.client.event.EventElement;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
- * OFC stacked bar chart 
+ * OFC stacked bar chart
  */
 public class StackedBarChart extends Element implements JSONizable {
 
 	/**
-	 * OFC stack bar 
+	 * OFC stack bar
 	 */
 	public static class Stack implements JSONizable {
 

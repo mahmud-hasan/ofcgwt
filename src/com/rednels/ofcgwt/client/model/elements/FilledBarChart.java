@@ -112,7 +112,7 @@ public class FilledBarChart extends BarChart implements JSONizable {
 	 * Creates a new filled bar chart.
 	 */
 	public FilledBarChart() {
-		this(null,null);
+		this(null, null);
 	}
 
 	/**

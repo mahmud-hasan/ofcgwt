@@ -5,7 +5,7 @@ package com.rednels.ofcgwt.client.model.axis;
  */
 public enum Rotation {
 
-	VERTICAL("vertical"), DIAGONAL("diagonal"),	HORIZONTAL("horizontal");
+	VERTICAL("vertical"), DIAGONAL("diagonal"), HORIZONTAL("horizontal");
 
 	private final String text;
 

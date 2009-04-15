@@ -111,7 +111,7 @@ public class SketchBarChart extends FilledBarChart implements JSONizable {
 	 * Creates a new sketch bar chart.
 	 */
 	public SketchBarChart() {
-		this(null,null,null);
+		this(null, null, null);
 	}
 
 	/**

@@ -108,16 +108,15 @@ public class CylinderBarChart extends BarChart implements JSONizable {
 	}
 
 	public static enum CylinderStyle {
-		
-		NORMAL("bar_cylinder"),	OUTLINE("bar_cylinder_outline"), 
-		GLASS("bar_round_glass"), ROUND("bar_round"), DOME("bar_dome");
+
+		NORMAL("bar_cylinder"), OUTLINE("bar_cylinder_outline"), GLASS("bar_round_glass"), ROUND("bar_round"), DOME("bar_dome");
 
 		private String style;
 
 		CylinderStyle(String style) {
 			this.style = style;
 		}
-		
+
 		public String getStyle() {
 			return style;
 		}

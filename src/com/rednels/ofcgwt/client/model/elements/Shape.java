@@ -28,7 +28,7 @@ import com.rednels.ofcgwt.client.event.EventElement;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
- * OFC shape 
+ * OFC shape
  */
 public class Shape extends Element implements JSONizable {
 

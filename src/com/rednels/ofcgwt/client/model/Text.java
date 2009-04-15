@@ -25,7 +25,7 @@ import com.google.gwt.json.client.JSONValue;
  * OFC text element
  */
 public class Text implements JSONizable {
-	
+
 	private String text;
 	private String style;
 
@@ -87,28 +87,17 @@ public class Text implements JSONizable {
 	}
 
 	/**
-	 * Sets the text style. 
-	 * <p/>
-	 * Example:
+	 * Sets the text style. <p/> Example:
+	 * 
 	 * <pre>
 	 * font-size: 20px; color:#0000ff; font-family: Verdana; text-align: center;
-	 * </pre> Style can optionally contain:</br>
-     * - font-size</br>
-     * - font-family</br>
-     * - font-weight</br>
-     * - color</br>
-     * - background-color</br>
-     * - text-align</br>
-     * - margin</br>
-     * - margin-left</br>
-     * - margin-right</br>
-     * - margin-top</br>
-     * - margin-bottom</br>
-     * - padding</br>
-     * - padding-left</br>
-     * - padding-right</br>
-     * - padding-top</br>
-     * - padding-bottom</br>
+	 * </pre>
+	 * 
+	 * Style can optionally contain:</br> - font-size</br> - font-family</br> -
+	 * font-weight</br> - color</br> - background-color</br> - text-align</br> -
+	 * margin</br> - margin-left</br> - margin-right</br> - margin-top</br> -
+	 * margin-bottom</br> - padding</br> - padding-left</br> -
+	 * padding-right</br> - padding-top</br> - padding-bottom</br>
 	 * 
 	 * @param style
 	 *            String

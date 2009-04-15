@@ -23,9 +23,12 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.DecoratorPanel;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -35,8 +38,10 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.rednels.ofcgwt.client.ChartWidget;
 import com.rednels.ofcgwt.client.model.ChartData;
+import com.rednels.ofcgwt.client.model.Legend;
 import com.rednels.ofcgwt.client.model.Text;
 import com.rednels.ofcgwt.client.model.ToolTip;
+import com.rednels.ofcgwt.client.model.Legend.Position;
 import com.rednels.ofcgwt.client.model.ToolTip.MouseStyle;
 import com.rednels.ofcgwt.client.model.axis.Keys;
 import com.rednels.ofcgwt.client.model.axis.Label;
@@ -47,6 +52,8 @@ import com.rednels.ofcgwt.client.model.elements.AreaChart;
 import com.rednels.ofcgwt.client.model.elements.BarChart;
 import com.rednels.ofcgwt.client.model.elements.CylinderBarChart;
 import com.rednels.ofcgwt.client.model.elements.HorizontalBarChart;
+import com.rednels.ofcgwt.client.model.elements.HorizontalStackedBarChart;
+import com.rednels.ofcgwt.client.model.elements.HorizontalStackedBarChart.HStack;
 import com.rednels.ofcgwt.client.model.elements.LineChart;
 import com.rednels.ofcgwt.client.model.elements.PieChart;
 import com.rednels.ofcgwt.client.model.elements.ScatterChart;
@@ -65,9 +72,10 @@ import com.rednels.ofcgwt.client.model.elements.dot.Star;
  */
 public class Demo implements EntryPoint {
 
-	private String[] colours = {"#ff0000", "#00ff00", "#0000ff", "#ff9900", "#ff00ff", "#FFFF00", "#6699FF", "#339933", "#1199aa"};
+	private String[] colours = { "#ff0000", "#00ff00", "#0000ff", "#ff9900", "#ff00ff", "#FFFF00", "#6699FF", "#339933", "#1199aa" };
 	private Command updateCmd = null;
 	private TextArea ta = null;
+	private DialogBox db = null;
 
 	public void onModuleLoad() {
 
@@ -75,10 +83,20 @@ public class Demo implements EntryPoint {
 		hp.setSpacing(10);
 
 		VerticalPanel vp = new VerticalPanel();
+		vp.setSpacing(20);
 		// add home page
 		HTML homeText = new HTML("<h2>Welcome to OFCGWT</h2>" + "<i>....the OpenFlashChart GWT Library</i></br></br>" + "This demonstration site will showcase the many different types of charts that can be inserted into a GWT application.");
 		vp.add(homeText);
-		vp.setCellHeight(homeText, "300");
+		vp.setCellHeight(homeText, "100");
+		createDialog();
+		Button popup = new Button("Show 2nd Chart in Dialog");
+		popup.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				db.center();
+				db.show();
+			}
+		});
+		vp.add(popup);
 		vp.add(new HTML("Update Speed <i>(0-off, 4-max)</i>"));
 		final SliderBar slider = new SliderBar(0.0, 4.0);
 		slider.setStepSize(1.0);
@@ -228,6 +246,13 @@ public class Demo implements EntryPoint {
 			}
 		}));
 
+		chartlist.add(createRadioButton("HorizontalStackChart", new Command() {
+			public void execute() {
+				chart.setChartData(getHorizontalStackChartData());
+				ta.setText(chart.getJsonData());
+			}
+		}));
+
 		hp.add(chartlist);
 		hp.setCellWidth(chartlist, "300");
 
@@ -267,13 +292,36 @@ public class Demo implements EntryPoint {
 		});
 	}
 
+	private void createDialog() {
+		db = new DialogBox();
+		db.setText("Chart in Dialog");
+
+		VerticalPanel dbContents = new VerticalPanel();
+		dbContents.setSpacing(4);
+		db.setWidget(dbContents);
+
+		ChartWidget chart = new ChartWidget();
+		chart.setChartData(getStackChartData());
+		chart.setSize("300", "300");
+		dbContents.add(chart);
+		Button closeButton = new Button("Close", new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				db.hide();
+			}
+		});
+		dbContents.add(closeButton);
+		dbContents.setCellHorizontalAlignment(closeButton, HasHorizontalAlignment.ALIGN_RIGHT);
+
+	}
+
 	private RadioButton createRadioButton(String string, final Command command) {
 		RadioButton rb = new RadioButton("chartlist", string);
-		rb.addClickHandler(new ClickHandler(){
+		rb.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				updateCmd = command;
-				command.execute();				
-			}});
+				command.execute();
+			}
+		});
 		return rb;
 	}
 
@@ -377,6 +425,7 @@ public class Demo implements EntryPoint {
 		ya.setMax(160);
 		cd.setYAxis(ya);
 		BarChart bchart3 = new BarChart(BarStyle.THREED);
+		bchart3.setBarwidth(.5);
 		bchart3.setColour("#ff8800");
 		for (int t = 0; t < 12; t++) {
 			bchart3.addValues(Random.nextInt(50) + 50);
@@ -385,8 +434,8 @@ public class Demo implements EntryPoint {
 
 		// right axis and line chart
 		YAxis yar = new YAxis();
-//		yar.setMax(450);
-//		yar.setSteps(50);
+		// yar.setMax(450);
+		// yar.setSteps(50);
 		yar.setGridColour("#000000");
 		cd.setYAxisRight(yar);
 
@@ -419,6 +468,7 @@ public class Demo implements EntryPoint {
 		ya.setMax(160);
 		cd3.setYAxis(ya);
 		CylinderBarChart bchart3 = new CylinderBarChart();
+		bchart3.setBarwidth(.95);
 		bchart3.setColour("#ff0000");
 		bchart3.setAlpha(.8f);
 		bchart3.setTooltip("$#val#");
@@ -466,7 +516,7 @@ public class Demo implements EntryPoint {
 		cd.setBackgroundColour("#ffffff");
 
 		LineChart lc1 = new LineChart();
-		lc1.setLineStyle(new LineChart.LineStyle(2,4));
+		lc1.setLineStyle(new LineChart.LineStyle(2, 4));
 		lc1.setDotStyle(null);
 		lc1.setText("PoorEnterprises Pty");
 		lc1.setColour("#ff0000");
@@ -508,21 +558,21 @@ public class Demo implements EntryPoint {
 		ChartData cd = new ChartData("X Y Distribution", "font-size: 14px; font-family: Verdana; text-align: center;");
 		cd.setBackgroundColour("#ffffff");
 		ScatterChart scat = new ScatterChart();
-//		Star star = new Star();
-//		star.setSize(10);
-//		star.setColour("#FF9900");
-//		star.setTooltip("#x#,#y#");
-//		scat.setDotStyle(star);
+		// Star star = new Star();
+		// star.setSize(10);
+		// star.setColour("#FF9900");
+		// star.setTooltip("#x#,#y#");
+		// scat.setDotStyle(star);
 		for (int n = 0; n < 20; n++) {
 			int x = Random.nextInt(50) - 25;
 			int y = Random.nextInt(50) - 25;
 			Star star = new Star();
-			star.setSize(Random.nextInt(8)+2);
+			star.setSize(Random.nextInt(8) + 2);
 			star.setColour(colours[Random.nextInt(8)]);
 			star.setTooltip("#x#,#y#");
 			star.setXY(x, y);
 			scat.addPoints(star);
-//			scat.addPoint(x, y);
+			// scat.addPoint(x, y);
 		}
 		XAxis xa = new XAxis();
 		xa.setRange(-25, 25, 5);
@@ -539,9 +589,9 @@ public class Demo implements EntryPoint {
 		cd.setBackgroundColour("#ffffff");
 		ScatterChart scat = new ScatterChart(ScatterStyle.LINE);
 
-		//FIXME does not work in flash
+		// FIXME does not work in flash
 		scat.setTooltip("#x#,#y#");
-		
+
 		for (int n = 0; n < 25; n++) {
 			int x = n * 2 - 25;
 			int y = Random.nextInt(30) - 15;
@@ -610,12 +660,11 @@ public class Demo implements EntryPoint {
 		double grade = 1.0 + (Random.nextInt(19) + 1) / 10.0;
 		int ln = 0;
 		for (float i = 0; i < 6.2; i += 0.2) {
-			if (ln%3==0) {
+			if (ln % 3 == 0) {
 				xa.addLabels("" + ln);
 			}
-			else
-			{
-				xa.addLabels("");				
+			else {
+				xa.addLabels("");
 			}
 			ln++;
 			area1.addValues(Math.sin(i) * grade + floor);
@@ -698,6 +747,50 @@ public class Demo implements EntryPoint {
 
 		YAxis ya = new YAxis();
 		ya.setRange(0, 14, 7);
+		cd.setYAxis(ya);
+
+		cd.addElements(stack);
+		return cd;
+	}
+
+	private ChartData getHorizontalStackChartData() {
+		ChartData cd = new ChartData("Investments in ($M)", "font-size: 14px; font-family: Verdana; text-align: center;");
+		cd.setBackgroundColour("#ffffff");
+		cd.setLegend(new Legend(Position.RIGHT, true));
+		cd.setTooltip(new ToolTip(MouseStyle.FOLLOW));
+
+		HorizontalStackedBarChart stack = new HorizontalStackedBarChart();
+		stack.setTooltip("#key#<br>#val# / #total#");
+		stack.setColours(colours);
+		stack.setBarwidth(0.9);
+
+		HorizontalStackedBarChart.StackValue v1 = new HorizontalStackedBarChart.StackValue(0, 1000);
+		HorizontalStackedBarChart.StackValue v2 = new HorizontalStackedBarChart.StackValue(1000, 1500);
+		HorizontalStackedBarChart.StackValue v3 = new HorizontalStackedBarChart.StackValue(1500, 1700 + Random.nextInt(12) * 100, "#FF00FF", "Other");
+		stack.addStack(new HStack(v1, v2, v3));
+
+		v1 = new HorizontalStackedBarChart.StackValue(0, 900);
+		v2 = new HorizontalStackedBarChart.StackValue(900, 1700);
+		stack.addStack(new HStack(v1, v2));
+
+		v1 = new HorizontalStackedBarChart.StackValue(0, 500);
+		v2 = new HorizontalStackedBarChart.StackValue(500, 2400);
+		stack.addStack(new HStack(v1, v2));
+
+		v1 = new HorizontalStackedBarChart.StackValue(0, 1500);
+		v2 = new HorizontalStackedBarChart.StackValue(1500, 2000);
+		v3 = new HorizontalStackedBarChart.StackValue(2000, 2100 + Random.nextInt(8) * 100, "#FF00FF", "Other");
+		stack.addStack(new HStack(v1, v2, v3));
+
+		stack.setKeys(new Keys("Shares", "#ff0000", 13), new Keys("Property", "#00ff00", 13));
+
+		XAxis xa = new XAxis();
+		xa.setRange(0, 3000, 500);
+		cd.setXAxis(xa);
+
+		YAxis ya = new YAxis();
+		ya.addLabels("John", "Frank", "Mary", "Andy");;
+		ya.setOffset(true);
 		cd.setYAxis(ya);
 
 		cd.addElements(stack);

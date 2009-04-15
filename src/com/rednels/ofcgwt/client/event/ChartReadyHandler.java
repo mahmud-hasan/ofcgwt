@@ -19,16 +19,16 @@ package com.rednels.ofcgwt.client.event;
 
 import com.google.gwt.event.shared.EventHandler;
 
-
 /**
  * Handler for {@link ChartReadyEvent} events.
  */
 public interface ChartReadyHandler extends EventHandler {
 
-  /**
-   * Called when a chart ready event is fired.
-   * 
-   * @param event the {@link ChartReadyEvent} that was fired
-   */
-  void onReady(ChartReadyEvent event);
+	/**
+	 * Called when a chart ready event is fired.
+	 * 
+	 * @param event
+	 *            the {@link ChartReadyEvent} that was fired
+	 */
+	void onReady(ChartReadyEvent event);
 }

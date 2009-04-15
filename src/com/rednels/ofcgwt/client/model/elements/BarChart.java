@@ -28,7 +28,7 @@ import com.rednels.ofcgwt.client.event.EventElement;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
- * OFC bar chart 
+ * OFC bar chart
  */
 public class BarChart extends Element implements JSONizable {
 
@@ -206,10 +206,10 @@ public class BarChart extends Element implements JSONizable {
 
 	public static enum BarStyle {
 
-		NORMAL("bar"),THREED("bar_3d"),GLASS("bar_glass");
+		NORMAL("bar"), THREED("bar_3d"), GLASS("bar_glass");
 
 		private String style;
-		
+
 		BarStyle(String style) {
 			this.style = style;
 		}
@@ -220,6 +220,7 @@ public class BarChart extends Element implements JSONizable {
 	}
 
 	private String colour;
+	private Number barwidth;
 
 	/**
 	 * Creates a new bar chart with normal style.
@@ -295,6 +296,7 @@ public class BarChart extends Element implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
+		if (barwidth != null) json.put("barwidth", new JSONNumber(barwidth.doubleValue()));
 		if (colour != null) json.put("colour", new JSONString(colour));
 		return json;
 	}
@@ -316,5 +318,24 @@ public class BarChart extends Element implements JSONizable {
 	 */
 	public void setColour(String colour) {
 		this.colour = colour;
+	}
+
+	/**
+	 * Gets the barwidth.
+	 * 
+	 * @return the barwidth
+	 */
+	public Number getBarwidth() {
+		return barwidth;
+	}
+
+	/**
+	 * Sets the barwidth.
+	 * 
+	 * @param barwidth
+	 *            the new barwidth
+	 */
+	public void setBarwidth(Number barwidth) {
+		this.barwidth = barwidth;
 	}
 }

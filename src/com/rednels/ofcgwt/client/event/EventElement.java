@@ -55,10 +55,11 @@ public class EventElement {
 	}
 
 	/**
-	 * Sets the onClick GWT event or url (if you set a GWT event, it will override the URL).
+	 * Sets the onClick GWT event or url (if you set a GWT event, it will
+	 * override the URL).
 	 * 
 	 * @param onClick
-	 *            the onClick 
+	 *            the onClick
 	 */
 	public void setOnClick(String onClick) {
 		this.onClick = onClick;

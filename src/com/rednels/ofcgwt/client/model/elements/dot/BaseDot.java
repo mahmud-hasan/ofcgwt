@@ -11,7 +11,7 @@ import com.rednels.ofcgwt.client.model.JSONizable;
  * OFC line dots
  */
 public abstract class BaseDot extends EventElement implements JSONizable {
-	
+
 	private Integer haloSize;
 	private Integer size;
 	private Number value;
@@ -21,7 +21,7 @@ public abstract class BaseDot extends EventElement implements JSONizable {
 	private String onClick;
 	private Number x;
 	private Number y;
-		
+
 	public BaseDot(String type) {
 		this.type = type;
 	}
@@ -198,7 +198,7 @@ public abstract class BaseDot extends EventElement implements JSONizable {
 	 * @param y
 	 *            the new y
 	 */
-	public void setXY(Number x,Number y) {
+	public void setXY(Number x, Number y) {
 		this.x = x;
 		this.y = y;
 	}

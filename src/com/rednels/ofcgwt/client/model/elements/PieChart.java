@@ -17,9 +17,7 @@ See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
  */
 package com.rednels.ofcgwt.client.model.elements;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import com.google.gwt.json.client.JSONArray;
@@ -68,20 +66,13 @@ public class PieChart extends Element implements JSONizable {
 		 */
 		public JSONValue buildJSON() {
 			JSONObject json = new JSONObject();
-			if (value != null)
-				json.put("value", new JSONNumber(value.doubleValue()));
-			if (label != null)
-				json.put("label", new JSONString(label));
-			if (labelColour != null)
-				json.put("label-colour", new JSONString(labelColour));
-			if (fontSize != null)
-				json.put("font-size", new JSONString(fontSize));
-			if (onClick != null)
-				json.put("on-click", new JSONString(onClick));
-			if (tooltip != null)
-				json.put("tip", new JSONString(tooltip));
-			if (animate != null)
-				json.put("animate", animate.buildJSON());
+			if (value != null) json.put("value", new JSONNumber(value.doubleValue()));
+			if (label != null) json.put("label", new JSONString(label));
+			if (labelColour != null) json.put("label-colour", new JSONString(labelColour));
+			if (fontSize != null) json.put("font-size", new JSONString(fontSize));
+			if (onClick != null) json.put("on-click", new JSONString(onClick));
+			if (tooltip != null) json.put("tip", new JSONString(tooltip));
+			if (animate != null) json.put("animate", animate.buildJSON());
 			return json;
 		}
 
@@ -180,8 +171,7 @@ public class PieChart extends Element implements JSONizable {
 		}
 	}
 
-	interface PieAnimation extends JSONizable {
-	}
+	interface PieAnimation extends JSONizable {}
 
 	public class PieFadeAnimation implements PieAnimation {
 
@@ -212,8 +202,7 @@ public class PieChart extends Element implements JSONizable {
 		 */
 		public JSONValue buildJSON() {
 			JSONObject json = new JSONObject();
-			if (distance != null)
-				json.put("distance", new JSONNumber(distance.intValue()));
+			if (distance != null) json.put("distance", new JSONNumber(distance.intValue()));
 			json.put("type", new JSONString("bounce"));
 			return json;
 		}
@@ -240,7 +229,6 @@ public class PieChart extends Element implements JSONizable {
 
 	private Integer startAngle;
 	private Integer radius;
-	private Collection<String> colours;
 	private String labelColour;
 	private Float alpha;
 	private Boolean alphaHighlight;
@@ -315,48 +303,23 @@ public class PieChart extends Element implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (startAngle != null)
-			json.put("start-angle", new JSONNumber(startAngle.intValue()));
-		if (radius != null)
-			json.put("radius", new JSONNumber(radius.intValue()));
-		if (alphaHighlight != null && alphaHighlight)
-			json.put("highlight", new JSONString("alpha"));
-		if (gradientFill != null)
-			json.put("gradient-fill", JSONBoolean.getInstance(gradientFill));
-		if (alpha != null)
-			json.put("alpha", new JSONNumber(alpha));
-		if (nolabels != null)
-			json.put("no-labels", JSONBoolean.getInstance(nolabels));
-		if (labelColour != null)
-			json.put("label-colour", new JSONString(labelColour));
-		if (border != null)
-			json.put("border", new JSONNumber(border.doubleValue()));
-		if (colours == null)
-			return json;
+		if (startAngle != null) json.put("start-angle", new JSONNumber(startAngle.intValue()));
+		if (radius != null) json.put("radius", new JSONNumber(radius.intValue()));
+		if (alphaHighlight != null && alphaHighlight) json.put("highlight", new JSONString("alpha"));
+		if (gradientFill != null) json.put("gradient-fill", JSONBoolean.getInstance(gradientFill));
+		if (alpha != null) json.put("alpha", new JSONNumber(alpha));
+		if (nolabels != null) json.put("no-labels", JSONBoolean.getInstance(nolabels));
+		if (labelColour != null) json.put("label-colour", new JSONString(labelColour));
+		if (border != null) json.put("border", new JSONNumber(border.doubleValue()));
 		JSONArray ary = new JSONArray();
 		int index = 0;
-		for (String s : colours) {
-			ary.set(index++, new JSONString(s));
-		}
-		if (index != 0)
-			json.put("colours", ary);
-		ary = new JSONArray();		
-		 index = 0;
-		if (animate != null)
-			ary.set(index++, animate.buildJSON());		
-		if (index != 0)
-			json.put("animate", ary);
+		if (animate != null) ary.set(index++, animate.buildJSON());
+		if (index != 0) json.put("animate", ary);
 
+		// TODO this is the current on-show animation support to stop build
+		// animation in pie
 		if (animate == null) json.put("animate", JSONBoolean.getInstance(false));
 		return json;
-	}
-
-	/**
-	 * Check colours.
-	 */
-	private synchronized void checkColours() {
-		if (colours == null)
-			colours = new ArrayList<String>();
 	}
 
 	/**
@@ -393,15 +356,6 @@ public class PieChart extends Element implements JSONizable {
 	 */
 	public Integer getBorder() {
 		return border;
-	}
-
-	/**
-	 * Gets the colours.
-	 * 
-	 * @return the colours
-	 */
-	public Collection<String> getColours() {
-		return colours;
 	}
 
 	/**
@@ -478,7 +432,7 @@ public class PieChart extends Element implements JSONizable {
 			setAnimation(new PieBounceAnimation(10));
 		}
 		else {
-			this.animate = null;			
+			this.animate = null;
 		}
 	}
 
@@ -500,41 +454,6 @@ public class PieChart extends Element implements JSONizable {
 	 */
 	public void setBorder(Integer border) {
 		this.border = border;
-	}
-
-	/**
-	 * Sets colours in HTML hex format (#ffffff)
-	 * 
-	 * @param colours
-	 *            the new colours
-	 */
-	public void setColours(Collection<String> colours) {
-		checkColours();
-		this.colours = colours;
-	}
-
-	/**
-	 * Sets the colours.
-	 * 
-	 * @param colours
-	 *            the new colours
-	 */
-	public void setColours(List<String> colours) {
-		checkColours();
-		this.colours.clear();
-		this.colours.addAll(colours);
-	}
-
-	/**
-	 * Sets colours in HTML hex format (#ffffff)
-	 * 
-	 * @param colours
-	 *            the new colours
-	 */
-	public void setColours(String... colours) {
-		checkColours();
-		this.colours.clear();
-		this.colours.addAll(Arrays.asList(colours));
 	}
 
 	/**

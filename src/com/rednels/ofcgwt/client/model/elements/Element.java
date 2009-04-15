@@ -41,6 +41,7 @@ public abstract class Element implements JSONizable {
 	private String tooltip;
 	private String onClick;
 	private List<Keys> keys = new ArrayList<Keys>();
+	private Collection<String> colours = new ArrayList<String>();
 	protected List<Object> values = new ArrayList<Object>();
 
 	/**
@@ -52,7 +53,6 @@ public abstract class Element implements JSONizable {
 	protected Element(String type) {
 		this.type = type;
 	}
-
 
 	public void addNull() {
 		values.add(null);
@@ -73,12 +73,18 @@ public abstract class Element implements JSONizable {
 
 		JSONArray ary = new JSONArray();
 		int index = 0;
+		for (String s : colours) {
+			ary.set(index++, new JSONString(s));
+		}
+		if (index != 0) json.put("colours", ary);
+
+		ary = new JSONArray();
+		index = 0;
 		for (Keys k : keys) {
 			ary.set(index++, k.buildJSON());
 		}
 		if (index != 0) json.put("keys", ary);
 
-		if (values == null) return json;
 		ary = new JSONArray();
 		index = 0;
 		for (Object o : values) {
@@ -88,7 +94,21 @@ public abstract class Element implements JSONizable {
 			if (o instanceof JSONizable) ary.set(index++, ((JSONizable) o).buildJSON());
 		}
 		if (index != 0) json.put("values", ary);
+
+		JSONObject type = new JSONObject();
+		type.put("type", new JSONString(""));
+		json.put("on-show", type);
+
 		return json;
+	}
+
+	/**
+	 * Gets the colours.
+	 * 
+	 * @return the colours
+	 */
+	public Collection<String> getColours() {
+		return colours;
 	}
 
 	/**
@@ -143,6 +163,27 @@ public abstract class Element implements JSONizable {
 	 */
 	public List<Object> getValues() {
 		return values;
+	}
+
+	/**
+	 * Sets colours in HTML hex format (#ffffff)
+	 * 
+	 * @param colours
+	 *            the new colours
+	 */
+	public void setColours(Collection<String> colours) {
+		this.colours = colours;
+	}
+
+	/**
+	 * Sets colours in HTML hex format (#ffffff)
+	 * 
+	 * @param colours
+	 *            the new colours
+	 */
+	public void setColours(String... colours) {
+		this.colours = new ArrayList<String>();
+		this.colours.addAll(Arrays.asList(colours));
 	}
 
 	/**

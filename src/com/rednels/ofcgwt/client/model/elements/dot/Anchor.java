@@ -8,14 +8,14 @@ import com.google.gwt.json.client.JSONValue;
  * OFC Star
  */
 public class Anchor extends BaseDot {
-	
+
 	private Integer rotation;
 	private Integer sides;
 
 	public Anchor() {
 		this(null);
-	} 
-	
+	}
+
 	public Anchor(Number value) {
 		super("anchor", value);
 	}
@@ -25,7 +25,7 @@ public class Anchor extends BaseDot {
 	 * 
 	 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
 	 */
-	public JSONValue buildJSON() {		
+	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
 		if (rotation != null) json.put("rotation", new JSONNumber(rotation.intValue()));
 		if (sides != null) json.put("sides", new JSONNumber(sides.intValue()));

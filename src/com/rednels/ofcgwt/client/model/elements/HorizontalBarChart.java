@@ -183,6 +183,7 @@ public class HorizontalBarChart extends Element implements JSONizable {
 	}
 
 	private String colour;
+	private Number barwidth;
 
 	/**
 	 * Creates a new horizontal bar chart.
@@ -255,6 +256,7 @@ public class HorizontalBarChart extends Element implements JSONizable {
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
 		if (colour != null) json.put("colour", new JSONString(colour));
+		if (barwidth != null) json.put("barwidth", new JSONNumber(barwidth.doubleValue()));
 		return json;
 	}
 
@@ -275,5 +277,24 @@ public class HorizontalBarChart extends Element implements JSONizable {
 	 */
 	public void setColour(String colour) {
 		this.colour = colour;
+	}
+
+	/**
+	 * Gets the barwidth.
+	 * 
+	 * @return the barwidth
+	 */
+	public Number getBarwidth() {
+		return barwidth;
+	}
+
+	/**
+	 * Sets the barwidth.
+	 * 
+	 * @param barwidth
+	 *            the new barwidth
+	 */
+	public void setBarwidth(Number barwidth) {
+		this.barwidth = barwidth;
 	}
 }
