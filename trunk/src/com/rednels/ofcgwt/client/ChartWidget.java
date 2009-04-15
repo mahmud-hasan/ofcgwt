@@ -32,9 +32,11 @@ import com.rednels.ofcgwt.client.model.ChartData;
 /**
  * A gwt chart widget based on Open Flash Chart.</br></br>
  * 
- * Create the ChartWidget and add anywhere a GWT widget can be used. Use
- * the model {@link ChartData} to build a chart and then pass to {@link ChartWidget#setChartData(ChartData)} and it will generate and set the correct JSON data.
- * <p/>You can also set JSON via the {@link #setJsonData(String)} method.
+ * Create the ChartWidget and add anywhere a GWT widget can be used. Use the
+ * model {@link ChartData} to build a chart and then pass to
+ * {@link ChartWidget#setChartData(ChartData)} and it will generate and set the
+ * correct JSON data. <p/>You can also set JSON via the
+ * {@link #setJsonData(String)} method.
  * 
  */
 public class ChartWidget extends Widget {
@@ -56,6 +58,7 @@ public class ChartWidget extends Widget {
 	private String flashurl = "ofcgwt/open-flash-chart.swf";
 	private String urlPrefix = GWT.getModuleBaseURL();
 	private ChartData chartData;
+	private Element chartElement;
 
 	/**
 	 * Creates a new ChartWidget. *
@@ -64,10 +67,9 @@ public class ChartWidget extends Widget {
 		swfId = "swfID_" + count;
 		swfDivId = "swfDivID_" + count;
 		++count;
-		Element element = DOM.createElement("div");
-		DOM.setElementProperty(element, "id", swfDivId);
-		element.setInnerHTML("<div id=\"embed_" + swfId + "\">" + emptyInnerDiv() + "</div>");
-		setElement(element);
+		chartElement = DOM.createElement("div");
+		DOM.setElementProperty(chartElement, "id", swfDivId);
+		setElement(chartElement);
 		setSize(width, height);
 		hasFlashPlayer = hasFlashPlayerVersion(MIN_PLAYER_VERSION);
 		cacheFixEnabled = cacheFixImpl.isCacheFixNeeded();
@@ -75,15 +77,16 @@ public class ChartWidget extends Widget {
 
 	/**
 	 * Sets this charts ChartData and processes it for handlers/events
+	 * 
 	 * @param cd
-	 * 		the ChartData model
+	 *            the ChartData model
 	 */
 	public void setChartData(ChartData cd) {
-		this.chartData = cd;		
-		for (com.rednels.ofcgwt.client.model.elements.Element e: chartData.getElements()) {
+		this.chartData = cd;
+		for (com.rednels.ofcgwt.client.model.elements.Element e : chartData.getElements()) {
 			for (Object o : e.getValues()) {
 				if (o instanceof EventElement) {
-					EventElement ee = (EventElement)o;
+					EventElement ee = (EventElement) o;
 					for (ChartClickHandler ch : ee.getHandlers()) {
 						String onclick = "ofc_onclick('" + getSwfId() + "','" + ch.hashCode() + "')";
 						ee.setOnClick(onclick);
@@ -93,12 +96,12 @@ public class ChartWidget extends Widget {
 		}
 		setJsonData(chartData.buildJSON().toString());
 	}
-	
+
 	protected void doOnChartClick(String evt) {
-		for (com.rednels.ofcgwt.client.model.elements.Element e: chartData.getElements()) {
+		for (com.rednels.ofcgwt.client.model.elements.Element e : chartData.getElements()) {
 			for (Object o : e.getValues()) {
 				if (o instanceof EventElement) {
-					EventElement ee = (EventElement)o;
+					EventElement ee = (EventElement) o;
 					for (ChartClickHandler ch : ee.getHandlers()) {
 						if (evt.equals("" + ch.hashCode())) {
 							ch.onClick(new ChartClickEvent());
@@ -108,7 +111,7 @@ public class ChartWidget extends Widget {
 			}
 		}
 	}
-	
+
 	protected List<ChartClickHandler> getHandlers() {
 		return null;
 	}
@@ -250,18 +253,22 @@ public class ChartWidget extends Widget {
 	}-*/;
 
 	protected void onAttach() {
-		super.onAttach();
+		chartElement.setInnerHTML("<div id=\"embed_" + swfId + "\">" + emptyInnerDiv() + "</div>");
 		ChartFactory.get().register(this);
 		if (!isSWFInjected) {
 			injectSWF(getInternalSWFURL(isCacheFixEnabled(), urlPrefix + flashurl, swfId), swfId, getWidth(), getHeight(), MIN_PLAYER_VERSION, ALTERNATE_SWF_SRC);
 			isSWFInjected = true;
 		}
+		super.onAttach();
 	}
-	
+
 	protected void onDetach() {
-		super.onDetach();
 		ChartFactory.get().unregister(this);
-	  }
+		chartElement.removeChild(chartElement.getChildNodes().getItem(0));
+		isSWFInjected = false;
+		super.onDetach();
+
+	}
 
 	/**
 	 * Calls the save_image method on the OFC swf.<br>
@@ -352,7 +359,7 @@ public class ChartWidget extends Widget {
 	 *            a JSON string
 	 */
 	public void setJsonData(String json) {
-//		System.out.println(json);
+		// System.out.println(json);
 		this.jsonData = json;
 		if (hasFlashPlayer && isSWFInjected) {
 			loadJSON(swfId, jsonData);

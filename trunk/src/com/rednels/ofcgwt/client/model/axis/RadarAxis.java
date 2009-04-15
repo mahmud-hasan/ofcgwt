@@ -28,7 +28,7 @@ import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
- * OFC radar axis 
+ * OFC radar axis
  */
 public class RadarAxis extends AbstractAxis implements JSONizable {
 

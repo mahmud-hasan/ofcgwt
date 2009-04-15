@@ -29,7 +29,7 @@ import com.rednels.ofcgwt.client.model.elements.dot.BaseDot;
 import com.rednels.ofcgwt.client.model.elements.dot.SolidDot;
 
 /**
- * OFC scatter chart 
+ * OFC scatter chart
  */
 public class ScatterChart extends Element implements JSONizable {
 
@@ -50,7 +50,7 @@ public class ScatterChart extends Element implements JSONizable {
 
 	private String colour;
 	private Integer dotSize;
-	private BaseDot dotStyle= new SolidDot();
+	private BaseDot dotStyle = new SolidDot();
 
 	/**
 	 * Creates a new scatter chart with ScatterStyle.POINT style
@@ -75,8 +75,8 @@ public class ScatterChart extends Element implements JSONizable {
 	 *            the y
 	 */
 	public void addPoint(Number x, Number y) {
-		BaseDot bd = new BaseDot(null){};
-		bd.setXY(x,y);
+		BaseDot bd = new BaseDot(null) {};
+		bd.setXY(x, y);
 		addPoints(bd);
 	}
 
@@ -108,7 +108,7 @@ public class ScatterChart extends Element implements JSONizable {
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
 		if (dotSize != null) json.put("dot-size", new JSONNumber(dotSize.doubleValue()));
-		if (this.dotStyle!= null) json.put("dot-style", dotStyle.buildJSON());
+		if (this.dotStyle != null) json.put("dot-style", dotStyle.buildJSON());
 		if (colour != null) json.put("colour", new JSONString(colour));
 		return json;
 	}

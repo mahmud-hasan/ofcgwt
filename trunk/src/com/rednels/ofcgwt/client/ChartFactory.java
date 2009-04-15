@@ -41,18 +41,18 @@ public class ChartFactory {
 	@SuppressWarnings("unused")
 	private void handleOnClick(String id, String evt) {
 		ChartWidget chart = charts.get(id);
-	    if (chart != null) {
-	    	chart.doOnChartClick(evt);
-	    }
+		if (chart != null) {
+			chart.doOnChartClick(evt);
+		}
 	}
 
 	@SuppressWarnings("unused")
-	  private void handleOnReady(String id) {
+	private void handleOnReady(String id) {
 		ChartWidget chart = charts.get(id);
-	    if (chart != null) {
-	    	chart.fireEvent(new ChartReadyEvent());
-	    }
-	  }
+		if (chart != null) {
+			chart.fireEvent(new ChartReadyEvent());
+		}
+	}
 
 	private native void init() /*-{
 	      var x = this;

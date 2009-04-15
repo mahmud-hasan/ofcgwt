@@ -29,7 +29,7 @@ import com.rednels.ofcgwt.client.model.elements.dot.BaseDot;
 import com.rednels.ofcgwt.client.model.elements.dot.SolidDot;
 
 /**
- OFC line chart
+ * OFC line chart
  */
 public class LineChart extends Element implements JSONizable {
 
@@ -52,7 +52,7 @@ public class LineChart extends Element implements JSONizable {
 			this.on = on;
 			this.off = off;
 		}
-		
+
 		/*
 		 * (non-Javadoc)
 		 * 
@@ -66,12 +66,12 @@ public class LineChart extends Element implements JSONizable {
 			return json;
 		}
 	}
-	
+
 	private Integer width;
 	private String text;
 	private String colour;
 	private boolean rightAxis;
-	private BaseDot dotStyle= new SolidDot();
+	private BaseDot dotStyle = new SolidDot();
 	private LineStyle lineStyle;
 
 	/**
@@ -142,8 +142,8 @@ public class LineChart extends Element implements JSONizable {
 		if (text != null) json.put("text", new JSONString(text));
 		if (colour != null) json.put("colour", new JSONString(colour));
 		if (this.rightAxis) json.put("axis", new JSONString("right"));
-		if (this.dotStyle!= null) json.put("dot-style", dotStyle.buildJSON());
-		if (this.lineStyle!= null) json.put("line-style", lineStyle.buildJSON());				
+		if (this.dotStyle != null) json.put("dot-style", dotStyle.buildJSON());
+		if (this.lineStyle != null) json.put("line-style", lineStyle.buildJSON());
 		return json;
 	}
 
@@ -156,7 +156,7 @@ public class LineChart extends Element implements JSONizable {
 		return colour;
 	}
 
-	/** 
+	/**
 	 * @return true if right axis
 	 */
 	public boolean isRightAxis() {

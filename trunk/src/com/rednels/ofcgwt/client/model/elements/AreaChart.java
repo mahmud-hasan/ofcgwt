@@ -24,7 +24,7 @@ import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 
 /**
- * OFC area chart 
+ * OFC area chart
  */
 public class AreaChart extends LineChart {
 

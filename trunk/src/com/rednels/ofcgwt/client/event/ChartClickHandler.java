@@ -19,16 +19,16 @@ package com.rednels.ofcgwt.client.event;
 
 import com.google.gwt.event.shared.EventHandler;
 
-
 /**
  * Handler for {@link ChartClickEvent} events.
  */
 public interface ChartClickHandler extends EventHandler {
 
-  /**
-   * Called when a chart click event is fired.
-   * 
-   * @param event the {@link ChartClickEvent} that was fired
-   */
-  void onClick(ChartClickEvent event);
+	/**
+	 * Called when a chart click event is fired.
+	 * 
+	 * @param event
+	 *            the {@link ChartClickEvent} that was fired
+	 */
+	void onClick(ChartClickEvent event);
 }

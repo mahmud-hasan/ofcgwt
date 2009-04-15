@@ -9,14 +9,14 @@ import com.google.gwt.json.client.JSONValue;
  * OFC Star
  */
 public class Star extends BaseDot {
-	
+
 	private Integer rotation;
 	private Boolean hollow;
 
 	public Star() {
 		this(null);
 	}
-	
+
 	public Star(Number value) {
 		super("star", value);
 	}
@@ -26,7 +26,7 @@ public class Star extends BaseDot {
 	 * 
 	 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
 	 */
-	public JSONValue buildJSON() {		
+	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
 		if (rotation != null) json.put("rotation", new JSONNumber(rotation.intValue()));
 		if (hollow != null) json.put("hollow", JSONBoolean.getInstance(hollow));
@@ -42,7 +42,7 @@ public class Star extends BaseDot {
 		return rotation;
 	}
 
-	/** 
+	/**
 	 * @return true if hollow
 	 */
 	public boolean isHollow() {

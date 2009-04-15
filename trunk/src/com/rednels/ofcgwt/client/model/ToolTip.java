@@ -24,13 +24,13 @@ import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 
 /**
- * OFC tooltip 
+ * OFC tooltip
  */
 public class ToolTip implements JSONizable {
-	
+
 	public static enum MouseStyle {
 
-		CLOSEST(0), FOLLOW(1), NORMAL(2);
+		CLOSEST(0), NORMAL(1), FOLLOW(2);
 
 		private int style;
 
@@ -42,7 +42,7 @@ public class ToolTip implements JSONizable {
 			return style;
 		}
 	}
-	
+
 	private String titlestyle;
 	private String bodystyle;
 	private String colour;

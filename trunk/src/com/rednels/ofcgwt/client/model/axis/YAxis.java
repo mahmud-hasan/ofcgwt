@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
@@ -29,11 +30,12 @@ import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
- * OFC y-axis 
+ * OFC y-axis
  */
 public class YAxis extends AbstractAxis implements JSONizable {
 
 	private Integer tickLength;
+	private Boolean logscale;
 	private List<String> labels;
 
 	/**
@@ -66,6 +68,7 @@ public class YAxis extends AbstractAxis implements JSONizable {
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
 		if (tickLength != null) json.put("tick-length", new JSONNumber(tickLength));
+		if (logscale != null) json.put("log-scale", JSONBoolean.getInstance(logscale));
 		if (labels == null) return json;
 		JSONArray ary = new JSONArray();
 		int index = 0;
@@ -90,6 +93,15 @@ public class YAxis extends AbstractAxis implements JSONizable {
 	 */
 	public List<String> getLabels() {
 		return labels;
+	}
+
+	/**
+	 * Gets the log scale.
+	 * 
+	 * @return the logscale
+	 */
+	public Boolean getLogScale() {
+		return logscale;
 	}
 
 	/**
@@ -119,6 +131,16 @@ public class YAxis extends AbstractAxis implements JSONizable {
 	 */
 	public void setLabels(String... labels) {
 		setLabels(Arrays.asList(labels));
+	}
+
+	/**
+	 * Sets the log scale.
+	 * 
+	 * @param logscale
+	 *            the logscale
+	 */
+	public void setVisible(Boolean logscale) {
+		this.logscale = logscale;
 	}
 
 	/**

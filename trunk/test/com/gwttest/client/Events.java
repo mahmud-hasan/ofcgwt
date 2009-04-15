@@ -74,7 +74,7 @@ public class Events implements EntryPoint {
 		resetBut = new Button("Reset", new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				chart.setChartData(getPieChartLayer1());				
+				chart.setChartData(getPieChartLayer1());
 			}
 		});
 		chartlist.add(chartLabel);
@@ -99,15 +99,15 @@ public class Events implements EntryPoint {
 		pie.setRadius(130);
 		pie.setColours(getColours());
 		Slice s1 = new Slice(33400, "AU");
-		s1.addChartClickHandler( new ChartClickHandler() {
+		s1.addChartClickHandler(new ChartClickHandler() {
 			@Override
 			public void onClick(ChartClickEvent event) {
-				chart.setChartData(getPieChartAULayer2());				
+				chart.setChartData(getPieChartAULayer2());
 			}
 		});
 		pie.addSlices(s1);
 		Slice s2 = new Slice(75000, "USA");
-		s2.addChartClickHandler( new ChartClickHandler() {
+		s2.addChartClickHandler(new ChartClickHandler() {
 			@Override
 			public void onClick(ChartClickEvent event) {
 				chart.setChartData(getPieChartUSLayer2());
@@ -115,7 +115,7 @@ public class Events implements EntryPoint {
 		});
 		pie.addSlices(s2);
 		Slice s3 = new Slice(63500, "EU");
-		s3.addChartClickHandler( new ChartClickHandler() {
+		s3.addChartClickHandler(new ChartClickHandler() {
 			@Override
 			public void onClick(ChartClickEvent event) {
 				chart.setChartData(getPieChartEULayer2());

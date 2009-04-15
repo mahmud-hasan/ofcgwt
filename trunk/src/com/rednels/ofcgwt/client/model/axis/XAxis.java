@@ -30,12 +30,12 @@ import com.google.gwt.json.client.JSONValue;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
- * OFC x-axis 
+ * OFC x-axis
  */
 public class XAxis extends AbstractAxis implements JSONizable {
 
 	/**
-	 * OFC x-axis label 
+	 * OFC x-axis label
 	 */
 	public class Labels extends Label implements JSONizable {
 
