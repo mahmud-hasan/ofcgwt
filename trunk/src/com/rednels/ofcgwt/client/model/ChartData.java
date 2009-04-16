@@ -217,7 +217,7 @@ public class ChartData implements JSONizable {
 	 * 
 	 * @return the tooltip
 	 */
-	public ToolTip getTooltip() {
+	public ToolTip getTooltipStyle() {
 		return tooltip;
 	}
 
@@ -399,7 +399,7 @@ public class ChartData implements JSONizable {
 	 * @param tooltip
 	 *            the new tooltip
 	 */
-	public void setTooltip(ToolTip tooltip) {
+	public void setTooltipStyle(ToolTip tooltip) {
 		this.tooltip = tooltip;
 	}
 
