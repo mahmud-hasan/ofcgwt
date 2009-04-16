@@ -53,7 +53,6 @@ import com.rednels.ofcgwt.client.model.elements.BarChart;
 import com.rednels.ofcgwt.client.model.elements.CylinderBarChart;
 import com.rednels.ofcgwt.client.model.elements.HorizontalBarChart;
 import com.rednels.ofcgwt.client.model.elements.HorizontalStackedBarChart;
-import com.rednels.ofcgwt.client.model.elements.HorizontalStackedBarChart.HStack;
 import com.rednels.ofcgwt.client.model.elements.LineChart;
 import com.rednels.ofcgwt.client.model.elements.PieChart;
 import com.rednels.ofcgwt.client.model.elements.ScatterChart;
@@ -61,6 +60,7 @@ import com.rednels.ofcgwt.client.model.elements.SketchBarChart;
 import com.rednels.ofcgwt.client.model.elements.StackedBarChart;
 import com.rednels.ofcgwt.client.model.elements.BarChart.BarStyle;
 import com.rednels.ofcgwt.client.model.elements.CylinderBarChart.CylinderStyle;
+import com.rednels.ofcgwt.client.model.elements.HorizontalStackedBarChart.HStack;
 import com.rednels.ofcgwt.client.model.elements.ScatterChart.ScatterStyle;
 import com.rednels.ofcgwt.client.model.elements.StackedBarChart.Stack;
 import com.rednels.ofcgwt.client.model.elements.dot.HollowDot;
@@ -115,7 +115,7 @@ public class Demo implements EntryPoint {
 		SimplePanel chartPanel = new SimplePanel();
 		chartPanel.setStylePrimaryName("chartPanel");
 		final ChartWidget chart = new ChartWidget();
-		chart.setSize("400", "300");
+		chart.setSize("500", "400");
 		chart.setChartData(getPieChartData());
 		chartPanel.add(chart);
 		dp.add(chartPanel);
@@ -645,7 +645,7 @@ public class Demo implements EntryPoint {
 		bchart1.addBars(new HorizontalBarChart.Bar(Random.nextInt(23) + 100, "#00ff00"));
 		bchart1.addBars(new HorizontalBarChart.Bar(Random.nextInt(33) + 100, "#ff0000"));
 		cd1.addElements(bchart1);
-		cd1.setTooltip(new ToolTip(MouseStyle.FOLLOW));
+		cd1.setTooltipStyle(new ToolTip(MouseStyle.FOLLOW));
 		return cd1;
 	}
 
@@ -757,7 +757,7 @@ public class Demo implements EntryPoint {
 		ChartData cd = new ChartData("Investments in ($M)", "font-size: 14px; font-family: Verdana; text-align: center;");
 		cd.setBackgroundColour("#ffffff");
 		cd.setLegend(new Legend(Position.RIGHT, true));
-		cd.setTooltip(new ToolTip(MouseStyle.FOLLOW));
+		cd.setTooltipStyle(new ToolTip(MouseStyle.FOLLOW));
 
 		HorizontalStackedBarChart stack = new HorizontalStackedBarChart();
 		stack.setTooltip("#key#<br>#val# / #total#");
