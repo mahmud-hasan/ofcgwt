@@ -1,7 +1,8 @@
 /*
-Copyright (C) 2008 Grant Slender
+Copyright (C) 2009 Grant Slender
 
 This file is part of OFCGWT.
+http://code.google.com/p/ofcgwt/
 
 OFCGWT is free software: you can redistribute it and/or modify
 it under the terms of the Lesser GNU General Public License as
@@ -66,49 +67,36 @@ public abstract class Element extends ElementEvents implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = new JSONObject();
-		if (type != null)
-			json.put("type", new JSONString(type));
-		if (text != null)
-			json.put("text", new JSONString(text));
-		if (fontSize != null)
-			json.put("font-size", new JSONNumber(fontSize));
-		if (tooltip != null)
-			json.put("tip", new JSONString(tooltip));
-		if (onClick != null)
-			json.put("on-click", new JSONString(onClick));
-		if (keyOnClick != null)
-			json.put("key-on-click", new JSONString(keyOnClick));
+		if (type != null) json.put("type", new JSONString(type));
+		if (text != null) json.put("text", new JSONString(text));
+		if (fontSize != null) json.put("font-size", new JSONNumber(fontSize));
+		if (tooltip != null) json.put("tip", new JSONString(tooltip));
+		if (onClick != null) json.put("on-click", new JSONString(onClick));
+		if (keyOnClick != null) json.put("key-on-click", new JSONString(keyOnClick));
 
 		JSONArray ary = new JSONArray();
 		int index = 0;
 		for (String s : colours) {
 			ary.set(index++, new JSONString(s));
 		}
-		if (index != 0)
-			json.put("colours", ary);
+		if (index != 0) json.put("colours", ary);
 
 		ary = new JSONArray();
 		index = 0;
 		for (Keys k : keys) {
 			ary.set(index++, k.buildJSON());
 		}
-		if (index != 0)
-			json.put("keys", ary);
+		if (index != 0) json.put("keys", ary);
 
 		ary = new JSONArray();
 		index = 0;
 		for (Object o : values) {
-			if (o == null)
-				ary.set(index++, null);
-			if (o instanceof Number)
-				ary.set(index++, new JSONNumber(((Number) o).doubleValue()));
-			if (o instanceof String)
-				ary.set(index++, new JSONString((String) o));
-			if (o instanceof JSONizable)
-				ary.set(index++, ((JSONizable) o).buildJSON());
+			if (o == null) ary.set(index++, null);
+			if (o instanceof Number) ary.set(index++, new JSONNumber(((Number) o).doubleValue()));
+			if (o instanceof String) ary.set(index++, new JSONString((String) o));
+			if (o instanceof JSONizable) ary.set(index++, ((JSONizable) o).buildJSON());
 		}
-		if (index != 0)
-			json.put("values", ary);
+		if (index != 0) json.put("values", ary);
 
 		json.put("on-show", onShowType);
 

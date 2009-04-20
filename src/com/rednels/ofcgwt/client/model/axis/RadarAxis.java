@@ -1,7 +1,8 @@
 /*
-Copyright (C) 2008 Grant Slender
+Copyright (C) 2009 Grant Slender
 
 This file is part of OFCGWT.
+http://code.google.com/p/ofcgwt/
 
 OFCGWT is free software: you can redistribute it and/or modify
 it under the terms of the Lesser GNU General Public License as
@@ -101,20 +102,15 @@ public class RadarAxis extends AbstractAxis implements JSONizable {
 		 */
 		public JSONValue buildJSON() {
 			JSONObject json = new JSONObject();
-			if (colour != null)
-				json.put("colour", new JSONString(colour));
-			if (labels == null)
-				return json;
+			if (colour != null) json.put("colour", new JSONString(colour));
+			if (labels == null) return json;
 			JSONArray ary = new JSONArray();
 			int index = 0;
 			for (Object o : getLabels()) {
-				if (o instanceof String)
-					ary.set(index++, new JSONString((String) o));
-				if (o instanceof Label)
-					ary.set(index++, ((Label) o).buildJSON());
+				if (o instanceof String) ary.set(index++, new JSONString((String) o));
+				if (o instanceof Label) ary.set(index++, ((Label) o).buildJSON());
 			}
-			if (index != 0)
-				json.put("labels", ary);
+			if (index != 0) json.put("labels", ary);
 			return json;
 		}
 
@@ -150,8 +146,7 @@ public class RadarAxis extends AbstractAxis implements JSONizable {
 		 * Check labels not null.
 		 */
 		private synchronized void checkLabelsNotNull() {
-			if (labels == null)
-				labels = new ArrayList<Object>();
+			if (labels == null) labels = new ArrayList<Object>();
 		}
 	}
 
@@ -187,10 +182,8 @@ public class RadarAxis extends AbstractAxis implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (labels != null)
-			json.put("labels", labels.buildJSON());
-		if (spokelabels != null)
-			json.put("spoke-labels", spokelabels.buildJSON());
+		if (labels != null) json.put("labels", labels.buildJSON());
+		if (spokelabels != null) json.put("spoke-labels", spokelabels.buildJSON());
 		return json;
 	}
 
@@ -276,15 +269,13 @@ public class RadarAxis extends AbstractAxis implements JSONizable {
 	 * Check labels not null.
 	 */
 	private synchronized void checkLabelsNotNull() {
-		if (labels == null)
-			labels = new Labels();
+		if (labels == null) labels = new Labels();
 	}
 
 	/**
 	 * Check labels not null.
 	 */
 	private synchronized void checkSpokeLabelsNotNull() {
-		if (spokelabels == null)
-			spokelabels = new Labels();
+		if (spokelabels == null) spokelabels = new Labels();
 	}
 }

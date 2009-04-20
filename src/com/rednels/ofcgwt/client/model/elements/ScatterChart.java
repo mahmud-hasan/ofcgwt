@@ -1,7 +1,8 @@
 /*
-Copyright (C) 2008 Grant Slender
+Copyright (C) 2009 Grant Slender
 
 This file is part of OFCGWT.
+http://code.google.com/p/ofcgwt/
 
 OFCGWT is free software: you can redistribute it and/or modify
 it under the terms of the Lesser GNU General Public License as
@@ -75,8 +76,7 @@ public class ScatterChart extends Element implements JSONizable {
 	 *            the y
 	 */
 	public void addPoint(Number x, Number y) {
-		BaseDot bd = new BaseDot(null) {
-		};
+		BaseDot bd = new BaseDot(null) {};
 		bd.setXY(x, y);
 		addPoints(bd);
 	}
@@ -108,12 +108,9 @@ public class ScatterChart extends Element implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (dotSize != null)
-			json.put("dot-size", new JSONNumber(dotSize.doubleValue()));
-		if (this.dotStyle != null)
-			json.put("dot-style", dotStyle.buildJSON());
-		if (colour != null)
-			json.put("colour", new JSONString(colour));
+		if (dotSize != null) json.put("dot-size", new JSONNumber(dotSize.doubleValue()));
+		if (this.dotStyle != null) json.put("dot-style", dotStyle.buildJSON());
+		if (colour != null) json.put("colour", new JSONString(colour));
 		return json;
 	}
 

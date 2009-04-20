@@ -1,7 +1,8 @@
 /*
-Copyright (C) 2008 Grant Slender
+Copyright (C) 2009 Grant Slender
 
 This file is part of OFCGWT.
+http://code.google.com/p/ofcgwt/
 
 OFCGWT is free software: you can redistribute it and/or modify
 it under the terms of the Lesser GNU General Public License as
@@ -30,8 +31,7 @@ public class SketchBarChart extends FilledBarChart implements JSONizable {
 	/**
 	 * OFC sketch bar chart bars
 	 */
-	public static class SketchBar extends FilledBarChart.Bar implements
-			JSONizable {
+	public static class SketchBar extends FilledBarChart.Bar implements JSONizable {
 
 		private Integer offset;
 
@@ -82,8 +82,7 @@ public class SketchBarChart extends FilledBarChart implements JSONizable {
 		 */
 		public JSONValue buildJSON() {
 			JSONObject json = (JSONObject) super.buildJSON();
-			if (offset != null)
-				json.put("offset", new JSONNumber(offset.doubleValue()));
+			if (offset != null) json.put("offset", new JSONNumber(offset.doubleValue()));
 			return json;
 		}
 
@@ -140,8 +139,7 @@ public class SketchBarChart extends FilledBarChart implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (offset != null)
-			json.put("offset", new JSONNumber(offset.doubleValue()));
+		if (offset != null) json.put("offset", new JSONNumber(offset.doubleValue()));
 		return json;
 	}
 

@@ -1,7 +1,8 @@
 /*
-Copyright (C) 2008 Grant Slender
+Copyright (C) 2009 Grant Slender
 
 This file is part of OFCGWT.
+http://code.google.com/p/ofcgwt/
 
 OFCGWT is free software: you can redistribute it and/or modify
 it under the terms of the Lesser GNU General Public License as
@@ -60,12 +61,9 @@ public class LineChart extends Element implements JSONizable {
 		 */
 		public JSONValue buildJSON() {
 			JSONObject json = new JSONObject();
-			if (on != null)
-				json.put("on", new JSONNumber(on.doubleValue()));
-			if (off != null)
-				json.put("off", new JSONNumber(off.doubleValue()));
-			if (style != null)
-				json.put("style", new JSONString(style));
+			if (on != null) json.put("on", new JSONNumber(on.doubleValue()));
+			if (off != null) json.put("off", new JSONNumber(off.doubleValue()));
+			if (style != null) json.put("style", new JSONString(style));
 			return json;
 		}
 	}
@@ -137,18 +135,12 @@ public class LineChart extends Element implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (width != null)
-			json.put("width", new JSONNumber(width));
-		if (text != null)
-			json.put("text", new JSONString(text));
-		if (colour != null)
-			json.put("colour", new JSONString(colour));
-		if (this.rightAxis)
-			json.put("axis", new JSONString("right"));
-		if (this.dotStyle != null)
-			json.put("dot-style", dotStyle.buildJSON());
-		if (this.lineStyle != null)
-			json.put("line-style", lineStyle.buildJSON());
+		if (width != null) json.put("width", new JSONNumber(width));
+		if (text != null) json.put("text", new JSONString(text));
+		if (colour != null) json.put("colour", new JSONString(colour));
+		if (this.rightAxis) json.put("axis", new JSONString("right"));
+		if (this.dotStyle != null) json.put("dot-style", dotStyle.buildJSON());
+		if (this.lineStyle != null) json.put("line-style", lineStyle.buildJSON());
 		return json;
 	}
 

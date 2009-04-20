@@ -1,7 +1,8 @@
 /*
-Copyright (C) 2008 Grant Slender
+Copyright (C) 2009 Grant Slender
 
 This file is part of OFCGWT.
+http://code.google.com/p/ofcgwt/
 
 OFCGWT is free software: you can redistribute it and/or modify
 it under the terms of the Lesser GNU General Public License as
@@ -99,16 +100,11 @@ public class HorizontalBarChart extends Element implements JSONizable {
 		 */
 		public JSONValue buildJSON() {
 			JSONObject json = new JSONObject();
-			if (left != null)
-				json.put("left", new JSONNumber(left.doubleValue()));
-			if (right != null)
-				json.put("right", new JSONNumber(right.doubleValue()));
-			if (colour != null)
-				json.put("colour", new JSONString(colour));
-			if (tooltip != null)
-				json.put("tip", new JSONString(tooltip));
-			if (onClick != null)
-				json.put("on-click", new JSONString(onClick));
+			if (left != null) json.put("left", new JSONNumber(left.doubleValue()));
+			if (right != null) json.put("right", new JSONNumber(right.doubleValue()));
+			if (colour != null) json.put("colour", new JSONString(colour));
+			if (tooltip != null) json.put("tip", new JSONString(tooltip));
+			if (onClick != null) json.put("on-click", new JSONString(onClick));
 			return json;
 		}
 
@@ -262,10 +258,8 @@ public class HorizontalBarChart extends Element implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (colour != null)
-			json.put("colour", new JSONString(colour));
-		if (barwidth != null)
-			json.put("barwidth", new JSONNumber(barwidth.doubleValue()));
+		if (colour != null) json.put("colour", new JSONString(colour));
+		if (barwidth != null) json.put("barwidth", new JSONNumber(barwidth.doubleValue()));
 		if (barwidth != null) json.put("barwidth", new JSONNumber(barwidth.doubleValue()));
 		return json;
 	}
@@ -306,24 +300,5 @@ public class HorizontalBarChart extends Element implements JSONizable {
 	 */
 	public void setColour(String colour) {
 		this.colour = colour;
-	}
-
-	/**
-	 * Gets the barwidth.
-	 * 
-	 * @return the barwidth
-	 */
-	public Number getBarwidth() {
-		return barwidth;
-	}
-
-	/**
-	 * Sets the barwidth.
-	 * 
-	 * @param barwidth
-	 *            the new barwidth
-	 */
-	public void setBarwidth(Number barwidth) {
-		this.barwidth = barwidth;
 	}
 }

@@ -1,7 +1,8 @@
 /*
-Copyright (C) 2008 Grant Slender
+Copyright (C) 2009 Grant Slender
 
 This file is part of OFCGWT.
+http://code.google.com/p/ofcgwt/
 
 OFCGWT is free software: you can redistribute it and/or modify
 it under the terms of the Lesser GNU General Public License as
@@ -51,12 +52,9 @@ public class Keys implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = new JSONObject();
-		if (text != null)
-			json.put("text", new JSONString(text));
-		if (colour != null)
-			json.put("colour", new JSONString(colour));
-		if (fontsize != null)
-			json.put("font-size", new JSONNumber(fontsize));
+		if (text != null) json.put("text", new JSONString(text));
+		if (colour != null) json.put("colour", new JSONString(colour));
+		if (fontsize != null) json.put("font-size", new JSONNumber(fontsize));
 		return json;
 	}
 

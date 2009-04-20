@@ -16,22 +16,30 @@ GNU General Public License for more details.
 
 See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
  */
-package com.rednels.ofcgwt.client.model;
+package com.rednels.ofcgwt.client.event;
 
-import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.event.shared.GwtEvent;
 
-/**
- * An interface that objects that build JSON strings should implement
- */
-public interface JSONizable {
+public class KeyClickEvent extends GwtEvent<KeyClickHandler> {
+
+	private static final Type<KeyClickHandler> TYPE = new Type<KeyClickHandler>();
 
 	/**
-	 * Build (and return) a JSONObject that contains all the items of this
-	 * object. If required, will call.buildJSON() on any contained JSONizable
-	 * objects, thus producing an entire JSON tree.
+	 * Gets the event type associated with click events.
 	 * 
-	 * @return the JSONObject
+	 * @return the handler type
 	 */
-	public JSONValue buildJSON();
+	public static Type<KeyClickHandler> getType() {
+		return TYPE;
+	}
 
+	@Override
+	public Type<KeyClickHandler> getAssociatedType() {
+		return TYPE;
+	}
+
+	@Override
+	protected void dispatch(KeyClickHandler handler) {
+		handler.onClick(this);
+	}
 }

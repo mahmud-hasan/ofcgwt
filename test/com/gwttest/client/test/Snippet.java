@@ -1,7 +1,8 @@
 /*
-Copyright (C) 2008 Grant Slender
+Copyright (C) 2009 Grant Slender
 
 This file is part of OFCGWT.
+http://code.google.com/p/ofcgwt/
 
 OFCGWT is free software: you can redistribute it and/or modify
 it under the terms of the Lesser GNU General Public License as
@@ -94,18 +95,14 @@ public class Snippet implements EntryPoint {
 	 * @param zIndex
 	 * @return
 	 */
-	public SimplePanel createSimplePanel(int width, int height, int top,
-			int left, String backgroundColor, int zIndex) {
+	public SimplePanel createSimplePanel(int width, int height, int top, int left, String backgroundColor, int zIndex) {
 		SimplePanel simplePanel = new SimplePanel();
 		DOM.setStyleAttribute(simplePanel.getElement(), "position", "absolute");
 		DOM.setStyleAttribute(simplePanel.getElement(), "width", width + "px");
-		DOM
-				.setStyleAttribute(simplePanel.getElement(), "height", height
-						+ "px");
+		DOM.setStyleAttribute(simplePanel.getElement(), "height", height + "px");
 		DOM.setStyleAttribute(simplePanel.getElement(), "top", top + "px");
 		DOM.setStyleAttribute(simplePanel.getElement(), "left", left + "px");
-		DOM.setStyleAttribute(simplePanel.getElement(), "backgroundColor",
-				backgroundColor);
+		DOM.setStyleAttribute(simplePanel.getElement(), "backgroundColor", backgroundColor);
 		DOM.setIntStyleAttribute(simplePanel.getElement(), "zIndex", zIndex);
 
 		// Add a GraphWidget into this panel with a z-index at panel's z-index +

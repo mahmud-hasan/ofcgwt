@@ -1,7 +1,8 @@
 /*
-Copyright (C) 2008 Grant Slender
+Copyright (C) 2009 Grant Slender
 
 This file is part of OFCGWT.
+http://code.google.com/p/ofcgwt/
 
 OFCGWT is free software: you can redistribute it and/or modify
 it under the terms of the Lesser GNU General Public License as
@@ -94,22 +95,15 @@ public class Legend implements JSONizable {
 		JSONObject json = new JSONObject();
 		json.put("visible", JSONBoolean.getInstance(true));
 		json.put("bg_colour", new JSONString("#fefefe"));
-		if (position != null)
-			json.put("position", new JSONString(position.getString()));
+		if (position != null) json.put("position", new JSONString(position.getString()));
 		json.put("border", JSONBoolean.getInstance(border));
 		json.put("shadow", JSONBoolean.getInstance(shadow));
-		if (alpha != null)
-			json.put("alpha", new JSONNumber(alpha));
-		if (stroke != null)
-			json.put("stroke", new JSONNumber(stroke));
-		if (margin != null)
-			json.put("margin", new JSONNumber(margin));
-		if (padding != null)
-			json.put("padding", new JSONNumber(padding));
-		if (borderColour != null)
-			json.put("border_colour", new JSONString(borderColour));
-		if (bgColour != null)
-			json.put("bg_colour", new JSONString(bgColour));
+		if (alpha != null) json.put("alpha", new JSONNumber(alpha));
+		if (stroke != null) json.put("stroke", new JSONNumber(stroke));
+		if (margin != null) json.put("margin", new JSONNumber(margin));
+		if (padding != null) json.put("padding", new JSONNumber(padding));
+		if (borderColour != null) json.put("border_colour", new JSONString(borderColour));
+		if (bgColour != null) json.put("bg_colour", new JSONString(bgColour));
 		return json;
 	}
 
