@@ -27,8 +27,10 @@ public class Anchor extends BaseDot {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (rotation != null) json.put("rotation", new JSONNumber(rotation.intValue()));
-		if (sides != null) json.put("sides", new JSONNumber(sides.intValue()));
+		if (rotation != null)
+			json.put("rotation", new JSONNumber(rotation.intValue()));
+		if (sides != null)
+			json.put("sides", new JSONNumber(sides.intValue()));
 		return json;
 	}
 
@@ -42,6 +44,15 @@ public class Anchor extends BaseDot {
 	}
 
 	/**
+	 * Gets the sides.
+	 * 
+	 * @return the sides
+	 */
+	public Integer getSides() {
+		return sides;
+	}
+
+	/**
 	 * Sets the rotation.
 	 * 
 	 * @param rotation
@@ -49,15 +60,6 @@ public class Anchor extends BaseDot {
 	 */
 	public void setRotation(Integer rotation) {
 		this.rotation = rotation;
-	}
-
-	/**
-	 * Gets the sides.
-	 * 
-	 * @return the sides
-	 */
-	public Integer getSides() {
-		return sides;
 	}
 
 	/**

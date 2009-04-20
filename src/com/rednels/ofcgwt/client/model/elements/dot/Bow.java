@@ -26,7 +26,8 @@ public class Bow extends BaseDot {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (rotation != null) json.put("rotation", new JSONNumber(rotation.intValue()));
+		if (rotation != null)
+			json.put("rotation", new JSONNumber(rotation.intValue()));
 		return json;
 	}
 

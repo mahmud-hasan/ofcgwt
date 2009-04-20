@@ -4,13 +4,13 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
-import com.rednels.ofcgwt.client.event.EventElement;
+import com.rednels.ofcgwt.client.event.DataValueEvents;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
  * OFC line dots
  */
-public abstract class BaseDot extends EventElement implements JSONizable {
+public abstract class BaseDot extends DataValueEvents implements JSONizable {
 
 	private Integer haloSize;
 	private Integer size;
@@ -18,7 +18,6 @@ public abstract class BaseDot extends EventElement implements JSONizable {
 	private String colour;
 	private String type;
 	private String tooltip;
-	private String onClick;
 	private Number x;
 	private Number y;
 
@@ -46,15 +45,24 @@ public abstract class BaseDot extends EventElement implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = new JSONObject();
-		if (haloSize != null) json.put("halo-size", new JSONNumber(haloSize.doubleValue()));
-		if (size != null) json.put("dot-size", new JSONNumber(size.doubleValue()));
-		if (value != null) json.put("value", new JSONNumber(value.doubleValue()));
-		if (colour != null) json.put("colour", new JSONString(colour));
-		if (type != null) json.put("type", new JSONString(type));
-		if (tooltip != null) json.put("tip", new JSONString(tooltip));
-		if (x != null) json.put("x", new JSONNumber(x.doubleValue()));
-		if (y != null) json.put("y", new JSONNumber(y.doubleValue()));
-		if (onClick != null) json.put("on-click", new JSONString(onClick));
+		if (haloSize != null)
+			json.put("halo-size", new JSONNumber(haloSize.doubleValue()));
+		if (size != null)
+			json.put("dot-size", new JSONNumber(size.doubleValue()));
+		if (value != null)
+			json.put("value", new JSONNumber(value.doubleValue()));
+		if (colour != null)
+			json.put("colour", new JSONString(colour));
+		if (type != null)
+			json.put("type", new JSONString(type));
+		if (tooltip != null)
+			json.put("tip", new JSONString(tooltip));
+		if (x != null)
+			json.put("x", new JSONNumber(x.doubleValue()));
+		if (y != null)
+			json.put("y", new JSONNumber(y.doubleValue()));
+		if (onClick != null)
+			json.put("on-click", new JSONString(onClick));
 		return json;
 	}
 
@@ -68,15 +76,6 @@ public abstract class BaseDot extends EventElement implements JSONizable {
 	}
 
 	/**
-	 * Gets the size.
-	 * 
-	 * @return the size
-	 */
-	public Integer getSize() {
-		return size;
-	}
-
-	/**
 	 * Gets the halo size.
 	 * 
 	 * @return the halo size
@@ -86,12 +85,12 @@ public abstract class BaseDot extends EventElement implements JSONizable {
 	}
 
 	/**
-	 * Gets the onClick.
+	 * Gets the size.
 	 * 
-	 * @return the onClick
+	 * @return the size
 	 */
-	public String getOnClick() {
-		return onClick;
+	public Integer getSize() {
+		return size;
 	}
 
 	/**
@@ -141,16 +140,6 @@ public abstract class BaseDot extends EventElement implements JSONizable {
 	}
 
 	/**
-	 * Sets the size.
-	 * 
-	 * @param size
-	 *            the size
-	 */
-	public void setSize(Integer size) {
-		this.size = size;
-	}
-
-	/**
 	 * Sets the halo size.
 	 * 
 	 * @param haloSize
@@ -161,13 +150,13 @@ public abstract class BaseDot extends EventElement implements JSONizable {
 	}
 
 	/**
-	 * Sets the onClick.
+	 * Sets the size.
 	 * 
-	 * @param onClick
-	 *            the onClick javascript method or url
+	 * @param size
+	 *            the size
 	 */
-	public void setOnClick(String onClick) {
-		this.onClick = onClick;
+	public void setSize(Integer size) {
+		this.size = size;
 	}
 
 	/**

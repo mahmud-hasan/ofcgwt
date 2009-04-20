@@ -26,7 +26,7 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
-import com.rednels.ofcgwt.client.event.EventElement;
+import com.rednels.ofcgwt.client.event.DataValueEvents;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
@@ -73,7 +73,8 @@ public class HorizontalStackedBarChart extends Element implements JSONizable {
 		 */
 		public JSONValue buildJSON() {
 			JSONArray ary = new JSONArray();
-			if (values == null) return ary;
+			if (values == null)
+				return ary;
 			int index = 0;
 			for (Object o : values) {
 				ary.set(index++, ((StackValue) o).buildJSON());
@@ -94,7 +95,8 @@ public class HorizontalStackedBarChart extends Element implements JSONizable {
 	/**
 	 * OFC stack bar chart values
 	 */
-	public static class StackValue extends EventElement implements JSONizable {
+	public static class StackValue extends DataValueEvents implements
+			JSONizable {
 
 		private Number left;
 		private Number right;
@@ -153,10 +155,14 @@ public class HorizontalStackedBarChart extends Element implements JSONizable {
 		 */
 		public JSONValue buildJSON() {
 			JSONObject json = new JSONObject();
-			if (left != null) json.put("left", new JSONNumber(left.doubleValue()));
-			if (right != null) json.put("right", new JSONNumber(right.doubleValue()));
-			if (colour != null) json.put("colour", new JSONString(colour));
-			if (text != null) json.put("text", new JSONString(text));
+			if (left != null)
+				json.put("left", new JSONNumber(left.doubleValue()));
+			if (right != null)
+				json.put("right", new JSONNumber(right.doubleValue()));
+			if (colour != null)
+				json.put("colour", new JSONString(colour));
+			if (text != null)
+				json.put("text", new JSONString(text));
 			return json;
 		}
 
@@ -246,15 +252,14 @@ public class HorizontalStackedBarChart extends Element implements JSONizable {
 		super("hbar_stack");
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Adds the stack.
 	 * 
-	 * @see com.rednels.ofcgwt.client.model.elements.Element.buildJSON()
+	 * @param stacks
+	 *            the stacks
 	 */
-	public JSONValue buildJSON() {
-		JSONObject json = (JSONObject) super.buildJSON();
-		if (barwidth != null) json.put("barwidth", new JSONNumber(barwidth.doubleValue()));
-		return json;
+	public void addStack(HStack... stacks) {
+		addStack(Arrays.asList(stacks));
 	}
 
 	/**
@@ -267,14 +272,16 @@ public class HorizontalStackedBarChart extends Element implements JSONizable {
 		values.addAll(stacks);
 	}
 
-	/**
-	 * Adds the stack.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param stacks
-	 *            the stacks
+	 * @see com.rednels.ofcgwt.client.model.elements.Element.buildJSON()
 	 */
-	public void addStack(HStack... stacks) {
-		addStack(Arrays.asList(stacks));
+	public JSONValue buildJSON() {
+		JSONObject json = (JSONObject) super.buildJSON();
+		if (barwidth != null)
+			json.put("barwidth", new JSONNumber(barwidth.doubleValue()));
+		return json;
 	}
 
 	/**

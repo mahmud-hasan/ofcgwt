@@ -51,9 +51,12 @@ public class Keys implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = new JSONObject();
-		if (text != null) json.put("text", new JSONString(text));
-		if (colour != null) json.put("colour", new JSONString(colour));
-		if (fontsize != null) json.put("font-size", new JSONNumber(fontsize));
+		if (text != null)
+			json.put("text", new JSONString(text));
+		if (colour != null)
+			json.put("colour", new JSONString(colour));
+		if (fontsize != null)
+			json.put("font-size", new JSONNumber(fontsize));
 		return json;
 	}
 

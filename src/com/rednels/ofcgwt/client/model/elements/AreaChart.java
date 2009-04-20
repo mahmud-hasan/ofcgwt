@@ -37,6 +37,8 @@ public class AreaChart extends LineChart {
 	 */
 	public AreaChart() {
 		super("area");
+		onShowType = new JSONObject();
+		((JSONObject) onShowType).put("type", new JSONString(""));
 	}
 
 	/*
@@ -46,9 +48,12 @@ public class AreaChart extends LineChart {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (fillAlpha != null) json.put("fill-alpha", new JSONNumber(fillAlpha));
-		if (fillColour != null) json.put("fill", new JSONString(fillColour));
-		if (loop != null) json.put("loop", JSONBoolean.getInstance(loop));
+		if (fillAlpha != null)
+			json.put("fill-alpha", new JSONNumber(fillAlpha));
+		if (fillColour != null)
+			json.put("fill", new JSONString(fillColour));
+		if (loop != null)
+			json.put("loop", JSONBoolean.getInstance(loop));
 		return json;
 	}
 

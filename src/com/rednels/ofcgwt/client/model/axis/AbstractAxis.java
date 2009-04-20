@@ -43,14 +43,22 @@ public abstract class AbstractAxis implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = new JSONObject();
-		if (stroke != null) json.put("stroke", new JSONNumber(stroke));
-		if (colour != null) json.put("colour", new JSONString(colour));
-		if (gridColour != null) json.put("grid-colour", new JSONString(gridColour));
-		if (steps != null) json.put("steps", new JSONNumber(steps.doubleValue()));
-		if (offset != null) json.put("offset", new JSONNumber(offset));
-		if (zdepth3d != null) json.put("3d", new JSONNumber(zdepth3d));
-		if (min != null) json.put("min", new JSONNumber(min.doubleValue()));
-		if (max != null) json.put("max", new JSONNumber(max.doubleValue()));
+		if (stroke != null)
+			json.put("stroke", new JSONNumber(stroke));
+		if (colour != null)
+			json.put("colour", new JSONString(colour));
+		if (gridColour != null)
+			json.put("grid-colour", new JSONString(gridColour));
+		if (steps != null)
+			json.put("steps", new JSONNumber(steps.doubleValue()));
+		if (offset != null)
+			json.put("offset", new JSONNumber(offset));
+		if (zdepth3d != null)
+			json.put("3d", new JSONNumber(zdepth3d));
+		if (min != null)
+			json.put("min", new JSONNumber(min.doubleValue()));
+		if (max != null)
+			json.put("max", new JSONNumber(max.doubleValue()));
 		return json;
 	}
 
@@ -173,7 +181,8 @@ public abstract class AbstractAxis implements JSONizable {
 	 *            the new offset
 	 */
 	public void setOffset(Boolean offset) {
-		if (offset == null) this.offset = null;
+		if (offset == null)
+			this.offset = null;
 		this.offset = offset ? 1 : 0;
 	}
 

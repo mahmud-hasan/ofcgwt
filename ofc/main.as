@@ -105,7 +105,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../../data-files/shape.txt";
+					var file:String = "../../data-files/pie-bug-green.txt";
 					//var file:String = "../../data-files/radar-2.txt";
 					//var file:String = "../../../test-data-files/stack.txt";
 					this.load_external_file( file );

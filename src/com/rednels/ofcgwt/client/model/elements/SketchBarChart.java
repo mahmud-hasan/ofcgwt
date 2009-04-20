@@ -30,7 +30,8 @@ public class SketchBarChart extends FilledBarChart implements JSONizable {
 	/**
 	 * OFC sketch bar chart bars
 	 */
-	public static class SketchBar extends FilledBarChart.Bar implements JSONizable {
+	public static class SketchBar extends FilledBarChart.Bar implements
+			JSONizable {
 
 		private Integer offset;
 
@@ -81,7 +82,8 @@ public class SketchBarChart extends FilledBarChart implements JSONizable {
 		 */
 		public JSONValue buildJSON() {
 			JSONObject json = (JSONObject) super.buildJSON();
-			if (offset != null) json.put("offset", new JSONNumber(offset.doubleValue()));
+			if (offset != null)
+				json.put("offset", new JSONNumber(offset.doubleValue()));
 			return json;
 		}
 
@@ -138,7 +140,8 @@ public class SketchBarChart extends FilledBarChart implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (offset != null) json.put("offset", new JSONNumber(offset.doubleValue()));
+		if (offset != null)
+			json.put("offset", new JSONNumber(offset.doubleValue()));
 		return json;
 	}
 

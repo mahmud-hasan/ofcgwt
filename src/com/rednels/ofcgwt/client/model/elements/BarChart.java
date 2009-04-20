@@ -24,7 +24,7 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
-import com.rednels.ofcgwt.client.event.EventElement;
+import com.rednels.ofcgwt.client.event.DataValueEvents;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
@@ -35,13 +35,12 @@ public class BarChart extends Element implements JSONizable {
 	/**
 	 * OFC bar chart bars
 	 */
-	public static class Bar extends EventElement implements JSONizable {
+	public static class Bar extends DataValueEvents implements JSONizable {
 
 		private Number top;
 		private Number bottom;
 		private String colour;
 		private String tooltip;
-		private String onClick;
 
 		/**
 		 * Creates a new bar.
@@ -100,11 +99,16 @@ public class BarChart extends Element implements JSONizable {
 		 */
 		public JSONValue buildJSON() {
 			JSONObject json = new JSONObject();
-			if (top != null) json.put("top", new JSONNumber(top.doubleValue()));
-			if (bottom != null) json.put("bottom", new JSONNumber(bottom.doubleValue()));
-			if (colour != null) json.put("colour", new JSONString(colour));
-			if (tooltip != null) json.put("tip", new JSONString(tooltip));
-			if (onClick != null) json.put("on-click", new JSONString(onClick));
+			if (top != null)
+				json.put("top", new JSONNumber(top.doubleValue()));
+			if (bottom != null)
+				json.put("bottom", new JSONNumber(bottom.doubleValue()));
+			if (colour != null)
+				json.put("colour", new JSONString(colour));
+			if (tooltip != null)
+				json.put("tip", new JSONString(tooltip));
+			if (onClick != null)
+				json.put("on-click", new JSONString(onClick));
 			return json;
 		}
 
@@ -124,15 +128,6 @@ public class BarChart extends Element implements JSONizable {
 		 */
 		public String getColour() {
 			return colour;
-		}
-
-		/**
-		 * Gets the onClick.
-		 * 
-		 * @return the onClick
-		 */
-		public String getOnClick() {
-			return onClick;
 		}
 
 		/**
@@ -171,16 +166,6 @@ public class BarChart extends Element implements JSONizable {
 		 */
 		public void setColour(String colour) {
 			this.colour = colour;
-		}
-
-		/**
-		 * Sets the onClick.
-		 * 
-		 * @param onClick
-		 *            the onClick javascript method or url
-		 */
-		public void setOnClick(String onClick) {
-			this.onClick = onClick;
 		}
 
 		/**
@@ -236,17 +221,13 @@ public class BarChart extends Element implements JSONizable {
 	 *            the style
 	 */
 	public BarChart(BarStyle style) {
-		super(style.getStyle());
+		this(style.getStyle());
 	}
 
-	/**
-	 * Creates a new bar chart.
-	 * 
-	 * @param style
-	 *            the style
-	 */
 	protected BarChart(String style) {
 		super(style);
+		onShowType = new JSONObject();
+		((JSONObject) onShowType).put("type", new JSONString(""));
 	}
 
 	/**
@@ -296,28 +277,11 @@ public class BarChart extends Element implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (barwidth != null) json.put("barwidth", new JSONNumber(barwidth.doubleValue()));
-		if (colour != null) json.put("colour", new JSONString(colour));
+		if (barwidth != null)
+			json.put("barwidth", new JSONNumber(barwidth.doubleValue()));
+		if (colour != null)
+			json.put("colour", new JSONString(colour));
 		return json;
-	}
-
-	/**
-	 * Gets the colour.
-	 * 
-	 * @return the colour
-	 */
-	public String getColour() {
-		return colour;
-	}
-
-	/**
-	 * Sets the colour in HTML hex format (#ffffff)
-	 * 
-	 * @param colour
-	 *            the new colour
-	 */
-	public void setColour(String colour) {
-		this.colour = colour;
 	}
 
 	/**
@@ -330,6 +294,15 @@ public class BarChart extends Element implements JSONizable {
 	}
 
 	/**
+	 * Gets the colour.
+	 * 
+	 * @return the colour
+	 */
+	public String getColour() {
+		return colour;
+	}
+
+	/**
 	 * Sets the barwidth.
 	 * 
 	 * @param barwidth
@@ -337,5 +310,15 @@ public class BarChart extends Element implements JSONizable {
 	 */
 	public void setBarwidth(Number barwidth) {
 		this.barwidth = barwidth;
+	}
+
+	/**
+	 * Sets the colour in HTML hex format (#ffffff)
+	 * 
+	 * @param colour
+	 *            the new colour
+	 */
+	public void setColour(String colour) {
+		this.colour = colour;
 	}
 }

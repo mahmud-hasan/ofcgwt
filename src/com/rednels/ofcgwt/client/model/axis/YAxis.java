@@ -67,23 +67,20 @@ public class YAxis extends AbstractAxis implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (tickLength != null) json.put("tick-length", new JSONNumber(tickLength));
-		if (logscale != null) json.put("log-scale", JSONBoolean.getInstance(logscale));
-		if (labels == null) return json;
+		if (tickLength != null)
+			json.put("tick-length", new JSONNumber(tickLength));
+		if (logscale != null)
+			json.put("log-scale", JSONBoolean.getInstance(logscale));
+		if (labels == null)
+			return json;
 		JSONArray ary = new JSONArray();
 		int index = 0;
 		for (String o : labels) {
 			ary.set(index++, new JSONString(o));
 		}
-		if (index != 0) json.put("labels", ary);
+		if (index != 0)
+			json.put("labels", ary);
 		return json;
-	}
-
-	/**
-	 * Check labels not null.
-	 */
-	private synchronized void checkLabelsNotNull() {
-		if (labels == null) labels = new ArrayList<String>();
 	}
 
 	/**
@@ -134,6 +131,16 @@ public class YAxis extends AbstractAxis implements JSONizable {
 	}
 
 	/**
+	 * Sets the tick length.
+	 * 
+	 * @param tick_length
+	 *            the new tick length
+	 */
+	public void setTickLength(Integer tick_length) {
+		this.tickLength = tick_length;
+	}
+
+	/**
 	 * Sets the log scale.
 	 * 
 	 * @param logscale
@@ -144,12 +151,10 @@ public class YAxis extends AbstractAxis implements JSONizable {
 	}
 
 	/**
-	 * Sets the tick length.
-	 * 
-	 * @param tick_length
-	 *            the new tick length
+	 * Check labels not null.
 	 */
-	public void setTickLength(Integer tick_length) {
-		this.tickLength = tick_length;
+	private synchronized void checkLabelsNotNull() {
+		if (labels == null)
+			labels = new ArrayList<String>();
 	}
 }

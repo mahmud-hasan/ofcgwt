@@ -18,6 +18,7 @@ See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
 package com.gwttest.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.gwttest.client.test.Snippet;
 
 /**
  * Example Test using OFCGWT

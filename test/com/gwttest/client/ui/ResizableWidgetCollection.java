@@ -13,7 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.gwttest.client;
+package com.gwttest.client.ui;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
@@ -22,10 +26,6 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.WindowResizeListener;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * A collection of {@link ResizableWidget} that periodically checks the outer
@@ -38,7 +38,8 @@ import java.util.Map;
  * Widgets do not need to be added to a {@link ResizableWidgetCollection} as
  * they cannot be resized.
  */
-public class ResizableWidgetCollection implements WindowResizeListener, Iterable<ResizableWidget> {
+public class ResizableWidgetCollection implements WindowResizeListener,
+		Iterable<ResizableWidget> {
 	/**
 	 * Information about a widgets size.
 	 */
@@ -60,8 +61,10 @@ public class ResizableWidgetCollection implements WindowResizeListener, Iterable
 		 *            the widget that will be monitored
 		 */
 		public ResizableWidgetInfo(ResizableWidget widget) {
-			curWidth = DOM.getElementPropertyInt(widget.getElement(), "clientWidth");
-			curHeight = DOM.getElementPropertyInt(widget.getElement(), "clientHeight");
+			curWidth = DOM.getElementPropertyInt(widget.getElement(),
+					"clientWidth");
+			curHeight = DOM.getElementPropertyInt(widget.getElement(),
+					"clientHeight");
 		}
 
 		/**
@@ -78,8 +81,7 @@ public class ResizableWidgetCollection implements WindowResizeListener, Iterable
 				this.curWidth = width;
 				this.curHeight = height;
 				return true;
-			}
-			else {
+			} else {
 				return false;
 			}
 		}
@@ -118,7 +120,8 @@ public class ResizableWidgetCollection implements WindowResizeListener, Iterable
 		@Override
 		public void run() {
 			// Ignore changes that result from window resize events
-			if (windowHeight != Window.getClientHeight() || windowWidth != Window.getClientWidth()) {
+			if (windowHeight != Window.getClientHeight()
+					|| windowWidth != Window.getClientWidth()) {
 				windowHeight = Window.getClientHeight();
 				windowWidth = Window.getClientWidth();
 				schedule(resizeCheckDelay);
@@ -195,7 +198,8 @@ public class ResizableWidgetCollection implements WindowResizeListener, Iterable
 	/**
 	 * Constructor.
 	 */
-	protected ResizableWidgetCollection(int resizeCheckDelay, boolean resizeCheckingEnabled) {
+	protected ResizableWidgetCollection(int resizeCheckDelay,
+			boolean resizeCheckingEnabled) {
 		setResizeCheckDelay(resizeCheckDelay);
 		setResizeCheckingEnabled(resizeCheckingEnabled);
 	}
@@ -215,7 +219,8 @@ public class ResizableWidgetCollection implements WindowResizeListener, Iterable
 	 * appropriately.
 	 */
 	public void checkWidgetSize() {
-		for (Map.Entry<ResizableWidget, ResizableWidgetInfo> entry : widgets.entrySet()) {
+		for (Map.Entry<ResizableWidget, ResizableWidgetInfo> entry : widgets
+				.entrySet()) {
 			ResizableWidget widget = entry.getKey();
 			ResizableWidgetInfo info = entry.getValue();
 			int curWidth = widget.getElement().getPropertyInt("clientWidth");
@@ -304,8 +309,7 @@ public class ResizableWidgetCollection implements WindowResizeListener, Iterable
 				});
 			}
 			resizeCheckTimer.schedule(resizeCheckDelay);
-		}
-		else if (!enabled && resizeCheckingEnabled) {
+		} else if (!enabled && resizeCheckingEnabled) {
 			resizeCheckingEnabled = false;
 			if (windowHandler != null) {
 				windowHandler.removeHandler();

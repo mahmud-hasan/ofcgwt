@@ -8,13 +8,16 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.gwttest.client.ImageService;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
-public class ImageServiceImpl extends RemoteServiceServlet implements ImageService {
+public class ImageServiceImpl extends RemoteServiceServlet implements
+		ImageService {
 
 	public String getImageToken(String base64image) {
 		byte[] imageBytes = Base64.decode(base64image);
 		String token = getMd5(base64image);
-		if (token == null) token = Math.round(Math.random()) + "";
-		getThreadLocalRequest().getSession().setAttribute("img_" + token, imageBytes);
+		if (token == null)
+			token = Math.round(Math.random()) + "";
+		getThreadLocalRequest().getSession().setAttribute("img_" + token,
+				imageBytes);
 		return token;
 	}
 
@@ -25,8 +28,8 @@ public class ImageServiceImpl extends RemoteServiceServlet implements ImageServi
 			md5.update(base64image.getBytes());
 			BigInteger hash = new BigInteger(1, md5.digest());
 			token = hash.toString(16);
+		} catch (NoSuchAlgorithmException nsae) {
 		}
-		catch (NoSuchAlgorithmException nsae) {}
 		return token;
 	}
 

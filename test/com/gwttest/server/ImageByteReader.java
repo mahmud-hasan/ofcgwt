@@ -11,7 +11,8 @@ import javax.servlet.http.HttpSession;
 public class ImageByteReader extends HttpServlet {
 	private static final String SESSION_VAR_NAME = "var";
 
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+	protected void service(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException {
 		try {
 			String variable = request.getParameter(SESSION_VAR_NAME);
 			HttpSession session = request.getSession();
@@ -20,12 +21,14 @@ public class ImageByteReader extends HttpServlet {
 			int contentLength = imageBytes.length;
 			response.setContentLength(contentLength);
 			response.setContentType("application");
-			response.setHeader("Content-Disposition", "attachment; filename=chart.png");
-			BufferedOutputStream output = new BufferedOutputStream(response.getOutputStream());
+			response.setHeader("Content-Disposition",
+					"attachment; filename=chart.png");
+			BufferedOutputStream output = new BufferedOutputStream(response
+					.getOutputStream());
 			output.write(imageBytes);
 			output.flush();
 			output.close();
+		} catch (Exception e) {
 		}
-		catch (Exception e) {}
 	}
 }

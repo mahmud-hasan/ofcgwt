@@ -20,10 +20,11 @@ package com.rednels.ofcgwt.client.event;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventElement {
+public class ElementEvents {
 
 	private List<ChartClickHandler> handlers;
 	protected String onClick;
+	protected String keyOnClick;
 
 	/**
 	 * Adds a ChartClickHandler handler.
@@ -46,12 +47,44 @@ public class EventElement {
 	}
 
 	/**
+	 * Gets the keyOnClick.
+	 * 
+	 * @return the keyOnClick
+	 */
+	public String getKeyOnClick() {
+		return keyOnClick;
+	}
+
+	/**
 	 * Gets the onClick.
 	 * 
 	 * @return the onClick
 	 */
 	public String getOnClick() {
 		return onClick;
+	}
+
+	/**
+	 * Sets the keyOnClick.
+	 * 
+	 * @param keyOnClick
+	 *            the keyOnClick javascript method or url
+	 */
+	public void setKeyOnClick(String keyOnClick) {
+		this.keyOnClick = keyOnClick;
+	}
+
+	/**
+	 * If true, sets keyOnClick to toggle visibility
+	 * 
+	 * @param toggleKeyOnClick
+	 *            boolean
+	 */
+	public void setKeyToggleOnClick(boolean toggleKeyOnClick) {
+		if (toggleKeyOnClick)
+			this.keyOnClick = "toggle-visibility";
+		else
+			this.keyOnClick = null;
 	}
 
 	/**

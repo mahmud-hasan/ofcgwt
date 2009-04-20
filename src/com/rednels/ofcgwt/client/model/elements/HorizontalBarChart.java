@@ -24,6 +24,7 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
+import com.rednels.ofcgwt.client.event.DataValueEvents;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
@@ -34,7 +35,7 @@ public class HorizontalBarChart extends Element implements JSONizable {
 	/**
 	 * OFC horizontal bar chart bars
 	 */
-	public static class Bar implements JSONizable {
+	public static class Bar extends DataValueEvents implements JSONizable {
 
 		private Number left;
 		private Number right;
@@ -98,10 +99,16 @@ public class HorizontalBarChart extends Element implements JSONizable {
 		 */
 		public JSONValue buildJSON() {
 			JSONObject json = new JSONObject();
-			if (left != null) json.put("left", new JSONNumber(left.doubleValue()));
-			if (right != null) json.put("right", new JSONNumber(right.doubleValue()));
-			if (colour != null) json.put("colour", new JSONString(colour));
-			if (tooltip != null) json.put("tip", new JSONString(tooltip));
+			if (left != null)
+				json.put("left", new JSONNumber(left.doubleValue()));
+			if (right != null)
+				json.put("right", new JSONNumber(right.doubleValue()));
+			if (colour != null)
+				json.put("colour", new JSONString(colour));
+			if (tooltip != null)
+				json.put("tip", new JSONString(tooltip));
+			if (onClick != null)
+				json.put("on-click", new JSONString(onClick));
 			return json;
 		}
 
@@ -255,9 +262,21 @@ public class HorizontalBarChart extends Element implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (colour != null) json.put("colour", new JSONString(colour));
+		if (colour != null)
+			json.put("colour", new JSONString(colour));
+		if (barwidth != null)
+			json.put("barwidth", new JSONNumber(barwidth.doubleValue()));
 		if (barwidth != null) json.put("barwidth", new JSONNumber(barwidth.doubleValue()));
 		return json;
+	}
+
+	/**
+	 * Gets the barwidth.
+	 * 
+	 * @return the barwidth
+	 */
+	public Number getBarwidth() {
+		return barwidth;
 	}
 
 	/**
@@ -267,6 +286,16 @@ public class HorizontalBarChart extends Element implements JSONizable {
 	 */
 	public String getColour() {
 		return colour;
+	}
+
+	/**
+	 * Sets the barwidth.
+	 * 
+	 * @param barwidth
+	 *            the new barwidth
+	 */
+	public void setBarwidth(Number barwidth) {
+		this.barwidth = barwidth;
 	}
 
 	/**

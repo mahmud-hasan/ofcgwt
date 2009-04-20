@@ -42,7 +42,8 @@
 			this.slice_angle = value.get('angle');
 			this.border_width = 1;
 			this.angle = value.get('start');
-			this.animate = value.get('animate');
+			
+			this.animate = value.get('on-show');  //DZ Temporary - need to implement on-show types
 			this.nolabels = value.get('no-labels');
 			this.value = value.get('value');
 			this.gradientFill = value.get('gradient-fill');

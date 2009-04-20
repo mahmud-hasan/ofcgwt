@@ -35,7 +35,8 @@ import com.rednels.ofcgwt.client.model.elements.PieChart;
  */
 public class ImageTest implements EntryPoint {
 
-	String[] panels = { "Home", "Pie", "Bar", "Line", "Scatter", "Horizontal Bar", "Area", "Sketch" };
+	String[] panels = { "Home", "Pie", "Bar", "Line", "Scatter",
+			"Horizontal Bar", "Area", "Sketch" };
 
 	public void onModuleLoad() {
 		SimplePanel main = new SimplePanel();
@@ -46,7 +47,10 @@ public class ImageTest implements EntryPoint {
 		tabPanel.setAnimationEnabled(true);
 
 		// add home page
-		HTML homeText = new HTML("<h2>Welcome to OFCGWT</h2>" + "<i>....the OpenFlashChart GWT Library</i></br></br>" + "This demonstration site will showcase the many different types of</br>charts that can be inserted into a GWT application.");
+		HTML homeText = new HTML(
+				"<h2>Welcome to OFCGWT</h2>"
+						+ "<i>....the OpenFlashChart GWT Library</i></br></br>"
+						+ "This demonstration site will showcase the many different types of</br>charts that can be inserted into a GWT application.");
 		tabPanel.add(homeText, panels[0]);
 
 		// add pie chart
@@ -60,13 +64,14 @@ public class ImageTest implements EntryPoint {
 
 	private ChartWidget addPieChart() {
 		ChartWidget chart = new ChartWidget();
-		ChartData cd = new ChartData("Sales by Region", "font-size: 14px; font-family: Verdana; text-align: center;");
+		ChartData cd = new ChartData("Sales by Region",
+				"font-size: 14px; font-family: Verdana; text-align: center;");
 		cd.setBackgroundColour("#ffffff");
 		PieChart pie = new PieChart();
 		pie.setAlpha(0.3f);
 		pie.setNoLabels(true);
 		pie.setTooltip("#label# $#val#<br>#percent#");
-		pie.setAnimate(true);
+		pie.setAnimateOnShow(true);
 		pie.setGradientFill(true);
 		pie.setColours("#ff0000", "#00ff00", "#0000ff", "#ff9900", "#ff00ff");
 		pie.addSlices(new PieChart.Slice(11000, "AU"));
@@ -101,7 +106,8 @@ public class ImageTest implements EntryPoint {
 		 * get the download prompt from it.
 		 */
 
-		ImageServiceAsync imgService = (ImageServiceAsync) GWT.create(ImageService.class);
+		ImageServiceAsync imgService = (ImageServiceAsync) GWT
+				.create(ImageService.class);
 		ServiceDefTarget target = (ServiceDefTarget) imgService;
 		target.setServiceEntryPoint("ImageService");
 
@@ -109,10 +115,12 @@ public class ImageTest implements EntryPoint {
 
 		// pie.addOnSaveClickListener(String imageData) {
 		imgService.getImageToken(imageData, new AsyncCallback<String>() {
-			public void onFailure(Throwable caught) {}
+			public void onFailure(Throwable caught) {
+			}
 
 			public void onSuccess(String result) {
-				Window.Location.assign(GWT.getModuleBaseURL() + "image?var=img_" + result);
+				Window.Location.assign(GWT.getModuleBaseURL()
+						+ "image?var=img_" + result);
 			}
 		});
 		// }

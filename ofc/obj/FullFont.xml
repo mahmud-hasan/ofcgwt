@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<flex-config>
+  <compiler>
+    <source-path append="true">
+      <path-element>C:\OFC\FlashDevelop\Library\AS3\classes</path-element>
+    </source-path>
+    <fonts>
+          <languages>
+              <language-range>
+                  <lang>ofcRange</lang>
+                  <range>U+0000-U+FFFF</range>
+              </language-range>
+          </languages>
+    </fonts>
+  </compiler>
+  <file-specs>
+    <path-element>main.as</path-element>
+  </file-specs>
+  <default-background-color>#F8F8D8</default-background-color>
+  <default-frame-rate>60</default-frame-rate>
+  <default-size>
+    <width>600</width>
+    <height>400</height>
+  </default-size>
+   <metadata>
+      <title>Open Flash Chart 2 - Patched by DZ</title>
+      <description>Patched version of Open Flash Chart 2</description>
+      <publisher>Patched version published by DZ</publisher>
+      <creator>OFC2 created by monk.e.boy</creator>
+      <language>EN</language>
+   </metadata>
+</flex-config>

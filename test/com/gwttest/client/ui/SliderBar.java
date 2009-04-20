@@ -13,7 +13,10 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.gwttest.client;
+package com.gwttest.client.ui;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;
@@ -28,9 +31,6 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.ImageBundle;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.SourcesChangeEvents;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A widget that allows the user to select a value within a range of possible
@@ -61,76 +61,8 @@ import java.util.List;
  * <li>.gwt-SliderBar-shell .gwt-SliderBar-label { the text labels along the
  * line }</li> </ul>
  */
-public class SliderBar extends FocusPanel implements ResizableWidget, SourcesChangeEvents {
-	/**
-	 * The timer used to continue to shift the knob as the user holds down one
-	 * of the left/right arrow keys. Only IE auto-repeats, so we just keep
-	 * catching the events.
-	 */
-	private class KeyTimer extends Timer {
-		/**
-		 * A bit indicating that this is the first run.
-		 */
-		private boolean firstRun = true;
-
-		/**
-		 * The delay between shifts, which shortens as the user holds down the
-		 * button.
-		 */
-		private int repeatDelay = 30;
-
-		/**
-		 * A bit indicating whether we are shifting to a higher or lower value.
-		 */
-		private boolean shiftRight = false;
-
-		/**
-		 * The number of steps to shift with each press.
-		 */
-		private int multiplier = 1;
-
-		/**
-		 * This method will be called when a timer fires. Override it to
-		 * implement the timer's logic.
-		 */
-		@Override
-		public void run() {
-			// Highlight the knob on first run
-			if (firstRun) {
-				firstRun = false;
-				startSliding(true, false);
-			}
-
-			// Slide the slider bar
-			if (shiftRight) {
-				setCurrentValue(curValue + multiplier * stepSize);
-			}
-			else {
-				setCurrentValue(curValue - multiplier * stepSize);
-			}
-
-			// Repeat this timer until cancelled by keyup event
-			schedule(repeatDelay);
-		}
-
-		/**
-		 * Schedules a timer to elapse in the future.
-		 * 
-		 * @param delayMillis
-		 *            how long to wait before the timer elapses, in milliseconds
-		 * @param shiftRight
-		 *            whether to shift up or not
-		 * @param multiplier
-		 *            the number of steps to shift
-		 */
-		public void schedule(int delayMillis, boolean shiftRight, int multiplier) {
-			firstRun = true;
-			this.shiftRight = shiftRight;
-			this.multiplier = multiplier;
-			super.schedule(delayMillis);
-		}
-	}
-
+public class SliderBar extends FocusPanel implements ResizableWidget,
+		SourcesChangeEvents {
 	/**
 	 * A formatter used to format the labels displayed in the widget.
 	 */
@@ -175,6 +107,74 @@ public class SliderBar extends FocusPanel implements ResizableWidget, SourcesCha
 		 * @return a prototype of this image
 		 */
 		AbstractImagePrototype sliderSliding();
+	}
+
+	/**
+	 * The timer used to continue to shift the knob as the user holds down one
+	 * of the left/right arrow keys. Only IE auto-repeats, so we just keep
+	 * catching the events.
+	 */
+	private class KeyTimer extends Timer {
+		/**
+		 * A bit indicating that this is the first run.
+		 */
+		private boolean firstRun = true;
+
+		/**
+		 * The delay between shifts, which shortens as the user holds down the
+		 * button.
+		 */
+		private int repeatDelay = 30;
+
+		/**
+		 * A bit indicating whether we are shifting to a higher or lower value.
+		 */
+		private boolean shiftRight = false;
+
+		/**
+		 * The number of steps to shift with each press.
+		 */
+		private int multiplier = 1;
+
+		/**
+		 * This method will be called when a timer fires. Override it to
+		 * implement the timer's logic.
+		 */
+		@Override
+		public void run() {
+			// Highlight the knob on first run
+			if (firstRun) {
+				firstRun = false;
+				startSliding(true, false);
+			}
+
+			// Slide the slider bar
+			if (shiftRight) {
+				setCurrentValue(curValue + multiplier * stepSize);
+			} else {
+				setCurrentValue(curValue - multiplier * stepSize);
+			}
+
+			// Repeat this timer until cancelled by keyup event
+			schedule(repeatDelay);
+		}
+
+		/**
+		 * Schedules a timer to elapse in the future.
+		 * 
+		 * @param delayMillis
+		 *            how long to wait before the timer elapses, in milliseconds
+		 * @param shiftRight
+		 *            whether to shift up or not
+		 * @param multiplier
+		 *            the number of steps to shift
+		 */
+		public void schedule(int delayMillis, boolean shiftRight, int multiplier) {
+			firstRun = true;
+			this.shiftRight = shiftRight;
+			this.multiplier = multiplier;
+			super.schedule(delayMillis);
+		}
 	}
 
 	/**
@@ -293,8 +293,10 @@ public class SliderBar extends FocusPanel implements ResizableWidget, SourcesCha
 	 * @param labelFormatter
 	 *            the label formatter
 	 */
-	public SliderBar(double minValue, double maxValue, LabelFormatter labelFormatter) {
-		this(minValue, maxValue, labelFormatter, (SliderBarImages) GWT.create(SliderBarImages.class));
+	public SliderBar(double minValue, double maxValue,
+			LabelFormatter labelFormatter) {
+		this(minValue, maxValue, labelFormatter, (SliderBarImages) GWT
+				.create(SliderBarImages.class));
 	}
 
 	/**
@@ -309,7 +311,8 @@ public class SliderBar extends FocusPanel implements ResizableWidget, SourcesCha
 	 * @param images
 	 *            the images to use for the slider
 	 */
-	public SliderBar(double minValue, double maxValue, LabelFormatter labelFormatter, SliderBarImages images) {
+	public SliderBar(double minValue, double maxValue,
+			LabelFormatter labelFormatter, SliderBarImages images) {
 		super();
 		this.minValue = minValue;
 		this.maxValue = maxValue;
@@ -420,8 +423,7 @@ public class SliderBar extends FocusPanel implements ResizableWidget, SourcesCha
 	public double getTotalRange() {
 		if (minValue > maxValue) {
 			return 0;
-		}
-		else {
+		} else {
 			return maxValue - minValue;
 		}
 	}
@@ -452,8 +454,7 @@ public class SliderBar extends FocusPanel implements ResizableWidget, SourcesCha
 					slidingMouse = false;
 					slideKnob(event);
 					stopSliding(true, true);
-				}
-				else if (slidingKeyboard) {
+				} else if (slidingKeyboard) {
 					slidingKeyboard = false;
 					stopSliding(true, true);
 				}
@@ -471,8 +472,7 @@ public class SliderBar extends FocusPanel implements ResizableWidget, SourcesCha
 				DOM.eventPreventDefault(event);
 				if (velocityY > 0) {
 					shiftRight(1);
-				}
-				else {
+				} else {
 					shiftLeft(1);
 				}
 				break;
@@ -577,7 +577,8 @@ public class SliderBar extends FocusPanel implements ResizableWidget, SourcesCha
 	public void redraw() {
 		if (isAttached()) {
 			int width = DOM.getElementPropertyInt(getElement(), "clientWidth");
-			int height = DOM.getElementPropertyInt(getElement(), "clientHeight");
+			int height = DOM
+					.getElementPropertyInt(getElement(), "clientHeight");
 			onResize(width, height);
 		}
 	}
@@ -619,7 +620,8 @@ public class SliderBar extends FocusPanel implements ResizableWidget, SourcesCha
 		this.curValue -= remainder;
 
 		// Go to next step if more than halfway there
-		if ((remainder > (stepSize / 2)) && ((this.curValue + stepSize) <= maxValue)) {
+		if ((remainder > (stepSize / 2))
+				&& ((this.curValue + stepSize) <= maxValue)) {
 			this.curValue += stepSize;
 		}
 
@@ -642,11 +644,12 @@ public class SliderBar extends FocusPanel implements ResizableWidget, SourcesCha
 		this.enabled = enabled;
 		if (enabled) {
 			images.slider().applyTo(knobImage);
-			DOM.setElementProperty(lineElement, "className", "gwt-SliderBar-line");
-		}
-		else {
+			DOM.setElementProperty(lineElement, "className",
+					"gwt-SliderBar-line");
+		} else {
 			images.sliderDisabled().applyTo(knobImage);
-			DOM.setElementProperty(lineElement, "className", "gwt-SliderBar-line gwt-SliderBar-line-disabled");
+			DOM.setElementProperty(lineElement, "className",
+					"gwt-SliderBar-line gwt-SliderBar-line-disabled");
 		}
 		redraw();
 	}
@@ -775,8 +778,7 @@ public class SliderBar extends FocusPanel implements ResizableWidget, SourcesCha
 	protected String formatLabel(double value) {
 		if (labelFormatter != null) {
 			return labelFormatter.formatLabel(this, value);
-		}
-		else {
+		} else {
 			return (int) (10 * value) / 10.0 + "";
 		}
 	}
@@ -828,8 +830,10 @@ public class SliderBar extends FocusPanel implements ResizableWidget, SourcesCha
 		Element knobElement = knobImage.getElement();
 		int lineWidth = DOM.getElementPropertyInt(lineElement, "offsetWidth");
 		int knobWidth = DOM.getElementPropertyInt(knobElement, "offsetWidth");
-		int knobLeftOffset = (int) (lineLeftOffset + (getKnobPercent() * lineWidth) - (knobWidth / 2));
-		knobLeftOffset = Math.min(knobLeftOffset, lineLeftOffset + lineWidth - (knobWidth / 2) - 1);
+		int knobLeftOffset = (int) (lineLeftOffset
+				+ (getKnobPercent() * lineWidth) - (knobWidth / 2));
+		knobLeftOffset = Math.min(knobLeftOffset, lineLeftOffset + lineWidth
+				- (knobWidth / 2) - 1);
 		DOM.setStyleAttribute(knobElement, "left", knobLeftOffset + "px");
 	}
 
@@ -850,16 +854,16 @@ public class SliderBar extends FocusPanel implements ResizableWidget, SourcesCha
 				Element label = null;
 				if (i < labelElements.size()) {
 					label = labelElements.get(i);
-				}
-				else { // Create the new label
+				} else { // Create the new label
 					label = DOM.createDiv();
 					DOM.setStyleAttribute(label, "position", "absolute");
 					DOM.setStyleAttribute(label, "display", "none");
 					if (enabled) {
-						DOM.setElementProperty(label, "className", "gwt-SliderBar-label");
-					}
-					else {
-						DOM.setElementProperty(label, "className", "gwt-SliderBar-label-disabled");
+						DOM.setElementProperty(label, "className",
+								"gwt-SliderBar-label");
+					} else {
+						DOM.setElementProperty(label, "className",
+								"gwt-SliderBar-label-disabled");
 					}
 					DOM.appendChild(getElement(), label);
 					labelElements.add(label);
@@ -876,9 +880,12 @@ public class SliderBar extends FocusPanel implements ResizableWidget, SourcesCha
 				DOM.setStyleAttribute(label, "left", "0px");
 
 				// Position the label and make it visible
-				int labelWidth = DOM.getElementPropertyInt(label, "offsetWidth");
-				int labelLeftOffset = lineLeftOffset + (lineWidth * i / numLabels) - (labelWidth / 2);
-				labelLeftOffset = Math.min(labelLeftOffset, lineLeftOffset + lineWidth - labelWidth);
+				int labelWidth = DOM
+						.getElementPropertyInt(label, "offsetWidth");
+				int labelLeftOffset = lineLeftOffset
+						+ (lineWidth * i / numLabels) - (labelWidth / 2);
+				labelLeftOffset = Math.min(labelLeftOffset, lineLeftOffset
+						+ lineWidth - labelWidth);
 				labelLeftOffset = Math.max(labelLeftOffset, lineLeftOffset);
 				DOM.setStyleAttribute(label, "left", labelLeftOffset + "px");
 				DOM.setStyleAttribute(label, "visibility", "visible");
@@ -888,8 +895,7 @@ public class SliderBar extends FocusPanel implements ResizableWidget, SourcesCha
 			for (int i = (numLabels + 1); i < labelElements.size(); i++) {
 				DOM.setStyleAttribute(labelElements.get(i), "display", "none");
 			}
-		}
-		else { // Hide all labels
+		} else { // Hide all labels
 			for (Element elem : labelElements) {
 				DOM.setStyleAttribute(elem, "display", "none");
 			}
@@ -913,8 +919,7 @@ public class SliderBar extends FocusPanel implements ResizableWidget, SourcesCha
 				Element tick = null;
 				if (i < tickElements.size()) {
 					tick = tickElements.get(i);
-				}
-				else { // Create the new tick
+				} else { // Create the new tick
 					tick = DOM.createDiv();
 					DOM.setStyleAttribute(tick, "position", "absolute");
 					DOM.setStyleAttribute(tick, "display", "none");
@@ -922,17 +927,20 @@ public class SliderBar extends FocusPanel implements ResizableWidget, SourcesCha
 					tickElements.add(tick);
 				}
 				if (enabled) {
-					DOM.setElementProperty(tick, "className", "gwt-SliderBar-tick");
-				}
-				else {
-					DOM.setElementProperty(tick, "className", "gwt-SliderBar-tick gwt-SliderBar-tick-disabled");
+					DOM.setElementProperty(tick, "className",
+							"gwt-SliderBar-tick");
+				} else {
+					DOM.setElementProperty(tick, "className",
+							"gwt-SliderBar-tick gwt-SliderBar-tick-disabled");
 				}
 				// Position the tick and make it visible
 				DOM.setStyleAttribute(tick, "visibility", "hidden");
 				DOM.setStyleAttribute(tick, "display", "");
 				int tickWidth = DOM.getElementPropertyInt(tick, "offsetWidth");
-				int tickLeftOffset = lineLeftOffset + (lineWidth * i / numTicks) - (tickWidth / 2);
-				tickLeftOffset = Math.min(tickLeftOffset, lineLeftOffset + lineWidth - tickWidth);
+				int tickLeftOffset = lineLeftOffset
+						+ (lineWidth * i / numTicks) - (tickWidth / 2);
+				tickLeftOffset = Math.min(tickLeftOffset, lineLeftOffset
+						+ lineWidth - tickWidth);
 				DOM.setStyleAttribute(tick, "left", tickLeftOffset + "px");
 				DOM.setStyleAttribute(tick, "visibility", "visible");
 			}
@@ -941,8 +949,7 @@ public class SliderBar extends FocusPanel implements ResizableWidget, SourcesCha
 			for (int i = (numTicks + 1); i < tickElements.size(); i++) {
 				DOM.setStyleAttribute(tickElements.get(i), "display", "none");
 			}
-		}
-		else { // Hide all ticks
+		} else { // Hide all ticks
 			for (Element elem : tickElements) {
 				DOM.setStyleAttribute(elem, "display", "none");
 			}
@@ -954,7 +961,8 @@ public class SliderBar extends FocusPanel implements ResizableWidget, SourcesCha
 	 */
 	private void highlight() {
 		String styleName = getStylePrimaryName();
-		DOM.setElementProperty(getElement(), "className", styleName + " " + styleName + "-focused");
+		DOM.setElementProperty(getElement(), "className", styleName + " "
+				+ styleName + "-focused");
 	}
 
 	/**
@@ -974,7 +982,8 @@ public class SliderBar extends FocusPanel implements ResizableWidget, SourcesCha
 	private void slideKnob(Event event) {
 		int x = DOM.eventGetClientX(event);
 		if (x > 0) {
-			int lineWidth = DOM.getElementPropertyInt(lineElement, "offsetWidth");
+			int lineWidth = DOM.getElementPropertyInt(lineElement,
+					"offsetWidth");
 			int lineLeft = DOM.getAbsoluteLeft(lineElement);
 			double percent = (double) (x - lineLeft) / lineWidth * 1.0;
 			setCurrentValue(getTotalRange() * percent + minValue, true);
@@ -991,8 +1000,10 @@ public class SliderBar extends FocusPanel implements ResizableWidget, SourcesCha
 	 */
 	private void startSliding(boolean highlight, boolean fireEvent) {
 		if (highlight) {
-			DOM.setElementProperty(lineElement, "className", "gwt-SliderBar-line gwt-SliderBar-line-sliding");
-			DOM.setElementProperty(knobImage.getElement(), "className", "gwt-SliderBar-knob gwt-SliderBar-knob-sliding");
+			DOM.setElementProperty(lineElement, "className",
+					"gwt-SliderBar-line gwt-SliderBar-line-sliding");
+			DOM.setElementProperty(knobImage.getElement(), "className",
+					"gwt-SliderBar-knob gwt-SliderBar-knob-sliding");
 			images.sliderSliding().applyTo(knobImage);
 		}
 	}
@@ -1007,9 +1018,11 @@ public class SliderBar extends FocusPanel implements ResizableWidget, SourcesCha
 	 */
 	private void stopSliding(boolean unhighlight, boolean fireEvent) {
 		if (unhighlight) {
-			DOM.setElementProperty(lineElement, "className", "gwt-SliderBar-line");
+			DOM.setElementProperty(lineElement, "className",
+					"gwt-SliderBar-line");
 
-			DOM.setElementProperty(knobImage.getElement(), "className", "gwt-SliderBar-knob");
+			DOM.setElementProperty(knobImage.getElement(), "className",
+					"gwt-SliderBar-knob");
 			images.slider().applyTo(knobImage);
 		}
 	}
@@ -1018,6 +1031,8 @@ public class SliderBar extends FocusPanel implements ResizableWidget, SourcesCha
 	 * Unhighlight this widget.
 	 */
 	private void unhighlight() {
-		DOM.setElementProperty(getElement(), "className", getStylePrimaryName());
+		DOM
+				.setElementProperty(getElement(), "className",
+						getStylePrimaryName());
 	}
 }

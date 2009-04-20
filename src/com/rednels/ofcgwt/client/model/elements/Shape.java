@@ -24,7 +24,7 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
-import com.rednels.ofcgwt.client.event.EventElement;
+import com.rednels.ofcgwt.client.event.DataValueEvents;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
@@ -35,7 +35,7 @@ public class Shape extends Element implements JSONizable {
 	/**
 	 * OFC shape points
 	 */
-	public static class Point extends EventElement implements JSONizable {
+	public static class Point extends DataValueEvents implements JSONizable {
 
 		private Number x;
 		private Number y;
@@ -60,8 +60,10 @@ public class Shape extends Element implements JSONizable {
 		 */
 		public JSONValue buildJSON() {
 			JSONObject json = new JSONObject();
-			if (x != null) json.put("x", new JSONNumber(x.doubleValue()));
-			if (y != null) json.put("y", new JSONNumber(y.doubleValue()));
+			if (x != null)
+				json.put("x", new JSONNumber(x.doubleValue()));
+			if (y != null)
+				json.put("y", new JSONNumber(y.doubleValue()));
 			return json;
 		}
 
@@ -153,8 +155,10 @@ public class Shape extends Element implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (alpha != null) json.put("alpha", new JSONNumber(alpha));
-		if (colour != null) json.put("colour", new JSONString(colour));
+		if (alpha != null)
+			json.put("alpha", new JSONNumber(alpha));
+		if (colour != null)
+			json.put("colour", new JSONString(colour));
 		return json;
 	}
 

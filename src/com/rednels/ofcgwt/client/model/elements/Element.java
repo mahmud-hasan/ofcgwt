@@ -27,22 +27,23 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
+import com.rednels.ofcgwt.client.event.ElementEvents;
 import com.rednels.ofcgwt.client.model.JSONizable;
 import com.rednels.ofcgwt.client.model.axis.Keys;
 
 /**
  * Base abstract class for OFC chart elements
  */
-public abstract class Element implements JSONizable {
+public abstract class Element extends ElementEvents implements JSONizable {
 
 	private final String type;
 	private String text;
 	private Integer fontSize;
 	private String tooltip;
-	private String onClick;
 	private List<Keys> keys = new ArrayList<Keys>();
 	private Collection<String> colours = new ArrayList<String>();
 	protected List<Object> values = new ArrayList<Object>();
+	protected JSONValue onShowType = new JSONObject();
 
 	/**
 	 * Creates a new element.
@@ -65,39 +66,51 @@ public abstract class Element implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = new JSONObject();
-		if (type != null) json.put("type", new JSONString(type));
-		if (text != null) json.put("text", new JSONString(text));
-		if (fontSize != null) json.put("font-size", new JSONNumber(fontSize));
-		if (tooltip != null) json.put("tip", new JSONString(tooltip));
-		if (onClick != null) json.put("on-click", new JSONString(onClick));
+		if (type != null)
+			json.put("type", new JSONString(type));
+		if (text != null)
+			json.put("text", new JSONString(text));
+		if (fontSize != null)
+			json.put("font-size", new JSONNumber(fontSize));
+		if (tooltip != null)
+			json.put("tip", new JSONString(tooltip));
+		if (onClick != null)
+			json.put("on-click", new JSONString(onClick));
+		if (keyOnClick != null)
+			json.put("key-on-click", new JSONString(keyOnClick));
 
 		JSONArray ary = new JSONArray();
 		int index = 0;
 		for (String s : colours) {
 			ary.set(index++, new JSONString(s));
 		}
-		if (index != 0) json.put("colours", ary);
+		if (index != 0)
+			json.put("colours", ary);
 
 		ary = new JSONArray();
 		index = 0;
 		for (Keys k : keys) {
 			ary.set(index++, k.buildJSON());
 		}
-		if (index != 0) json.put("keys", ary);
+		if (index != 0)
+			json.put("keys", ary);
 
 		ary = new JSONArray();
 		index = 0;
 		for (Object o : values) {
-			if (o == null) ary.set(index++, null);
-			if (o instanceof Number) ary.set(index++, new JSONNumber(((Number) o).doubleValue()));
-			if (o instanceof String) ary.set(index++, new JSONString((String) o));
-			if (o instanceof JSONizable) ary.set(index++, ((JSONizable) o).buildJSON());
+			if (o == null)
+				ary.set(index++, null);
+			if (o instanceof Number)
+				ary.set(index++, new JSONNumber(((Number) o).doubleValue()));
+			if (o instanceof String)
+				ary.set(index++, new JSONString((String) o));
+			if (o instanceof JSONizable)
+				ary.set(index++, ((JSONizable) o).buildJSON());
 		}
-		if (index != 0) json.put("values", ary);
+		if (index != 0)
+			json.put("values", ary);
 
-		JSONObject type = new JSONObject();
-		type.put("type", new JSONString(""));
-		json.put("on-show", type);
+		json.put("on-show", onShowType);
 
 		return json;
 	}
@@ -118,15 +131,6 @@ public abstract class Element implements JSONizable {
 	 */
 	public Integer getFontSize() {
 		return fontSize;
-	}
-
-	/**
-	 * Gets the onClick.
-	 * 
-	 * @return the onClick
-	 */
-	public String getOnClick() {
-		return onClick;
 	}
 
 	/**
@@ -215,16 +219,6 @@ public abstract class Element implements JSONizable {
 	public void setKeys(List<Keys> keys) {
 		this.keys.clear();
 		this.keys.addAll(keys);
-	}
-
-	/**
-	 * Sets the onClick.
-	 * 
-	 * @param onClick
-	 *            the onClick javascript method or url
-	 */
-	public void setOnClick(String onClick) {
-		this.onClick = onClick;
 	}
 
 	/**
