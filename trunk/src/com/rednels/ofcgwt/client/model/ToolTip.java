@@ -1,7 +1,8 @@
 /*
-Copyright (C) 2008 Grant Slender
+Copyright (C) 2009 Grant Slender
 
 This file is part of OFCGWT.
+http://code.google.com/p/ofcgwt/
 
 OFCGWT is free software: you can redistribute it and/or modify
 it under the terms of the Lesser GNU General Public License as
@@ -30,7 +31,7 @@ public class ToolTip implements JSONizable {
 
 	public static enum MouseStyle {
 
-		CLOSEST(0),  FOLLOW(1), NORMAL(2);
+		CLOSEST(0), FOLLOW(1), NORMAL(2);
 
 		private int style;
 
@@ -55,8 +56,7 @@ public class ToolTip implements JSONizable {
 	/**
 	 * Create a new ToolTip instance
 	 */
-	public ToolTip() {
-	}
+	public ToolTip() {}
 
 	/**
 	 * Create a new ToolTip instance with the given mouse style
@@ -75,20 +75,13 @@ public class ToolTip implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = new JSONObject();
-		if (titlestyle != null)
-			json.put("title", new JSONString(titlestyle));
-		if (bodystyle != null)
-			json.put("body", new JSONString(bodystyle));
-		if (colour != null)
-			json.put("colour", new JSONString(colour));
-		if (backgroundcolour != null)
-			json.put("background", new JSONString(backgroundcolour));
-		if (mouse != null)
-			json.put("mouse", new JSONNumber(mouse.getStyle()));
-		if (stroke != null)
-			json.put("stroke", new JSONNumber(stroke));
-		if (shadow != null)
-			json.put("shadow", JSONBoolean.getInstance(shadow));
+		if (titlestyle != null) json.put("title", new JSONString(titlestyle));
+		if (bodystyle != null) json.put("body", new JSONString(bodystyle));
+		if (colour != null) json.put("colour", new JSONString(colour));
+		if (backgroundcolour != null) json.put("background", new JSONString(backgroundcolour));
+		if (mouse != null) json.put("mouse", new JSONNumber(mouse.getStyle()));
+		if (stroke != null) json.put("stroke", new JSONNumber(stroke));
+		if (shadow != null) json.put("shadow", JSONBoolean.getInstance(shadow));
 		return json;
 	}
 

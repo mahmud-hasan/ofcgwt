@@ -1,7 +1,8 @@
 /*
-Copyright (C) 2008 Grant Slender
+Copyright (C) 2009 Grant Slender
 
 This file is part of OFCGWT.
+http://code.google.com/p/ofcgwt/
 
 OFCGWT is free software: you can redistribute it and/or modify
 it under the terms of the Lesser GNU General Public License as
@@ -111,16 +112,11 @@ public class StackedBarChart extends Element implements JSONizable {
 		 */
 		public JSONValue buildJSON() {
 			JSONArray ary = new JSONArray();
-			if (values == null)
-				return ary;
+			if (values == null) return ary;
 			int index = 0;
 			for (Object o : values) {
-				if (o instanceof Number)
-					ary
-							.set(index++, new JSONNumber(((Number) o)
-									.doubleValue()));
-				if (o instanceof StackValue)
-					ary.set(index++, ((StackValue) o).buildJSON());
+				if (o instanceof Number) ary.set(index++, new JSONNumber(((Number) o).doubleValue()));
+				if (o instanceof StackValue) ary.set(index++, ((StackValue) o).buildJSON());
 			}
 			return ary;
 		}
@@ -138,8 +134,7 @@ public class StackedBarChart extends Element implements JSONizable {
 	/**
 	 * OFC stack bar chart values
 	 */
-	public static class StackValue extends DataValueEvents implements
-			JSONizable {
+	public static class StackValue extends DataValueEvents implements JSONizable {
 
 		private Number val;
 		private String colour;
@@ -174,10 +169,8 @@ public class StackedBarChart extends Element implements JSONizable {
 		 */
 		public JSONValue buildJSON() {
 			JSONObject json = new JSONObject();
-			if (val != null)
-				json.put("val", new JSONNumber(val.doubleValue()));
-			if (colour != null)
-				json.put("colour", new JSONString(colour));
+			if (val != null) json.put("val", new JSONNumber(val.doubleValue()));
+			if (colour != null) json.put("colour", new JSONString(colour));
 			return json;
 		}
 

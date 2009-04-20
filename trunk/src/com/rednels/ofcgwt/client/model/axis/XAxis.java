@@ -1,7 +1,8 @@
 /*
-Copyright (C) 2008 Grant Slender
+Copyright (C) 2009 Grant Slender
 
 This file is part of OFCGWT.
+http://code.google.com/p/ofcgwt/
 
 OFCGWT is free software: you can redistribute it and/or modify
 it under the terms of the Lesser GNU General Public License as
@@ -107,28 +108,19 @@ public class XAxis extends AbstractAxis implements JSONizable {
 		 */
 		public JSONValue buildJSON() {
 			JSONObject json = (JSONObject) super.buildJSON();
-			if (steps != null)
-				json.put("steps", new JSONNumber(steps));
-			if (colour != null)
-				json.put("colour", new JSONString(colour));
-			if (size != null)
-				json.put("size", new JSONNumber(size));
-			if (rotate != null)
-				json.put("rotate", new JSONString(rotate.toString()));
-			if (visible != null)
-				json.put("visible", JSONBoolean.getInstance(visible));
-			if (labels == null)
-				return json;
+			if (steps != null) json.put("steps", new JSONNumber(steps));
+			if (colour != null) json.put("colour", new JSONString(colour));
+			if (size != null) json.put("size", new JSONNumber(size));
+			if (rotate != null) json.put("rotate", new JSONString(rotate.toString()));
+			if (visible != null) json.put("visible", JSONBoolean.getInstance(visible));
+			if (labels == null) return json;
 			JSONArray ary = new JSONArray();
 			int index = 0;
 			for (Object o : getLabels()) {
-				if (o instanceof String)
-					ary.set(index++, new JSONString((String) o));
-				if (o instanceof Label)
-					ary.set(index++, ((Label) o).buildJSON());
+				if (o instanceof String) ary.set(index++, new JSONString((String) o));
+				if (o instanceof Label) ary.set(index++, ((Label) o).buildJSON());
 			}
-			if (index != 0)
-				json.put("labels", ary);
+			if (index != 0) json.put("labels", ary);
 			return json;
 		}
 
@@ -240,8 +232,7 @@ public class XAxis extends AbstractAxis implements JSONizable {
 		 * Check labels not null.
 		 */
 		private synchronized void checkLabelsNotNull() {
-			if (labels == null)
-				labels = new ArrayList<Object>();
+			if (labels == null) labels = new ArrayList<Object>();
 		}
 	}
 
@@ -288,10 +279,8 @@ public class XAxis extends AbstractAxis implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (tickHeight != null)
-			json.put("tick-height", new JSONNumber(tickHeight));
-		if (labels != null)
-			json.put("labels", labels.buildJSON());
+		if (tickHeight != null) json.put("tick-height", new JSONNumber(tickHeight));
+		if (labels != null) json.put("labels", labels.buildJSON());
 		return json;
 	}
 
@@ -357,7 +346,6 @@ public class XAxis extends AbstractAxis implements JSONizable {
 	 * Check labels not null.
 	 */
 	private synchronized void checkLabelsNotNull() {
-		if (labels == null)
-			labels = new Labels();
+		if (labels == null) labels = new Labels();
 	}
 }

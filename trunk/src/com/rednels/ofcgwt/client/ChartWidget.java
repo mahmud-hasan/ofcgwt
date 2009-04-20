@@ -1,7 +1,8 @@
 /*
-Copyright (C) 2008 Grant Slender
+Copyright (C) 2009 Grant Slender
 
 This file is part of OFCGWT.
+http://code.google.com/p/ofcgwt/
 
 OFCGWT is free software: you can redistribute it and/or modify
 it under the terms of the Lesser GNU General Public License as
@@ -27,6 +28,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.rednels.ofcgwt.client.event.ChartClickEvent;
 import com.rednels.ofcgwt.client.event.ChartClickHandler;
 import com.rednels.ofcgwt.client.event.DataValueEvents;
+import com.rednels.ofcgwt.client.event.KeyClickHandler;
 import com.rednels.ofcgwt.client.model.ChartData;
 
 /**
@@ -35,16 +37,16 @@ import com.rednels.ofcgwt.client.model.ChartData;
  * Create the ChartWidget and add anywhere a GWT widget can be used. Use the
  * model {@link ChartData} to build a chart and then pass to
  * {@link ChartWidget#setChartData(ChartData)} and it will generate and set the
- * correct JSON data. <p/>You can also set JSON via the
- * {@link #setJsonData(String)} method.
+ * correct JSON data.
+ * <p/>
+ * You can also set JSON via the {@link #setJsonData(String)} method.
  * 
  */
 public class ChartWidget extends Widget {
 	public static final String MIN_PLAYER_VERSION = "9.0.0";
 	public static final String ALTERNATE_SWF_SRC = "expressInstall.swf";
 
-	private static final CacheFixImpl cacheFixImpl = GWT
-			.create(CacheFixImpl.class);
+	private static final CacheFixImpl cacheFixImpl = GWT.create(CacheFixImpl.class);
 	private static int count = 0;
 
 	private boolean isSWFInjected = false;
@@ -146,19 +148,18 @@ public class ChartWidget extends Widget {
 	}
 
 	/**
-	 * Obtains raw image data of this chart.
-	 * Call returns null if the flash chart is not loaded.
+	 * Obtains raw image data of this chart. Call returns null if the flash
+	 * chart is not loaded.
 	 * 
-	 * @returns String
-	 *            chart image data
+	 * @return String chart image data
 	 */
 	public String getImageData() {
 		if (hasFlashPlayer && isSWFInjected) {
 			return getImageData(getSwfId());
-		}	
+		}
 		return null;
 	}
-	
+
 	/**
 	 * Enables an fix/workaround that stops caching of the swf which on IE may
 	 * solve some bugs. The workaround adds a unique parameter url to each SWF
@@ -181,14 +182,23 @@ public class ChartWidget extends Widget {
 	 */
 	public void setChartData(ChartData cd) {
 		this.chartData = cd;
-		for (com.rednels.ofcgwt.client.model.elements.Element e : chartData
-				.getElements()) {
+		for (com.rednels.ofcgwt.client.model.elements.Element e : chartData.getElements()) {
+			// add chart click events...
+			for (ChartClickHandler cch : e.getChartClickHandlers()) {
+				String onclick = "ofc_onclick('" + getSwfId() + "','" + cch.hashCode() + "')";
+				e.setOnClick(onclick);
+			}
+			// add key click events...
+			for (KeyClickHandler kch : e.getKeyClickHandlers()) {
+				String onclick = "ofc_onclick('" + getSwfId() + "','" + kch.hashCode() + "')";
+				e.setKeyOnClick(onclick);
+			}
 			for (Object o : e.getValues()) {
 				if (o instanceof DataValueEvents) {
+					// add data value click events...
 					DataValueEvents dve = (DataValueEvents) o;
 					for (ChartClickHandler ch : dve.getHandlers()) {
-						String onclick = "ofc_onclick('" + getSwfId() + "','"
-								+ ch.hashCode() + "')";
+						String onclick = "ofc_onclick('" + getSwfId() + "','" + ch.hashCode() + "')";
 						dve.setOnClick(onclick);
 					}
 				}
@@ -271,8 +281,7 @@ public class ChartWidget extends Widget {
 	}
 
 	protected void doOnChartClick(String evt) {
-		for (com.rednels.ofcgwt.client.model.elements.Element e : chartData
-				.getElements()) {
+		for (com.rednels.ofcgwt.client.model.elements.Element e : chartData.getElements()) {
 			for (Object o : e.getValues()) {
 				if (o instanceof DataValueEvents) {
 					DataValueEvents ee = (DataValueEvents) o;
@@ -291,13 +300,10 @@ public class ChartWidget extends Widget {
 	}
 
 	protected void onAttach() {
-		chartElement.setInnerHTML("<div id=\"embed_" + swfId + "\">"
-				+ emptyInnerDiv() + "</div>");
+		chartElement.setInnerHTML("<div id=\"embed_" + swfId + "\">" + emptyInnerDiv() + "</div>");
 		ChartFactory.get().register(this);
 		if (!isSWFInjected) {
-			injectSWF(getInternalSWFURL(isCacheFixEnabled(), urlPrefix
-					+ flashurl, swfId), swfId, getWidth(), getHeight(),
-					MIN_PLAYER_VERSION, ALTERNATE_SWF_SRC);
+			injectSWF(getInternalSWFURL(isCacheFixEnabled(), urlPrefix + flashurl, swfId), swfId, getWidth(), getHeight(), MIN_PLAYER_VERSION, ALTERNATE_SWF_SRC);
 			isSWFInjected = true;
 		}
 		super.onAttach();
@@ -312,8 +318,7 @@ public class ChartWidget extends Widget {
 	}
 
 	private String emptyInnerDiv() {
-		return getInnerDivTextForFlashPlayerNotFound().replaceAll(
-				"\\$\\{flashPlayer.version\\}", MIN_PLAYER_VERSION);
+		return getInnerDivTextForFlashPlayerNotFound().replaceAll("\\$\\{flashPlayer.version\\}", MIN_PLAYER_VERSION);
 	}
 
 	/**
@@ -322,8 +327,7 @@ public class ChartWidget extends Widget {
 	 * @return the swf url string
 	 */
 	private String getInternalSWFURL(boolean iefix, String flashurl, String id) {
-		if (!iefix)
-			return flashurl;
+		if (!iefix) return flashurl;
 		return flashurl + ("?id=" + id + (new Date().getTime()));
 	}
 
@@ -332,8 +336,7 @@ public class ChartWidget extends Widget {
 	  	return $wnd.swfobject.hasFlashPlayerVersion(v);	        
 	}-*/;
 
-	private native void injectSWF(String swf, String id, String w, String h,
-			String ver, String alt)
+	private native void injectSWF(String swf, String id, String w, String h, String ver, String alt)
 	/*-{ 	     
 		var flashvars = {id: id,allowResize: true};
 		var params = {scale: 'noscale', allowscriptaccess:'always',wmode: 'transparent'};		

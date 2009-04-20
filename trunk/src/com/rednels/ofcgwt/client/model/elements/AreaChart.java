@@ -1,7 +1,8 @@
 /*
-Copyright (C) 2008 Grant Slender
+Copyright (C) 2009 Grant Slender
 
 This file is part of OFCGWT.
+http://code.google.com/p/ofcgwt/
 
 OFCGWT is free software: you can redistribute it and/or modify
 it under the terms of the Lesser GNU General Public License as
@@ -48,12 +49,9 @@ public class AreaChart extends LineChart {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (fillAlpha != null)
-			json.put("fill-alpha", new JSONNumber(fillAlpha));
-		if (fillColour != null)
-			json.put("fill", new JSONString(fillColour));
-		if (loop != null)
-			json.put("loop", JSONBoolean.getInstance(loop));
+		if (fillAlpha != null) json.put("fill-alpha", new JSONNumber(fillAlpha));
+		if (fillColour != null) json.put("fill", new JSONString(fillColour));
+		if (loop != null) json.put("loop", JSONBoolean.getInstance(loop));
 		return json;
 	}
 

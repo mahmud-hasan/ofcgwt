@@ -1,7 +1,8 @@
 /*
-Copyright (C) 2008 Grant Slender
+Copyright (C) 2009 Grant Slender
 
 This file is part of OFCGWT.
+http://code.google.com/p/ofcgwt/
 
 OFCGWT is free software: you can redistribute it and/or modify
 it under the terms of the Lesser GNU General Public License as
@@ -22,7 +23,8 @@ import java.util.List;
 
 public class ElementEvents {
 
-	private List<ChartClickHandler> handlers;
+	private List<ChartClickHandler> onClickHandlers;
+	private List<KeyClickHandler> keyOnClickHandlers;
 	protected String onClick;
 	protected String keyOnClick;
 
@@ -33,17 +35,46 @@ public class ElementEvents {
 	 *            the ChartClickHandler
 	 */
 	public void addChartClickHandler(ChartClickHandler handler) {
-		if (handlers == null) {
-			handlers = new ArrayList<ChartClickHandler>();
+		if (onClickHandlers == null) {
+			onClickHandlers = new ArrayList<ChartClickHandler>();
 		}
-		handlers.add(handler);
+		onClickHandlers.add(handler);
 	}
 
-	public List<ChartClickHandler> getHandlers() {
-		if (handlers == null) {
+	/**
+	 * Gets the ChartClickHandler handlers.
+	 * 
+	 * @return a List of ChartClickHandler
+	 */
+	public List<ChartClickHandler> getChartClickHandlers() {
+		if (onClickHandlers == null) {
 			return new ArrayList<ChartClickHandler>();
 		}
-		return handlers;
+		return onClickHandlers;
+	}
+	/**
+	 * Adds a KeyClickHandler handler.
+	 * 
+	 * @param handler
+	 *            the ChartClickHandler
+	 */
+	public void addKeyClickHandler(KeyClickHandler handler) {
+		if (keyOnClickHandlers == null) {
+			keyOnClickHandlers = new ArrayList<KeyClickHandler>();
+		}
+		keyOnClickHandlers.add(handler);
+	}
+
+	/**
+	 * Gets the KeyClickHandler handlers.
+	 * 
+	 * @return a List of KeyClickHandler
+	 */
+	public List<KeyClickHandler> getKeyClickHandlers() {
+		if (keyOnClickHandlers == null) {
+			return new ArrayList<KeyClickHandler>();
+		}
+		return keyOnClickHandlers;
 	}
 
 	/**
@@ -81,10 +112,8 @@ public class ElementEvents {
 	 *            boolean
 	 */
 	public void setKeyToggleOnClick(boolean toggleKeyOnClick) {
-		if (toggleKeyOnClick)
-			this.keyOnClick = "toggle-visibility";
-		else
-			this.keyOnClick = null;
+		if (toggleKeyOnClick) this.keyOnClick = "toggle-visibility";
+		else this.keyOnClick = null;
 	}
 
 	/**

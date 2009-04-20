@@ -1,7 +1,8 @@
 /*
-Copyright (C) 2008 Grant Slender
+Copyright (C) 2009 Grant Slender
 
 This file is part of OFCGWT.
+http://code.google.com/p/ofcgwt/
 
 OFCGWT is free software: you can redistribute it and/or modify
 it under the terms of the Lesser GNU General Public License as
@@ -99,16 +100,11 @@ public class BarChart extends Element implements JSONizable {
 		 */
 		public JSONValue buildJSON() {
 			JSONObject json = new JSONObject();
-			if (top != null)
-				json.put("top", new JSONNumber(top.doubleValue()));
-			if (bottom != null)
-				json.put("bottom", new JSONNumber(bottom.doubleValue()));
-			if (colour != null)
-				json.put("colour", new JSONString(colour));
-			if (tooltip != null)
-				json.put("tip", new JSONString(tooltip));
-			if (onClick != null)
-				json.put("on-click", new JSONString(onClick));
+			if (top != null) json.put("top", new JSONNumber(top.doubleValue()));
+			if (bottom != null) json.put("bottom", new JSONNumber(bottom.doubleValue()));
+			if (colour != null) json.put("colour", new JSONString(colour));
+			if (tooltip != null) json.put("tip", new JSONString(tooltip));
+			if (onClick != null) json.put("on-click", new JSONString(onClick));
 			return json;
 		}
 
@@ -277,10 +273,8 @@ public class BarChart extends Element implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (barwidth != null)
-			json.put("barwidth", new JSONNumber(barwidth.doubleValue()));
-		if (colour != null)
-			json.put("colour", new JSONString(colour));
+		if (barwidth != null) json.put("barwidth", new JSONNumber(barwidth.doubleValue()));
+		if (colour != null) json.put("colour", new JSONString(colour));
 		return json;
 	}
 

@@ -1,7 +1,8 @@
 /*
-Copyright (C) 2008 Grant Slender
+Copyright (C) 2009 Grant Slender
 
 This file is part of OFCGWT.
+http://code.google.com/p/ofcgwt/
 
 OFCGWT is free software: you can redistribute it and/or modify
 it under the terms of the Lesser GNU General Public License as
@@ -73,8 +74,7 @@ import com.rednels.ofcgwt.client.model.elements.dot.Star;
  */
 public class Demo implements EntryPoint {
 
-	private String[] colours = { "#ff0000", "#00ff00", "#0000ff", "#ff9900",
-			"#ff00ff", "#FFFF00", "#6699FF", "#339933", "#1199aa" };
+	private String[] colours = { "#ff0000", "#00ff00", "#0000ff", "#ff9900", "#ff00ff", "#FFFF00", "#6699FF", "#339933", "#1199aa" };
 	private Command updateCmd = null;
 	private TextArea ta = null;
 	private DialogBox db = null;
@@ -87,10 +87,7 @@ public class Demo implements EntryPoint {
 		VerticalPanel vp = new VerticalPanel();
 		vp.setSpacing(20);
 		// add home page
-		HTML homeText = new HTML(
-				"<h2>Welcome to OFCGWT</h2>"
-						+ "<i>....the OpenFlashChart GWT Library</i></br></br>"
-						+ "This demonstration site will showcase the many different types of charts that can be inserted into a GWT application.");
+		HTML homeText = new HTML("<h2>Welcome to OFCGWT</h2>" + "<i>....the OpenFlashChart GWT Library</i></br></br>" + "This demonstration site will showcase the many different types of charts that can be inserted into a GWT application.");
 		vp.add(homeText);
 		vp.setCellHeight(homeText, "100");
 		createDialog();
@@ -153,13 +150,12 @@ public class Demo implements EntryPoint {
 			}
 		}));
 
-		chartlist.add(createRadioButton("BarChart - Transparent",
-				new Command() {
-					public void execute() {
-						chart.setChartData(getBarChartTransparentData());
-						ta.setText(chart.getJsonData());
-					}
-				}));
+		chartlist.add(createRadioButton("BarChart - Transparent", new Command() {
+			public void execute() {
+				chart.setChartData(getBarChartTransparentData());
+				ta.setText(chart.getJsonData());
+			}
+		}));
 
 		chartlist.add(createRadioButton("BarChart - Glass", new Command() {
 			public void execute() {
@@ -182,29 +178,26 @@ public class Demo implements EntryPoint {
 			}
 		}));
 
-		chartlist.add(createRadioButton("CylinderChart - RoundGlass",
-				new Command() {
-					public void execute() {
-						chart.setChartData(getCylinderChartGlassData());
-						ta.setText(chart.getJsonData());
-					}
-				}));
+		chartlist.add(createRadioButton("CylinderChart - RoundGlass", new Command() {
+			public void execute() {
+				chart.setChartData(getCylinderChartGlassData());
+				ta.setText(chart.getJsonData());
+			}
+		}));
 
-		chartlist.add(createRadioButton("LineChart - 3 Dot Types",
-				new Command() {
-					public void execute() {
-						chart.setChartData(getLineChartData());
-						ta.setText(chart.getJsonData());
-					}
-				}));
+		chartlist.add(createRadioButton("LineChart - 3 Dot Types", new Command() {
+			public void execute() {
+				chart.setChartData(getLineChartData());
+				ta.setText(chart.getJsonData());
+			}
+		}));
 
-		chartlist.add(createRadioButton("ScatterChart - Star Dot",
-				new Command() {
-					public void execute() {
-						chart.setChartData(getScatterPointChartData());
-						ta.setText(chart.getJsonData());
-					}
-				}));
+		chartlist.add(createRadioButton("ScatterChart - Star Dot", new Command() {
+			public void execute() {
+				chart.setChartData(getScatterPointChartData());
+				ta.setText(chart.getJsonData());
+			}
+		}));
 
 		chartlist.add(createRadioButton("ScatterChart - Line", new Command() {
 			public void execute() {
@@ -319,8 +312,7 @@ public class Demo implements EntryPoint {
 			}
 		});
 		dbContents.add(closeButton);
-		dbContents.setCellHorizontalAlignment(closeButton,
-				HasHorizontalAlignment.ALIGN_RIGHT);
+		dbContents.setCellHorizontalAlignment(closeButton, HasHorizontalAlignment.ALIGN_RIGHT);
 
 	}
 
@@ -336,14 +328,11 @@ public class Demo implements EntryPoint {
 	}
 
 	private ChartData get3DBarLineChartData() {
-		ChartData cd = new ChartData("Sales by Month 2008",
-				"font-size: 14px; font-family: Verdana; text-align: center;");
+		ChartData cd = new ChartData("Sales by Month 2008", "font-size: 14px; font-family: Verdana; text-align: center;");
 		cd.setBackgroundColour("#ffffff");
 
 		XAxis xa = new XAxis();
-		xa
-				.setLabels("J", "F", "M", "A", "M", "J", "J", "A", "S", "O",
-						"N", "D");
+		xa.setLabels("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D");
 		xa.setZDepth3D(8);
 		xa.setColour("#909090");
 		cd.setXAxis(xa);
@@ -383,8 +372,7 @@ public class Demo implements EntryPoint {
 	}
 
 	private ChartData getAniPieChartData() {
-		ChartData cd = new ChartData("Results",
-				"font-size: 14px; font-family: Verdana; text-align: center;");
+		ChartData cd = new ChartData("Results", "font-size: 14px; font-family: Verdana; text-align: center;");
 		cd.setBackgroundColour("#ffffff");
 		PieChart pie = new PieChart();
 		pie.setTooltip("#label# $#val#<br>#percent#");
@@ -393,16 +381,14 @@ public class Demo implements EntryPoint {
 		pie.setGradientFill(false);
 		pie.setColours(colours);
 		for (int t = 0; t < Random.nextInt(10) + 10; t++) {
-			pie.addSlices(new PieChart.Slice(Random.nextDouble() * 1.1 + .5, ""
-					+ (t + 1)));
+			pie.addSlices(new PieChart.Slice(Random.nextDouble() * 1.1 + .5, "" + (t + 1)));
 		}
 		cd.addElements(pie);
 		return cd;
 	}
 
 	private ChartData getAreaHollowChartData() {
-		ChartData cd1 = new ChartData("Volume Consumed",
-				"font-size: 14px; font-family: Verdana; text-align: center;");
+		ChartData cd1 = new ChartData("Volume Consumed", "font-size: 14px; font-family: Verdana; text-align: center;");
 		cd1.setBackgroundColour("#ffffff");
 		AreaChart area1 = new AreaChart();
 		area1.setDotStyle(null);
@@ -414,7 +400,8 @@ public class Demo implements EntryPoint {
 		for (float i = 0; i < 6.2; i += 0.2) {
 			if (ln % 3 == 0) {
 				xa.addLabels("" + ln);
-			} else {
+			}
+			else {
 				xa.addLabels("");
 			}
 			ln++;
@@ -427,13 +414,10 @@ public class Demo implements EntryPoint {
 	}
 
 	private ChartData getAreaLineChartData() {
-		ChartData cd2 = new ChartData("Growth per Region",
-				"font-size: 14px; font-family: Verdana; text-align: center;");
+		ChartData cd2 = new ChartData("Growth per Region", "font-size: 14px; font-family: Verdana; text-align: center;");
 		cd2.setBackgroundColour("#ffffff");
 		XAxis xa = new XAxis();
-		xa
-				.setLabels("J", "F", "M", "A", "M", "J", "J", "A", "S", "O",
-						"N", "D");
+		xa.setLabels("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D");
 		// xa.setMax(12);
 		cd2.setXAxis(xa);
 		AreaChart area2 = new AreaChart();
@@ -442,10 +426,8 @@ public class Demo implements EntryPoint {
 		area2.setColour("#ff0000");
 		area2.setFillColour("#ff0000");
 		for (int n = 0; n < 12; n++) {
-			if (n % 3 != 0)
-				area2.addNull();
-			else
-				area2.addValues(n * Random.nextDouble());
+			if (n % 3 != 0) area2.addNull();
+			else area2.addValues(n * Random.nextDouble());
 		}
 		cd2.addElements(area2);
 		AreaChart area3 = new AreaChart();
@@ -458,18 +440,15 @@ public class Demo implements EntryPoint {
 		int floor = Random.nextInt(3);
 		double grade = (Random.nextInt(4) + 1) / 10.0;
 		for (int n = 0; n < 12; n++) {
-			if (n % 2 != 0)
-				area3.addNull();
-			else
-				area3.addValues(n * grade + floor);
+			if (n % 2 != 0) area3.addNull();
+			else area3.addValues(n * grade + floor);
 		}
 		cd2.addElements(area3);
 		return cd2;
 	}
 
 	private ChartData getBarChartGlassData() {
-		ChartData cd2 = new ChartData("Sales by Month 2007",
-				"font-size: 14px; font-family: Verdana; text-align: center;");
+		ChartData cd2 = new ChartData("Sales by Month 2007", "font-size: 14px; font-family: Verdana; text-align: center;");
 		cd2.setBackgroundColour("#ffffff");
 		XAxis xa = new XAxis();
 		xa.setLabels("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N");
@@ -493,15 +472,11 @@ public class Demo implements EntryPoint {
 	}
 
 	private ChartData getBarChartTransparentData() {
-		ChartData cd = new ChartData(
-				"Sales by Month 2006",
-				"font-size: 16px; font-weight: bold; font-family: Verdana; color:#ff9900; text-align: center;");
+		ChartData cd = new ChartData("Sales by Month 2006", "font-size: 16px; font-weight: bold; font-family: Verdana; color:#ff9900; text-align: center;");
 		cd.setBackgroundColour("-1");
 		cd.setDecimalSeparatorComma(true);
 		XAxis xa = new XAxis();
-		xa
-				.setLabels("J", "F", "M", "A", "M", "J", "J", "A", "S", "O",
-						"N", "D");
+		xa.setLabels("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D");
 		xa.getLabels().setColour("#ffff00");
 		xa.setGridColour("#aaaaff");
 		xa.setColour("#FF9900");
@@ -524,8 +499,7 @@ public class Demo implements EntryPoint {
 	}
 
 	private ChartData getCylinderChartData() {
-		ChartData cd3 = new ChartData("Sales by Quarter 2008",
-				"font-size: 14px; font-family: Verdana; text-align: center;");
+		ChartData cd3 = new ChartData("Sales by Quarter 2008", "font-size: 14px; font-family: Verdana; text-align: center;");
 		cd3.setBackgroundColour("#ffffff");
 		XAxis xa = new XAxis();
 		xa.setLabels("Q1", "Q2", "Q3", "Q4");
@@ -549,13 +523,10 @@ public class Demo implements EntryPoint {
 	}
 
 	private ChartData getCylinderChartGlassData() {
-		ChartData cd3 = new ChartData("Sales by Month 2008",
-				"font-size: 14px; font-family: Verdana; text-align: center;");
+		ChartData cd3 = new ChartData("Sales by Month 2008", "font-size: 14px; font-family: Verdana; text-align: center;");
 		cd3.setBackgroundColour("#ffffff");
 		XAxis xa = new XAxis();
-		xa
-				.setLabels("J", "F", "M", "A", "M", "J", "J", "A", "S", "O",
-						"N", "D");
+		xa.setLabels("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D");
 		xa.setZDepth3D(5);
 		// xa.setMax(12);
 		xa.setTickHeight(4);
@@ -571,11 +542,9 @@ public class Demo implements EntryPoint {
 		bchart3.setAlpha(0.6f);
 		bchart3.setTooltip("$#val#");
 		for (int t = 0; t < 12; t++) {
-			if (t % 2 == 0)
-				bchart3.addValues(Random.nextInt(50) + 50);
+			if (t % 2 == 0) bchart3.addValues(Random.nextInt(50) + 50);
 			else {
-				CylinderBarChart.Bar b = new CylinderBarChart.Bar(Random
-						.nextInt(50) + 50);
+				CylinderBarChart.Bar b = new CylinderBarChart.Bar(Random.nextInt(50) + 50);
 				b.setColour("#90ff90");
 				bchart3.addBars(b);
 			}
@@ -586,8 +555,7 @@ public class Demo implements EntryPoint {
 	}
 
 	private ChartData getHorizBarChartData() {
-		ChartData cd1 = new ChartData("Top Car Speed",
-				"font-size: 14px; font-family: Verdana; text-align: center;");
+		ChartData cd1 = new ChartData("Top Car Speed", "font-size: 14px; font-family: Verdana; text-align: center;");
 		cd1.setBackgroundColour("#ffffff");
 		XAxis xa = new XAxis();
 		xa.setRange(0, 200, 20);
@@ -598,22 +566,17 @@ public class Demo implements EntryPoint {
 		cd1.setYAxis(ya);
 		HorizontalBarChart bchart1 = new HorizontalBarChart();
 		bchart1.setTooltip("#val# mph");
-		bchart1.addBars(new HorizontalBarChart.Bar(Random.nextInt(87) + 100,
-				"#ffff00"));
-		bchart1.addBars(new HorizontalBarChart.Bar(Random.nextInt(44) + 100,
-				"#0000ff"));
-		bchart1.addBars(new HorizontalBarChart.Bar(Random.nextInt(23) + 100,
-				"#00ff00"));
-		bchart1.addBars(new HorizontalBarChart.Bar(Random.nextInt(33) + 100,
-				"#ff0000"));
+		bchart1.addBars(new HorizontalBarChart.Bar(Random.nextInt(87) + 100, "#ffff00"));
+		bchart1.addBars(new HorizontalBarChart.Bar(Random.nextInt(44) + 100, "#0000ff"));
+		bchart1.addBars(new HorizontalBarChart.Bar(Random.nextInt(23) + 100, "#00ff00"));
+		bchart1.addBars(new HorizontalBarChart.Bar(Random.nextInt(33) + 100, "#ff0000"));
 		cd1.addElements(bchart1);
 		cd1.setTooltipStyle(new ToolTip(MouseStyle.FOLLOW));
 		return cd1;
 	}
 
 	private ChartData getHorizontalStackChartData() {
-		ChartData cd = new ChartData("Investments in ($M)",
-				"font-size: 14px; font-family: Verdana; text-align: center;");
+		ChartData cd = new ChartData("Investments in ($M)", "font-size: 14px; font-family: Verdana; text-align: center;");
 		cd.setBackgroundColour("#ffffff");
 		cd.setLegend(new Legend(Position.RIGHT, true));
 		cd.setTooltipStyle(new ToolTip(MouseStyle.FOLLOW));
@@ -623,12 +586,9 @@ public class Demo implements EntryPoint {
 		stack.setColours(colours);
 		stack.setBarwidth(0.9);
 
-		HorizontalStackedBarChart.StackValue v1 = new HorizontalStackedBarChart.StackValue(
-				0, 1000);
-		HorizontalStackedBarChart.StackValue v2 = new HorizontalStackedBarChart.StackValue(
-				1000, 1500);
-		HorizontalStackedBarChart.StackValue v3 = new HorizontalStackedBarChart.StackValue(
-				1500, 1700 + Random.nextInt(12) * 100, "#FF00FF", "Other");
+		HorizontalStackedBarChart.StackValue v1 = new HorizontalStackedBarChart.StackValue(0, 1000);
+		HorizontalStackedBarChart.StackValue v2 = new HorizontalStackedBarChart.StackValue(1000, 1500);
+		HorizontalStackedBarChart.StackValue v3 = new HorizontalStackedBarChart.StackValue(1500, 1700 + Random.nextInt(12) * 100, "#FF00FF", "Other");
 		stack.addStack(new HStack(v1, v2, v3));
 
 		v1 = new HorizontalStackedBarChart.StackValue(0, 900);
@@ -641,20 +601,17 @@ public class Demo implements EntryPoint {
 
 		v1 = new HorizontalStackedBarChart.StackValue(0, 1500);
 		v2 = new HorizontalStackedBarChart.StackValue(1500, 2000);
-		v3 = new HorizontalStackedBarChart.StackValue(2000, 2100 + Random
-				.nextInt(8) * 100, "#FF00FF", "Other");
+		v3 = new HorizontalStackedBarChart.StackValue(2000, 2100 + Random.nextInt(8) * 100, "#FF00FF", "Other");
 		stack.addStack(new HStack(v1, v2, v3));
 
-		stack.setKeys(new Keys("Shares", "#ff0000", 13), new Keys("Property",
-				"#00ff00", 13));
+		stack.setKeys(new Keys("Shares", "#ff0000", 13), new Keys("Property", "#00ff00", 13));
 
 		XAxis xa = new XAxis();
 		xa.setRange(0, 3000, 500);
 		cd.setXAxis(xa);
 
 		YAxis ya = new YAxis();
-		ya.addLabels("John", "Frank", "Mary", "Andy");
-		;
+		ya.addLabels("John", "Frank", "Mary", "Andy");;
 		ya.setOffset(true);
 		cd.setYAxis(ya);
 
@@ -663,8 +620,7 @@ public class Demo implements EntryPoint {
 	}
 
 	private ChartData getLineChartData() {
-		ChartData cd = new ChartData("Relative Performance",
-				"font-size: 14px; font-family: Verdana; text-align: center;");
+		ChartData cd = new ChartData("Relative Performance", "font-size: 14px; font-family: Verdana; text-align: center;");
 		cd.setBackgroundColour("#ffffff");
 
 		LineChart lc1 = new LineChart();
@@ -698,8 +654,7 @@ public class Demo implements EntryPoint {
 		ya.setMin(-1);
 		cd.setYAxis(ya);
 
-		cd.setXLegend(new Text("Annual performance over 30 years",
-				"{font-size: 10px; color: #000000}"));
+		cd.setXLegend(new Text("Annual performance over 30 years", "{font-size: 10px; color: #000000}"));
 
 		cd.addElements(lc1);
 		cd.addElements(lc2);
@@ -708,8 +663,7 @@ public class Demo implements EntryPoint {
 	}
 
 	private ChartData getPieChartData() {
-		ChartData cd = new ChartData("Sales by Region",
-				"font-size: 14px; font-family: Verdana; text-align: center;");
+		ChartData cd = new ChartData("Sales by Region", "font-size: 14px; font-family: Verdana; text-align: center;");
 		cd.setBackgroundColour("#ffffff");
 		cd.setLegend(new Legend(Position.RIGHT, true));
 
@@ -730,8 +684,7 @@ public class Demo implements EntryPoint {
 	}
 
 	private ChartData getRadarChartData() {
-		ChartData cd2 = new ChartData("Risk Areas",
-				"font-size: 12px; text-align: left;");
+		ChartData cd2 = new ChartData("Risk Areas", "font-size: 12px; text-align: left;");
 		cd2.setBackgroundColour("#ffffff");
 		RadarAxis ra = new RadarAxis();
 		ra.setMax(11);
@@ -746,15 +699,13 @@ public class Demo implements EntryPoint {
 		area2.setColour("#ff0000");
 		area2.setFillColour("#ff0000");
 		area2.setLoop(true);
-		area2.addValues(Random.nextInt(8) + 2, Random.nextInt(8) + 2, Random
-				.nextInt(8) + 2, Random.nextInt(8) + 2, Random.nextInt(8) + 2);
+		area2.addValues(Random.nextInt(8) + 2, Random.nextInt(8) + 2, Random.nextInt(8) + 2, Random.nextInt(8) + 2, Random.nextInt(8) + 2);
 		cd2.addElements(area2);
 		return cd2;
 	}
 
 	private ChartData getScatterLineChartData() {
-		ChartData cd = new ChartData("X Y Distribution",
-				"font-size: 14px; font-family: Verdana; text-align: center;");
+		ChartData cd = new ChartData("X Y Distribution", "font-size: 14px; font-family: Verdana; text-align: center;");
 		cd.setBackgroundColour("#ffffff");
 		ScatterChart scat = new ScatterChart(ScatterStyle.LINE);
 
@@ -777,8 +728,7 @@ public class Demo implements EntryPoint {
 	}
 
 	private ChartData getScatterPointChartData() {
-		ChartData cd = new ChartData("X Y Distribution",
-				"font-size: 14px; font-family: Verdana; text-align: center;");
+		ChartData cd = new ChartData("X Y Distribution", "font-size: 14px; font-family: Verdana; text-align: center;");
 		cd.setBackgroundColour("#ffffff");
 		ScatterChart scat = new ScatterChart();
 		// Star star = new Star();
@@ -808,8 +758,7 @@ public class Demo implements EntryPoint {
 	}
 
 	private ChartData getSketchChartData() {
-		ChartData cd2 = new ChartData("How many pies were eaten?",
-				"font-size: 14px; font-family: Verdana; text-align: center;");
+		ChartData cd2 = new ChartData("How many pies were eaten?", "font-size: 14px; font-family: Verdana; text-align: center;");
 		cd2.setBackgroundColour("#ffffff");
 		XAxis xa = new XAxis();
 		xa.setLabels("John", "Frank", "Mary", "Andy", "Mike", "James");
@@ -817,10 +766,8 @@ public class Demo implements EntryPoint {
 		cd2.setXAxis(xa);
 		SketchBarChart sketch = new SketchBarChart("#00aa00", "#009900", 6);
 		sketch.setTooltip("#val# pies");
-		sketch.addValues(Random.nextInt(6) + 1, Random.nextInt(5) + 1, Random
-				.nextInt(3) + 1);
-		SketchBarChart.SketchBar skb = new SketchBarChart.SketchBar(Random
-				.nextInt(5) + 5);
+		sketch.addValues(Random.nextInt(6) + 1, Random.nextInt(5) + 1, Random.nextInt(3) + 1);
+		SketchBarChart.SketchBar skb = new SketchBarChart.SketchBar(Random.nextInt(5) + 5);
 		skb.setColour("#6666ff");
 		skb.setTooltip("Winner!<br>#val# pies");
 		sketch.addBars(skb);
@@ -830,25 +777,17 @@ public class Demo implements EntryPoint {
 	}
 
 	private ChartData getStackChartData() {
-		ChartData cd = new ChartData("Investments in ($M)",
-				"font-size: 14px; font-family: Verdana; text-align: center;");
+		ChartData cd = new ChartData("Investments in ($M)", "font-size: 14px; font-family: Verdana; text-align: center;");
 		cd.setBackgroundColour("#ffffff");
 
 		StackedBarChart stack = new StackedBarChart();
-		stack.addStack(new Stack(Random.nextDouble() * 2.5,
-				Random.nextDouble() * 5));
-		stack.addStack(new Stack(new StackedBarChart.StackValue(Random
-				.nextDouble() * 7, "#ffdd00")));
-		stack.addStack(new Stack(new StackedBarChart.StackValue(Random
-				.nextDouble() * 5, "#ff0000")));
-		Stack s = new Stack(Random.nextDouble() * 2, Random.nextDouble() * 2,
-				Random.nextDouble() * 2);
-		s.addStackValues(new StackedBarChart.StackValue(
-				Random.nextDouble() * 2, "#ff00ff"));
+		stack.addStack(new Stack(Random.nextDouble() * 2.5, Random.nextDouble() * 5));
+		stack.addStack(new Stack(new StackedBarChart.StackValue(Random.nextDouble() * 7, "#ffdd00")));
+		stack.addStack(new Stack(new StackedBarChart.StackValue(Random.nextDouble() * 5, "#ff0000")));
+		Stack s = new Stack(Random.nextDouble() * 2, Random.nextDouble() * 2, Random.nextDouble() * 2);
+		s.addStackValues(new StackedBarChart.StackValue(Random.nextDouble() * 2, "#ff00ff"));
 		stack.addStack(s);
-		stack.setKeys(new Keys("None", "#ffdd00", 13), new Keys("Property",
-				"#ff0000", 13), new Keys("Shares", "#00ff00", 13), new Keys(
-				"Cash", "#ff00ff", 13));
+		stack.setKeys(new Keys("None", "#ffdd00", 13), new Keys("Property", "#ff0000", 13), new Keys("Shares", "#00ff00", 13), new Keys("Cash", "#ff00ff", 13));
 
 		XAxis xa = new XAxis();
 		xa.setLabels("John", "Frank", "Mary", "Andy");

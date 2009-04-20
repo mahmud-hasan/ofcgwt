@@ -1,7 +1,8 @@
 /*
-Copyright (C) 2008 Grant Slender
+Copyright (C) 2009 Grant Slender
 
 This file is part of OFCGWT.
+http://code.google.com/p/ofcgwt/
 
 OFCGWT is free software: you can redistribute it and/or modify
 it under the terms of the Lesser GNU General Public License as
@@ -49,8 +50,7 @@ public class PieChart extends Element implements JSONizable {
 		 */
 		public JSONValue buildJSON() {
 			JSONObject json = new JSONObject();
-			if (distance != null)
-				json.put("distance", new JSONNumber(distance.intValue()));
+			if (distance != null) json.put("distance", new JSONNumber(distance.intValue()));
 			json.put("type", new JSONString("bounce"));
 			return json;
 		}
@@ -135,22 +135,14 @@ public class PieChart extends Element implements JSONizable {
 		 */
 		public JSONValue buildJSON() {
 			JSONObject json = new JSONObject();
-			if (value != null)
-				json.put("value", new JSONNumber(value.doubleValue()));
-			if (label != null)
-				json.put("label", new JSONString(label));
-			if (text != null)
-				json.put("text", new JSONString(text));
-			if (labelColour != null)
-				json.put("label-colour", new JSONString(labelColour));
-			if (fontSize != null)
-				json.put("font-size", new JSONString(fontSize));
-			if (onClick != null)
-				json.put("on-click", new JSONString(onClick));
-			if (tooltip != null)
-				json.put("tip", new JSONString(tooltip));
-			if (animate != null)
-				json.put("animate", animate.buildJSON());
+			if (value != null) json.put("value", new JSONNumber(value.doubleValue()));
+			if (label != null) json.put("label", new JSONString(label));
+			if (text != null) json.put("text", new JSONString(text));
+			if (labelColour != null) json.put("label-colour", new JSONString(labelColour));
+			if (fontSize != null) json.put("font-size", new JSONString(fontSize));
+			if (onClick != null) json.put("on-click", new JSONString(onClick));
+			if (tooltip != null) json.put("tip", new JSONString(tooltip));
+			if (animate != null) json.put("animate", animate.buildJSON());
 			return json;
 		}
 
@@ -249,8 +241,7 @@ public class PieChart extends Element implements JSONizable {
 		}
 	}
 
-	interface PieAnimation extends JSONizable {
-	}
+	interface PieAnimation extends JSONizable {}
 
 	private Integer startAngle;
 	private Integer radius;
@@ -328,26 +319,17 @@ public class PieChart extends Element implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (startAngle != null)
-			json.put("start-angle", new JSONNumber(startAngle.intValue()));
-		if (radius != null)
-			json.put("radius", new JSONNumber(radius.intValue()));
-		if (gradientFill != null)
-			json.put("gradient-fill", JSONBoolean.getInstance(gradientFill));
-		if (alpha != null)
-			json.put("alpha", new JSONNumber(alpha));
-		if (nolabels != null)
-			json.put("no-labels", JSONBoolean.getInstance(nolabels));
-		if (labelColour != null)
-			json.put("label-colour", new JSONString(labelColour));
-		if (border != null)
-			json.put("border", new JSONNumber(border.doubleValue()));
+		if (startAngle != null) json.put("start-angle", new JSONNumber(startAngle.intValue()));
+		if (radius != null) json.put("radius", new JSONNumber(radius.intValue()));
+		if (gradientFill != null) json.put("gradient-fill", JSONBoolean.getInstance(gradientFill));
+		if (alpha != null) json.put("alpha", new JSONNumber(alpha));
+		if (nolabels != null) json.put("no-labels", JSONBoolean.getInstance(nolabels));
+		if (labelColour != null) json.put("label-colour", new JSONString(labelColour));
+		if (border != null) json.put("border", new JSONNumber(border.doubleValue()));
 		JSONArray ary = new JSONArray();
 		int index = 0;
-		if (animate != null)
-			ary.set(index++, animate.buildJSON());
-		if (index != 0)
-			json.put("animate", ary);
+		if (animate != null) ary.set(index++, animate.buildJSON());
+		if (index != 0) json.put("animate", ary);
 
 		return json;
 	}
@@ -441,7 +423,8 @@ public class PieChart extends Element implements JSONizable {
 	public void setAnimateOnShow(boolean animate) {
 		if (animate) {
 			onShowType = null;
-		} else {
+		}
+		else {
 			onShowType = JSONBoolean.getInstance(false);
 		}
 	}

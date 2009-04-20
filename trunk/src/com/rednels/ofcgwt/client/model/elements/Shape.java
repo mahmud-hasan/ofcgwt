@@ -1,7 +1,8 @@
 /*
-Copyright (C) 2008 Grant Slender
+Copyright (C) 2009 Grant Slender
 
 This file is part of OFCGWT.
+http://code.google.com/p/ofcgwt/
 
 OFCGWT is free software: you can redistribute it and/or modify
 it under the terms of the Lesser GNU General Public License as
@@ -60,10 +61,8 @@ public class Shape extends Element implements JSONizable {
 		 */
 		public JSONValue buildJSON() {
 			JSONObject json = new JSONObject();
-			if (x != null)
-				json.put("x", new JSONNumber(x.doubleValue()));
-			if (y != null)
-				json.put("y", new JSONNumber(y.doubleValue()));
+			if (x != null) json.put("x", new JSONNumber(x.doubleValue()));
+			if (y != null) json.put("y", new JSONNumber(y.doubleValue()));
 			return json;
 		}
 
@@ -155,10 +154,8 @@ public class Shape extends Element implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (alpha != null)
-			json.put("alpha", new JSONNumber(alpha));
-		if (colour != null)
-			json.put("colour", new JSONString(colour));
+		if (alpha != null) json.put("alpha", new JSONNumber(alpha));
+		if (colour != null) json.put("colour", new JSONString(colour));
 		return json;
 	}
 

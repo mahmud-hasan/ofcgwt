@@ -1,7 +1,8 @@
 /*
-Copyright (C) 2008 Grant Slender
+Copyright (C) 2009 Grant Slender
 
 This file is part of OFCGWT.
+http://code.google.com/p/ofcgwt/
 
 OFCGWT is free software: you can redistribute it and/or modify
 it under the terms of the Lesser GNU General Public License as
@@ -68,8 +69,7 @@ public class FilledBarChart extends BarChart implements JSONizable {
 		 * @param outlineColour
 		 *            the outline colour
 		 */
-		public Bar(Number top, Number bottom, String colour,
-				String outlineColour) {
+		public Bar(Number top, Number bottom, String colour, String outlineColour) {
 			super(top, bottom);
 			setColour(colour);
 			setOutlineColour(outlineColour);
@@ -83,8 +83,7 @@ public class FilledBarChart extends BarChart implements JSONizable {
 		 */
 		public JSONValue buildJSON() {
 			JSONObject json = (JSONObject) super.buildJSON();
-			if (outlineColour != null)
-				json.put("outline-colour", new JSONString(outlineColour));
+			if (outlineColour != null) json.put("outline-colour", new JSONString(outlineColour));
 			return json;
 		}
 
@@ -148,8 +147,7 @@ public class FilledBarChart extends BarChart implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (outlineColour != null)
-			json.put("outline-colour", new JSONString(outlineColour));
+		if (outlineColour != null) json.put("outline-colour", new JSONString(outlineColour));
 		return json;
 	}
 

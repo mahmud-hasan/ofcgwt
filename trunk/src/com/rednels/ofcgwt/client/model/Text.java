@@ -1,7 +1,8 @@
 /*
-Copyright (C) 2008 Grant Slender
+Copyright (C) 2009 Grant Slender
 
 This file is part of OFCGWT.
+http://code.google.com/p/ofcgwt/
 
 OFCGWT is free software: you can redistribute it and/or modify
 it under the terms of the Lesser GNU General Public License as
@@ -63,10 +64,8 @@ public class Text implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = new JSONObject();
-		if (text != null)
-			json.put("text", new JSONString(text));
-		if (style != null)
-			json.put("style", new JSONString(style));
+		if (text != null) json.put("text", new JSONString(text));
+		if (style != null) json.put("style", new JSONString(style));
 		return json;
 	}
 
@@ -89,7 +88,9 @@ public class Text implements JSONizable {
 	}
 
 	/**
-	 * Sets the text style. <p/> Example:
+	 * Sets the text style.
+	 * <p/>
+	 * Example:
 	 * 
 	 * <pre>
 	 * font-size: 20px; color:#0000ff; font-family: Verdana; text-align: center;
