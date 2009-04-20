@@ -33,12 +33,12 @@ public class ChartClickEvent extends GwtEvent<ChartClickHandler> {
 	}
 
 	@Override
-	protected void dispatch(ChartClickHandler handler) {
-		handler.onClick(this);
+	public Type<ChartClickHandler> getAssociatedType() {
+		return TYPE;
 	}
 
 	@Override
-	public Type<ChartClickHandler> getAssociatedType() {
-		return TYPE;
+	protected void dispatch(ChartClickHandler handler) {
+		handler.onClick(this);
 	}
 }

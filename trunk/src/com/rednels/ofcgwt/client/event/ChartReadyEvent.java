@@ -24,12 +24,12 @@ public class ChartReadyEvent extends GwtEvent<ChartReadyHandler> {
 	private static final Type<ChartReadyHandler> TYPE = new Type<ChartReadyHandler>();
 
 	@Override
-	protected void dispatch(ChartReadyHandler handler) {
-		handler.onReady(this);
+	public Type<ChartReadyHandler> getAssociatedType() {
+		return TYPE;
 	}
 
 	@Override
-	public Type<ChartReadyHandler> getAssociatedType() {
-		return TYPE;
+	protected void dispatch(ChartReadyHandler handler) {
+		handler.onReady(this);
 	}
 }

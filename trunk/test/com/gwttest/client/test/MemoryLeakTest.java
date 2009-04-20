@@ -15,7 +15,7 @@ GNU General Public License for more details.
 
 See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
  */
-package com.gwttest.client;
+package com.gwttest.client.test;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -33,6 +33,35 @@ import com.rednels.ofcgwt.client.model.elements.PieChart;
  * Example Test using OFCGWT
  */
 public class MemoryLeakTest implements EntryPoint {
+
+	public class TestPieChart {
+		ChartData c;
+		PieChart p;
+
+		public TestPieChart() {
+			p = new PieChart();
+			p.setGradientFill(true);
+			p.setStartAngle(35);
+			p.setBorder(2);
+			p.setColours("#d01f3c", "#345678", "#356aa0", "#C79810");
+			p.setTooltip("#label#<br>$#val# (#percent#)");
+			p.setAlpha(0.6f);
+			p.setNoLabels(true);
+
+			c = new ChartData("Pie Chart");
+			c.addElements(p);
+			c.setBackgroundColour("#eeffee");
+		}
+
+		public ChartData update() {
+			p.getValues().clear();
+			int n = Random.nextInt(6) + 2;
+			for (int i = 0; i < n; i++) {
+				p.addSlice(Random.nextInt(12) * 1000, "Slice #" + (i + 1));
+			}
+			return c;
+		}
+	}
 
 	public void onModuleLoad() {
 		SimplePanel pieSp = new SimplePanel();
@@ -58,35 +87,5 @@ public class MemoryLeakTest implements EntryPoint {
 			}
 		});
 		RootPanel.get().add(b);
-	}
-
-	public class TestPieChart {
-		ChartData c;
-		PieChart p;
-
-		public TestPieChart() {
-			p = new PieChart();
-			p.setGradientFill(true);
-			p.setAnimate(false);
-			p.setStartAngle(35);
-			p.setBorder(2);
-			p.setColours("#d01f3c", "#345678", "#356aa0", "#C79810");
-			p.setTooltip("#label#<br>$#val# (#percent#)");
-			p.setAlpha(0.6f);
-			p.setNoLabels(true);
-
-			c = new ChartData("Pie Chart");
-			c.addElements(p);
-			c.setBackgroundColour("#eeffee");
-		}
-
-		public ChartData update() {
-			p.getValues().clear();
-			int n = Random.nextInt(6) + 2;
-			for (int i = 0; i < n; i++) {
-				p.addSlice(Random.nextInt(12) * 1000, "Slice #" + (i + 1));
-			}
-			return c;
-		}
 	}
 }

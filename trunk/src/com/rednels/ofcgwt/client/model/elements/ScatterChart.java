@@ -75,19 +75,10 @@ public class ScatterChart extends Element implements JSONizable {
 	 *            the y
 	 */
 	public void addPoint(Number x, Number y) {
-		BaseDot bd = new BaseDot(null) {};
+		BaseDot bd = new BaseDot(null) {
+		};
 		bd.setXY(x, y);
 		addPoints(bd);
-	}
-
-	/**
-	 * Adds the points.
-	 * 
-	 * @param points
-	 *            the points
-	 */
-	public void addPoints(Collection<BaseDot> points) {
-		getValues().addAll(points);
 	}
 
 	/**
@@ -100,6 +91,16 @@ public class ScatterChart extends Element implements JSONizable {
 		getValues().addAll(Arrays.asList(points));
 	}
 
+	/**
+	 * Adds the points.
+	 * 
+	 * @param points
+	 *            the points
+	 */
+	public void addPoints(Collection<BaseDot> points) {
+		getValues().addAll(points);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -107,9 +108,12 @@ public class ScatterChart extends Element implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (dotSize != null) json.put("dot-size", new JSONNumber(dotSize.doubleValue()));
-		if (this.dotStyle != null) json.put("dot-style", dotStyle.buildJSON());
-		if (colour != null) json.put("colour", new JSONString(colour));
+		if (dotSize != null)
+			json.put("dot-size", new JSONNumber(dotSize.doubleValue()));
+		if (this.dotStyle != null)
+			json.put("dot-style", dotStyle.buildJSON());
+		if (colour != null)
+			json.put("colour", new JSONString(colour));
 		return json;
 	}
 

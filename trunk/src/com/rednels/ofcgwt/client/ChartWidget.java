@@ -26,7 +26,7 @@ import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Widget;
 import com.rednels.ofcgwt.client.event.ChartClickEvent;
 import com.rednels.ofcgwt.client.event.ChartClickHandler;
-import com.rednels.ofcgwt.client.event.EventElement;
+import com.rednels.ofcgwt.client.event.DataValueEvents;
 import com.rednels.ofcgwt.client.model.ChartData;
 
 /**
@@ -43,7 +43,8 @@ public class ChartWidget extends Widget {
 	public static final String MIN_PLAYER_VERSION = "9.0.0";
 	public static final String ALTERNATE_SWF_SRC = "expressInstall.swf";
 
-	private static final CacheFixImpl cacheFixImpl = GWT.create(CacheFixImpl.class);
+	private static final CacheFixImpl cacheFixImpl = GWT
+			.create(CacheFixImpl.class);
 	private static int count = 0;
 
 	private boolean isSWFInjected = false;
@@ -76,51 +77,6 @@ public class ChartWidget extends Widget {
 	}
 
 	/**
-	 * Sets this charts ChartData and processes it for handlers/events
-	 * 
-	 * @param cd
-	 *            the ChartData model
-	 */
-	public void setChartData(ChartData cd) {
-		this.chartData = cd;
-		for (com.rednels.ofcgwt.client.model.elements.Element e : chartData.getElements()) {
-			for (Object o : e.getValues()) {
-				if (o instanceof EventElement) {
-					EventElement ee = (EventElement) o;
-					for (ChartClickHandler ch : ee.getHandlers()) {
-						String onclick = "ofc_onclick('" + getSwfId() + "','" + ch.hashCode() + "')";
-						ee.setOnClick(onclick);
-					}
-				}
-			}
-		}
-		setJsonData(chartData.buildJSON().toString());
-	}
-
-	protected void doOnChartClick(String evt) {
-		for (com.rednels.ofcgwt.client.model.elements.Element e : chartData.getElements()) {
-			for (Object o : e.getValues()) {
-				if (o instanceof EventElement) {
-					EventElement ee = (EventElement) o;
-					for (ChartClickHandler ch : ee.getHandlers()) {
-						if (evt.equals("" + ch.hashCode())) {
-							ch.onClick(new ChartClickEvent());
-						}
-					}
-				}
-			}
-		}
-	}
-
-	protected List<ChartClickHandler> getHandlers() {
-		return null;
-	}
-
-	private String emptyInnerDiv() {
-		return getInnerDivTextForFlashPlayerNotFound().replaceAll("\\$\\{flashPlayer.version\\}", MIN_PLAYER_VERSION);
-	}
-
-	/**
 	 * Gets the current OFC flash URL. Defaults to just "open-flash-chart.swf"
 	 * 
 	 * @return the flashurl
@@ -146,16 +102,6 @@ public class ChartWidget extends Widget {
 	 */
 	public String getInnerDivTextForFlashPlayerNotFound() {
 		return innerDivTextForFlashPlayerNotFound;
-	}
-
-	/**
-	 * Used internally to returns the correct open flash chart swf url
-	 * 
-	 * @return the swf url string
-	 */
-	private String getInternalSWFURL(boolean iefix, String flashurl, String id) {
-		if (!iefix) return flashurl;
-		return flashurl + ("?id=" + id + (new Date().getTime()));
 	}
 
 	/**
@@ -191,44 +137,6 @@ public class ChartWidget extends Widget {
 	}
 
 	/**
-	 * Returns true if the flash player equals or is higher than the version
-	 * string provided
-	 * 
-	 * @param v
-	 *            String version
-	 * @return true if flash version equals or is higher
-	 */
-	private native boolean hasFlashPlayerVersion(String v)
-	/*-{	    
-	  	return $wnd.swfobject.hasFlashPlayerVersion(v);	        
-	}-*/;
-
-	/**
-	 * Injects the swf into the dom.<br>
-	 * Internal widget use only - made public for integration.
-	 * 
-	 * @param swf
-	 *            url
-	 * @param id
-	 *            the dom id
-	 * @param w
-	 *            width
-	 * @param h
-	 *            height
-	 * @param ver
-	 *            version string (9.0.0)
-	 * @param alt
-	 *            alternate swf to load if wrong version
-	 */
-	private native void injectSWF(String swf, String id, String w, String h, String ver, String alt)
-	/*-{ 	     
-		var flashvars = {id: id,allowResize: true};
-		var params = {scale: 'noscale', allowscriptaccess:'always',wmode: 'transparent'};		
-	    var attributes = { data: swf, width: w, height: h, id: id, name: id };
-		$wnd.swfobject.embedSWF(swf, "embed_"+id, w, h, ver, alt, flashvars, params, attributes);
-	}-*/;
-
-	/**
 	 * Is the CacheFix Enabled?
 	 * 
 	 * @return true if cache fix is enabled, false if not
@@ -238,70 +146,19 @@ public class ChartWidget extends Widget {
 	}
 
 	/**
-	 * Calls the load method on the OFC swf.<br>
-	 * Internal widget use only - made public for integration.
+	 * Obtains raw image data of this chart.
+	 * Call returns null if the flash chart is not loaded.
 	 * 
-	 * @param id
-	 *            the dom id
-	 * @param json
-	 *            a JSON string
+	 * @returns String
+	 *            chart image data
 	 */
-	private native void loadJSON(String id, String json)
-	/*-{				
-		var swf = $doc.getElementById(id);
-		if ('load' in swf) swf.load(json);
-	}-*/;
-
-	protected void onAttach() {
-		chartElement.setInnerHTML("<div id=\"embed_" + swfId + "\">" + emptyInnerDiv() + "</div>");
-		ChartFactory.get().register(this);
-		if (!isSWFInjected) {
-			injectSWF(getInternalSWFURL(isCacheFixEnabled(), urlPrefix + flashurl, swfId), swfId, getWidth(), getHeight(), MIN_PLAYER_VERSION, ALTERNATE_SWF_SRC);
-			isSWFInjected = true;
-		}
-		super.onAttach();
-	}
-
-	protected void onDetach() {
-		ChartFactory.get().unregister(this);
-		chartElement.removeChild(chartElement.getChildNodes().getItem(0));
-		isSWFInjected = false;
-		super.onDetach();
-
-	}
-
-	/**
-	 * Calls the save_image method on the OFC swf.<br>
-	 * Internal widget use only - made public for integration.
-	 * 
-	 * @param id
-	 *            the dom id
-	 * @param url
-	 *            the url to call
-	 * @param debug
-	 *            enable debug
-	 */
-	private native void saveImage(String id, String url, boolean debug)
-	/*-{				
-		var swf = $doc.getElementById(id);
-		if ('save_image' in swf) swf.save_image( url, 'this.@com.rednels.ofcgwt.client.ChartWidget::notifyImageSaved()()', debug );
-	}-*/;
-
-	/**
-	 * Saves a JPG image of this chart and send the JPG to the url provided.
-	 * Call does nothing if the required flash player is not loaded.
-	 * 
-	 * @param url
-	 *            the url to call
-	 * @param debug
-	 *            enable debug
-	 */
-	public void saveJpgImagetoURL(String url, boolean debug) {
+	public String getImageData() {
 		if (hasFlashPlayer && isSWFInjected) {
-			saveImage(swfId, url, debug);
-		}
+			return getImageData(getSwfId());
+		}	
+		return null;
 	}
-
+	
 	/**
 	 * Enables an fix/workaround that stops caching of the swf which on IE may
 	 * solve some bugs. The workaround adds a unique parameter url to each SWF
@@ -314,6 +171,30 @@ public class ChartWidget extends Widget {
 	 */
 	public void setCacheFixEnabled(boolean enable) {
 		this.cacheFixEnabled = enable;
+	}
+
+	/**
+	 * Sets this charts ChartData and processes it for handlers/events
+	 * 
+	 * @param cd
+	 *            the ChartData model
+	 */
+	public void setChartData(ChartData cd) {
+		this.chartData = cd;
+		for (com.rednels.ofcgwt.client.model.elements.Element e : chartData
+				.getElements()) {
+			for (Object o : e.getValues()) {
+				if (o instanceof DataValueEvents) {
+					DataValueEvents dve = (DataValueEvents) o;
+					for (ChartClickHandler ch : dve.getHandlers()) {
+						String onclick = "ofc_onclick('" + getSwfId() + "','"
+								+ ch.hashCode() + "')";
+						dve.setOnClick(onclick);
+					}
+				}
+			}
+		}
+		setJsonData(chartData.buildJSON().toString());
 	}
 
 	/**
@@ -388,4 +269,89 @@ public class ChartWidget extends Widget {
 			}
 		}
 	}
+
+	protected void doOnChartClick(String evt) {
+		for (com.rednels.ofcgwt.client.model.elements.Element e : chartData
+				.getElements()) {
+			for (Object o : e.getValues()) {
+				if (o instanceof DataValueEvents) {
+					DataValueEvents ee = (DataValueEvents) o;
+					for (ChartClickHandler ch : ee.getHandlers()) {
+						if (evt.equals("" + ch.hashCode())) {
+							ch.onClick(new ChartClickEvent());
+						}
+					}
+				}
+			}
+		}
+	}
+
+	protected List<ChartClickHandler> getHandlers() {
+		return null;
+	}
+
+	protected void onAttach() {
+		chartElement.setInnerHTML("<div id=\"embed_" + swfId + "\">"
+				+ emptyInnerDiv() + "</div>");
+		ChartFactory.get().register(this);
+		if (!isSWFInjected) {
+			injectSWF(getInternalSWFURL(isCacheFixEnabled(), urlPrefix
+					+ flashurl, swfId), swfId, getWidth(), getHeight(),
+					MIN_PLAYER_VERSION, ALTERNATE_SWF_SRC);
+			isSWFInjected = true;
+		}
+		super.onAttach();
+	}
+
+	protected void onDetach() {
+		ChartFactory.get().unregister(this);
+		chartElement.removeChild(chartElement.getChildNodes().getItem(0));
+		isSWFInjected = false;
+		super.onDetach();
+
+	}
+
+	private String emptyInnerDiv() {
+		return getInnerDivTextForFlashPlayerNotFound().replaceAll(
+				"\\$\\{flashPlayer.version\\}", MIN_PLAYER_VERSION);
+	}
+
+	/**
+	 * Used internally to returns the correct open flash chart swf url
+	 * 
+	 * @return the swf url string
+	 */
+	private String getInternalSWFURL(boolean iefix, String flashurl, String id) {
+		if (!iefix)
+			return flashurl;
+		return flashurl + ("?id=" + id + (new Date().getTime()));
+	}
+
+	private native boolean hasFlashPlayerVersion(String v)
+	/*-{	    
+	  	return $wnd.swfobject.hasFlashPlayerVersion(v);	        
+	}-*/;
+
+	private native void injectSWF(String swf, String id, String w, String h,
+			String ver, String alt)
+	/*-{ 	     
+		var flashvars = {id: id,allowResize: true};
+		var params = {scale: 'noscale', allowscriptaccess:'always',wmode: 'transparent'};		
+	    var attributes = { data: swf, width: w, height: h, id: id, name: id };
+		$wnd.swfobject.embedSWF(swf, "embed_"+id, w, h, ver, alt, flashvars, params, attributes);
+	}-*/;
+
+	private native void loadJSON(String id, String json)
+	/*-{				
+		var swf = $doc.getElementById(id);
+		if ('load' in swf) swf.load(json);
+	}-*/;
+
+	private native String getImageData(String id)
+	/*-{				
+		var swf = $doc.getElementById(id);
+		var data = null;
+		if ('get_img_binary' in swf) data = swf.get_img_binary();
+		return data;
+	}-*/;
 }

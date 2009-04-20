@@ -72,11 +72,16 @@ public class Label implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = new JSONObject();
-		if (text != null) json.put("text", new JSONString(text));
-		if (colour != null) json.put("colour", new JSONString(colour));
-		if (size != null) json.put("size", new JSONNumber(size));
-		if (rotateAngle != null) json.put("rotate", new JSONNumber(rotateAngle));
-		if (visible != null) json.put("visible", JSONBoolean.getInstance(visible));
+		if (text != null)
+			json.put("text", new JSONString(text));
+		if (colour != null)
+			json.put("colour", new JSONString(colour));
+		if (size != null)
+			json.put("size", new JSONNumber(size));
+		if (rotateAngle != null)
+			json.put("rotate", new JSONNumber(rotateAngle));
+		if (visible != null)
+			json.put("visible", JSONBoolean.getInstance(visible));
 		return json;
 	}
 

@@ -28,8 +28,10 @@ public class Star extends BaseDot {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (rotation != null) json.put("rotation", new JSONNumber(rotation.intValue()));
-		if (hollow != null) json.put("hollow", JSONBoolean.getInstance(hollow));
+		if (rotation != null)
+			json.put("rotation", new JSONNumber(rotation.intValue()));
+		if (hollow != null)
+			json.put("hollow", JSONBoolean.getInstance(hollow));
 		return json;
 	}
 
@@ -50,16 +52,6 @@ public class Star extends BaseDot {
 	}
 
 	/**
-	 * Sets the rotation.
-	 * 
-	 * @param rotation
-	 *            the rotation
-	 */
-	public void setRotation(Integer rotation) {
-		this.rotation = rotation;
-	}
-
-	/**
 	 * Sets the hollow.
 	 * 
 	 * @param hollow
@@ -67,5 +59,15 @@ public class Star extends BaseDot {
 	 */
 	public void setHollow(Boolean hollow) {
 		this.hollow = hollow;
+	}
+
+	/**
+	 * Sets the rotation.
+	 * 
+	 * @param rotation
+	 *            the rotation
+	 */
+	public void setRotation(Integer rotation) {
+		this.rotation = rotation;
 	}
 }

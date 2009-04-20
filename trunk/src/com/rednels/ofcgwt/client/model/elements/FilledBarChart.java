@@ -68,7 +68,8 @@ public class FilledBarChart extends BarChart implements JSONizable {
 		 * @param outlineColour
 		 *            the outline colour
 		 */
-		public Bar(Number top, Number bottom, String colour, String outlineColour) {
+		public Bar(Number top, Number bottom, String colour,
+				String outlineColour) {
 			super(top, bottom);
 			setColour(colour);
 			setOutlineColour(outlineColour);
@@ -82,7 +83,8 @@ public class FilledBarChart extends BarChart implements JSONizable {
 		 */
 		public JSONValue buildJSON() {
 			JSONObject json = (JSONObject) super.buildJSON();
-			if (outlineColour != null) json.put("outline-colour", new JSONString(outlineColour));
+			if (outlineColour != null)
+				json.put("outline-colour", new JSONString(outlineColour));
 			return json;
 		}
 
@@ -118,16 +120,6 @@ public class FilledBarChart extends BarChart implements JSONizable {
 	/**
 	 * Creates a new filled bar chart.
 	 * 
-	 * @param style
-	 *            the style
-	 */
-	protected FilledBarChart(String style) {
-		super(style);
-	}
-
-	/**
-	 * Creates a new filled bar chart.
-	 * 
 	 * @param colour
 	 *            the colour
 	 * @param outlineColour
@@ -139,6 +131,16 @@ public class FilledBarChart extends BarChart implements JSONizable {
 		setOutlineColour(outlineColour);
 	}
 
+	/**
+	 * Creates a new filled bar chart.
+	 * 
+	 * @param style
+	 *            the style
+	 */
+	protected FilledBarChart(String style) {
+		super(style);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -146,7 +148,8 @@ public class FilledBarChart extends BarChart implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (outlineColour != null) json.put("outline-colour", new JSONString(outlineColour));
+		if (outlineColour != null)
+			json.put("outline-colour", new JSONString(outlineColour));
 		return json;
 	}
 

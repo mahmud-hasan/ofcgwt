@@ -26,7 +26,7 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
-import com.rednels.ofcgwt.client.event.EventElement;
+import com.rednels.ofcgwt.client.event.DataValueEvents;
 import com.rednels.ofcgwt.client.model.JSONizable;
 
 /**
@@ -34,12 +34,68 @@ import com.rednels.ofcgwt.client.model.JSONizable;
  */
 public class PieChart extends Element implements JSONizable {
 
+	public static class PieBounceAnimation implements PieAnimation {
+
+		private Number distance;
+
+		public PieBounceAnimation(Integer distance) {
+			setDistance(distance);
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
+		 */
+		public JSONValue buildJSON() {
+			JSONObject json = new JSONObject();
+			if (distance != null)
+				json.put("distance", new JSONNumber(distance.intValue()));
+			json.put("type", new JSONString("bounce"));
+			return json;
+		}
+
+		/**
+		 * Gets the distance.
+		 * 
+		 * @return the distance
+		 */
+		public Number getDistance() {
+			return distance;
+		}
+
+		/**
+		 * Sets the distance
+		 * 
+		 * @param distance
+		 *            the distance to set
+		 */
+		public void setDistance(Integer distance) {
+			this.distance = distance;
+		}
+	}
+
+	public static class PieFadeAnimation implements PieAnimation {
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
+		 */
+		public JSONValue buildJSON() {
+			JSONObject json = new JSONObject();
+			json.put("type", new JSONString("fade"));
+			return json;
+		}
+	}
+
 	/**
 	 * OFC pie slices
 	 */
-	public static class Slice extends EventElement implements JSONizable {
+	public static class Slice extends DataValueEvents implements JSONizable {
 
 		private final String label;
+		private final String text;
 		private final Number value;
 		private String labelColour;
 		private String fontSize;
@@ -55,8 +111,21 @@ public class PieChart extends Element implements JSONizable {
 		 *            the label
 		 */
 		public Slice(Number value, String label) {
+			this(value, label, label);
+		}
+
+		/**
+		 * Creates a new slice.
+		 * 
+		 * @param value
+		 *            the value
+		 * @param label
+		 *            the label
+		 */
+		public Slice(Number value, String label, String text) {
 			this.label = label;
 			this.value = value;
+			this.text = text;
 		}
 
 		/*
@@ -66,13 +135,22 @@ public class PieChart extends Element implements JSONizable {
 		 */
 		public JSONValue buildJSON() {
 			JSONObject json = new JSONObject();
-			if (value != null) json.put("value", new JSONNumber(value.doubleValue()));
-			if (label != null) json.put("label", new JSONString(label));
-			if (labelColour != null) json.put("label-colour", new JSONString(labelColour));
-			if (fontSize != null) json.put("font-size", new JSONString(fontSize));
-			if (onClick != null) json.put("on-click", new JSONString(onClick));
-			if (tooltip != null) json.put("tip", new JSONString(tooltip));
-			if (animate != null) json.put("animate", animate.buildJSON());
+			if (value != null)
+				json.put("value", new JSONNumber(value.doubleValue()));
+			if (label != null)
+				json.put("label", new JSONString(label));
+			if (text != null)
+				json.put("text", new JSONString(text));
+			if (labelColour != null)
+				json.put("label-colour", new JSONString(labelColour));
+			if (fontSize != null)
+				json.put("font-size", new JSONString(fontSize));
+			if (onClick != null)
+				json.put("on-click", new JSONString(onClick));
+			if (tooltip != null)
+				json.put("tip", new JSONString(tooltip));
+			if (animate != null)
+				json.put("animate", animate.buildJSON());
 			return json;
 		}
 
@@ -171,67 +249,13 @@ public class PieChart extends Element implements JSONizable {
 		}
 	}
 
-	interface PieAnimation extends JSONizable {}
-
-	public class PieFadeAnimation implements PieAnimation {
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
-		 */
-		public JSONValue buildJSON() {
-			JSONObject json = new JSONObject();
-			json.put("type", new JSONString("fade"));
-			return json;
-		}
-	}
-
-	public class PieBounceAnimation implements PieAnimation {
-
-		private Number distance;
-
-		public PieBounceAnimation(Integer distance) {
-			setDistance(distance);
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see com.rednels.ofcgwt.client.model.JSONizable.buildJSON()
-		 */
-		public JSONValue buildJSON() {
-			JSONObject json = new JSONObject();
-			if (distance != null) json.put("distance", new JSONNumber(distance.intValue()));
-			json.put("type", new JSONString("bounce"));
-			return json;
-		}
-
-		/**
-		 * Gets the distance.
-		 * 
-		 * @return the distance
-		 */
-		public Number getDistance() {
-			return distance;
-		}
-
-		/**
-		 * Sets the distance
-		 * 
-		 * @param distance
-		 *            the distance to set
-		 */
-		public void setDistance(Integer distance) {
-			this.distance = distance;
-		}
+	interface PieAnimation extends JSONizable {
 	}
 
 	private Integer startAngle;
 	private Integer radius;
 	private String labelColour;
 	private Float alpha;
-	private Boolean alphaHighlight;
 	private PieAnimation animate;
 	private Boolean gradientFill;
 	private Boolean nolabels;
@@ -242,6 +266,7 @@ public class PieChart extends Element implements JSONizable {
 	 */
 	public PieChart() {
 		super("pie");
+		onShowType = JSONBoolean.getInstance(false);
 	}
 
 	/**
@@ -303,22 +328,27 @@ public class PieChart extends Element implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (startAngle != null) json.put("start-angle", new JSONNumber(startAngle.intValue()));
-		if (radius != null) json.put("radius", new JSONNumber(radius.intValue()));
-		if (alphaHighlight != null && alphaHighlight) json.put("highlight", new JSONString("alpha"));
-		if (gradientFill != null) json.put("gradient-fill", JSONBoolean.getInstance(gradientFill));
-		if (alpha != null) json.put("alpha", new JSONNumber(alpha));
-		if (nolabels != null) json.put("no-labels", JSONBoolean.getInstance(nolabels));
-		if (labelColour != null) json.put("label-colour", new JSONString(labelColour));
-		if (border != null) json.put("border", new JSONNumber(border.doubleValue()));
+		if (startAngle != null)
+			json.put("start-angle", new JSONNumber(startAngle.intValue()));
+		if (radius != null)
+			json.put("radius", new JSONNumber(radius.intValue()));
+		if (gradientFill != null)
+			json.put("gradient-fill", JSONBoolean.getInstance(gradientFill));
+		if (alpha != null)
+			json.put("alpha", new JSONNumber(alpha));
+		if (nolabels != null)
+			json.put("no-labels", JSONBoolean.getInstance(nolabels));
+		if (labelColour != null)
+			json.put("label-colour", new JSONString(labelColour));
+		if (border != null)
+			json.put("border", new JSONNumber(border.doubleValue()));
 		JSONArray ary = new JSONArray();
 		int index = 0;
-		if (animate != null) ary.set(index++, animate.buildJSON());
-		if (index != 0) json.put("animate", ary);
+		if (animate != null)
+			ary.set(index++, animate.buildJSON());
+		if (index != 0)
+			json.put("animate", ary);
 
-		// TODO this is the current on-show animation support to stop build
-		// animation in pie
-		if (animate == null) json.put("animate", JSONBoolean.getInstance(false));
 		return json;
 	}
 
@@ -329,15 +359,6 @@ public class PieChart extends Element implements JSONizable {
 	 */
 	public Float getAlpha() {
 		return alpha;
-	}
-
-	/**
-	 * Gets the alphaHighlight value
-	 * 
-	 * @return true if alphaHighlight is enabled
-	 */
-	public Boolean getAlphaHighlight() {
-		return alphaHighlight;
 	}
 
 	/**
@@ -368,15 +389,6 @@ public class PieChart extends Element implements JSONizable {
 	}
 
 	/**
-	 * Gets the no labels value
-	 * 
-	 * @return true if no labels is enabled
-	 */
-	public Boolean getNoLabels() {
-		return nolabels;
-	}
-
-	/**
 	 * Gets the label colour.
 	 * 
 	 * @return the label colour
@@ -386,12 +398,12 @@ public class PieChart extends Element implements JSONizable {
 	}
 
 	/**
-	 * Gets the start angle.
+	 * Gets the no labels value
 	 * 
-	 * @return the start angle
+	 * @return true if no labels is enabled
 	 */
-	public Integer getStartAngle() {
-		return startAngle;
+	public Boolean getNoLabels() {
+		return nolabels;
 	}
 
 	/**
@@ -399,6 +411,15 @@ public class PieChart extends Element implements JSONizable {
 	 */
 	public Integer getRadius() {
 		return radius;
+	}
+
+	/**
+	 * Gets the start angle.
+	 * 
+	 * @return the start angle
+	 */
+	public Integer getStartAngle() {
+		return startAngle;
 	}
 
 	/**
@@ -412,32 +433,21 @@ public class PieChart extends Element implements JSONizable {
 	}
 
 	/**
-	 * Sets alpha colour toggle as the highlight, or slice slide out animation
-	 * 
-	 * @param alphaHighlight
-	 *            true or false
-	 */
-	public void setAlphaHighlight(boolean alphaHighlight) {
-		this.alphaHighlight = alphaHighlight;
-	}
-
-	/**
-	 * Sets if animation of slice rotation build is enabled
+	 * Sets if animation on show (slice build rotation) is enabled
 	 * 
 	 * @param animate
 	 *            true or false
 	 */
-	public void setAnimate(boolean animate) {
+	public void setAnimateOnShow(boolean animate) {
 		if (animate) {
-			setAnimation(new PieBounceAnimation(10));
-		}
-		else {
-			this.animate = null;
+			onShowType = null;
+		} else {
+			onShowType = JSONBoolean.getInstance(false);
 		}
 	}
 
 	/**
-	 * Sets the animation.
+	 * Sets the animation - set to null if no animation required.
 	 * 
 	 * @param animate
 	 *            the new animate
@@ -467,16 +477,6 @@ public class PieChart extends Element implements JSONizable {
 	}
 
 	/**
-	 * Sets the no labels.
-	 * 
-	 * @param nolabels
-	 *            true or false
-	 */
-	public void setNoLabels(boolean nolabels) {
-		this.nolabels = nolabels;
-	}
-
-	/**
 	 * Sets the label colour.
 	 * 
 	 * @param labelColour
@@ -487,13 +487,13 @@ public class PieChart extends Element implements JSONizable {
 	}
 
 	/**
-	 * Sets the start angle.
+	 * Sets the no labels.
 	 * 
-	 * @param startAngle
-	 *            the new start angle
+	 * @param nolabels
+	 *            true or false
 	 */
-	public void setStartAngle(Integer startAngle) {
-		this.startAngle = startAngle;
+	public void setNoLabels(boolean nolabels) {
+		this.nolabels = nolabels;
 	}
 
 	/**
@@ -502,5 +502,15 @@ public class PieChart extends Element implements JSONizable {
 	 */
 	public void setRadius(Integer radius) {
 		this.radius = radius;
+	}
+
+	/**
+	 * Sets the start angle.
+	 * 
+	 * @param startAngle
+	 *            the new start angle
+	 */
+	public void setStartAngle(Integer startAngle) {
+		this.startAngle = startAngle;
 	}
 }

@@ -107,27 +107,29 @@ public class XAxis extends AbstractAxis implements JSONizable {
 		 */
 		public JSONValue buildJSON() {
 			JSONObject json = (JSONObject) super.buildJSON();
-			if (steps != null) json.put("steps", new JSONNumber(steps));
-			if (colour != null) json.put("colour", new JSONString(colour));
-			if (size != null) json.put("size", new JSONNumber(size));
-			if (rotate != null) json.put("rotate", new JSONString(rotate.toString()));
-			if (visible != null) json.put("visible", JSONBoolean.getInstance(visible));
-			if (labels == null) return json;
+			if (steps != null)
+				json.put("steps", new JSONNumber(steps));
+			if (colour != null)
+				json.put("colour", new JSONString(colour));
+			if (size != null)
+				json.put("size", new JSONNumber(size));
+			if (rotate != null)
+				json.put("rotate", new JSONString(rotate.toString()));
+			if (visible != null)
+				json.put("visible", JSONBoolean.getInstance(visible));
+			if (labels == null)
+				return json;
 			JSONArray ary = new JSONArray();
 			int index = 0;
 			for (Object o : getLabels()) {
-				if (o instanceof String) ary.set(index++, new JSONString((String) o));
-				if (o instanceof Label) ary.set(index++, ((Label) o).buildJSON());
+				if (o instanceof String)
+					ary.set(index++, new JSONString((String) o));
+				if (o instanceof Label)
+					ary.set(index++, ((Label) o).buildJSON());
 			}
-			if (index != 0) json.put("labels", ary);
+			if (index != 0)
+				json.put("labels", ary);
 			return json;
-		}
-
-		/**
-		 * Check labels not null.
-		 */
-		private synchronized void checkLabelsNotNull() {
-			if (labels == null) labels = new ArrayList<Object>();
 		}
 
 		/**
@@ -233,6 +235,14 @@ public class XAxis extends AbstractAxis implements JSONizable {
 		public void setVisible(Boolean visible) {
 			this.visible = visible;
 		}
+
+		/**
+		 * Check labels not null.
+		 */
+		private synchronized void checkLabelsNotNull() {
+			if (labels == null)
+				labels = new ArrayList<Object>();
+		}
 	}
 
 	private Integer tickHeight;
@@ -278,16 +288,11 @@ public class XAxis extends AbstractAxis implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = (JSONObject) super.buildJSON();
-		if (tickHeight != null) json.put("tick-height", new JSONNumber(tickHeight));
-		if (labels != null) json.put("labels", labels.buildJSON());
+		if (tickHeight != null)
+			json.put("tick-height", new JSONNumber(tickHeight));
+		if (labels != null)
+			json.put("labels", labels.buildJSON());
 		return json;
-	}
-
-	/**
-	 * Check labels not null.
-	 */
-	private synchronized void checkLabelsNotNull() {
-		if (labels == null) labels = new Labels();
 	}
 
 	/**
@@ -346,5 +351,13 @@ public class XAxis extends AbstractAxis implements JSONizable {
 	 */
 	public void setXAxisLabels(Labels labels) {
 		this.labels = labels;
+	}
+
+	/**
+	 * Check labels not null.
+	 */
+	private synchronized void checkLabelsNotNull() {
+		if (labels == null)
+			labels = new Labels();
 	}
 }

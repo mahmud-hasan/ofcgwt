@@ -77,7 +77,7 @@ public class ChartData implements JSONizable {
 	 * Creates a new chart data instance.
 	 */
 	public ChartData() {
-	// nothing...
+		// nothing...
 	}
 
 	/**
@@ -126,24 +126,43 @@ public class ChartData implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		final JSONObject json = new JSONObject();
-		if (title != null) json.put("title", title.buildJSON());
-		if (tooltip != null) json.put("tooltip", tooltip.buildJSON());
-		if (x_axis != null) json.put("x_axis", x_axis.buildJSON());
-		if (y_axis != null) json.put("y_axis", y_axis.buildJSON());
-		if (yaxis_label_style != null) json.put("y_label__label_style", new JSONString(yaxis_label_style));
-		if (y_axis_right != null) json.put("y_axis_right", y_axis_right.buildJSON());
-		if (yaxisright_label_style != null) json.put("y_label_2__label_style", new JSONString(yaxisright_label_style));
-		if (radar_axis != null) json.put("radar_axis", radar_axis.buildJSON());
-		if (y_legend != null) json.put("y_legend", y_legend.buildJSON());
-		if (y2_legend != null) json.put("y2_legend", y2_legend.buildJSON());
-		if (x_legend != null) json.put("x_legend", x_legend.buildJSON());
-		if (legend != null) json.put("legend", legend.buildJSON());
-		if (bg_colour != null) json.put("bg_colour", new JSONString(bg_colour));
-		if (isDecimalSeparatorComma) json.put("is_decimal_separator_comma", new JSONNumber(1));
-		if (isFixedNumDecimalsForced) json.put("is_fixed_num_decimals_forced", new JSONNumber(1));
-		if (isThousandSeparatorDisabled) json.put("is_thousand_separator_disabled", new JSONNumber(1));
-		if (numDecimals != null) json.put("num_decimals", new JSONNumber(numDecimals));
-		if (elements == null) return json;
+		if (title != null)
+			json.put("title", title.buildJSON());
+		if (tooltip != null)
+			json.put("tooltip", tooltip.buildJSON());
+		if (x_axis != null)
+			json.put("x_axis", x_axis.buildJSON());
+		if (y_axis != null)
+			json.put("y_axis", y_axis.buildJSON());
+		if (yaxis_label_style != null)
+			json.put("y_label__label_style", new JSONString(yaxis_label_style));
+		if (y_axis_right != null)
+			json.put("y_axis_right", y_axis_right.buildJSON());
+		if (yaxisright_label_style != null)
+			json.put("y_label_2__label_style", new JSONString(
+					yaxisright_label_style));
+		if (radar_axis != null)
+			json.put("radar_axis", radar_axis.buildJSON());
+		if (y_legend != null)
+			json.put("y_legend", y_legend.buildJSON());
+		if (y2_legend != null)
+			json.put("y2_legend", y2_legend.buildJSON());
+		if (x_legend != null)
+			json.put("x_legend", x_legend.buildJSON());
+		if (legend != null)
+			json.put("legend", legend.buildJSON());
+		if (bg_colour != null)
+			json.put("bg_colour", new JSONString(bg_colour));
+		if (isDecimalSeparatorComma)
+			json.put("is_decimal_separator_comma", new JSONNumber(1));
+		if (isFixedNumDecimalsForced)
+			json.put("is_fixed_num_decimals_forced", new JSONNumber(1));
+		if (isThousandSeparatorDisabled)
+			json.put("is_thousand_separator_disabled", new JSONNumber(1));
+		if (numDecimals != null)
+			json.put("num_decimals", new JSONNumber(numDecimals));
+		if (elements == null)
+			return json;
 		final JSONArray ary = new JSONArray();
 		int index = 0;
 		for (final Element e : elements) {
@@ -151,12 +170,6 @@ public class ChartData implements JSONizable {
 		}
 		json.put("elements", ary);
 		return json;
-	}
-
-	private String createLabelStyle(Integer size, String colour) {
-		String label_style = size.toString();
-		if (colour != null && colour.length() > 0) label_style += "," + colour;
-		return label_style;
 	}
 
 	/**
@@ -199,7 +212,8 @@ public class ChartData implements JSONizable {
 	 * @return RadarAxis object
 	 */
 	public RadarAxis getRadarAxis() {
-		if (radar_axis == null) radar_axis = new RadarAxis();
+		if (radar_axis == null)
+			radar_axis = new RadarAxis();
 		return radar_axis;
 	}
 
@@ -227,7 +241,8 @@ public class ChartData implements JSONizable {
 	 * @return XAxis object
 	 */
 	public XAxis getXAxis() {
-		if (x_axis == null) x_axis = new XAxis();
+		if (x_axis == null)
+			x_axis = new XAxis();
 		return x_axis;
 	}
 
@@ -246,7 +261,8 @@ public class ChartData implements JSONizable {
 	 * @return YAxis object
 	 */
 	public YAxis getYAxis() {
-		if (y_axis == null) y_axis = new YAxis();
+		if (y_axis == null)
+			y_axis = new YAxis();
 		return y_axis;
 	}
 
@@ -498,5 +514,12 @@ public class ChartData implements JSONizable {
 	@Deprecated
 	public String toString() {
 		return buildJSON().toString();
+	}
+
+	private String createLabelStyle(Integer size, String colour) {
+		String label_style = size.toString();
+		if (colour != null && colour.length() > 0)
+			label_style += "," + colour;
+		return label_style;
 	}
 }

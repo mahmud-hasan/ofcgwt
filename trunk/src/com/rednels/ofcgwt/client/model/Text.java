@@ -63,8 +63,10 @@ public class Text implements JSONizable {
 	 */
 	public JSONValue buildJSON() {
 		JSONObject json = new JSONObject();
-		if (text != null) json.put("text", new JSONString(text));
-		if (style != null) json.put("style", new JSONString(style));
+		if (text != null)
+			json.put("text", new JSONString(text));
+		if (style != null)
+			json.put("style", new JSONString(style));
 		return json;
 	}
 
