@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+  <servlet>
+    <servlet-name>ImageServiceImpl</servlet-name>
+    <servlet-class>com.gwttest.server.ImageServiceImpl</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ImageByteReader</servlet-name>
+    <servlet-class>com.gwttest.server.ImageByteReader</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ImageServiceImpl</servlet-name>
+    <url-pattern>/ImageService</url-pattern>
+  </servlet-mapping>  
+  <servlet-mapping>
+    <servlet-name>ImageByteReader</servlet-name>
+    <url-pattern>/image</url-pattern>
+  </servlet-mapping>  
+</web-app>

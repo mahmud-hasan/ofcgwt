@@ -27,11 +27,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class ImageByteReader extends HttpServlet {
-	private static final String SESSION_VAR_NAME = "var";
+
+	private static final long serialVersionUID = -8873813591069236947L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		try {
-			String variable = request.getParameter(SESSION_VAR_NAME);
+			String variable = request.getParameter("var");
 			HttpSession session = request.getSession();
 			byte[] imageBytes = (byte[]) session.getAttribute(variable);
 			response.reset();

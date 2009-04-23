@@ -19,11 +19,16 @@ See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
 package com.gwttest.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.DecoratorPanel;
@@ -31,6 +36,7 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -77,9 +83,10 @@ public class Demo implements EntryPoint {
 	private String[] colours = { "#ff0000", "#00ff00", "#0000ff", "#ff9900", "#ff00ff", "#FFFF00", "#6699FF", "#339933", "#1199aa" };
 	private Command updateCmd = null;
 	private TextArea ta = null;
-	private DialogBox db = null;
+	private DialogBox popupDb = null;
 
 	public void onModuleLoad() {
+		final ChartWidget chart = new ChartWidget();
 
 		HorizontalPanel hp = new HorizontalPanel();
 		hp.setSpacing(10);
@@ -90,15 +97,36 @@ public class Demo implements EntryPoint {
 		HTML homeText = new HTML("<h2>Welcome to OFCGWT</h2>" + "<i>....the OpenFlashChart GWT Library</i></br></br>" + "This demonstration site will showcase the many different types of charts that can be inserted into a GWT application.");
 		vp.add(homeText);
 		vp.setCellHeight(homeText, "100");
-		createDialog();
+		
+		createPopupDialog();
 		Button popup = new Button("Show 2nd Chart in Dialog");
 		popup.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				db.center();
-				db.show();
+				popupDb.center();
+				popupDb.show();
 			}
 		});
 		vp.add(popup);
+
+		Button image = new Button("Show Image of Chart");
+		image.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {			
+
+				ImageServiceAsync imgService = (ImageServiceAsync) GWT.create(ImageService.class);
+				ServiceDefTarget target = (ServiceDefTarget) imgService;
+				target.setServiceEntryPoint("/ImageService");
+
+				imgService.getImageToken(chart.getImageData(), new AsyncCallback<String>() {
+					public void onFailure(Throwable caught) {}
+
+					public void onSuccess(String result) {
+						createImageDialog("/image?var=img_" + result);
+					}
+				});
+			}
+		});
+		vp.add(image);
+		
 		vp.add(new HTML("Update Speed <i>(0-off, 4-max)</i>"));
 		final SliderBar slider = new SliderBar(0.0, 4.0);
 		slider.setStepSize(1.0);
@@ -116,7 +144,6 @@ public class Demo implements EntryPoint {
 		DecoratorPanel dp = new DecoratorPanel();
 		SimplePanel chartPanel = new SimplePanel();
 		chartPanel.setStylePrimaryName("chartPanel");
-		final ChartWidget chart = new ChartWidget();
 		chart.setSize("500", "400");
 		chart.setChartData(getPieChartData());
 		chartPanel.add(chart);
@@ -294,13 +321,13 @@ public class Demo implements EntryPoint {
 		});
 	}
 
-	private void createDialog() {
-		db = new DialogBox();
-		db.setText("Chart in Dialog");
+	private void createPopupDialog() {
+		popupDb = new DialogBox();
+		popupDb.setText("Chart in Dialog");
 
 		VerticalPanel dbContents = new VerticalPanel();
 		dbContents.setSpacing(4);
-		db.setWidget(dbContents);
+		popupDb.setWidget(dbContents);
 
 		ChartWidget chart = new ChartWidget();
 		chart.setChartData(getStackChartData());
@@ -308,12 +335,37 @@ public class Demo implements EntryPoint {
 		dbContents.add(chart);
 		Button closeButton = new Button("Close", new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				db.hide();
+				popupDb.hide();
 			}
 		});
 		dbContents.add(closeButton);
 		dbContents.setCellHorizontalAlignment(closeButton, HasHorizontalAlignment.ALIGN_RIGHT);
 
+	}
+
+	private void createImageDialog(String imgurl) {		
+		final DialogBox imageDb = new DialogBox();
+		imageDb.setText("Image Capture of Chart");
+
+		VerticalPanel dbContents = new VerticalPanel();
+		dbContents.setSpacing(4);
+		imageDb.setWidget(dbContents);
+
+		Image chartImg = new Image(imgurl);
+		
+		chartImg.setSize("250", "200");
+		dbContents.add(chartImg);
+		
+		Button closeButton = new Button("Close", new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				imageDb.hide();
+			}
+		});
+		dbContents.add(closeButton);
+		dbContents.setCellHorizontalAlignment(closeButton, HasHorizontalAlignment.ALIGN_RIGHT);
+
+		imageDb.center();
+		imageDb.show();
 	}
 
 	private RadioButton createRadioButton(String string, final Command command) {
