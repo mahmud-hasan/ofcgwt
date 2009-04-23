@@ -2,7 +2,7 @@
 <project default="gwt.compile" basedir=".">
 	<property environment="env" />
 	<property name="ofcgwt.src" value="src" />
-	<property name="ofcgwt.release" value="ofcgwt-2.0.1 beta" />
+	<property name="ofcgwt.release" value="ofcgwt-2.0.2" />
 	<property name="ofcgwt.target" location="build" />
 	<property name="gwt.compiler.class" value="com.google.gwt.dev.Compiler" />
 	<property name="gwt.war.dir" value="war" />

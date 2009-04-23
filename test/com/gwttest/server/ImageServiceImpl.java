@@ -28,6 +28,8 @@ import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 public class ImageServiceImpl extends RemoteServiceServlet implements ImageService {
 
+	private static final long serialVersionUID = 506418524121350353L;
+
 	public String getImageToken(String base64image) {
 		byte[] imageBytes = Base64.decode(base64image);
 		String token = getMd5(base64image);
