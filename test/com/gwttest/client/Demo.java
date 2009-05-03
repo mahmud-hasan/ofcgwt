@@ -22,11 +22,9 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
@@ -114,13 +112,13 @@ public class Demo implements EntryPoint {
 
 				ImageServiceAsync imgService = (ImageServiceAsync) GWT.create(ImageService.class);
 				ServiceDefTarget target = (ServiceDefTarget) imgService;
-				target.setServiceEntryPoint("/ImageService");
+				target.setServiceEntryPoint(GWT.getHostPageBaseURL()+"ImageService");
 
 				imgService.getImageToken(chart.getImageData(), new AsyncCallback<String>() {
 					public void onFailure(Throwable caught) {}
 
 					public void onSuccess(String result) {
-						createImageDialog("/image?var=img_" + result);
+						createImageDialog(GWT.getHostPageBaseURL()+"image?var=img_" + result);
 					}
 				});
 			}

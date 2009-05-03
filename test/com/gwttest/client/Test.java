@@ -19,6 +19,7 @@ See <http://www.gnu.org/licenses/lgpl-3.0.txt>.
 package com.gwttest.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.gwttest.client.test.FlexTableTest;
 import com.gwttest.client.test.Snippet;
 
 /**
@@ -27,7 +28,8 @@ import com.gwttest.client.test.Snippet;
 public class Test implements EntryPoint {
 
 	public void onModuleLoad() {
-		new Snippet().onModuleLoad();
+//		new Snippet().onModuleLoad();
+		new FlexTableTest().onModuleLoad();
 		// new Demo().onModuleLoad();
 		// new MemoryLeakTest().onModuleLoad();
 	}
